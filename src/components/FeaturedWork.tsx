@@ -25,7 +25,7 @@ const projects: Project[] = [
     categoryColor: 'cyan', // Monokai Pro cyan #78dce8
     title: 'Aurora Design System',
     description:
-      'Built GM\'s first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance.',
+      "Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance.",
     href: '/work/aurora-gm',
     tags: ['React', 'Design Tokens', 'Storybook'],
     commitHash: 'a3f9c2d',
@@ -67,7 +67,7 @@ const projects: Project[] = [
   {
     category: 'STANDARDS',
     categoryColor: 'pink', // Monokai Pro pink #ff6188
-    title: 'Variable Contract',
+    title: 'Variables Contract',
     description:
       'Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, solving tool lock-in and version control gaps.',
     href: '/work/variable-contract',
@@ -123,7 +123,6 @@ export default function FeaturedWork() {
             delay: index * 0.2,
             ease: 'expo.out',
           })
-
         }
       })
     }, sectionRef)
@@ -138,7 +137,6 @@ export default function FeaturedWork() {
       className='pt-32 pb-32 px-6 relative overflow-hidden'
       style={{ backgroundColor: MONOKAI.background }}
     >
-
       {/* Atmospheric gradients */}
       <div className='absolute inset-0'>
         <div className='absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[100px]' />
@@ -246,39 +244,103 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
       switch (project.category) {
         case 'DESIGN SYSTEMS':
           return (
-            <svg style={iconStyle} fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z' />
+            <svg
+              style={iconStyle}
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z'
+              />
             </svg>
           )
         case 'DEVELOPER TOOLS':
           return (
-            <svg style={iconStyle} fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' />
+            <svg
+              style={iconStyle}
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'
+              />
             </svg>
           )
         case 'ACCESSIBILITY':
           return (
-            <svg style={iconStyle} fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z' />
-              <path strokeLinecap='round' strokeLinejoin='round' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z' />
+            <svg
+              style={iconStyle}
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+              />
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+              />
             </svg>
           )
         case 'HEALTH TECH':
           return (
-            <svg style={iconStyle} fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z' />
+            <svg
+              style={iconStyle}
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+              />
             </svg>
           )
         case 'STANDARDS':
           return (
-            <svg style={iconStyle} fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />
+            <svg
+              style={iconStyle}
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+              />
             </svg>
           )
         case 'CONSULTING':
           return (
-            <svg style={iconStyle} fill='none' viewBox='0 0 24 24' stroke='currentColor' strokeWidth={2}>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' />
+            <svg
+              style={iconStyle}
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+              />
             </svg>
           )
         default:
@@ -365,43 +427,43 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
 
             {/* Tags + CTA pinned to bottom */}
             <div className='mt-auto pt-8'>
-            {/* Tags */}
-            <div className='flex flex-wrap gap-2 mb-6'>
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className='px-3 py-1.5 text-[11px] font-mono rounded-md border transition-all duration-300'
-                  style={{
-                    backgroundColor: `${categoryColor}08`,
-                    color: `${MONOKAI.foreground}60`,
-                    borderColor: `${categoryColor}20`,
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+              {/* Tags */}
+              <div className='flex flex-wrap gap-2 mb-6'>
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className='px-3 py-1.5 text-[11px] font-mono rounded-md border transition-all duration-300'
+                    style={{
+                      backgroundColor: `${categoryColor}08`,
+                      color: `${MONOKAI.foreground}60`,
+                      borderColor: `${categoryColor}20`,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
 
-            {/* CTA Link */}
-            <a
-              href={project.href}
-              className='inline-flex items-center gap-2.5 text-white/80 hover:text-white font-medium transition-all duration-300 group/link'
-            >
-              <span className='font-mono text-sm'>Read case study</span>
-              <svg
-                className='w-4 h-4 transform group-hover/link:translate-x-1.5 transition-transform duration-300'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-                strokeWidth={2.5}
+              {/* CTA Link */}
+              <a
+                href={project.href}
+                className='inline-flex items-center gap-2.5 text-white/80 hover:text-white font-medium transition-all duration-300 group/link'
               >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  d='M13 7l5 5m0 0l-5 5m5-5H6'
-                />
-              </svg>
-            </a>
+                <span className='font-mono text-sm'>Read case study</span>
+                <svg
+                  className='w-4 h-4 transform group-hover/link:translate-x-1.5 transition-transform duration-300'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                  strokeWidth={2.5}
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M13 7l5 5m0 0l-5 5m5-5H6'
+                  />
+                </svg>
+              </a>
             </div>
           </div>
 
