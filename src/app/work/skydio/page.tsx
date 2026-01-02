@@ -8,8 +8,8 @@ export default function SkydioPage() {
   return (
     <CaseStudyLayout
       title='Skydio Autonomy Widget'
-      category='Consulting'
-      categoryColor='cyan'
+      category='CONSULTING'
+      categoryColor='yellow'
       description="Built production-grade React widget system for Skydio's Rivit design language, enabling real-time drone control with config-driven UI architecture and Storybook documentation."
       role='Frontend Consultant - Component Architecture & Storybook'
       timeline='2024 (Contract)'
@@ -23,8 +23,8 @@ export default function SkydioPage() {
       ]}
       links={[
         {
-          label: 'GitHub Repository',
-          href: 'https://github.com/marklearst/skydio-autonomy-widget',
+          label: 'GitHub (private)',
+          href: '',
           icon: (
             <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
               <path
@@ -36,8 +36,8 @@ export default function SkydioPage() {
           ),
         },
         {
-          label: 'Skydio',
-          href: 'https://www.skydio.com',
+          label: 'Skydio (request password)',
+          href: '',
           icon: (
             <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
               <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' />
@@ -48,11 +48,13 @@ export default function SkydioPage() {
       impact={[
         {
           metric: 'Production',
-          description: 'Delivered widget system for real-time autonomous drone control',
+          description:
+            'Delivered widget system for real-time autonomous drone control',
         },
         {
-          metric: 'Storybook 9',
-          description: 'Comprehensive component documentation with accessibility testing',
+          metric: 'Storybook',
+          description:
+            'Comprehensive component documentation with accessibility testing',
         },
         {
           metric: 'Config-Driven',
@@ -66,17 +68,35 @@ export default function SkydioPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                Skydio, a leading autonomous drone company, needed a production-grade React widget for their Rivit design language to control real-time drone missions. The challenge required:
+                Skydio, a leading autonomous drone company, needed a
+                production-grade React widget for their Rivit design language to
+                control real-time drone missions. The challenge required:
               </p>
-              <ul className='space-y-3 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li>Highly composable widget system supporting multiple mission types (Waypoint, RTD, Orbit, Tracking)</li>
+              <ul
+                className='space-y-3 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  Highly composable widget system supporting multiple mission
+                  types (Waypoint, RTD, Orbit, Tracking)
+                </li>
                 <li>Real-time UI updates synchronized with drone state</li>
-                <li>Config-driven architecture for seamless Figma-to-code parity</li>
-                <li>Responsive design adapting from mobile to desktop control interfaces</li>
-                <li>Comprehensive Storybook documentation for product and engineering teams</li>
+                <li>
+                  Config-driven architecture for seamless Figma-to-code parity
+                </li>
+                <li>
+                  Responsive design adapting from mobile to desktop control
+                  interfaces
+                </li>
+                <li>
+                  Comprehensive Storybook documentation for product and
+                  engineering teams
+                </li>
               </ul>
               <p className='text-lg leading-relaxed'>
-                The widget needed to function as a "UI microservice" that could be integrated into Skydio's drone control systems with minimal coupling.
+                The widget needed to function as a "UI microservice" that could
+                be integrated into Skydio's drone control systems with minimal
+                coupling.
               </p>
             </div>
           ),
@@ -86,13 +106,22 @@ export default function SkydioPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                I built the <strong>Autonomy Widget</strong> using a config-driven architecture that maps all actions, icons, and controls declaratively—making UI parity with Figma designs effortless.
+                I built the <strong>Autonomy Widget</strong> using a
+                config-driven architecture that maps all actions, icons, and
+                controls declaratively—making UI parity with Figma designs
+                effortless.
               </p>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Config-Driven Architecture
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Central action configuration pattern enabling declarative UI:
               </p>
               <CodeBlock
@@ -118,55 +147,113 @@ const ACTION_CONFIGS = {
 <IconButton {...ACTION_CONFIGS[action]} />`}
               />
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 State Management Pattern
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 React Context Provider pattern for unified widget state:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li>Central state provider managing mission type, timer, and action states</li>
-                <li>Remote state synchronization for real-time drone updates</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  Central state provider managing mission type, timer, and
+                  action states
+                </li>
+                <li>
+                  Remote state synchronization for real-time drone updates
+                </li>
                 <li>Event subscription hooks for analytics telemetry</li>
                 <li>Config injection at runtime for dynamic UI behavior</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Component System
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Built highly composable React components:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li><strong>Dynamic Timer:</strong> Circular countdown ring with animated icon transitions</li>
-                <li><strong>OrbitSlider:</strong> Dual progress indicators with chevron controls</li>
-                <li><strong>IconButton:</strong> Shared component with icons, tooltips, and labels</li>
-                <li><strong>StatusMessage:</strong> Expandable area for mission updates</li>
-                <li><strong>Tooltip System:</strong> Custom accessible tooltips with ARIA support</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  <strong>Dynamic Timer:</strong> Circular countdown ring with
+                  animated icon transitions
+                </li>
+                <li>
+                  <strong>OrbitSlider:</strong> Dual progress indicators with
+                  chevron controls
+                </li>
+                <li>
+                  <strong>IconButton:</strong> Shared component with icons,
+                  tooltips, and labels
+                </li>
+                <li>
+                  <strong>StatusMessage:</strong> Expandable area for mission
+                  updates
+                </li>
+                <li>
+                  <strong>Tooltip System:</strong> Custom accessible tooltips
+                  with ARIA support
+                </li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Responsive Design
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Adaptive layouts using Tailwind CSS v4:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Compact mobile mode with minimal controls</li>
                 <li>Expanded desktop mode showing full action sets</li>
                 <li>Design tokens synced with Figma Variables</li>
                 <li>Responsive by default with mobile-first approach</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Storybook Documentation
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Comprehensive component playground:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Storybook 9 with Vite integration for fast builds</li>
-                <li>Accessibility addon (@storybook/addon-a11y) for WCAG testing</li>
+                <li>
+                  Accessibility addon (@storybook/addon-a11y) for WCAG testing
+                </li>
                 <li>Theme switching addon for light/dark mode validation</li>
                 <li>Component Docs tabs with prop tables and usage examples</li>
               </ul>
@@ -177,10 +264,16 @@ const ACTION_CONFIGS = {
           title: 'Technical Implementation',
           content: (
             <div className='space-y-6'>
-              <h3 className='text-2xl font-mono mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Barrel Architecture Pattern
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Modular exports for clean import paths:
               </p>
               <CodeBlock
@@ -197,39 +290,70 @@ import AutonomyWidget from '@/components/AutonomyWidget'
 import IconButton from '@/components/IconButton'`}
               />
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Figma-to-Code Workflow
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Streamlined design handoff:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Figma-exported SVG icons imported as React components</li>
-                <li>Design tokens from Figma Variables mapped to Tailwind config</li>
-                <li>Config-driven approach maintains 1:1 parity with Figma designs</li>
+                <li>
+                  Design tokens from Figma Variables mapped to Tailwind config
+                </li>
+                <li>
+                  Config-driven approach maintains 1:1 parity with Figma designs
+                </li>
                 <li>Minimal translation layer between design and code</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Integration Patterns
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Widget functions as "UI microservice":
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Remote state synchronization with drone control systems</li>
                 <li>Config injection at runtime for dynamic behavior</li>
                 <li>Event subscription hooks for analytics telemetry</li>
                 <li>Minimal coupling to external systems</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.cyan }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.yellow }}
+              >
                 Build & Tooling
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Modern development stack:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Vite for fast builds and HMR</li>
                 <li>pnpm workspace management</li>
                 <li>ESLint configuration for code quality</li>
@@ -244,30 +368,61 @@ import IconButton from '@/components/IconButton'`}
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                The Autonomy Widget established a production-grade foundation for Skydio's drone control interfaces:
+                The Autonomy Widget established a production-grade foundation
+                for Skydio's drone control interfaces:
               </p>
-              <ul className='space-y-4 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-4 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Production-ready widget system</strong> powering real-time autonomous drone missions (Waypoint, RTD, Orbit, Tracking)
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Production-ready widget system
+                  </strong>{' '}
+                  powering real-time autonomous drone missions (Waypoint, RTD,
+                  Orbit, Tracking)
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Config-driven architecture</strong> enabling effortless Figma-to-code parity through declarative ACTION_CONFIGS mapping
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Config-driven architecture
+                  </strong>{' '}
+                  enabling effortless Figma-to-code parity through declarative
+                  ACTION_CONFIGS mapping
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Storybook 9 documentation</strong> with accessibility testing, prop tables, and interactive examples for team onboarding
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Storybook 9 documentation
+                  </strong>{' '}
+                  with accessibility testing, prop tables, and interactive
+                  examples for team onboarding
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Responsive design</strong> adapting from compact mobile controls to expanded desktop interfaces
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Responsive design
+                  </strong>{' '}
+                  adapting from compact mobile controls to expanded desktop
+                  interfaces
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>UI-as-API pattern</strong> functioning as microservice with remote state sync and event hooks
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    UI-as-API pattern
+                  </strong>{' '}
+                  functioning as microservice with remote state sync and event
+                  hooks
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Team onboarding</strong> training product and engineering teams on component patterns and adoption workflows
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Team onboarding
+                  </strong>{' '}
+                  training product and engineering teams on component patterns
+                  and adoption workflows
                 </li>
               </ul>
               <p className='text-lg leading-relaxed mt-8'>
-                Delivered a composable, well-documented component library that accelerated Skydio's product development while maintaining design system consistency across their autonomous drone platform.
+                Delivered a composable, well-documented component library that
+                accelerated Skydio's product development while maintaining
+                design system consistency across their autonomous drone
+                platform.
               </p>
             </div>
           ),

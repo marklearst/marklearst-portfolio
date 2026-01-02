@@ -7,9 +7,9 @@ export default function DiabeticUtilsPage() {
   return (
     <CaseStudyLayout
       title='Diabetic Utils'
-      category='Health Tech'
-      categoryColor='orange'
-      description="TypeScript library for glucose, A1C, and Time in Range (TIR) calculations. Featured in Google AI Overview for diabetes developer tools with 100% test coverage and adopted by health tech teams."
+      category='HEALTH TECH'
+      categoryColor='pink'
+      description='TypeScript library for glucose, A1C, and Time in Range (TIR) calculations. Featured in Google AI Overview for diabetes developer tools with 100% test coverage and adopted by health tech teams.'
       role='Creator & Maintainer'
       timeline='2023 - Present'
       technologies={[
@@ -47,15 +47,18 @@ export default function DiabeticUtilsPage() {
       impact={[
         {
           metric: '100%',
-          description: 'Test coverage with Vitest ensuring clinical calculation accuracy',
+          description:
+            'Test coverage with Vitest ensuring clinical calculation accuracy',
         },
         {
           metric: 'Google AI',
-          description: 'Featured in Google AI Overview for diabetes developer tools',
+          description:
+            'Featured in Google AI Overview for diabetes developer tools',
         },
         {
           metric: 'Production',
-          description: 'Adopted by health tech teams for glucose monitoring apps',
+          description:
+            'Adopted by health tech teams for glucose monitoring apps',
         },
       ]}
       gradient='from-orange-500/20 via-yellow-500/10 to-transparent'
@@ -65,17 +68,36 @@ export default function DiabeticUtilsPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                Developers building diabetes management apps face a critical challenge: there's no standardized, tested library for glucose calculations. This creates:
+                Developers building diabetes management apps face a critical
+                challenge: there's no standardized, tested library for glucose
+                calculations. This creates:
               </p>
-              <ul className='space-y-3 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li>Teams reinventing the same glucose conversion algorithms (mg/dL ↔ mmol/L)</li>
-                <li>A1C calculation formulas copy-pasted from medical papers without validation</li>
-                <li>Time in Range (TIR) metrics implemented inconsistently across apps</li>
+              <ul
+                className='space-y-3 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  Teams reinventing the same glucose conversion algorithms
+                  (mg/dL ↔ mmol/L)
+                </li>
+                <li>
+                  A1C calculation formulas copy-pasted from medical papers
+                  without validation
+                </li>
+                <li>
+                  Time in Range (TIR) metrics implemented inconsistently across
+                  apps
+                </li>
                 <li>No type-safe APIs for glucose data structures</li>
-                <li>Clinical calculation errors that could impact patient care</li>
+                <li>
+                  Clinical calculation errors that could impact patient care
+                </li>
               </ul>
               <p className='text-lg leading-relaxed'>
-                I built GlucoseIQ (Apple Watch app) and kept rewriting the same utility functions. I realized the diabetes developer community needed a single, tested, TypeScript library for these calculations.
+                I built GlucoseIQ (Apple Watch app) and kept rewriting the same
+                utility functions. I realized the diabetes developer community
+                needed a single, tested, TypeScript library for these
+                calculations.
               </p>
             </div>
           ),
@@ -85,58 +107,172 @@ export default function DiabeticUtilsPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                <strong>Diabetic Utils</strong> is a TypeScript library providing clinical-grade calculations for glucose monitoring, A1C estimation, and Time in Range metrics.
+                <strong>Diabetic Utils</strong> is a TypeScript library
+                providing clinical-grade calculations for glucose monitoring,
+                A1C estimation, and Time in Range metrics.
               </p>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 Glucose Conversions
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Type-safe functions for converting between mg/dL and mmol/L:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.orange}20`, color: MONOKAI.orange }}>mgDlToMmolL()</code> - Convert mg/dL to mmol/L with proper rounding</li>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.orange}20`, color: MONOKAI.orange }}>mmolLToMgDl()</code> - Convert mmol/L to mg/dL</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.pink}20`,
+                      color: MONOKAI.pink,
+                    }}
+                  >
+                    mgDlToMmolL()
+                  </code>{' '}
+                  - Convert mg/dL to mmol/L with proper rounding
+                </li>
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.pink}20`,
+                      color: MONOKAI.pink,
+                    }}
+                  >
+                    mmolLToMgDl()
+                  </code>{' '}
+                  - Convert mmol/L to mg/dL
+                </li>
                 <li>Handles edge cases and validates input ranges</li>
-                <li>Uses standard conversion factor (18.0182) from clinical guidelines</li>
+                <li>
+                  Uses standard conversion factor (18.0182) from clinical
+                  guidelines
+                </li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 A1C Calculations
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                Estimated A1C (eA1C) calculation from average glucose using the ADAG formula:
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                Estimated A1C (eA1C) calculation from average glucose using the
+                ADAG formula:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.orange}20`, color: MONOKAI.orange }}>calculateA1C()</code> - Convert average glucose to estimated A1C percentage</li>
-                <li>Based on ADAG Study formula: A1C = (avg_glucose + 46.7) / 28.7</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.pink}20`,
+                      color: MONOKAI.pink,
+                    }}
+                  >
+                    calculateA1C()
+                  </code>{' '}
+                  - Convert average glucose to estimated A1C percentage
+                </li>
+                <li>
+                  Based on ADAG Study formula: A1C = (avg_glucose + 46.7) / 28.7
+                </li>
                 <li>Supports both mg/dL and mmol/L input</li>
                 <li>Returns A1C as percentage (e.g., 7.2%)</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 Time in Range (TIR)
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Calculate TIR metrics following ADA/ATTD consensus guidelines:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.orange}20`, color: MONOKAI.orange }}>calculateTIR()</code> - Percentage of readings in target range (70-180 mg/dL)</li>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.orange}20`, color: MONOKAI.orange }}>calculateTBR()</code> - Time below range (hypoglycemia detection)</li>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.orange}20`, color: MONOKAI.orange }}>calculateTAR()</code> - Time above range (hyperglycemia detection)</li>
-                <li>Configurable target ranges for personalized therapy goals</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.pink}20`,
+                      color: MONOKAI.pink,
+                    }}
+                  >
+                    calculateTIR()
+                  </code>{' '}
+                  - Percentage of readings in target range (70-180 mg/dL)
+                </li>
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.pink}20`,
+                      color: MONOKAI.pink,
+                    }}
+                  >
+                    calculateTBR()
+                  </code>{' '}
+                  - Time below range (hypoglycemia detection)
+                </li>
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.pink}20`,
+                      color: MONOKAI.pink,
+                    }}
+                  >
+                    calculateTAR()
+                  </code>{' '}
+                  - Time above range (hyperglycemia detection)
+                </li>
+                <li>
+                  Configurable target ranges for personalized therapy goals
+                </li>
                 <li>Handles missing data and validates reading counts</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 100% Test Coverage
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Comprehensive test suite with Vitest covering:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>All calculation formulas against known medical values</li>
-                <li>Edge cases: boundary values, negative numbers, zero handling</li>
+                <li>
+                  Edge cases: boundary values, negative numbers, zero handling
+                </li>
                 <li>Input validation and error handling</li>
                 <li>Precision and rounding behavior</li>
               </ul>
@@ -147,52 +283,88 @@ export default function DiabeticUtilsPage() {
           title: 'Technical Implementation',
           content: (
             <div className='space-y-6'>
-              <h3 className='text-2xl font-mono mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 TypeScript-First Design
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Built with TypeScript for type safety:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Strongly typed glucose reading objects</li>
                 <li>Enum types for units (mg/dL, mmol/L)</li>
                 <li>Generic functions supporting both unit systems</li>
                 <li>Full IntelliSense support in IDEs</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 Clinical Accuracy
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Formulas validated against clinical sources:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>A1C calculation uses ADAG Study consensus formula</li>
                 <li>TIR ranges follow ADA/ATTD 2019 guidelines</li>
                 <li>Conversion factors match international standards</li>
                 <li>Test cases derived from published medical examples</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 Developer Experience
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Designed for ease of use:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Zero dependencies - pure TypeScript implementation</li>
                 <li>Tree-shakeable exports for minimal bundle size</li>
                 <li>Comprehensive JSDoc documentation</li>
                 <li>Published on npm with semantic versioning</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.orange }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.pink }}
+              >
                 Use Cases
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Powers glucose monitoring features in:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>CGM (Continuous Glucose Monitor) companion apps</li>
                 <li>Diabetes management dashboards</li>
                 <li>Apple Watch and wearable health apps (like GlucoseIQ)</li>
@@ -207,30 +379,59 @@ export default function DiabeticUtilsPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                Diabetic Utils fills a critical gap in the health tech developer ecosystem:
+                Diabetic Utils fills a critical gap in the health tech developer
+                ecosystem:
               </p>
-              <ul className='space-y-4 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-4 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Featured in Google AI Overview</strong> for diabetes developer tools—recognized as a go-to resource for glucose calculations
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Featured in Google AI Overview
+                  </strong>{' '}
+                  for diabetes developer tools—recognized as a go-to resource
+                  for glucose calculations
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Adopted by health tech teams</strong> building production CGM apps and diabetes management platforms
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Adopted by health tech teams
+                  </strong>{' '}
+                  building production CGM apps and diabetes management platforms
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>100% test coverage</strong> ensures clinical calculation accuracy, critical for patient-facing applications
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    100% test coverage
+                  </strong>{' '}
+                  ensures clinical calculation accuracy, critical for
+                  patient-facing applications
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Type-safe API</strong> prevents unit confusion bugs (mg/dL vs mmol/L) that plague glucose apps
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Type-safe API
+                  </strong>{' '}
+                  prevents unit confusion bugs (mg/dL vs mmol/L) that plague
+                  glucose apps
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Open-source contribution</strong> to the diabetes developer community, reducing duplicated effort
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Open-source contribution
+                  </strong>{' '}
+                  to the diabetes developer community, reducing duplicated
+                  effort
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Zero dependencies</strong> makes it safe to adopt in production health apps with strict security requirements
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Zero dependencies
+                  </strong>{' '}
+                  makes it safe to adopt in production health apps with strict
+                  security requirements
                 </li>
               </ul>
               <p className='text-lg leading-relaxed mt-8'>
-                The library is actively maintained on npm and serves as the calculation engine for GlucoseIQ (Apple Watch app) and other health tech projects.
+                The library is actively maintained on npm and serves as the
+                calculation engine for GlucoseIQ (Apple Watch app) and other
+                health tech projects.
               </p>
             </div>
           ),
