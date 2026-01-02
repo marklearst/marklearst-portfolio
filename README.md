@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mark Learst Portfolio
+
+Personal portfolio site built with Next.js showcasing my work as a senior frontend engineer. Features terminal-style navigation transitions, custom animations, and detailed case studies of projects I've built.
+
+## Tech Stack
+
+- Next.js 16 with App Router
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- GSAP for animations
+- Three.js for 3D elements
+- Zustand for state management
+- Lenis for smooth scrolling
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                    # Next.js app router pages
+│   ├── work/              # Case study pages
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx          # Home page
+├── components/            # React components
+│   ├── brand/            # Branding components (logo, particles)
+│   ├── transitions/      # Terminal-style navigation transitions
+│   └── ui/               # UI components (cursor, neural network, etc.)
+├── lib/                   # Utilities and helpers
+│   ├── terminal-*.ts     # Terminal animation utilities
+│   └── monokai-colors.ts  # Color system
+└── hooks/                 # Custom React hooks
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Terminal-style navigation transitions that mimic command-line interactions when navigating between pages. Custom particle systems, neural network background, and cursor trail effects. All animations are optimized for performance with centralized timing controls.
 
-## Deploy on Vercel
+The site includes detailed case studies for projects like Aurora Design System at GM, FigmaVars Hooks, a11y Companion, and others. Each case study includes code examples, technical details, and outcomes.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm build
+```
+
+## Development Notes
+
+The site uses a Monokai-inspired color scheme throughout. Terminal animations are controlled via centralized timing utilities in `src/lib/terminal-timing.ts`. All components are built with accessibility in mind, following WCAG guidelines.
+
+Font loading uses MonoLisa for monospaced text and system fonts for body copy. The site is fully responsive and optimized for performance.
