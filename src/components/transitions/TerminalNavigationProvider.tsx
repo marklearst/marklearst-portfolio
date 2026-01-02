@@ -37,12 +37,16 @@ export default function TerminalNavigationProvider({
   useEffect(() => {
     if (pathname !== previousPathRef.current) {
       previousPathRef.current = pathname
-      // Small delay to let new page render before revealing
+
+      // Only complete transition after enough time for animation to finish
+      // If transition is active, wait longer for terminal animation to complete
+      const delay = isTransitioning ? 1200 : 100
+
       setTimeout(() => {
         completeTransition()
-      }, 100)
+      }, delay)
     }
-  }, [pathname, completeTransition])
+  }, [pathname, isTransitioning, completeTransition])
 
   const handleComplete = () => {
     // Only trigger navigation, don't complete transition yet
