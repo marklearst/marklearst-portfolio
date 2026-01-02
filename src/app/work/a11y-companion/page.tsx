@@ -7,7 +7,7 @@ export default function A11yCompanionPage() {
   return (
     <CaseStudyLayout
       title='a11y Companion'
-      category='Accessibility'
+      category='ACCESSIBILITY'
       categoryColor='green'
       description='Figma widget bringing The A11Y Project Checklist into design workflows. 200+ active users across design teams with WCAG 2.2 tooltips, progress tracking, bulk actions, and MD/HTML/JSON export capabilities.'
       role='Creator & Maintainer'
