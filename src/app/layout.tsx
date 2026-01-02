@@ -3,7 +3,6 @@ import './globals.css'
 import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
 import ParticleHeader from '@/components/brand/ParticleHeader'
 import CursorOrbs from '@/components/ui/CursorOrbs'
-import CursorGlow from '@/components/ui/CursorGlow'
 import KonamiCode from '@/components/ui/KonamiCode'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import SmoothScrollProvider from '@/components/SmoothScrollProvider'
@@ -50,9 +49,6 @@ export default function RootLayout({
         <header className='fixed top-8 left-8 z-40'>
           <ParticleHeader />
         </header>
-
-        {/* Subtle ambient cursor glow - premium lighting effect */}
-        <CursorGlow />
 
         {/* Monokai cursor orbs - premium cursor trail */}
         <CursorOrbs />
