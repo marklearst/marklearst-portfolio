@@ -28,6 +28,11 @@ export default function TerminalTransition({
   const packagesRef = useRef<HTMLDivElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
   const outputRef = useRef<HTMLDivElement>(null)
+  const onCompleteRef = useRef(onComplete)
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete
+  }, [onComplete])
 
   // Derive command from targetRoute using useMemo (no state needed)
   const command = useMemo(() => {
@@ -125,7 +130,7 @@ export default function TerminalTransition({
 
     // 8. Trigger navigation while overlay is still visible
     master.call(() => {
-      if (onComplete) onComplete()
+      if (onCompleteRef.current) onCompleteRef.current()
     })
 
     // 9. Keep overlay visible a bit longer for smooth transition
@@ -134,7 +139,7 @@ export default function TerminalTransition({
     return () => {
       master.kill()
     }
-  }, [command, isActive, targetRoute, onComplete])
+  }, [command, isActive, targetRoute])
 
   if (!isActive) return null
 
