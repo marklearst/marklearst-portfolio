@@ -346,8 +346,9 @@ export default function CaseStudyLayout({
                     impactRefs.current[index] = node
                   }}
                 >
+                  {/* was text-[clamp(32px,5vw,48px)] */}
                   <div
-                    className='text-[clamp(32px,5vw,48px)] font-mono font-bold mb-3'
+                    className='text-[clamp(28px,4vw,42px)] font-mono font-bold mb-3'
                     style={{ color: categoryTone }}
                   >
                     {item.metric}
