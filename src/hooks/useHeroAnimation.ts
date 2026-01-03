@@ -4,8 +4,8 @@ import { useEffect, type RefObject } from 'react'
 import { gsap } from 'gsap'
 
 export function useHeroAnimation(
-  heroRef: RefObject<HTMLElement>,
-  nameBoxRef: RefObject<HTMLElement>,
+  heroRef: RefObject<HTMLElement | null>,
+  nameBoxRef: RefObject<HTMLElement | null>,
 ) {
   useEffect(() => {
     const ctx = gsap.context(() => {
