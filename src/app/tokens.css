@@ -1,0 +1,49 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --token-color-base-black: 11 11 14;
+  --token-color-base-white: 255 255 255;
+  --token-color-base-smoke: 20 20 24;
+  --token-color-monokai-pink: 255 97 136;
+  --token-color-monokai-orange: 251 152 102;
+  --token-color-monokai-yellow: 255 216 102;
+  --token-color-monokai-green: 169 220 117;
+  --token-color-monokai-cyan: 120 220 232;
+  --token-color-monokai-purple: 171 157 242;
+  --token-color-monokai-background: 35 31 34;
+  --token-color-monokai-background-alt: 46 42 46;
+  --token-color-monokai-foreground: 252 252 250;
+  --token-color-canvas: 11 11 14;
+  --token-color-surface: 20 20 24;
+  --token-color-ink-primary: 255 255 255;
+  --token-color-ink-muted: 255 255 255 / 0.6;
+  --token-color-accent-primary: 120 220 232;
+  --token-color-accent-secondary: 171 157 242;
+  --token-color-accent-success: 169 220 117;
+  --token-color-accent-danger: 255 97 136;
+  --token-color-border-subtle: 255 255 255 / 0.08;
+  --token-font-mono: MonoLisa, "SF Mono", Consolas, monospace;
+  --token-font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --token-font-serif: ui-serif, Georgia, serif;
+  --token-font-body: MonoLisa, "SF Mono", Consolas, monospace;
+  --token-font-display: MonoLisa, "SF Mono", Consolas, monospace;
+  --token-font-ui: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --token-space-xs: 4px;
+  --token-space-sm: 8px;
+  --token-space-md: 16px;
+  --token-space-lg: 24px;
+  --token-space-xl: 32px;
+  --token-space-2xl: 48px;
+  --token-radius-soft: 6px;
+  --token-radius-card: 12px;
+  --token-radius-pill: 999px;
+  --token-component-terminal-background: 35 31 34;
+  --token-component-terminal-foreground: 252 252 250;
+  --token-component-terminal-accent: 120 220 232;
+  --token-component-terminal-success: 169 220 117;
+  --token-component-terminal-error: 255 97 136;
+  --token-component-card-border: 255 255 255 / 0.08;
+  --token-component-card-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
