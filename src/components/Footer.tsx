@@ -156,11 +156,11 @@ export default function Footer() {
       <div className='max-w-7xl mx-auto relative z-10'>
         <div className='footer-content grid md:grid-cols-2 gap-12 mb-16'>
           {/* Brand */}
-          <div>
+          <div className='md:pr-3'>
             <h3 className='text-3xl font-mono lowercase mb-4 tracking-tight'>
               marklearst
             </h3>
-            <p className='text-white/50 text-sm leading-relaxed mb-6 max-w-md font-mono'>
+            <p className='text-white/50 text-sm leading-relaxed mb-6 font-mono whitespace-normal break-normal text-balance'>
               I architect design systems, build developer tools designers
               actually want to use, and ship open-source that solves real
               problems.
@@ -168,7 +168,7 @@ export default function Footer() {
             <div className='inline-block px-3 py-1.5 bg-white/5 border border-white/10 rounded-full'>
               <div className='flex items-center gap-2'>
                 <div className='w-2 h-2 bg-green-400 rounded-full animate-pulse' />
-                <span className='font-mono text-xs text-white/50'>
+                <span className='font-mono text-xs text-white/60'>
                   Available for Remote full-time roles
                 </span>
               </div>

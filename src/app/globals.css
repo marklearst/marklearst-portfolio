@@ -124,6 +124,7 @@ a:focus-visible {
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 /* Prevent scroll restoration jump */
@@ -131,6 +132,15 @@ html,
 body {
   scroll-behavior: auto;
   overflow-x: hidden;
+}
+
+html[data-transitioning='true'],
+body[data-transitioning='true'] {
+  overflow: hidden;
+}
+
+html[data-transitioning='true'] {
+  padding-right: var(--transition-scrollbar-width, 0px);
 }
 
 /* Custom selection */
