@@ -64,9 +64,9 @@ export function useHeroAnimation(
       )
 
       // Background keywords - FLOATING IN NEURAL SPACE (slower for smooth line following)
-      const keywords = gsap.utils.toArray<HTMLElement>('.bg-keyword')
+      const keywordElements = gsap.utils.toArray<HTMLElement>('.bg-keyword')
 
-      keywords.forEach((el) => {
+      keywordElements.forEach((el) => {
         // Gentle floating motion - slower so lines can follow smoothly
         const driftX = gsap.utils.random(15, 30)
         const driftY = gsap.utils.random(10, 25)
