@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, ReactNode } from 'react'
+import { useRef, ReactNode } from 'react'
 import { gsap } from 'gsap'
 
 interface MagneticWrapperProps {
@@ -15,7 +15,6 @@ export default function MagneticWrapper({
   className = '',
 }: MagneticWrapperProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const [isHovering, setIsHovering] = useState(false)
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return
@@ -35,12 +34,7 @@ export default function MagneticWrapper({
     })
   }
 
-  const handleMouseEnter = () => {
-    setIsHovering(true)
-  }
-
   const handleMouseLeave = () => {
-    setIsHovering(false)
     if (!ref.current) return
 
     gsap.to(ref.current, {
@@ -56,7 +50,6 @@ export default function MagneticWrapper({
       ref={ref}
       className={className}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ display: 'inline-block' }}
     >
