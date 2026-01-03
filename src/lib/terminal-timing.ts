@@ -38,7 +38,7 @@ export const DURATION = {
   loadingFadeIn: timing(0.3), // seconds
 
   // Route-specific durations
-  homeRoute: timing(1000), // milliseconds
+  homeRoute: timing(1200), // milliseconds
   workRoute: timing(1200), // milliseconds
   workRouteWithPackages: timing(1500), // milliseconds
   blogRoute: timing(1000), // milliseconds
