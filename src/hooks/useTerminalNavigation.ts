@@ -135,6 +135,7 @@ export function useTerminalNavigation() {
     const handlePopState = () => {
       // Get the current path after popstate
       const currentPath = normalizePathname(window.location.pathname)
+      if (isTransitioningRef.current) return
 
       // Trigger terminal transition for back/forward navigation
       startTransitionRef.current(currentPath, () => {
