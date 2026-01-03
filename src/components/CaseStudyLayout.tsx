@@ -3,128 +3,13 @@
 import { useEffect, useRef, ReactNode } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
+import { getCategoryColor, getCategoryIcon } from '@/lib/project-categories'
 import { MONOKAI } from '@/lib/monokai-colors'
 import Link from 'next/link'
 import Footer from './Footer'
 
 gsap.registerPlugin(ScrollTrigger)
-
-// Category icon helper - matches FeaturedWork icons
-const getCategoryIcon = (category: string) => {
-  const iconStyle = { width: '14px', height: '14px' }
-
-  switch (category) {
-    case 'Design Systems':
-    case 'DESIGN SYSTEMS':
-      return (
-        <svg
-          style={iconStyle}
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z'
-          />
-        </svg>
-      )
-    case 'Developer Tools':
-    case 'DEVELOPER TOOLS':
-      return (
-        <svg
-          style={iconStyle}
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'
-          />
-        </svg>
-      )
-    case 'Accessibility':
-    case 'ACCESSIBILITY':
-      return (
-        <svg
-          style={iconStyle}
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-          />
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-          />
-        </svg>
-      )
-    case 'Health Tech':
-    case 'HEALTH TECH':
-      return (
-        <svg
-          style={iconStyle}
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
-          />
-        </svg>
-      )
-    case 'Standards':
-    case 'STANDARDS':
-      return (
-        <svg
-          style={iconStyle}
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-          />
-        </svg>
-      )
-    case 'Consulting':
-    case 'CONSULTING':
-      return (
-        <svg
-          style={iconStyle}
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke='currentColor'
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-          />
-        </svg>
-      )
-    default:
-      return null
-  }
-}
 
 interface CaseStudySection {
   title: string
@@ -133,8 +18,8 @@ interface CaseStudySection {
 
 interface CaseStudyLayoutProps {
   title: string
-  category: string
-  categoryColor: 'pink' | 'orange' | 'yellow' | 'green' | 'cyan' | 'purple'
+  category: ProjectCategory
+  categoryColor: ProjectCategoryColor
   description: string
   role: string
   timeline: string
@@ -160,6 +45,7 @@ export default function CaseStudyLayout({
 }: CaseStudyLayoutProps) {
   const pageRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLElement>(null)
+  const categoryTone = getCategoryColor(categoryColor)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -256,12 +142,12 @@ export default function CaseStudyLayout({
 
           {/* Category */}
           <div className='case-study-category flex items-center gap-3 mb-6 opacity-0'>
-            <div style={{ color: MONOKAI[categoryColor] }}>
+            <div style={{ color: categoryTone }}>
               {getCategoryIcon(category)}
             </div>
             <span
               className='text-xs font-mono uppercase tracking-wider'
-              style={{ color: MONOKAI[categoryColor] }}
+              style={{ color: categoryTone }}
             >
               {category}
             </span>
@@ -328,8 +214,8 @@ export default function CaseStudyLayout({
                     key={tech}
                     className='px-2 py-1 text-xs font-mono rounded'
                     style={{
-                      backgroundColor: `${MONOKAI[categoryColor]}20`,
-                      color: MONOKAI[categoryColor],
+                      backgroundColor: `${categoryTone}20`,
+                      color: categoryTone,
                     }}
                   >
                     {tech}
@@ -353,9 +239,9 @@ export default function CaseStudyLayout({
                     rel={isDisabled ? undefined : 'noopener noreferrer'}
                     className='inline-flex items-center gap-2 px-4 py-2 font-mono text-sm rounded-lg transition-all duration-300'
                     style={{
-                      backgroundColor: `${MONOKAI[categoryColor]}20`,
-                      color: MONOKAI[categoryColor],
-                      border: `1px solid ${MONOKAI[categoryColor]}40`,
+                      backgroundColor: `${categoryTone}20`,
+                      color: categoryTone,
+                      border: `1px solid ${categoryTone}40`,
                       opacity: isDisabled ? 0.5 : 1,
                       cursor: isDisabled ? 'not-allowed' : 'pointer',
                       transform: isDisabled ? 'none' : undefined,
@@ -408,7 +294,7 @@ export default function CaseStudyLayout({
                 <div key={index} className='case-study-section'>
                   <div
                     className='text-[clamp(32px,5vw,48px)] font-mono font-bold mb-3'
-                    style={{ color: MONOKAI[categoryColor] }}
+                    style={{ color: categoryTone }}
                   >
                     {item.metric}
                   </div>
