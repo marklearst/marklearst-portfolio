@@ -58,7 +58,8 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
   '/': {
     route: '/',
     command: formatCommand('whoami'),
-    output: 'marklearst',
+    loading: 'Resolving identity...',
+    output: formatOutput('marklearst', true),
     packages: ['Senior Frontend Engineer'],
     duration: DURATION.homeRoute,
     color: MONOKAI.cyan,
