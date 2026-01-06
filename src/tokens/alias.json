@@ -1,24 +1,54 @@
 {
   "color": {
-    "canvas": { "$type": "color", "$value": { "$ref": "color.base.black" } },
-    "surface": { "$type": "color", "$value": { "$ref": "color.base.smoke" } },
+    "canvas": {
+      "$type": "color",
+      "$value": {
+        "dark": "{color.base.black}",
+        "light": { "r": 248, "g": 248, "b": 242 }
+      }
+    },
+    "surface": {
+      "$type": "color",
+      "$value": {
+        "dark": "{color.base.smoke}",
+        "light": { "r": 255, "g": 255, "b": 255 }
+      }
+    },
     "ink": {
-      "primary": { "$type": "color", "$value": { "$ref": "color.base.white" } },
-      "muted": { "$type": "color", "$value": "rgba(255, 255, 255, 0.6)" }
+      "primary": {
+        "$type": "color",
+        "$value": {
+          "dark": "{color.base.white}",
+          "light": "{color.base.black}"
+        }
+      },
+      "muted": {
+        "$type": "color",
+        "$value": {
+          "dark": { "r": 255, "g": 255, "b": 255, "alpha": 0.6 },
+          "light": { "r": 11, "g": 11, "b": 14, "alpha": 0.6 }
+        }
+      }
     },
     "accent": {
-      "primary": { "$type": "color", "$value": { "$ref": "color.monokai.cyan" } },
-      "secondary": { "$type": "color", "$value": { "$ref": "color.monokai.purple" } },
-      "success": { "$type": "color", "$value": { "$ref": "color.monokai.green" } },
-      "danger": { "$type": "color", "$value": { "$ref": "color.monokai.pink" } }
+      "primary": { "$type": "color", "$value": "{color.monokai.cyan}" },
+      "secondary": { "$type": "color", "$value": "{color.monokai.purple}" },
+      "success": { "$type": "color", "$value": "{color.monokai.green}" },
+      "danger": { "$type": "color", "$value": "{color.monokai.pink}" }
     },
     "border": {
-      "subtle": { "$type": "color", "$value": "rgba(255, 255, 255, 0.08)" }
+      "subtle": {
+        "$type": "color",
+        "$value": {
+          "dark": { "r": 255, "g": 255, "b": 255, "alpha": 0.08 },
+          "light": { "r": 11, "g": 11, "b": 14, "alpha": 0.08 }
+        }
+      }
     }
   },
   "font": {
-    "body": { "$type": "fontFamily", "$value": { "$ref": "font.mono" } },
-    "display": { "$type": "fontFamily", "$value": { "$ref": "font.mono" } },
-    "ui": { "$type": "fontFamily", "$value": { "$ref": "font.sans" } }
+    "body": { "$type": "fontFamily", "$value": "{font.mono}" },
+    "display": { "$type": "fontFamily", "$value": "{font.mono}" },
+    "ui": { "$type": "fontFamily", "$value": "{font.sans}" }
   }
 }
