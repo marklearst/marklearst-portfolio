@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "tokens:build": "node scripts/build-tokens-sd.mjs"
+    "tokens:build": "node scripts/build-tokens-sd.mjs",
+    "tokens:validate": "node scripts/validate-tokens.mjs"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
@@ -26,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "ajv": "^8.17.1",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
