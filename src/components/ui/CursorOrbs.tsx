@@ -34,6 +34,7 @@ const TRAIL_SPEED_DECAY = 0.016 // Speed reduction per orb
 
 export default function CursorOrbs() {
   const [hasInteracted, setHasInteracted] = useState(false)
+  const [isEnabled, setIsEnabled] = useState(false)
   const orbsRef = useRef<OrbState[]>([])
   const orbElementsRef = useRef<(HTMLDivElement | null)[]>([])
   const mousePosRef = useRef({ x: 0, y: 0 })
@@ -45,6 +46,27 @@ export default function CursorOrbs() {
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
+    const updateEnabled = () => {
+      if (typeof window === 'undefined') return
+      const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches
+      const isFinePointer = window.matchMedia('(pointer: fine)').matches
+      const isHoverCapable = window.matchMedia('(hover: hover)').matches
+      setIsEnabled(isLargeScreen && isFinePointer && isHoverCapable)
+    }
+
+    updateEnabled()
+
+    window.addEventListener('resize', updateEnabled)
+    return () => {
+      window.removeEventListener('resize', updateEnabled)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isEnabled) {
+      setHasInteracted(false)
+      return
+    }
     if (typeof window === 'undefined') return
     const startX = window.innerWidth / 2
     const startY = window.innerHeight / 2
@@ -57,10 +79,11 @@ export default function CursorOrbs() {
     }))
     mousePosRef.current = { x: startX, y: startY }
     lastMousePosRef.current = { x: startX, y: startY }
-  }, [])
+  }, [isEnabled])
 
   // Handle mouse movement
   useEffect(() => {
+    if (!isEnabled) return
     const handleMouseMove = (e: MouseEvent) => {
       const newPos = { x: e.clientX, y: e.clientY }
 
@@ -109,10 +132,11 @@ export default function CursorOrbs() {
       if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current)
       if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current)
     }
-  }, [hasInteracted])
+  }, [hasInteracted, isEnabled])
 
   // Animation loop
   useEffect(() => {
+    if (!isEnabled) return
     if (!hasInteracted) return
     const animate = () => {
       const orbs = orbsRef.current
@@ -172,9 +196,9 @@ export default function CursorOrbs() {
         cancelAnimationFrame(rafRef.current)
       }
     }
-  }, [hasInteracted])
+  }, [hasInteracted, isEnabled])
 
-  if (!hasInteracted) return null
+  if (!isEnabled || !hasInteracted) return null
 
   return (
     <div

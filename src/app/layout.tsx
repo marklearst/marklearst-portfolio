@@ -17,7 +17,11 @@ export const metadata: Metadata = {
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon.ico', sizes: 'any' },
     ],
-    apple: { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    apple: {
+      url: '/apple-touch-icon.png',
+      sizes: '180x180',
+      type: 'image/png',
+    },
   },
   manifest: '/site.webmanifest',
 }
@@ -46,7 +50,7 @@ export default function RootLayout({
         <ScrollProgress />
 
         {/* Header with ML logo */}
-        <header className='fixed top-8 left-8 z-40'>
+        <header className='fixed top-8 left-8 z-40 flex items-center gap-4'>
           <ParticleHeader />
         </header>
 
