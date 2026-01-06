@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import './theme.css';
 @import './tokens.css';
+@import './tokens.light.css';
 @import './monolisa.css';
 
 /* Base styles */
@@ -100,6 +101,18 @@ a:focus-visible {
 
 .animate-gradient-x {
   animation: gradient-x 8s ease infinite;
+}
+
+@keyframes keyword-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1279px) {
+  .bg-keyword {
+    animation: keyword-fade 1.8s ease 0.6s forwards;
+  }
 }
 
 /* Button ripple effect */
