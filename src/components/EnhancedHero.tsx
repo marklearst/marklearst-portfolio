@@ -16,7 +16,7 @@ const getServerSnapshot = () => false
 export default function EnhancedHero() {
   const { trackHeroCTAClick, trackExternalLinkClick, getPlatformFromUrl } =
     useAnalytics()
-  const heroRef = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement | null>(null)
   const nameBoxRef = useRef<HTMLDivElement>(null)
 
   const isClient = useSyncExternalStore(
@@ -25,7 +25,7 @@ export default function EnhancedHero() {
     getServerSnapshot,
   )
 
-  useHeroAnimation(heroRef, nameBoxRef)
+  useHeroAnimation(heroRef as React.RefObject<HTMLDivElement>, nameBoxRef)
 
   return (
     <section
@@ -206,7 +206,7 @@ export default function EnhancedHero() {
             onClick={() => {
               trackExternalLinkClick({
                 platform: getPlatformFromUrl('https://github.com/marklearst'),
-                url: 'https://github.com/marklearst',
+                href: 'https://github.com/marklearst',
                 location: 'hero',
               })
             }}

@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import React from 'react'
 import Image from 'next/image'
+import { useSectionViewTracking } from '@/hooks/useAnalytics'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -43,6 +44,12 @@ const testimonials: Testimonial[] = [
 export default function Testimonials() {
   const sectionRef = useRef<HTMLElement>(null)
   const testimonialRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  useSectionViewTracking({
+    ref: sectionRef,
+    section: 'testimonials',
+    data: { location: 'home' },
+  })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -147,7 +154,7 @@ export default function Testimonials() {
         <div className='space-y-16'>
           {testimonials.map((testimonial, index) => (
             <TestimonialCard
-              key={index}
+              key={testimonial.author}
               testimonial={testimonial}
               ref={(el) => {
                 testimonialRefs.current[index] = el

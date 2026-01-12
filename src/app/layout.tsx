@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Analytics } from '@vercel/analytics/next'
+import { Analytics, type BeforeSendEvent } from '@vercel/analytics/next'
 import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
 import ParticleHeader from '@/components/brand/ParticleHeader'
 import CursorOrbs from '@/components/ui/CursorOrbs'
@@ -9,6 +9,28 @@ import ScrollProgress from '@/components/ui/ScrollProgress'
 import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
 import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
+import AnalyticsManager from '@/components/AnalyticsManager'
+
+const redactUrlParams = (rawUrl: string) => {
+  try {
+    const base =
+      typeof window === 'undefined' ? 'https://example.com' : window.location.origin
+    const url = new URL(rawUrl, base)
+    const sensitiveParams = [
+      'token',
+      'auth',
+      'session',
+      'secret',
+      'code',
+      'key',
+      'email',
+    ]
+    sensitiveParams.forEach((param) => url.searchParams.delete(param))
+    return url.toString()
+  } catch {
+    return rawUrl
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Mark Learst - Senior Frontend Engineer',
@@ -69,9 +91,25 @@ export default function RootLayout({
           </SmoothScrollProvider>
           <FigmaVarsDebug />
         </FigmaVarsContextProvider>
+        <AnalyticsManager />
         <Analytics
-        // Automatically enabled in production
-        // debug={process.env.NODE_ENV === 'development'}
+          beforeSend={(event: BeforeSendEvent) => {
+            if (
+              typeof window !== 'undefined' &&
+              localStorage.getItem('va-disable')
+            ) {
+              return null
+            }
+
+            const sanitizedUrl = redactUrlParams(event.url)
+            if (sanitizedUrl !== event.url) {
+              return { ...event, url: sanitizedUrl }
+            }
+
+            return event
+          }}
+          // Automatically enabled in production
+          // debug={process.env.NODE_ENV === 'development'}
         />
       </body>
     </html>

@@ -13,13 +13,14 @@ export default function Home() {
   useEffect(() => {
     // Only handle hash-based navigation, let browser restore scroll position otherwise
     const hash = window.location.hash.slice(1)
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null
     if (hash) {
       trackHashNavigation({
         hash,
-        source: window.location.hash ? 'direct_link' : 'scroll',
+        source: 'initial_load',
       })
       // Small delay to ensure DOM is ready
-      setTimeout(() => {
+      scrollTimeout = setTimeout(() => {
         const element = document.getElementById(hash)
         if (element) {
           element.scrollIntoView({ behavior: 'instant' })
@@ -27,17 +28,40 @@ export default function Home() {
       }, 100)
     }
     // Browser will automatically restore scroll position on refresh
+    return () => {
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
+    }
+  }, [trackHashNavigation])
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const nextHash = window.location.hash.slice(1)
+      if (!nextHash) return
+      trackHashNavigation({
+        hash: nextHash,
+        source: 'hash_change',
+      })
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
   }, [trackHashNavigation])
 
   // Smart hash clearing - remove hash when user scrolls away from target section
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    let scrollTimeout: NodeJS.Timeout
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null
     let hasCleared = false
 
     const clearHashOnScroll = () => {
-      clearTimeout(scrollTimeout)
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
 
       scrollTimeout = setTimeout(() => {
         const hash = window.location.hash
@@ -64,7 +88,9 @@ export default function Home() {
 
     return () => {
       clearTimeout(activationTimer)
-      clearTimeout(scrollTimeout)
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
       window.removeEventListener('scroll', clearHashOnScroll)
     }
   }, [])

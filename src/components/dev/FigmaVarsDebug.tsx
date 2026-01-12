@@ -4,8 +4,7 @@ import { useEffect, useRef } from 'react'
 import { useVariables } from '@figma-vars/hooks'
 
 export default function FigmaVarsDebug() {
-  if (process.env.NODE_ENV === 'production') return null
-
+  const isDev = process.env.NODE_ENV !== 'production'
   const { data, error, isLoading } = useVariables()
 
   const collectionCount = data?.meta
@@ -16,8 +15,8 @@ export default function FigmaVarsDebug() {
   const status = isLoading
     ? 'loading'
     : error
-      ? 'error'
-      : `${collectionCount} collections / ${variableCount} variables`
+    ? 'error'
+    : `${collectionCount} collections / ${variableCount} variables`
 
   const lastStatusRef = useRef<string | null>(null)
 
@@ -26,6 +25,8 @@ export default function FigmaVarsDebug() {
     lastStatusRef.current = status
     console.log('[figma-vars]', status)
   }, [status])
+
+  if (!isDev) return null
 
   return (
     <div className='fixed bottom-4 left-4 z-50 rounded-md border border-white/10 bg-black/60 px-3 py-2 text-[11px] font-mono text-white/60 backdrop-blur'>

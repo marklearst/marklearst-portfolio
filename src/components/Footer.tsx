@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MONOKAI } from '@/lib/monokai-colors'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -30,7 +30,7 @@ function SocialLink({ link }: { link: SocialLinkData }) {
       onClick={() => {
         trackSocialLinkClick({
           platform,
-          url: link.href,
+          href: link.href,
         })
       }}
       className='footer-link group flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 hover:scale-105'
@@ -60,9 +60,16 @@ function SocialLink({ link }: { link: SocialLinkData }) {
 }
 
 export default function Footer() {
-  const footerRef = useRef<HTMLElement>(null)
+  const footerRef = useRef<HTMLElement | null>(null)
+
+  useSectionViewTracking({
+    ref: footerRef as React.RefObject<HTMLElement>,
+    section: 'footer',
+    data: { location: 'global' },
+  })
 
   useEffect(() => {
+    let fallbackTimeout: ReturnType<typeof setTimeout> | null = null
     const ctx = gsap.context(() => {
       // Set initial state explicitly, then animate
       gsap.set('.footer-content', { opacity: 0, y: 40 })
@@ -94,7 +101,7 @@ export default function Footer() {
       })
 
       // Fallback: ensure visibility after a delay in case ScrollTrigger doesn't fire
-      setTimeout(() => {
+      fallbackTimeout = setTimeout(() => {
         gsap.to('.footer-content', { opacity: 1, y: 0, duration: 0.5 })
         gsap.to('.footer-link', {
           opacity: 1,
@@ -105,7 +112,12 @@ export default function Footer() {
       }, 2000)
     }, footerRef)
 
-    return () => ctx.revert()
+    return () => {
+      if (fallbackTimeout) {
+        clearTimeout(fallbackTimeout)
+      }
+      ctx.revert()
+    }
   }, [])
 
   const socialLinks = [
