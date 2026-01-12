@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 const STORAGE_KEY = 'theme-preference'
 
@@ -23,6 +24,7 @@ const getStoredTheme = (): 'dark' | 'light' | null => {
 }
 
 export default function ThemeToggle() {
+  const { trackThemeToggle } = useAnalytics()
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const [ready, setReady] = useState(false)
 
@@ -49,7 +51,10 @@ export default function ThemeToggle() {
   return (
     <button
       type='button'
-      onClick={() => setTheme(nextTheme)}
+      onClick={() => {
+        trackThemeToggle({ from: theme, to: nextTheme })
+        setTheme(nextTheme)
+      }}
       aria-pressed={theme === 'light'}
       aria-label={`Switch to ${nextTheme} theme`}
       className='inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-mono uppercase tracking-wide text-white/70 transition hover:bg-white/10 hover:text-white'
