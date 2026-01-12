@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -15,11 +16,23 @@ interface SocialLinkData {
 }
 
 function SocialLink({ link }: { link: SocialLinkData }) {
+  const { trackSocialLinkClick, getPlatformFromUrl } = useAnalytics()
+  const platform = getPlatformFromUrl(link.href) as
+    | 'github'
+    | 'linkedin'
+    | 'email'
+
   return (
     <a
       href={link.href}
       target='_blank'
       rel='noopener noreferrer'
+      onClick={() => {
+        trackSocialLinkClick({
+          platform,
+          url: link.href,
+        })
+      }}
       className='footer-link group flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 hover:scale-105'
       style={{
         backgroundColor: `${link.color}10`,
