@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
 import ParticleHeader from '@/components/brand/ParticleHeader'
@@ -68,6 +69,8 @@ export default function RootLayout({
           </SmoothScrollProvider>
           <FigmaVarsDebug />
         </FigmaVarsContextProvider>
+
+        <Analytics />
       </body>
     </html>
   )
