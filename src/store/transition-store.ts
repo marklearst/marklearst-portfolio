@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { trackTerminalTransition } from '@/lib/analytics'
 
 type TransitionPhase = 'idle' | 'animating' | 'navigating'
 
@@ -36,6 +37,11 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
           route,
         })
       }
+      trackTerminalTransition({
+        event: 'start',
+        route,
+        transitionKey: nextKey,
+      })
       return {
         isTransitioning: true,
         phase: 'animating',
@@ -48,7 +54,7 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
   },
 
   triggerNavigation: (key) => {
-    const { onNavigate, transitionKey, phase } = get()
+    const { onNavigate, transitionKey, phase, targetRoute } = get()
     if (key && key !== transitionKey) return
     if (!onNavigate || phase === 'navigating') return
     if (process.env.NODE_ENV === 'development') {
@@ -57,18 +63,32 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
         key: transitionKey,
       })
     }
+    if (targetRoute) {
+      trackTerminalTransition({
+        event: 'navigate',
+        route: targetRoute,
+        transitionKey,
+      })
+    }
     set({ phase: 'navigating' })
     onNavigate()
   },
 
   completeTransition: (key) => {
-    const { transitionKey, isTransitioning } = get()
+    const { transitionKey, isTransitioning, targetRoute } = get()
     if (!isTransitioning) return
     if (key && key !== transitionKey) return
     if (process.env.NODE_ENV === 'development') {
       console.log('[transition]', {
         event: 'complete',
         key: transitionKey,
+      })
+    }
+    if (targetRoute) {
+      trackTerminalTransition({
+        event: 'complete',
+        route: targetRoute,
+        transitionKey,
       })
     }
     set({
