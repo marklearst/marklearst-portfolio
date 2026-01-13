@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MONOKAI } from '@/lib/monokai-colors'
 import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
+import AnalyticsOptOutToggle from '@/components/ui/AnalyticsOptOutToggle'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -61,6 +63,7 @@ function SocialLink({ link }: { link: SocialLinkData }) {
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement | null>(null)
+  const { trackNavigationClick } = useAnalytics()
 
   useSectionViewTracking({
     ref: footerRef as React.RefObject<HTMLElement>,
@@ -192,9 +195,9 @@ export default function Footer() {
             </p>
             <div className='inline-block px-3 py-1.5 bg-white/5 border border-white/10 rounded-full'>
               <div className='flex items-center gap-2'>
-                <div className='w-2 h-2 bg-green-400 rounded-full animate-pulse' />
+                <div className='w-2 h-2 rounded-full animate-pulse bg-monokai-green' />
                 <span className='font-mono text-xs text-white/60'>
-                  Available for Remote full-time roles
+                  Available for remote full-time roles
                 </span>
               </div>
             </div>
@@ -222,7 +225,21 @@ export default function Footer() {
               <span>Crafted with precision</span>
             </div>
 
-            <div className='flex items-center gap-6'>
+            <div className='flex items-center gap-4'>
+              <AnalyticsOptOutToggle />
+              <Link
+                href='/privacy'
+                onClick={() => {
+                  trackNavigationClick({
+                    action: 'privacy_page',
+                    to: '/privacy',
+                    location: 'footer',
+                  })
+                }}
+                className='font-mono text-[10px] uppercase tracking-wider text-white/30 transition hover:text-white/70'
+              >
+                privacy
+              </Link>
               <div className='font-mono text-xs text-white/20'>
                 <span className='text-teal-400/50'>v</span>2026.1.0
               </div>
