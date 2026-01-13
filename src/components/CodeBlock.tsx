@@ -1,13 +1,17 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import type { CSSProperties } from 'react'
+import { usePathname } from 'next/navigation'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 interface CodeBlockProps {
   code: string
   language?: string
   showLineNumbers?: boolean
+  analyticsLabel?: string
 }
 
 // Custom Monokai Pro theme matching our brand colors
@@ -154,9 +158,48 @@ export default function CodeBlock({
   code,
   language = 'typescript',
   showLineNumbers = false,
+  analyticsLabel,
 }: CodeBlockProps) {
+  const { trackCodeBlockView } = useAnalytics()
+  const pathname = usePathname()
+  const blockRef = useRef<HTMLDivElement>(null)
+  const hasTrackedRef = useRef(false)
+
+  useEffect(() => {
+    if (!blockRef.current || hasTrackedRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || hasTrackedRef.current) return
+          hasTrackedRef.current = true
+
+          const project = pathname.startsWith('/work/')
+            ? pathname.split('/').pop() || undefined
+            : undefined
+
+          trackCodeBlockView({
+            route: pathname,
+            project,
+            label: analyticsLabel,
+            language,
+          })
+
+          observer.disconnect()
+        })
+      },
+      { threshold: 0.5 },
+    )
+
+    observer.observe(blockRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [analyticsLabel, language, pathname, trackCodeBlockView])
+
   return (
-    <div className='relative group mt-4 mb-6'>
+    <div ref={blockRef} className='relative group mt-4 mb-6'>
       {/* Hover glow effect */}
       <div className='absolute -inset-1 bg-linear-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
 

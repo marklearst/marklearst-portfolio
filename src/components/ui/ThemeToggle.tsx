@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
 const STORAGE_KEY = 'theme-preference'
@@ -24,27 +24,29 @@ const getStoredTheme = (): 'dark' | 'light' | null => {
 }
 
 export default function ThemeToggle() {
-  const { trackThemeToggle } = useAnalytics()
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
-  const [ready, setReady] = useState(false)
+  const { trackThemeToggle, trackThemePreference } = useAnalytics()
+  const [theme, setTheme] = useState<'dark' | 'light'>(
+    () => getStoredTheme() ?? 'dark',
+  )
+  const hasTrackedPreferenceRef = useRef(false)
 
   useEffect(() => {
     const stored = getStoredTheme()
-    const nextTheme = stored ?? 'dark'
-    setTheme(nextTheme)
-    applyTheme(nextTheme)
-    setReady(true)
-  }, [])
+    applyTheme(theme)
+    if (!hasTrackedPreferenceRef.current) {
+      trackThemePreference({
+        theme,
+        source: stored ? 'stored' : 'default',
+      })
+      hasTrackedPreferenceRef.current = true
+    }
+  }, [theme, trackThemePreference])
 
   useEffect(() => {
-    if (!ready) return
-    applyTheme(theme)
     try {
       localStorage.setItem(STORAGE_KEY, theme)
     } catch {}
-  }, [ready, theme])
-
-  if (!ready) return null
+  }, [theme])
 
   const nextTheme = theme === 'dark' ? 'light' : 'dark'
 
