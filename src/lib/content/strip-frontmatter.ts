@@ -1,15 +1,9 @@
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  type ReactNode,
-} from 'react'
+import { Children, cloneElement, isValidElement, type ReactNode } from 'react'
 
 const isWhitespace = (node: ReactNode) =>
   typeof node === 'string' && node.trim().length === 0
 
-const isHrNode = (node: ReactNode) =>
-  isValidElement(node) && node.type === 'hr'
+const isHrNode = (node: ReactNode) => isValidElement(node) && node.type === 'hr'
 
 export const stripFrontmatter = (node: ReactNode): ReactNode => {
   if (!isValidElement<{ children?: ReactNode }>(node)) return node
@@ -17,9 +11,7 @@ export const stripFrontmatter = (node: ReactNode): ReactNode => {
   const children = Children.toArray(node.props.children)
   if (children.length === 0) return node
 
-  const firstContentIndex = children.findIndex(
-    (child) => !isWhitespace(child),
-  )
+  const firstContentIndex = children.findIndex((child) => !isWhitespace(child))
   if (firstContentIndex === -1) return node
   if (!isHrNode(children[firstContentIndex])) return node
 

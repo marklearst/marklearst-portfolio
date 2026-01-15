@@ -1,0 +1,295 @@
+---
+slug: figmavars-hooks
+title: FigmaVars Hooks
+category: DEVELOPER TOOLS
+categoryColor: cyan
+description: "React 19 hooks library and CLI for the official Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage."
+role: "Creator & Maintainer"
+timeline: "2024 - Present"
+technologies:
+  - React 19
+  - TypeScript
+  - Figma REST API
+  - Vitest
+  - Node.js
+  - CLI
+  - npm
+links:
+  - label: GitHub
+    href: https://github.com/marklearst/figma-vars-hooks
+    icon: github
+  - label: npm Package
+    href: https://www.npmjs.com/package/@figma-vars/hooks
+    icon: npm
+impact:
+  - metric: "100%"
+    description: "Test coverage with Vitest ensuring reliability for production use"
+  - metric: "Type-Safe"
+    description: "Full TypeScript support with runtime guards and error helpers"
+  - metric: "Open Source"
+    description: "MIT licensed and actively maintained for the design systems community"
+gradient: from-cyan-500/20 via-teal-500/10 to-transparent
+---
+
+<CaseStudySection title="The Problem">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Design systems teams using Figma Variables faced a critical workflow
+      challenge: there was no official way to programmatically access Figma's
+      design variables from React applications. This created:
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-3">
+      <li>Manual copy-paste workflows to sync design tokens from Figma to code</li>
+      <li>Version drift between Figma variables and application code</li>
+      <li>No way to validate variables at runtime in React apps</li>
+      <li>Inability to dynamically load Figma variables in Storybook or dev tools</li>
+      <li>Fragmented token export solutions that didn't leverage official APIs</li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph>
+      When Figma released their Variables REST API in 2024, I saw an opportunity
+      to build the missing piece: a React hooks library that made Figma Variables
+      a first-class citizen in React development.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="The Solution">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      <strong>FigmaVars Hooks</strong> is a React 19 hooks library that provides
+      type-safe access to the Figma Variables REST API, paired with a CLI tool
+      for exporting variables into CI/CD pipelines.
+    </CaseStudyParagraph>
+
+    <CaseStudySubheading className="mt-0">Quick Start (hooks + provider)</CaseStudySubheading>
+    <CaseStudyMutedText>
+      A lightweight provider wraps your app while hooks fetch and cache variables
+      with SWR under the hood:
+    </CaseStudyMutedText>
+    <CodeBlock
+      language="tsx"
+      analyticsLabel="figma_vars_hooks_quick_start"
+      code={[
+        "import { FigmaVarsProvider, useVariables } from '@figma-vars/hooks'",
+        "",
+        "const FIGMA_TOKEN = process.env.NEXT_PUBLIC_FIGMA_TOKEN",
+        "const FIGMA_FILE_KEY = 'your-file-key'",
+        "",
+        "export function App() {",
+        "  return (",
+        "    <FigmaVarsProvider token={FIGMA_TOKEN} fileKey={FIGMA_FILE_KEY}>",
+        "      <Variables />",
+        "    </FigmaVarsProvider>",
+        "  )",
+        "}",
+        "",
+        "function Variables() {",
+        "  const { data, isLoading, error } = useVariables()",
+        "  if (isLoading) return <div>Loading...</div>",
+        "  if (error) return <div>Error: {error.message}</div>",
+        "  const variables = Object.values(data?.meta.variables ?? {})",
+        "  return <pre>{JSON.stringify(variables, null, 2)}</pre>",
+        "}",
+      ].join('\n')}
+    />
+
+    <CaseStudySubheading>React Hooks API</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Built custom React hooks that fetch and cache Figma variables at runtime:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li><code>useFigmaVariables()</code> - Fetch all variables from a Figma file</li>
+      <li><code>useFigmaVariable()</code> - Get a specific variable by ID or name</li>
+      <li><code>useFigmaCollection()</code> - Access variable collections</li>
+      <li>Built-in caching and request deduplication for performance</li>
+      <li>Full TypeScript support with exported response types and type guards</li>
+      <li>SWR configuration for revalidation, retry, and cache control</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>CLI Export Tool</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Created <code>figma-vars-export</code> CLI for exporting Figma variables as
+      JSON in CI/CD pipelines:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Runs in GitHub Actions or any CI environment</li>
+      <li>Exports variables to JSON format compatible with Style Dictionary</li>
+      <li>Supports filtering by collection, mode, or variable name</li>
+      <li>Validates exported data with runtime guards before writing</li>
+    </CaseStudyMutedList>
+    <CodeBlock
+      language="bash"
+      analyticsLabel="figma_vars_hooks_cli_export"
+      code={[
+        "FIGMA_TOKEN=your_token npx figma-vars-export --file-key YOUR_FILE_KEY --out ./figma-variables.json",
+        "",
+        "FIGMA_TOKEN=your_token figma-vars-export --file-key YOUR_FILE_KEY --out ./figma-variables.json",
+        "",
+        "figma-vars-export --help",
+      ].join('\n')}
+    />
+
+    <CaseStudySubheading>Storybook Integration</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Wrap stories once and surface live variables across your component docs:
+    </CaseStudyMutedText>
+    <CodeBlock
+      language="tsx"
+      analyticsLabel="figma_vars_hooks_storybook"
+      code={[
+        "// .storybook/preview.tsx",
+        "import { FigmaVarsProvider } from '@figma-vars/hooks'",
+        "import type { Preview } from '@storybook/react'",
+        "",
+        "const FIGMA_TOKEN = process.env.STORYBOOK_FIGMA_TOKEN",
+        "const FIGMA_FILE_KEY = process.env.STORYBOOK_FIGMA_FILE_KEY",
+        "",
+        "const preview: Preview = {",
+        "  decorators: [",
+        "    Story => (",
+        "      <FigmaVarsProvider token={FIGMA_TOKEN} fileKey={FIGMA_FILE_KEY}>",
+        "        <Story />",
+        "      </FigmaVarsProvider>",
+        "    ),",
+        "  ],",
+        "}",
+        "",
+        "export default preview",
+      ].join('\n')}
+    />
+
+    <CaseStudySubheading>Offline Fallback</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Teams without Enterprise can still ship by exporting JSON once and using
+      <code>fallbackFile</code> for static or local environments. This keeps
+      Storybook and design system dashboards in sync without live API calls.
+    </CaseStudyMutedText>
+    <CodeBlock
+      language="tsx"
+      analyticsLabel="figma_vars_hooks_fallback"
+      code={[
+        "import exportedVariables from './figma-variables.json'",
+        "",
+        "<FigmaVarsProvider",
+        "  token={null}",
+        "  fileKey={null}",
+        "  fallbackFile={exportedVariables}",
+        ">",
+        "  <App />",
+        "</FigmaVarsProvider>",
+      ].join('\n')}
+    />
+
+    <CaseStudySubheading>Runtime Guards + Error Utilities</CaseStudySubheading>
+    <CaseStudyMutedText>
+      The library ships type guards and error helpers so apps can validate data
+      and respond to API failures without guessing.
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li><code>isLocalVariablesResponse()</code> - Validate local responses</li>
+      <li><code>isPublishedVariablesResponse()</code> - Validate published data</li>
+      <li><code>isFigmaApiError()</code> + helpers for status code handling</li>
+      <li><code>redactToken()</code> for safe logging and support flows</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>100% Test Coverage</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Built comprehensive test suite with Vitest covering:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>All hook behaviors and edge cases</li>
+      <li>API request/response mocking and error handling</li>
+      <li>Runtime validation for all data structures</li>
+      <li>CLI command execution and file output</li>
+    </CaseStudyMutedList>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Technical Architecture">
+  <div className="space-y-6">
+    <CaseStudySubheading className="mt-0">React 19 Features</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Leveraged React 19's new capabilities:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Server Components for initial data fetching when used in Next.js</li>
+      <li>Use hook for async data loading</li>
+      <li>Built-in caching strategies with React's cache function</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Typed Core Entrypoint</CaseStudySubheading>
+    <CaseStudyMutedText>
+      A core build ships for non-React use cases (server scripts, TanStack Query,
+      or custom fetchers) while preserving the same data contracts.
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>Developer Experience</CaseStudySubheading>
+    <CaseStudyMutedText>Optimized for DX:</CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Clear error messages with suggestions for common issues</li>
+      <li>Comprehensive TypeScript types exported from package</li>
+      <li>Detailed README with code examples and API reference</li>
+      <li>Minimal configuration required to get started</li>
+      <li>ESM-first build with CJS interop and Node 20 toolchain</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Security and Rate Limits</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Token handling and rate-limit resilience are built in:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Redaction helpers for safe token logging</li>
+      <li>Retry utilities with exponential backoff for 429 responses</li>
+      <li>Documented scopes for read/write access</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Use Cases</CaseStudySubheading>
+    <CaseStudyMutedText>Enables powerful workflows:</CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Live Storybook integration showing actual Figma variables</li>
+      <li>Design token validation tools that check Figma against codebase</li>
+      <li>Admin panels for managing design tokens across teams</li>
+      <li>CI/CD pipelines that auto-sync Figma changes to code repos</li>
+    </CaseStudyMutedList>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Impact & Adoption">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      FigmaVars Hooks bridges the gap between Figma Variables and React
+      development while keeping design systems predictable at scale:
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-4">
+      <li>
+        <strong>Eliminates manual token sync</strong> by providing programmatic
+        access to Figma Variables directly from React
+      </li>
+      <li>
+        <strong>Type-safe runtime validation</strong> ensures variables
+        are valid before use in applications
+      </li>
+      <li>
+        <strong>100% test coverage</strong> provides confidence for teams adopting
+        the library in production
+      </li>
+      <li>
+        <strong>Open-source contribution</strong> to the design systems community,
+        filling a critical gap in the Figma Variables ecosystem
+      </li>
+      <li>
+        <strong>CLI tool enables CI/CD</strong> workflows that auto-sync design
+        tokens on every Figma change
+      </li>
+      <li>
+        <strong>Enterprise and offline paths</strong> cover both live API usage
+        and static exports for non-Enterprise teams
+      </li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph className="mt-8">
+      The library is published on npm, actively maintained, and is the backbone
+      for teams building production token pipelines, Storybook dashboards, and
+      Figma-to-code workflows.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>

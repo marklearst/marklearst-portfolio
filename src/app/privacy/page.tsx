@@ -101,13 +101,16 @@ export default function PrivacyPage() {
               >
                 If you have questions, reach out at{' '}
                 <a
-                  className='text-white/80 hover:text-white'
-                  href='mailto:github@marklearst.com'
+                  className='text-white/80 hover:text-white underline'
+                  href='mailto:me@marklearst.com'
                 >
-                  github@marklearst.com
+                  me@marklearst.com
                 </a>
                 . You can also head back to the{' '}
-                <Link className='text-white/80 hover:text-white' href='/'>
+                <Link
+                  className='text-white/80 hover:text-white underline'
+                  href='/'
+                >
                   homepage
                 </Link>
                 .
