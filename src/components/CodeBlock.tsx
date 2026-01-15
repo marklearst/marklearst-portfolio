@@ -200,20 +200,20 @@ export default function CodeBlock({
 
   return (
     <div ref={blockRef} className='relative group mt-4 mb-6'>
-      {/* Hover glow effect */}
-      <div className='absolute -inset-1 bg-linear-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
+      {/* Hover depth */}
+      <div className='absolute -inset-1 bg-linear-to-r from-black/50 via-black/30 to-black/50 rounded-2xl blur-[28px] opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
 
       {/* Code container */}
-      <div className='relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden'>
-        {/* macOS window dots */}
-        <div className='absolute top-4 left-4 flex gap-2 z-10'>
-          <div className='w-3 h-3 rounded-full bg-red-500/30' />
-          <div className='w-3 h-3 rounded-full bg-yellow-500/30' />
-          <div className='w-3 h-3 rounded-full bg-green-500/30' />
+      <div className='relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 group-hover:-translate-y-0.5 group-hover:shadow-[0_28px_80px_rgba(0,0,0,0.45)]'>
+        {/* Header bar */}
+        <div className='flex items-center gap-2 h-9 px-5 border-b border-white/10 bg-white/4'>
+          <div className='w-2.5 h-2.5 rounded-full bg-red-500/30' />
+          <div className='w-2.5 h-2.5 rounded-full bg-yellow-500/30' />
+          <div className='w-2.5 h-2.5 rounded-full bg-green-500/30' />
         </div>
 
         {/* Code block */}
-        <div className='p-6 pt-12 overflow-x-auto'>
+        <div className='p-5 pt-4 overflow-x-auto'>
           <SyntaxHighlighter
             language={language}
             style={monokaiProTheme}
@@ -223,12 +223,15 @@ export default function CodeBlock({
               padding: 0,
               margin: 0,
               fontSize: '14px',
+              borderRadius: 0,
             }}
             codeTagProps={{
               style: {
                 fontFamily: '"MonoLisa", "SF Mono", Consolas, monospace',
                 fontFeatureSettings: '"liga" 1, "calt" 1',
                 backgroundColor: 'transparent',
+                padding: 0,
+                borderRadius: 0,
               },
             }}
           >

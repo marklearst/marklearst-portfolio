@@ -133,10 +133,9 @@ export default function ParticleHeader() {
       aria-label='Mark Learst - Home'
     >
       <div
-        className='flex items-center font-mono font-medium'
+        className='flex items-center font-mono font-medium text-lg sm:text-2xl'
         style={{
           color: 'rgb(252, 252, 250)',
-          fontSize: '1.5rem',
         }}
       >
         <span className='opacity-50 mr-[2px]'>{`{`}</span>
