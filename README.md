@@ -1,88 +1,60 @@
 # Mark Learst Portfolio
 
-Personal portfolio site built with Next.js showcasing my work as a senior frontend engineer. Features terminal-style navigation transitions, custom animations, and detailed case studies of projects I've built.
+Coder to the core, think like a designer.
 
-## Tech Stack
+This is my portfolio and a living build log. I am a senior frontend and design engineer who ships design systems, React UI architecture, and accessibility-first interfaces that hold up in production. I care about performance, motion with intent, and making the handoff between design and code feel invisible.
 
-- Next.js 16 with App Router
-- React 19
-- TypeScript
-- Tailwind CSS v4
-- GSAP for animations
-- Three.js for 3D elements
-- Zustand for state management
-- Lenis for smooth scrolling
-- Style Dictionary for token builds
-- FigmaVars Hooks for variables integration
+What you will find here:
 
-## Getting Started
+- Case studies and artifacts written in MDX so the work stays close to the code.
+- A Monokai-inspired visual system and terminal-style navigation.
+- A command palette for fast navigation.
 
-Install dependencies:
+## Tech
+
+- [Next.js](https://nextjs.org) 16 (App Router), [React](https://react.dev) 19, [TypeScript](https://www.typescriptlang.org)
+- [Style Dictionary](https://github.com/amzn/style-dictionary), [Variables Contract](https://variables-contract.vercel.app/), [FigmaVars Hooks](https://github.com/marklearst/figma-vars-hooks)
+- [Tailwind CSS](https://tailwindcss.com) v4, [GSAP](https://greensock.com/gsap/), [Three.js](https://threejs.org)
+- [Zustand](https://zustand-demo.pmnd.rs/), [Lenis](https://lenis.darkroom.engineering/)
+
+## Content architecture
+
+- About: `src/content/about.mdx`
+- Artifacts: `src/content/artifacts/*.mdx`
+- Case studies: `src/content/case-studies/*.mdx`
+- Content loaders: `src/lib/content/*`
+- MDX components: `src/components/mdx/*`
+
+If you add a new case study, create the MDX file and register it in `src/lib/content/case-studies.tsx`.
+
+## Routes
+
+```
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /artifacts
+├ ● /artifacts/[slug]
+│ ├ /artifacts/variable-contract-semver
+│ └ /artifacts/terminal-navigation
+├ ○ /privacy
+├ ○ /work/a11y-companion
+├ ○ /work/aurora-gm
+├ ○ /work/diabetic-utils
+├ ○ /work/figmavars-hooks
+├ ○ /work/skydio
+└ ○ /work/variable-contract
+```
+
+## Run locally
 
 ```bash
 pnpm install
-```
-
-Run the development server:
-
-```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+## Contact
 
-## Figma Variables (optional)
-
-The app is wired to `@figma-vars/hooks` with a local fallback JSON so it can run without the Figma API. Update `src/data/figma-variables.json` with exported variables when ready.
-
-To enable live Figma Variables locally, set these in `.env.local`:
-
-```bash
-NEXT_PUBLIC_FIGMA_TOKEN=your_personal_access_token
-NEXT_PUBLIC_FIGMA_FILE_KEY=your_figma_file_key
-```
-
-In dev, a small overlay shows collection/variable counts and logs status to the console.
-
-## Project Structure
-
-```
-src/
-├── app/                    # Next.js app router pages
-│   ├── work/              # Case study pages
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx          # Home page
-├── components/            # React components
-│   ├── brand/            # Branding components (logo, particles)
-│   ├── dev/              # Dev-only overlays/debug tools
-│   ├── providers/        # App-level context providers
-│   ├── transitions/      # Terminal-style navigation transitions
-│   └── ui/               # UI components (cursor, neural network, etc.)
-├── data/                  # Local JSON assets (e.g., Figma variables fallback)
-├── tokens/                # Design tokens (Variables Contract JSON)
-├── lib/                   # Utilities and helpers
-│   ├── terminal-*.ts     # Terminal animation utilities
-│   └── monokai-colors.ts  # Color system
-└── hooks/                 # Custom React hooks
-
-scripts/
-└── style-dictionary/       # Style Dictionary transforms/filters
-```
-
-## Key Features
-
-Terminal-style navigation transitions that mimic command-line interactions when navigating between pages. Custom particle systems, neural network background, and cursor trail effects. All animations are optimized for performance with centralized timing controls.
-
-The site includes detailed case studies for projects like Aurora Design System at GM, FigmaVars Hooks, a11y Companion, and others. Each case study includes code examples, technical details, and outcomes.
-
-## Build
-
-```bash
-pnpm build
-```
-
-## Development Notes
-
-The site uses a Monokai-inspired color scheme throughout. Terminal animations are controlled via centralized timing utilities in `src/lib/terminal-timing.ts`. All components are built with accessibility in mind, following WCAG guidelines.
-
-Font loading uses MonoLisa for monospaced text and system fonts for body copy. The site is fully responsive and optimized for performance.
+- github@marklearst.com
+- https://marklearst.com
