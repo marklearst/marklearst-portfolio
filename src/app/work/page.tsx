@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import path from 'node:path'
 import fs from 'node:fs/promises'
 import matter from 'gray-matter'
+import Footer from '@/components/Footer'
 import WorkCatalog from '@/components/WorkCatalog'
 import { MONOKAI } from '@/lib/monokai-colors'
 
@@ -33,6 +34,7 @@ export default async function WorkPage() {
       <div className='max-w-7xl mx-auto'>
         <WorkCatalog aboutSummary={aboutSummary} />
       </div>
+      <Footer />
     </main>
   )
 }
