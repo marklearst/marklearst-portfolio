@@ -60,7 +60,7 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     command: formatCommand('whoami'),
     loading: 'Resolving identity...',
     output: formatOutput('marklearst', true),
-    packages: ['Senior Frontend Engineer'],
+    packages: ['Senior Frontend Engineer', 'Senior Design Engineer'],
     duration: DURATION.homeRoute,
     color: MONOKAI.cyan,
   },
@@ -70,7 +70,7 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     loading: 'Indexing case studies...',
     output: formatOutput('Ready', true),
     duration: DURATION.workRoute,
-    color: MONOKAI.purple,
+    color: MONOKAI.cyan,
   },
   '/artifacts': {
     route: '/artifacts',
@@ -78,7 +78,7 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     loading: 'Indexing artifacts...',
     output: formatOutput('Ready', true),
     duration: DURATION.workRoute,
-    color: MONOKAI.cyan,
+    color: MONOKAI.purple,
   },
   ...PROJECT_ROUTE_COMMANDS,
   '/work/glucoseiq': {
@@ -89,6 +89,22 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     output: formatOutput('Ready', true),
     duration: DURATION.workRouteWithPackages,
     color: MONOKAI.pink,
+  },
+  '/artifacts/terminal-navigation': {
+    route: '/artifacts/terminal-navigation',
+    command: formatCommand('cat /artifacts/terminal-navigation'),
+    loading: 'Reading artifact...',
+    output: formatOutput('Ready', true),
+    duration: DURATION.workRoute,
+    color: MONOKAI.purple,
+  },
+  '/artifacts/variable-contract-semver': {
+    route: '/artifacts/variable-contract-semver',
+    command: formatCommand('cat /artifacts/variable-contract-semver'),
+    loading: 'Reading artifact...',
+    output: formatOutput('Ready', true),
+    duration: DURATION.workRoute,
+    color: MONOKAI.cyan,
   },
 }
 
