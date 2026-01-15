@@ -191,6 +191,7 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Creator & Maintainer',
     timeline: '2023 - Present',
     publishedAt: '2023-08-01',
+    featured: true,
     technologies: [
       'Figma Widget API',
       'TypeScript',
@@ -267,6 +268,7 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Specification Author & W3C Community Contributor',
     timeline: '2024 - Present',
     publishedAt: '2024-10-01',
+    featured: true,
     technologies: [
       'JSON Schema',
       'DTCG Spec',
@@ -302,6 +304,7 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Frontend Consultant - Component Architecture & Storybook',
     timeline: '2024 (Contract)',
     publishedAt: '2024-05-01',
+    featured: true,
     technologies: [
       'React',
       'TypeScript',

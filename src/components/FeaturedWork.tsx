@@ -27,7 +27,7 @@ export default function FeaturedWork() {
       gsap.from('.section-title', {
         scrollTrigger: {
           trigger: '.section-title',
-          start: 'top 75%',
+          start: 'top 95%',
         },
         opacity: 0,
         y: 60,
@@ -39,7 +39,7 @@ export default function FeaturedWork() {
       gsap.from('.section-subtitle', {
         scrollTrigger: {
           trigger: '.section-subtitle',
-          start: 'top 80%',
+          start: 'top 95%',
         },
         opacity: 0,
         y: 30,
@@ -55,7 +55,7 @@ export default function FeaturedWork() {
           gsap.from(card, {
             scrollTrigger: {
               trigger: card,
-              start: 'top 90%',
+              start: 'top 99%',
             },
             opacity: 0,
             y: 100,
@@ -101,19 +101,19 @@ export default function FeaturedWork() {
         {/* Cards Grid - Consistent spacing with equal height rows */}
         <div className='grid lg:grid-cols-3 gap-6 auto-rows-fr'>
           {(FEATURED_PROJECTS.length ? FEATURED_PROJECTS : PROJECTS)
-            .slice(0, 3)
+            .slice(0, 6)
             .map((project, index) => (
-            <ProjectCard
-              key={project.slug}
-              project={project}
-              index={index}
-              isActive={activeCard === index}
-              onHover={() => setActiveCard(index)}
-              onLeave={() => setActiveCard(null)}
-              ref={(el) => {
-                cardsRef.current[index] = el
-              }}
-            />
+              <ProjectCard
+                key={project.slug}
+                project={project}
+                index={index}
+                isActive={activeCard === index}
+                onHover={() => setActiveCard(index)}
+                onLeave={() => setActiveCard(null)}
+                ref={(el) => {
+                  cardsRef.current[index] = el
+                }}
+              />
             ))}
         </div>
       </div>
