@@ -39,10 +39,10 @@ export default function FeaturedWork() {
       gsap.from('.section-subtitle', {
         scrollTrigger: {
           trigger: '.section-subtitle',
-          start: 'top 75%',
+          start: 'top 80%',
         },
         opacity: 0,
-        x: -20,
+        y: 30,
         duration: 1,
         delay: 0.3,
         ease: 'expo.out',
@@ -55,7 +55,7 @@ export default function FeaturedWork() {
           gsap.from(card, {
             scrollTrigger: {
               trigger: card,
-              start: 'top 80%',
+              start: 'top 90%',
             },
             opacity: 0,
             y: 100,
