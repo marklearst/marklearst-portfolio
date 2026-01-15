@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type { ProjectMeta } from '@/data/projects'
@@ -80,11 +81,7 @@ const sortProjects = (projects: ProjectMeta[]) =>
     return a.title.localeCompare(b.title)
   })
 
-export default function WorkCatalog({
-  aboutSummary,
-}: {
-  aboutSummary: string
-}) {
+export default function WorkCatalog() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [activeCatalogCard, setActiveCatalogCard] = useState<number | null>(
@@ -166,7 +163,7 @@ export default function WorkCatalog({
         gsap.from(card, {
           scrollTrigger: {
             trigger: card,
-            start: 'top 85%',
+            start: 'top 99%',
             toggleActions: 'play none none none',
           },
           opacity: 0,
@@ -180,7 +177,7 @@ export default function WorkCatalog({
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [filteredProjects.length])
+  }, [])
 
   return (
     <section ref={sectionRef}>
@@ -207,18 +204,32 @@ export default function WorkCatalog({
           <button
             type='button'
             onClick={() => setActiveFilters([])}
-            className='px-3 py-1.5 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200'
-            style={{
-              borderColor: `${MONOKAI.foreground}40`,
-              color: MONOKAI.foreground,
-              backgroundColor:
-                activeFilters.length === 0
-                  ? `${MONOKAI.foreground}20`
-                  : `${MONOKAI.foreground}10`,
-            }}
+            className='work-filter-pill px-3 py-1.5 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200 inline-flex items-center gap-2'
+            style={
+              {
+                borderColor: `${MONOKAI.foreground}40`,
+                color: MONOKAI.foreground,
+                backgroundColor:
+                  activeFilters.length === 0
+                    ? `${MONOKAI.foreground}20`
+                    : `${MONOKAI.foreground}10`,
+                '--filter-ring-color': `${MONOKAI.foreground}80`,
+              } as CSSProperties
+            }
             aria-pressed={activeFilters.length === 0}
           >
-            All
+            <span
+              aria-hidden='true'
+              className='h-2.5 w-2.5 rounded-full border transition-all duration-300'
+              style={{
+                borderColor: `${MONOKAI.foreground}70`,
+                backgroundColor: MONOKAI.foreground,
+                opacity: activeFilters.length === 0 ? 1 : 0.25,
+                transform:
+                  activeFilters.length === 0 ? 'scale(1)' : 'scale(0.85)',
+              }}
+            />
+            <span>All</span>
           </button>
           {WORK_FILTERS.map((filter) => {
             const isActive = activeFilters.includes(filter.id)
@@ -227,15 +238,28 @@ export default function WorkCatalog({
                 key={filter.id}
                 type='button'
                 onClick={() => toggleFilter(filter.id)}
-                className='px-3 py-1.5 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer'
-                style={{
-                  borderColor: `${filter.color}${isActive ? '60' : '40'}`,
-                  color: filter.color,
-                  backgroundColor: `${filter.color}${isActive ? '30' : '20'}`,
-                }}
+                className='work-filter-pill px-3 py-1.5 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer inline-flex items-center gap-2'
+                style={
+                  {
+                    borderColor: `${filter.color}${isActive ? '60' : '40'}`,
+                    color: filter.color,
+                    backgroundColor: `${filter.color}${isActive ? '30' : '20'}`,
+                    '--filter-ring-color': `${filter.color}80`,
+                  } as CSSProperties
+                }
                 aria-pressed={isActive}
               >
-                {filter.label}
+                <span
+                  aria-hidden='true'
+                  className='h-2.5 w-2.5 rounded-full border transition-all duration-300'
+                  style={{
+                    borderColor: `${filter.color}80`,
+                    backgroundColor: filter.color,
+                    opacity: isActive ? 1 : 0.25,
+                    transform: isActive ? 'scale(1)' : 'scale(0.85)',
+                  }}
+                />
+                <span>{filter.label}</span>
               </button>
             )
           })}
