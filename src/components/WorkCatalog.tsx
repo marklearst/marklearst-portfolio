@@ -185,7 +185,7 @@ export default function WorkCatalog({
   return (
     <section ref={sectionRef}>
       <div className='mb-8'>
-        <div className='work-kicker flex items-center gap-3 font-mono text-xs uppercase tracking-wider text-white/40'>
+        <div className='work-kicker flex items-center gap-3 pb-5 font-mono text-xs uppercase tracking-wider text-white/40'>
           <span>{'//  '}</span>
           <span>full catalog</span>
         </div>
@@ -196,7 +196,7 @@ export default function WorkCatalog({
           Everything I ship lives here, design systems, React UI architecture,
           tokens, Storybook docs, accessibility work, motion experiments, and
           the tooling that makes teams faster. Some projects are shipped in
-          production, some are open source, some are R and D that turned into
+          production, some are open source, some are R&D that turned into
           patterns I reuse. Filter by focus area to scan fast, then open any
           card for the decisions, the tradeoffs, and the code.
         </p>
