@@ -107,15 +107,15 @@ export default function WorkCatalog() {
   return (
     <section>
       <div className='flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10'>
-        <div>
+        <div className='flex-1 min-w-0 lg:pr-6'>
           <div className='flex items-center gap-3 font-mono text-xs uppercase tracking-wider text-white/40'>
             <span>{'//  '}</span>
             <span>full catalog</span>
           </div>
-          <h2 className='mt-4 text-3xl font-mono lowercase text-white'>
+          <h2 className='mt-4 text-[clamp(32px,4vw,48px)] font-mono lowercase text-white !font-bold'>
             All work
           </h2>
-          <p className='mt-3 max-w-2xl font-mono text-sm text-white/60'>
+          <p className='mt-3 max-w-3xl font-mono text-[clamp(16px,1.6vw,20px)] leading-relaxed text-white/70'>
             Everything I ship, from design systems and OSS to health tech and
             developer tooling. Filter by focus area to scan fast.
           </p>
