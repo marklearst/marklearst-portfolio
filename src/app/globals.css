@@ -1,26 +1,52 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Antique Condensed */
+@font-face {
+  font-family: 'Antique Condensed';
+  src: url('/fonts/AntiqueCon-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Tailwind theme with your fonts */
+@theme {
+  --font-serif: 'Antique Condensed', ui-serif, Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-black text-white/80 font-sans;
+}
+
+/* Antique Condensed - ONLY for h1 and h2 */
+h1 {
+  @apply font-serif lowercase text-white;
+  letter-spacing: -0.015em; /* Tighter to connect K and L */
+  line-height: 1.1;
+}
+
+h2 {
+  @apply font-serif lowercase text-white;
+  letter-spacing: -0.01em; /* Slightly looser for readability */
+  line-height: 1.1;
+}
+
+/* Sans-serif - for h3-h6 (better readability at smaller sizes) */
+h3,
+h4,
+h5,
+h6 {
+  @apply font-sans lowercase text-white font-semibold;
+  line-height: 1.2;
+}
+
+code {
+  @apply font-mono text-sm bg-white/5 px-2 py-1 rounded;
+}
+
+a {
+  @apply transition-all;
 }
