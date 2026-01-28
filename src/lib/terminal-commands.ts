@@ -35,8 +35,9 @@ const formatOutput = (output: string, withCheck?: boolean) =>
 const PROJECT_ROUTE_COMMANDS = PROJECTS.reduce<Record<string, TerminalCommand>>(
   (acc, project) => {
     const terminal = project.terminal
-    const output = terminal.output
-      ? formatOutput(terminal.output, terminal.outputWithCheck)
+    const output =
+      terminal.output ?
+        formatOutput(terminal.output, terminal.outputWithCheck)
       : undefined
 
     acc[project.route] = {
@@ -98,9 +99,9 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     duration: DURATION.workRoute,
     color: MONOKAI.purple,
   },
-  '/artifacts/variable-contract-semver': {
-    route: '/artifacts/variable-contract-semver',
-    command: formatCommand('cat /artifacts/variable-contract-semver'),
+  '/artifacts/variable-design-standard-semver': {
+    route: '/artifacts/variable-design-standard-semver',
+    command: formatCommand('cat /artifacts/variable-design-standard-semver'),
     loading: 'Reading artifact...',
     output: formatOutput('Ready', true),
     duration: DURATION.workRoute,
