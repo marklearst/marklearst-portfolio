@@ -22,7 +22,7 @@ const OPEN_SOURCE_SLUGS = new Set([
   'figmavars-hooks',
   'a11y-companion',
   'diabetic-utils',
-  'variable-contract',
+  'variable-design-standard',
 ])
 
 const WORK_FILTERS: WorkFilter[] = [
@@ -199,7 +199,7 @@ export default function WorkCatalog() {
         </p>
       </div>
 
-      {ENABLE_FILTERS ? (
+      {ENABLE_FILTERS ?
         <div className='work-filters flex flex-wrap items-center gap-2 mb-8'>
           <button
             type='button'
@@ -210,9 +210,9 @@ export default function WorkCatalog() {
                 borderColor: `${MONOKAI.foreground}40`,
                 color: MONOKAI.foreground,
                 backgroundColor:
-                  activeFilters.length === 0
-                    ? `${MONOKAI.foreground}20`
-                    : `${MONOKAI.foreground}10`,
+                  activeFilters.length === 0 ?
+                    `${MONOKAI.foreground}20`
+                  : `${MONOKAI.foreground}10`,
                 '--filter-ring-color': `${MONOKAI.foreground}80`,
               } as CSSProperties
             }
@@ -267,7 +267,7 @@ export default function WorkCatalog() {
             {filteredProjects.length} of {sortedProjects.length}
           </span>
         </div>
-      ) : null}
+      : null}
 
       {/* {aboutSummary ? (
         <div
@@ -285,7 +285,7 @@ export default function WorkCatalog() {
         </div>
       ) : null} */}
 
-      {filteredProjects.length ? (
+      {filteredProjects.length ?
         <div className='grid gap-6 lg:grid-cols-3 auto-rows-fr'>
           {filteredProjects.map((project, index) => (
             <div key={project.slug} className='work-card h-full'>
@@ -300,11 +300,10 @@ export default function WorkCatalog() {
             </div>
           ))}
         </div>
-      ) : (
-        <div className='rounded-2xl border border-white/10 bg-white/5 p-8 text-center font-mono text-sm text-white/60'>
+      : <div className='rounded-2xl border border-white/10 bg-white/5 p-8 text-center font-mono text-sm text-white/60'>
           No projects match those filters.
         </div>
-      )}
+      }
     </section>
   )
 }

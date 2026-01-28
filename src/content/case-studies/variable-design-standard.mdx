@@ -1,0 +1,502 @@
+---
+slug: variable-design-standard
+title: Variable Design Standard
+category: STANDARDS
+categoryColor: orange
+description: Open specification for design variable governance. Defines JSON structure, naming rules, validation, and versioning on DTCG 2025.10 format. Three layers. No mapped collections.
+role: Specification Author & Editor
+timeline: 2024 - Present
+technologies:
+  - JSON Schema
+  - DTCG 2025.10
+  - Design Tokens
+  - Version Control
+  - CI/CD Validation
+  - Style Dictionary
+links:
+  - label: GitHub Specification
+    href: https://github.com/marklearst/variable-design-standard
+    icon: github
+  - label: Variable Design Standard
+    href: https://variable-design-standard.vercel.app/
+    icon: external
+impact:
+  - metric: DTCG
+    description: Built on W3C Design Tokens Community Group 2025.10 specification
+  - metric: JSON-as-API
+    description: File paths and variable names are the contract interface
+  - metric: 3 Layers
+    description: Base, Alias, Component. No fourth layer. No extra hops.
+gradient: from-purple-500/20 via-indigo-500/10 to-transparent
+---
+
+<CaseStudySection title="The Problem">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Everyone calls them something different--design tokens, style properties,
+      variables, constants. The terminology split is a symptom of a deeper
+      problem: there is no standard for how design variables should be governed
+      across tools and teams. This creates:
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-3">
+      <li>
+        <strong>Naming confusion:</strong> Designers call them one thing,
+        developers another. Handoff breaks because vocabulary is split.
+      </li>
+      <li>
+        <strong>No governance:</strong> Variables change without rules. Breaking
+        changes ship to production without notice.
+      </li>
+      <li>
+        <strong>Tool lock-in:</strong> Figma Variables, Tokens Studio, and
+        code-based systems use incompatible formats and reference syntax.
+      </li>
+      <li>
+        <strong>Handoff breaks:</strong> Design and code don't align. No way to
+        track which variable version is deployed.
+      </li>
+      <li>
+        <strong>No validation:</strong> Invalid variables pass review and cause
+        build failures downstream.
+      </li>
+      <li>
+        <strong>Layer proliferation:</strong> Teams add <em>mapped</em> collections
+        between base and semantic layers to solve brand switching. Each extra
+        layer means extra reference hops, extra naming decisions, and extra
+        surfaces to audit. Variables should be easy to reason about--not require
+        a specialist to untangle.
+      </li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph>
+      After building Aurora at GM and experiencing these pain points across
+      4 brands, I realized the industry needed something different--not a new
+      format, but a governance layer on an existing one. One that solves
+      multi-brand without adding complexity.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="The Solution">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      <strong>Variable Design Standard (VDS)</strong> is a governance layer on
+      the DTCG 2025.10 format. It defines naming rules, validation requirements,
+      versioning strategy, and adapter patterns--so handoff holds as teams and
+      products grow. Three layers. File selection for brands. No extra hops.
+    </CaseStudyParagraph>
+
+    <CaseStudySubheading>JSON-as-API Architecture</CaseStudySubheading>
+    <CaseStudyMutedText>
+      The JSON file set is the API surface. File paths and variable names are
+      the contract. A rename is a breaking change.
+    </CaseStudyMutedText>
+
+<CodeBlock
+  language="json"
+  analyticsLabel="vds_contract_example"
+  code={`{
+  "color": {
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.gray.900}",
+        "$description": "Primary text color for body content"
+      }
+    },
+    "surface": {
+      "brand": {
+        "$type": "color",
+        "$value": "{color.brand.primary}"
+      }
+    }
+  }
+}`}
+/>
+
+    <CaseStudySubheading>Three-Layer Anatomy</CaseStudySubheading>
+    <CaseStudyMutedText>
+      VDS defines three layers only. Base, Alias, Component. Implementations
+      must not add a fourth layer between Alias and Base:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>
+        <strong>Base variables:</strong> Raw scales and palettes. The only place
+        literal values live. <code>color.gray.900</code>, <code>space.4</code>
+      </li>
+      <li>
+        <strong>Alias variables:</strong> Semantic intent. Reference base
+        variables. <code>color.text.primary</code> → <code>{'{color.gray.900}'}</code>
+      </li>
+      <li>
+        <strong>Component variables:</strong> Scoped control when needed.
+        <code>component.button.color.background</code> → <code>{'{color.surface.brand}'}</code>
+      </li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Adapter Pattern</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Tool exports are inputs, not the contract. Adapters normalize Figma,
+      Tokens Studio, and other formats into VDS:
+    </CaseStudyMutedText>
+
+<CodeBlock
+  language="json"
+  analyticsLabel="vds_adapter_before"
+  code={`// Before: Figma export (tool-specific)
+{
+  "@primitives": {
+    "$color": {
+      "primary": {
+        "$type": "color",
+        "$value": "{@primitives.$color.blue.500}",
+        "$variable_metadata": {
+          "figmaId": "VariableID:502:227"
+        }
+      }
+    }
+  }
+}`}
+/>
+
+<CodeBlock
+  language="json"
+  analyticsLabel="vds_adapter_after"
+  code={`// After: VDS contract (normalized)
+{
+  "primitives": {
+    "color": {
+      "primary": {
+        "$type": "color",
+        "$value": "{primitives.color.blue.500}",
+        "$extensions": {
+          "figma": { "variableId": "VariableID:502:227" }
+        }
+      }
+    }
+  }
+}`}
+/>
+
+    <CaseStudySubheading>Governance Built In</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Variable names are treated like an API. Changes are reviewed before merge:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Naming rules validated in CI (dot-separated paths, no hyphens)</li>
+      <li>References validated for resolution and cycles</li>
+      <li>Breaking changes require MAJOR version bump</li>
+      <li>Deprecation strategy with migration paths</li>
+    </CaseStudyMutedList>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Why Three Layers">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Some approaches add <em>mapped</em> collections between base and semantic
+      layers to handle brand switching. One mapped collection becomes two.
+      Two becomes three. Before long, your variables panel looks like
+      inception--layers within layers, and you need a specialist to trace
+      which value actually renders.
+    </CaseStudyParagraph>
+    <CaseStudyParagraph>
+      VDS takes a different position: <strong>file selection replaces mapped
+      layers</strong>. The primitives already exist. JSON has structure. Folders
+      have hierarchy. CSS has <code>@layer</code>, <code>@import</code>, and
+      cascade. Use them.
+    </CaseStudyParagraph>
+
+    <CaseStudySubheading>The Cost of Mapped Layers</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Each additional layer between base and alias creates compounding overhead:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>
+        <strong>Second naming decision:</strong> Every semantic variable now
+        requires naming the intermediate mapped value too. Double the naming
+        surface. Double the review scope.
+      </li>
+      <li>
+        <strong>Extra reference hop:</strong> Every resolution traverses one
+        more layer. More hops, more failure points, slower builds.
+      </li>
+      <li>
+        <strong>Extra audit surface:</strong> Another collection to review,
+        validate, and keep in sync across brands. Another place for drift.
+      </li>
+      <li>
+        <strong>Expanded decision surface:</strong> Instead of one file
+        selection, you now manage collection modes in cramped tool panels.
+      </li>
+      <li>
+        <strong>Artificial complexity:</strong> Complexity that benefits
+        specialists, not teams. Variables should be easy to reason about.
+      </li>
+    </CaseStudyMutedList>
+
+<CodeBlock
+  language="json"
+  analyticsLabel="vds_non_conformant"
+  code={`// Non-conformant: Mapped layer adds overhead
+{
+  "mapped": {
+    "brand": {
+      "primary": { "$type": "color", "$value": "{color.blue.500}" }
+    }
+  },
+  "color": {
+    "surface": {
+      "brand": { "$type": "color", "$value": "{mapped.brand.primary}" }
+    }
+  }
+}`}
+/>
+
+    <CaseStudySubheading>File Selection Rule (JSON-as-API)</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Brand selection happens by file list, not by mapped collections in a
+      design tool panel. Pick one folder. The semantic names stay the same.
+      The values change. The folder structure is the switch.
+    </CaseStudyMutedText>
+
+<CodeBlock
+  language="text"
+  analyticsLabel="vds_file_selection"
+  code={`tokens/
+  base/              # Shared scales (all brands)
+    color.json
+    spacing.json
+  brand-a/           # Brand A values
+    color.json       # color.brand.primary = #0066cc
+  brand-b/           # Brand B values
+    color.json       # color.brand.primary = #ff0066`}
+/>
+
+<CodeBlock
+  language="json"
+  analyticsLabel="vds_build_selection"
+  code={`// Build config selects brand by source list
+{
+  "source": [
+    "tokens/base/**/*.json",
+    "tokens/brand-a/**/*.json"
+  ]
+}`}
+/>
+
+    <CaseStudyMutedText className="mt-4">
+      If you can select files, you can switch brands. No extra collection
+      required. One decision point. CSS cascade layers handle consumption.
+    </CaseStudyMutedText>
+
+<CodeBlock
+  language="css"
+  analyticsLabel="vds_css_layers"
+  code={`/* CSS cascade layers for brand selection at consumption */
+@layer base, brand;
+@import "variables-base.css" layer(base);
+@import "variables-brand-a.css" layer(brand);`}
+/>
+
+    <CaseStudySubheading>Why This Is Faster</CaseStudySubheading>
+    <CaseStudyMutedList className="space-y-2">
+      <li>One alias hop from base is the default. Direct path. No detours.</li>
+      <li>No extra collection to review, audit, or explain to new team members.</li>
+      <li>The three-layer graph keeps review scope small and traceable.</li>
+      <li>CSS <code>@layer</code> and <code>@import</code> handle cascade. Use the platform.</li>
+      <li>Decisions live in files and build inputs, not cramped plugin panels.</li>
+      <li>Any engineer can read the folder structure and understand the brand switch.</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Why JSON-as-API Works</CaseStudySubheading>
+    <CaseStudyMutedText>
+      The primitives already exist. You do not need new abstraction layers:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>
+        <strong>Files are already versioned.</strong> Git tracks every change.
+        History, blame, diff, rollback for free.
+      </li>
+      <li>
+        <strong>Paths are already structured.</strong> <code>tokens/brand-a/color.json</code>
+        is self-documenting. No second naming system required.
+      </li>
+      <li>
+        <strong>Build tools already select files.</strong> Style Dictionary's
+        <code>source</code> array. CSS <code>@import</code>. The selector exists.
+      </li>
+      <li>
+        <strong>Engineers already know this pattern.</strong> Every dev
+        understands folder structure. Not every dev wants to learn design tool
+        panel quirks.
+      </li>
+      <li>
+        <strong>One source of truth.</strong> The JSON in version control is
+        canonical. The design tool panel is a view, not the source.
+      </li>
+    </CaseStudyMutedList>
+    <CaseStudyMutedText className="mt-4">
+      Mapped layers are a workaround for tools that cannot do file selection.
+      We have tools that can.
+    </CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Technical Implementation">
+  <div className="space-y-6">
+    <CaseStudySubheading className="mt-0">DTCG 2025.10 Compliance</CaseStudySubheading>
+    <CaseStudyMutedText>
+      VDS builds on the W3C Design Tokens Community Group specification, adding
+      governance without reinventing the format:
+    </CaseStudyMutedText>
+
+<CodeBlock
+  language="json"
+  analyticsLabel="vds_dtcg_types"
+  code={`{
+  "border": {
+    "default": {
+      "$type": "border",
+      "$value": {
+        "width": { "value": 1, "unit": "px" },
+        "color": {
+          "colorSpace": "srgb",
+          "components": [0.88, 0.88, 0.88],
+          "hex": "#e0e0e0"
+        },
+        "style": "solid"
+      }
+    }
+  },
+  "typography": {
+    "heading": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.primary}",
+        "fontSize": "{font.size.lg}",
+        "fontWeight": "{font.weight.bold}",
+        "lineHeight": 1.5
+      }
+    }
+  }
+}`}
+/>
+
+    <CaseStudySubheading>Semantic Versioning</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Breaking changes are explicit. Consumers can plan upgrades:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>
+        <strong>MAJOR:</strong> Variable renamed or removed, type changed
+      </li>
+      <li>
+        <strong>MINOR:</strong> New variables, new modes, non-breaking additions
+      </li>
+      <li>
+        <strong>PATCH:</strong> Value tweaks, documentation updates
+      </li>
+    </CaseStudyMutedList>
+
+<CodeBlock
+  language="json"
+  analyticsLabel="vds_deprecation"
+  code={`{
+  "color": {
+    "primary": {
+      "$type": "color",
+      "$value": "#0066cc",
+      "$deprecated": true,
+      "$description": "Use color.brand.primary instead"
+    },
+    "brand": {
+      "primary": {
+        "$type": "color",
+        "$value": "#0066cc"
+      }
+    }
+  }
+}`}
+/>
+
+    <CaseStudySubheading>Validation in CI</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Every PR runs validation before merge:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>JSON schema validation for DTCG compliance</li>
+      <li>Naming convention checks (dot-separated, lowercase)</li>
+      <li>Reference resolution and cycle detection</li>
+      <li>Mode key consistency within collections</li>
+      <li>Breaking change detection with release notes requirements</li>
+    </CaseStudyMutedList>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="What VDS Is and Isn't">
+  <div className="space-y-6">
+    <CaseStudySubheading className="mt-0">VDS Is</CaseStudySubheading>
+    <CaseStudyMutedList className="space-y-2">
+      <li>A governance layer on DTCG 2025.10 format</li>
+      <li>Rules for naming, validation, and versioning</li>
+      <li>Adapter patterns for tool integration</li>
+      <li>A standard for managing variables in version control</li>
+      <li>Three layers only: Base, Alias, Component</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>VDS Is Not</CaseStudySubheading>
+    <CaseStudyMutedList className="space-y-2">
+      <li>A new format (uses DTCG 2025.10)</li>
+      <li>A tool (works with existing tools)</li>
+      <li>A design system (governs variables, not design decisions)</li>
+      <li>A runtime library (validation is build-time)</li>
+      <li>A place for extra abstraction layers</li>
+    </CaseStudyMutedList>
+
+    <CaseStudyParagraph className="mt-8">
+      VDS succeeds when teams adopt it without confusion, variables are
+      validated automatically, design and code stay aligned, and tools work
+      together via DTCG format and adapters.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Impact & Vision">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Variable Design Standard addresses foundational infrastructure gaps:
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-4">
+      <li>
+        <strong>Solves tool lock-in</strong> through adapter patterns that
+        normalize any tool output into a portable contract format
+      </li>
+      <li>
+        <strong>Enables design-code alignment</strong> with shared vocabulary
+        ("variables" across CSS, JS, and Figma) and validated handoff
+      </li>
+      <li>
+        <strong>Prevents breaking changes</strong> through SemVer, deprecation
+        strategy, and CI validation before merge
+      </li>
+      <li>
+        <strong>Scales to multi-brand</strong> with file selection rules that
+        keep one semantic name set across brands--no intermediate layers
+      </li>
+      <li>
+        <strong>Reduces governance overhead</strong> by keeping the layer count
+        minimal. Three layers. One decision point for brand selection.
+      </li>
+      <li>
+        <strong>DTCG-compliant</strong> foundation ensures compatibility with
+        W3C standards and the broader tooling ecosystem
+      </li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph className="mt-8">
+      The specification is published as a living document, informed by real
+      design systems work at scale. The goal is to establish an industry
+      standard for design variable governance that teams can adopt regardless
+      of their tool stack--because the contract should outlive any tool choice.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>

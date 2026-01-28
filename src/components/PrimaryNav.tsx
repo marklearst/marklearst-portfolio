@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { useEffectsStore } from '@/stores/cursor-orbs-store'
 
 const navItems = [
   { label: 'about', href: '/about', key: 'about' },
@@ -12,9 +13,109 @@ const navItems = [
   { label: 'artifacts', href: '/artifacts', key: 'artifacts' },
 ]
 
+function CodeToggleIcon({ active }: { active: boolean }) {
+  // Match orbs icon dimensions: size 24, with visual weight at radius ~9
+  const size = 24
+  const textColor = active ? MONOKAI.foreground : '#777777'
+  // Filled circle background like the orbs' visual footprint
+  const bgColor = active ? `${MONOKAI.foreground}18` : '#77777718'
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      fill='none'
+      style={{
+        opacity: active ? 1 : 0.8,
+        transition: 'opacity 300ms',
+        cursor: 'pointer',
+        userSelect: 'none',
+      }}
+    >
+      {/* Filled circle background - radius 11 to match orbs visual weight */}
+      <circle
+        cx={12}
+        cy={12}
+        r={11}
+        fill={bgColor}
+        // style={{ transition: 'fill 300ms' }}
+      />
+      {/* Single line: <On /> or <Off /> */}
+      <text
+        x='12'
+        y='13.5'
+        fontSize='7'
+        fontFamily='monospace'
+        fontWeight='600'
+        fill={textColor}
+        textAnchor='middle'
+        dominantBaseline='middle'
+        // style={{ transition: 'fill 300ms' }}
+      >
+        {active ? '<On/>' : '<Off/>'}
+      </text>
+    </svg>
+  )
+}
+
+function OrbsIcon({ active }: { active: boolean }) {
+  const colors =
+    active ?
+      [
+        '#ffd866', // yellow
+        '#a9dc75', // green
+        '#78dce8', // cyan
+        '#ab9df2', // purple
+        '#ff6188', // pink
+        '#fb9866', // orange
+      ]
+    : Array(6).fill('#777777') // gray when inactive
+
+  const size = 24
+  const radius = 9
+  const dotSize = 2.5
+  const cx = size / 2
+  const cy = size / 2
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      fill='none'
+      style={{
+        animation: active ? 'spin 8s linear infinite' : 'none',
+        opacity: active ? 1 : 0.8,
+        transition: 'opacity 1000ms',
+        cursor: 'pointer',
+        userSelect: 'none',
+      }}
+    >
+      {colors.map((color, i) => {
+        const angle = (i / colors.length) * Math.PI * 2 - Math.PI / 2
+        const x = cx + Math.cos(angle) * radius
+        const y = cy + Math.sin(angle) * radius
+        return (
+          <circle
+            key={i}
+            cx={x}
+            cy={y}
+            r={dotSize}
+            fill={color}
+            style={{ transition: 'fill 300ms' }}
+          />
+        )
+      })}
+    </svg>
+  )
+}
+
 export default function PrimaryNav() {
   const pathname = usePathname()
   const { trackNavigationClick } = useAnalytics()
+  const { orbsVisible, toggleOrbs, neuralTextVisible, toggleNeuralText } =
+    useEffectsStore()
   const navRef = useRef<HTMLElement>(null)
   const indicatorRef = useRef<HTMLDivElement>(null)
   const labelRefs = useRef<Record<string, HTMLSpanElement | null>>({})
@@ -118,8 +219,9 @@ export default function PrimaryNav() {
           width: 0,
           opacity: 0,
           transform: 'translateX(0)',
-          backgroundImage: isHovering
-            ? 'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)'
+          backgroundImage:
+            isHovering ?
+              'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)'
             : 'none',
           backgroundColor: isHovering ? 'transparent' : 'rgba(255,255,255,0.4)',
           backgroundSize: '200% 100%',
@@ -171,6 +273,29 @@ export default function PrimaryNav() {
           </Link>
         )
       })}
+      <div className='w-px h-4 bg-white/10 mx-1' aria-hidden='true' />
+      <button
+        type='button'
+        onClick={toggleNeuralText}
+        className='p-2 rounded-full transition-colors duration-200 hover:bg-white/5'
+        style={{ color: MONOKAI.foreground }}
+        aria-label={
+          neuralTextVisible ? 'Hide code keywords' : 'Show code keywords'
+        }
+        title={neuralTextVisible ? 'Hide code keywords' : 'Show code keywords'}
+      >
+        <CodeToggleIcon active={neuralTextVisible} />
+      </button>
+      <button
+        type='button'
+        onClick={toggleOrbs}
+        className='p-2 rounded-full transition-colors duration-200 hover:bg-white/5'
+        style={{ color: MONOKAI.foreground }}
+        aria-label={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
+        title={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
+      >
+        <OrbsIcon active={orbsVisible} />
+      </button>
     </nav>
   )
 }

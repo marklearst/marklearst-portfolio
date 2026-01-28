@@ -4,7 +4,7 @@ import type { ComponentType, ReactElement } from 'react'
 import matter from 'gray-matter'
 import { estimateReadingTime } from '@/lib/content/reading-time'
 import TerminalNavigationContent from '@/content/artifacts/terminal-navigation.mdx'
-import VariableContractSemverContent from '@/content/artifacts/variable-contract-semver.mdx'
+import VariableDesignStandardSemverContent from '@/content/artifacts/variable-design-standard-semver.mdx'
 
 export type ArtifactFrontmatter = {
   title: string
@@ -38,8 +38,8 @@ const ARTIFACT_ENTRIES: Array<{
     Content: TerminalNavigationContent,
   },
   {
-    fileName: 'variable-contract-semver.mdx',
-    Content: VariableContractSemverContent,
+    fileName: 'variable-design-standard-semver.mdx',
+    Content: VariableDesignStandardSemverContent,
   },
 ]
 

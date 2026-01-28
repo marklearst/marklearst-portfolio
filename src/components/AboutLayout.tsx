@@ -95,7 +95,10 @@ export default function AboutLayout({
               >
                 {section.title}
               </h2>
-              <div style={{ color: `${MONOKAI.foreground}cc` }}>
+              <div
+                className='space-y-4 [&_ul]:mt-4'
+                style={{ color: `${MONOKAI.foreground}cc` }}
+              >
                 {section.content}
               </div>
             </div>
