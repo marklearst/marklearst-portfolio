@@ -1,32 +1,17 @@
 'use client'
 
-import { useRef, useSyncExternalStore } from 'react'
-import { HERO_KEYWORDS } from '@/data/hero-keywords'
+import { useRef } from 'react'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
 import Link from 'next/link'
-import NeuralNetwork from '@/components/ui/NeuralNetwork'
 import { useAnalytics } from '@/hooks/useAnalytics'
-import { useEffectsStore } from '@/stores/cursor-orbs-store'
-
-// Hydration-safe client detection
-const subscribeNoop = () => () => {}
-const getClientSnapshot = () => true
-const getServerSnapshot = () => false
 
 export default function EnhancedHero() {
   const { trackHeroCTAClick, trackExternalLinkClick, getPlatformFromUrl } =
     useAnalytics()
   const heroRef = useRef<HTMLDivElement | null>(null)
   const nameBoxRef = useRef<HTMLDivElement>(null)
-  const neuralTextVisible = useEffectsStore((state) => state.neuralTextVisible)
-
-  const isClient = useSyncExternalStore(
-    subscribeNoop,
-    getClientSnapshot,
-    getServerSnapshot,
-  )
 
   useHeroAnimation(heroRef as React.RefObject<HTMLDivElement>, nameBoxRef)
 
@@ -34,50 +19,18 @@ export default function EnhancedHero() {
     <section
       ref={heroRef}
       className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-24 sm:pt-0 overflow-hidden'
-      style={{ backgroundColor: MONOKAI.background }}
     >
-      {/* Neural background wrapper - fades in with hero */}
-      <div
-        className='neural-bg absolute inset-0 pointer-events-none'
-        style={{ opacity: 0 }}
-      >
-        {/* Dynamic neural network - lines connect to text centers and follow movement */}
-        {isClient && <NeuralNetwork />}
-
-        {/* Background code keywords - DENSE with Monokai colors */}
+      {/* Monokai gradient line at top */}
+      <div className='absolute top-0 left-0 right-0 h-1'>
         <div
-          className='absolute inset-0 overflow-hidden transition-opacity duration-500'
-          style={{ opacity: neuralTextVisible ? 1 : 0 }}
-        >
-          {HERO_KEYWORDS.map((kw, i) => (
-            <div
-              key={i}
-              className={`bg-keyword absolute font-mono ${kw.size}`}
-              style={{
-                left: kw.x,
-                top: kw.y,
-                color: kw.color,
-                opacity: kw.opacity,
-              }}
-            >
-              {kw.text}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Subtle gradient mesh - NOT dominant */}
-      <div className='absolute inset-0 opacity-10'>
-        <div
-          className='absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px]'
-          style={{ backgroundColor: MONOKAI.cyan }}
-        />
-        <div
-          className='absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full blur-[120px]'
-          style={{ backgroundColor: MONOKAI.purple }}
+          className='w-full h-full animate-gradient-x'
+          style={{
+            background:
+              'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)',
+            backgroundSize: '200% 100%',
+          }}
         />
       </div>
-
       {/* Gradient fade at bottom for smooth transition */}
       <div
         className='absolute bottom-0 left-0 right-0 h-64 pointer-events-none'
@@ -243,75 +196,6 @@ export default function EnhancedHero() {
               GitHub
             </span>
           </a>
-        </div>
-
-        {/* Badges - Correct order: Design Systems, React, WCAG, Open Source, Dev Tools, Health Tech */}
-        <div className='flex flex-wrap gap-3 font-mono text-sm'>
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.purple}20`,
-              color: MONOKAI.purple,
-              border: `1px solid ${MONOKAI.purple}40`,
-            }}
-          >
-            Design Systems
-          </span>
-
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.cyan}20`,
-              color: MONOKAI.cyan,
-              border: `1px solid ${MONOKAI.cyan}40`,
-            }}
-          >
-            React • TypeScript
-          </span>
-
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.green}20`,
-              color: MONOKAI.green,
-              border: `1px solid ${MONOKAI.green}40`,
-            }}
-          >
-            WCAG • A11y
-          </span>
-
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.orange}20`,
-              color: MONOKAI.orange,
-              border: `1px solid ${MONOKAI.orange}40`,
-            }}
-          >
-            Open Source
-          </span>
-
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.yellow}20`,
-              color: MONOKAI.yellow,
-              border: `1px solid ${MONOKAI.yellow}40`,
-            }}
-          >
-            Developer Tools
-          </span>
-
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.pink}20`,
-              color: MONOKAI.pink,
-              border: `1px solid ${MONOKAI.pink}40`,
-            }}
-          >
-            Health Tech
-          </span>
         </div>
       </div>
     </section>
