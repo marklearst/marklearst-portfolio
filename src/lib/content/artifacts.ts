@@ -5,6 +5,7 @@ import matter from 'gray-matter'
 import { estimateReadingTime } from '@/lib/content/reading-time'
 import TerminalNavigationContent from '@/content/artifacts/terminal-navigation.mdx'
 import VariableDesignStandardSemverContent from '@/content/artifacts/variable-design-standard-semver.mdx'
+import AgenticWorkflowsContent from '@/content/artifacts/agentic-workflows-claude-cursor.mdx'
 
 export type ArtifactFrontmatter = {
   title: string
@@ -33,6 +34,10 @@ const ARTIFACT_ENTRIES: Array<{
   fileName: string
   Content: MDXContent
 }> = [
+  {
+    fileName: 'agentic-workflows-claude-cursor.mdx',
+    Content: AgenticWorkflowsContent,
+  },
   {
     fileName: 'terminal-navigation.mdx',
     Content: TerminalNavigationContent,
