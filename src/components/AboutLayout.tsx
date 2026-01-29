@@ -55,7 +55,6 @@ export default function AboutLayout({
   return (
     <main
       className='min-h-screen relative overflow-hidden'
-      style={{ backgroundColor: MONOKAI.background }}
     >
       <div className='absolute inset-0 pointer-events-none'>
         <div

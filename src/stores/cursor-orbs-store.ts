@@ -6,10 +6,12 @@ import { persist } from 'zustand/middleware'
 interface EffectsState {
   orbsVisible: boolean
   neuralTextVisible: boolean
+  homeNeuralState: boolean
   toggleOrbs: () => void
   toggleNeuralText: () => void
   setOrbsVisible: (visible: boolean) => void
   setNeuralTextVisible: (visible: boolean) => void
+  setHomeNeuralState: (visible: boolean) => void
 }
 
 export const useEffectsStore = create<EffectsState>()(
@@ -17,11 +19,13 @@ export const useEffectsStore = create<EffectsState>()(
     (set) => ({
       orbsVisible: true,
       neuralTextVisible: true,
+      homeNeuralState: true,
       toggleOrbs: () => set((state) => ({ orbsVisible: !state.orbsVisible })),
       toggleNeuralText: () =>
         set((state) => ({ neuralTextVisible: !state.neuralTextVisible })),
       setOrbsVisible: (visible) => set({ orbsVisible: visible }),
       setNeuralTextVisible: (visible) => set({ neuralTextVisible: visible }),
+      setHomeNeuralState: (visible) => set({ homeNeuralState: visible }),
     }),
     {
       name: 'effects-preference',

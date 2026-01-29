@@ -285,8 +285,10 @@ export default function NeuralNetwork() {
       uniqueNodes.add(conn.to)
     })
 
+    const nodeArray = Array.from(uniqueNodes).sort((a, b) => a - b)
+
     // Get colors for each node from keywords
-    uniqueNodes.forEach((nodeId) => {
+    nodeArray.forEach((nodeId) => {
       const el = keywordNodesRef.current[nodeId]
       const color = el?.style.color || MONOKAI.cyan
 
@@ -354,8 +356,7 @@ export default function NeuralNetwork() {
         const toPos = nodePositionsRef.current.get(conn.to)
 
         if (!fromPos || !toPos) {
-          // Remove orb if positions not available
-          orbsRef.current.splice(i, 1)
+          // Skip drawing if positions not available yet, but keep orb alive
           continue
         }
 

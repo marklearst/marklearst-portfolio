@@ -14,7 +14,7 @@ const navItems = [
 ]
 
 function CodeToggleIcon({ active }: { active: boolean }) {
-  const [text, setText] = useState(active ? '<On />' : '<Off />')
+  const [text, setText] = useState(active ? '<On/>' : '<Off/>')
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
   const isFirstRender = useRef(true)
 
@@ -26,8 +26,8 @@ function CodeToggleIcon({ active }: { active: boolean }) {
 
     const sequence =
       active ?
-        ['<Off />', '<Of />', '<O />', '<On />']
-      : ['<On />', '<O />', '<Of />', '<Off />']
+        ['<Off/>', '<Of/>', '<O/>', '<On/>']
+      : ['<On/>', '<O/>', '<Of/>', '<Off/>']
 
     let currentIndex = 0
 
@@ -35,7 +35,7 @@ function CodeToggleIcon({ active }: { active: boolean }) {
       if (currentIndex < sequence.length) {
         setText(sequence[currentIndex])
         currentIndex++
-        timeoutRef.current = setTimeout(animate, 50)
+        timeoutRef.current = setTimeout(animate, 100)
       }
     }
 
@@ -48,20 +48,19 @@ function CodeToggleIcon({ active }: { active: boolean }) {
   }, [active])
 
   // Increased size for better visibility
-  const size = 32
-  const color = active ? MONOKAI.cyan : MONOKAI.foreground
-  const bgColor = active ? `${MONOKAI.green}08` : `${MONOKAI.pink}08`
+  const size = 48
+  const color = active ? MONOKAI.cyan : '#777777'
+  const bgColor = active ? `${MONOKAI.cyan}00` : `${MONOKAI.pink}00`
 
   return (
     <svg
-      width={size * 2}
+      width={size}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       fill='none'
       style={{
         cursor: 'pointer',
         userSelect: 'none',
-        opacity: active ? 1 : 0.3,
       }}
     >
       <circle
@@ -74,9 +73,9 @@ function CodeToggleIcon({ active }: { active: boolean }) {
       <text
         x='50%'
         y='55%'
-        fontSize='16'
+        fontSize='14'
         fontFamily='monospace'
-        fontWeight='600'
+        fontWeight='700'
         fill={color}
         textAnchor='middle'
         dominantBaseline='middle'
@@ -91,12 +90,12 @@ function OrbsIcon({ active }: { active: boolean }) {
   const colors =
     active ?
       [
-        '#ffd866', // yellow
-        '#a9dc75', // green
-        '#78dce8', // cyan
-        '#ab9df2', // purple
-        '#ff6188', // pink
-        '#fb9866', // orange
+        MONOKAI.yellow,
+        MONOKAI.green,
+        MONOKAI.cyan,
+        MONOKAI.purple,
+        MONOKAI.pink,
+        MONOKAI.orange,
       ]
     : Array(6).fill('#777777') // gray when inactive
 
@@ -142,13 +141,40 @@ function OrbsIcon({ active }: { active: boolean }) {
 export default function PrimaryNav() {
   const pathname = usePathname()
   const { trackNavigationClick } = useAnalytics()
-  const { orbsVisible, toggleOrbs, neuralTextVisible, toggleNeuralText } =
-    useEffectsStore()
+  const {
+    orbsVisible,
+    toggleOrbs,
+    neuralTextVisible,
+    setNeuralTextVisible,
+    homeNeuralState,
+    setHomeNeuralState,
+  } = useEffectsStore()
   const navRef = useRef<HTMLElement>(null)
   const indicatorRef = useRef<HTMLDivElement>(null)
   const labelRefs = useRef<Record<string, HTMLSpanElement | null>>({})
   const [hoverKey, setHoverKey] = useState<string | null>(null)
   const [workInView, setWorkInView] = useState(false)
+
+  // Handle neural text state based on route
+  useEffect(() => {
+    if (pathname === '/') {
+      // On home, restore user preference
+      setNeuralTextVisible(homeNeuralState)
+    } else {
+      // On other pages, default to off (for reading clarity)
+      setNeuralTextVisible(false)
+    }
+  }, [pathname, homeNeuralState, setNeuralTextVisible])
+
+  const handleToggleNeuralText = () => {
+    const nextState = !neuralTextVisible
+    setNeuralTextVisible(nextState)
+
+    // If on home page, update the preference
+    if (pathname === '/') {
+      setHomeNeuralState(nextState)
+    }
+  }
 
   const isActive = (key: string) => {
     if (key === 'about') return pathname === '/about'
@@ -234,13 +260,13 @@ export default function PrimaryNav() {
   return (
     <nav
       ref={navRef}
-      className='relative flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md px-3 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.35)]'
+      className='relative flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md pl-5 pr-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)]'
       onMouseLeave={() => setHoverKey(null)}
     >
       <div
         ref={indicatorRef}
         aria-hidden='true'
-        className={`pointer-events-none absolute bottom-2.5 left-0 h-[2px] rounded-full transition-[transform,width,opacity,background] duration-300 ease-out ${
+        className={`pointer-events-none absolute bottom-3 left-0 h-[2px] rounded-full transition-[transform,width,opacity,background] duration-300 ease-out ${
           isHovering ? 'animate-gradient-x' : ''
         }`}
         style={{
@@ -301,12 +327,18 @@ export default function PrimaryNav() {
           </Link>
         )
       })}
-      <div className='w-px h-4 bg-white/10 mx-1' aria-hidden='true' />
+      <div
+        className='w-px h-10 mr-3 mx-1'
+        style={{
+          background:
+            'linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent)',
+        }}
+        aria-hidden='true'
+      />
       <button
         type='button'
-        onClick={toggleNeuralText}
-        className='p-2 rounded-full transition-colors duration-200 hover:bg-white/5'
-        style={{ color: MONOKAI.foreground }}
+        onClick={handleToggleNeuralText}
+        onMouseEnter={() => setHoverKey(null)}
         aria-label={
           neuralTextVisible ? 'Hide code keywords' : 'Show code keywords'
         }
@@ -317,7 +349,8 @@ export default function PrimaryNav() {
       <button
         type='button'
         onClick={toggleOrbs}
-        className='p-2 rounded-full transition-colors duration-200 hover:bg-white/5'
+        onMouseEnter={() => setHoverKey(null)}
+        className='p-2'
         style={{ color: MONOKAI.foreground }}
         aria-label={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
         title={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}

@@ -78,6 +78,17 @@ export default function FeaturedWork() {
       className='pt-32 pb-32 px-6 relative overflow-hidden'
       style={{ backgroundColor: MONOKAI.background }}
     >
+      {/* Monokai gradient line at top */}
+      <div className='absolute top-0 left-0 right-0 h-1'>
+        <div
+          className='w-full h-full animate-gradient-x'
+          style={{
+            background:
+              'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)',
+            backgroundSize: '200% 100%',
+          }}
+        />
+      </div>
       {/* Atmospheric gradients */}
       <div className='absolute inset-0'>
         <div className='absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[100px]' />
