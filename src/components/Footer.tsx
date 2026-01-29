@@ -36,26 +36,26 @@ function SocialLink({ link }: { link: SocialLinkData }) {
           href: link.href,
         })
       }}
-      className='footer-link group flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 hover:scale-105'
+      className='footer-link relative flex items-center gap-3 px-5 py-3 rounded-xl'
       style={{
-        backgroundColor: `${link.color}10`,
-        border: `1px solid ${link.color}30`,
+        backgroundColor: 'transparent',
+        color: MONOKAI.foreground,
+        outline: `0px solid ${link.color}`,
+        outlineOffset: '0px',
       }}
       onMouseEnter={(e) => {
-        const target = e.currentTarget
-        target.style.boxShadow = `0 0 25px ${link.color}40, 0 0 50px ${link.color}20`
-        target.style.borderColor = `${link.color}60`
-        target.style.backgroundColor = `${link.color}20`
+        e.currentTarget.style.borderColor = link.color
+        e.currentTarget.style.outline = `3px solid ${link.color}`
+        e.currentTarget.style.outlineOffset = '3px'
       }}
       onMouseLeave={(e) => {
-        const target = e.currentTarget
-        target.style.boxShadow = 'none'
-        target.style.borderColor = `${link.color}30`
-        target.style.backgroundColor = `${link.color}10`
+        e.currentTarget.style.borderColor = `${link.color}40`
+        e.currentTarget.style.outline = `0px solid ${link.color}`
+        e.currentTarget.style.outlineOffset = '0px'
       }}
     >
       <span style={{ color: link.color }}>{link.icon}</span>
-      <span className='font-mono text-sm' style={{ color: link.color }}>
+      <span className='font-mono text-sm' style={{ color: MONOKAI.foreground }}>
         {link.name}
       </span>
     </a>
@@ -83,7 +83,7 @@ export default function Footer() {
 
       gsap.to('.footer-content', {
         scrollTrigger: {
-          trigger: '.footer-content',
+          trigger: footerRef.current,
           start: 'top 90%',
           toggleActions: 'play none none none',
         },
@@ -95,7 +95,7 @@ export default function Footer() {
 
       gsap.to('.footer-link', {
         scrollTrigger: {
-          trigger: '.footer-links',
+          trigger: footerRef.current,
           start: 'top 90%',
           toggleActions: 'play none none none',
         },
@@ -178,6 +178,17 @@ export default function Footer() {
       ref={footerRef}
       className='bg-black relative py-20 px-6 border-t border-white/5 overflow-hidden'
     >
+      {/* Monokai gradient line at top */}
+      <div className='absolute top-0 left-0 right-0 h-1'>
+        <div
+          className='w-full h-full animate-gradient-x'
+          style={{
+            background:
+              'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)',
+            backgroundSize: '200% 100%',
+          }}
+        />
+      </div>
       {/* Background elements */}
       <div className='absolute inset-0'>
         <div className='absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-teal-500/5 rounded-full blur-[100px]' />
