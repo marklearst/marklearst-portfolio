@@ -40,7 +40,7 @@ code {
 }
 
 a {
-  @apply transition-all;
+  @apply transition-colors duration-200;
 }
 
 /* Focus states - subtle, readable */
@@ -229,19 +229,3 @@ html[data-transitioning='true'] {
   animation: konami-fade 4s ease-in-out;
 }
 
-/* Discovery pulse for interactive elements - plays once */
-@keyframes discovery-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1.15);
-    opacity: 1;
-  }
-}
-
-.animate-discovery-pulse {
-  animation: discovery-pulse 0.6s ease-in-out 2s 2;
-}
