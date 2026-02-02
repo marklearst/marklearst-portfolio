@@ -13,7 +13,13 @@ const navItems = [
   { label: 'artifacts', href: '/artifacts', key: 'artifacts' },
 ]
 
-function CodeToggleIcon({ active }: { active: boolean }) {
+function CodeToggleIcon({
+  active,
+  discovering = false,
+}: {
+  active: boolean
+  discovering?: boolean
+}) {
   const [text, setText] = useState(active ? '<On/>' : '<Off/>')
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
   const isFirstRender = useRef(true)
@@ -24,9 +30,8 @@ function CodeToggleIcon({ active }: { active: boolean }) {
       return
     }
 
-    const sequence =
-      active ?
-        ['<Off/>', '<Of/>', '<O/>', '<On/>']
+    const sequence = active
+      ? ['<Off/>', '<Of/>', '<O/>', '<On/>']
       : ['<On/>', '<O/>', '<Of/>', '<Off/>']
 
     let currentIndex = 0
@@ -47,10 +52,9 @@ function CodeToggleIcon({ active }: { active: boolean }) {
     }
   }, [active])
 
-  // Increased size for better visibility
   const size = 48
-  const color = active ? MONOKAI.cyan : '#777777'
-  const bgColor = active ? `${MONOKAI.cyan}00` : `${MONOKAI.pink}00`
+  // During discovery, show the "on" color to hint at functionality
+  const color = active || discovering ? MONOKAI.cyan : '#777777'
 
   return (
     <svg
@@ -63,13 +67,6 @@ function CodeToggleIcon({ active }: { active: boolean }) {
         userSelect: 'none',
       }}
     >
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={size / 2 - 2}
-        fill={bgColor}
-        style={{ transition: 'fill 300ms' }}
-      />
       <text
         x='50%'
         y='55%'
@@ -79,6 +76,9 @@ function CodeToggleIcon({ active }: { active: boolean }) {
         fill={color}
         textAnchor='middle'
         dominantBaseline='middle'
+        style={{
+          transition: 'fill 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        }}
       >
         {text}
       </text>
@@ -86,18 +86,23 @@ function CodeToggleIcon({ active }: { active: boolean }) {
   )
 }
 
-function OrbsIcon({ active }: { active: boolean }) {
-  const colors =
-    active ?
-      [
-        MONOKAI.yellow,
-        MONOKAI.green,
-        MONOKAI.cyan,
-        MONOKAI.purple,
-        MONOKAI.pink,
-        MONOKAI.orange,
-      ]
-    : Array(6).fill('#777777') // gray when inactive
+function OrbsIcon({
+  active,
+  discovering = false,
+}: {
+  active: boolean
+  discovering?: boolean
+}) {
+  const monoColors = [
+    MONOKAI.yellow,
+    MONOKAI.green,
+    MONOKAI.cyan,
+    MONOKAI.purple,
+    MONOKAI.pink,
+    MONOKAI.orange,
+  ]
+  // During discovery, show the vibrant colors to hint at functionality
+  const colors = active || discovering ? monoColors : Array(6).fill('#777777')
 
   const size = 24
   const radius = 9
@@ -112,9 +117,8 @@ function OrbsIcon({ active }: { active: boolean }) {
       viewBox={`0 0 ${size} ${size}`}
       fill='none'
       style={{
-        animation: active ? 'spin 8s linear infinite' : 'none',
-        opacity: active ? 1 : 0.8,
-        transition: 'opacity 1000ms',
+        opacity: active || discovering ? 1 : 0.8,
+        transition: 'opacity 400ms cubic-bezier(0.16, 1, 0.3, 1)',
         cursor: 'pointer',
         userSelect: 'none',
       }}
@@ -130,7 +134,11 @@ function OrbsIcon({ active }: { active: boolean }) {
             cy={y}
             r={dotSize}
             fill={color}
-            style={{ transition: 'fill 300ms' }}
+            style={{
+              transition: `fill 400ms cubic-bezier(0.16, 1, 0.3, 1) ${
+                i * 50
+              }ms`,
+            }}
           />
         )
       })}
@@ -152,8 +160,75 @@ export default function PrimaryNav() {
   const navRef = useRef<HTMLElement>(null)
   const indicatorRef = useRef<HTMLDivElement>(null)
   const labelRefs = useRef<Record<string, HTMLSpanElement | null>>({})
+  const codeButtonRef = useRef<HTMLButtonElement>(null)
+  const orbsButtonRef = useRef<HTMLButtonElement>(null)
   const [hoverKey, setHoverKey] = useState<string | null>(null)
   const [workInView, setWorkInView] = useState(false)
+
+  // Discovery animation state - pulses colors to hint at toggle functionality
+  const [codeDiscovering, setCodeDiscovering] = useState(false)
+  const [orbsDiscovering, setOrbsDiscovering] = useState(false)
+
+  // Discovery animation: pulse colors with WAAPI for smooth compositor timing
+  useEffect(() => {
+    // Only run discovery if both toggles are off (default state)
+    if (neuralTextVisible || orbsVisible) return
+    if (typeof Element === 'undefined' || !Element.prototype.animate) return
+
+    const pulseIterations = 2
+    const pulseDuration = 1200 // ms per pulse cycle
+    const codeDelay = 3000 // Start after hero animation completes
+    const orbsDelay = 3500 // Stagger orbs after code toggle
+
+    const runDiscovery = (
+      element: HTMLButtonElement | null,
+      delay: number,
+      setDiscovering: (value: boolean) => void,
+    ) => {
+      if (!element) return () => {}
+
+      const animation = element.animate(
+        [{ opacity: 0.55 }, { opacity: 1 }, { opacity: 0.8 }],
+        {
+          duration: pulseDuration,
+          iterations: pulseIterations,
+          delay,
+          easing: 'ease-out',
+        },
+      )
+
+      const startTimeout = window.setTimeout(
+        () => setDiscovering(true),
+        delay,
+      )
+      const endTimeout = window.setTimeout(
+        () => setDiscovering(false),
+        delay + pulseDuration * pulseIterations,
+      )
+
+      return () => {
+        animation.cancel()
+        window.clearTimeout(startTimeout)
+        window.clearTimeout(endTimeout)
+      }
+    }
+
+    const cleanupCode = runDiscovery(
+      codeButtonRef.current,
+      codeDelay,
+      setCodeDiscovering,
+    )
+    const cleanupOrbs = runDiscovery(
+      orbsButtonRef.current,
+      orbsDelay,
+      setOrbsDiscovering,
+    )
+
+    return () => {
+      cleanupCode()
+      cleanupOrbs()
+    }
+  }, [neuralTextVisible, orbsVisible]) // Only run once on mount
 
   // Handle neural text state based on route
   useEffect(() => {
@@ -206,10 +281,10 @@ export default function PrimaryNav() {
     const navRect = navEl.getBoundingClientRect()
     const labelRect = labelEl.getBoundingClientRect()
     const left = labelRect.left - navRect.left
-    const width = labelRect.width
+    const width = labelRect.width - 1
 
-    indicatorEl.style.width = `${width - 1}px`
-    indicatorEl.style.transform = `translateX(${left - 1}px)`
+    // Use transform only (GPU-accelerated) - scaleX for width, translateX for position
+    indicatorEl.style.transform = `translateX(${left - 1}px) scaleX(${width})`
     indicatorEl.style.opacity = '1'
   }
 
@@ -266,16 +341,16 @@ export default function PrimaryNav() {
       <div
         ref={indicatorRef}
         aria-hidden='true'
-        className={`pointer-events-none absolute bottom-3 left-0 h-[2px] rounded-full transition-[transform,width,opacity,background] duration-300 ease-out ${
+        className={`pointer-events-none absolute bottom-3 left-0 h-[2px] rounded-full transition-[transform,opacity,background] duration-300 ease-out ${
           isHovering ? 'animate-gradient-x' : ''
         }`}
         style={{
-          width: 0,
+          width: 1,
           opacity: 0,
-          transform: 'translateX(0)',
-          backgroundImage:
-            isHovering ?
-              'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)'
+          transform: 'translateX(0) scaleX(0)',
+          transformOrigin: 'left',
+          backgroundImage: isHovering
+            ? 'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)'
             : 'none',
           backgroundColor: isHovering ? 'transparent' : 'rgba(255,255,255,0.4)',
           backgroundSize: '200% 100%',
@@ -336,27 +411,31 @@ export default function PrimaryNav() {
         aria-hidden='true'
       />
       <button
+        ref={codeButtonRef}
         type='button'
         onClick={handleToggleNeuralText}
         onMouseEnter={() => setHoverKey(null)}
-        className='animate-discovery-pulse'
         aria-label={
           neuralTextVisible ? 'Hide code keywords' : 'Show code keywords'
         }
         title={neuralTextVisible ? 'Hide code keywords' : 'Show code keywords'}
       >
-        <CodeToggleIcon active={neuralTextVisible} />
+        <CodeToggleIcon
+          active={neuralTextVisible}
+          discovering={codeDiscovering}
+        />
       </button>
       <button
+        ref={orbsButtonRef}
         type='button'
         onClick={toggleOrbs}
         onMouseEnter={() => setHoverKey(null)}
-        className='p-2 animate-discovery-pulse'
-        style={{ color: MONOKAI.foreground, animationDelay: '2.3s' }}
+        className='p-2'
+        style={{ color: MONOKAI.foreground }}
         aria-label={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
         title={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
       >
-        <OrbsIcon active={orbsVisible} />
+        <OrbsIcon active={orbsVisible} discovering={orbsDiscovering} />
       </button>
     </nav>
   )
