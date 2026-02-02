@@ -245,3 +245,56 @@ html[data-transitioning='true'] {
 .animate-konami-fade {
   animation: konami-fade 4s ease-in-out;
 }
+
+/* Timeline styles - clean, minimal, Vercel/Apple aesthetic */
+.timeline-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 20px;
+}
+
+.timeline-entry {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.timeline-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: #78dce8;
+}
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.timeline-year {
+  font-weight: 500;
+  color: #fcfcfa;
+}
+
+.timeline-role {
+  color: rgba(252, 252, 250, 0.7);
+  font-size: 0.9375rem;
+}
+
+.timeline-description {
+  color: rgba(252, 252, 250, 0.5);
+  font-size: 0.875rem;
+  margin-top: 2px;
+}
+
+.timeline-subsection {
+  margin-bottom: 40px;
+}
+
+.timeline-subsection:last-child {
+  margin-bottom: 0;
+}
