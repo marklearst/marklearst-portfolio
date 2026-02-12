@@ -6,6 +6,7 @@ import { estimateReadingTime } from '@/lib/content/reading-time'
 import TerminalNavigationContent from '@/content/artifacts/terminal-navigation.mdx'
 import VariableDesignStandardSemverContent from '@/content/artifacts/variable-design-standard-semver.mdx'
 import AgenticWorkflowsContent from '@/content/artifacts/agentic-workflows-claude-cursor.mdx'
+import A11yCompanionV2ContrastHonestyContent from '@/content/artifacts/a11y-companion-v2-contrast-honesty.mdx'
 
 export type ArtifactFrontmatter = {
   title: string
@@ -34,6 +35,10 @@ const ARTIFACT_ENTRIES: Array<{
   fileName: string
   Content: MDXContent
 }> = [
+  {
+    fileName: 'a11y-companion-v2-contrast-honesty.mdx',
+    Content: A11yCompanionV2ContrastHonestyContent,
+  },
   {
     fileName: 'agentic-workflows-claude-cursor.mdx',
     Content: AgenticWorkflowsContent,
