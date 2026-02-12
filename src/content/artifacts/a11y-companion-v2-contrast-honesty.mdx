@@ -1,0 +1,84 @@
+---
+title: "a11y Companion v2.0.0: Contrast Tools Shouldn't Lie"
+slug: a11y-companion-v2
+summary: Why the v2.0.0 contrast inspector refuses false confidence, and what that means for honest WCAG implementation in Figma workflows.
+tags:
+  - a11y
+  - accessibility
+  - wcag
+  - figma
+  - figjam
+  - open-source
+published_at: 2026-02-12
+pinned: true
+---
+
+**♿️ a11y Companion v2.0.0 is live.**
+
+If you want to track WCAG work inside Figma and FigJam, without spreadsheet theater, this is for you.
+
+Source checklist: [The A11Y Project](https://www.a11yproject.com/checklist/). Standards target: [W3C WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/).
+
+![a11y Companion v2.0.0 release preview](/images/a11y_Compantion_v2.0.0.jpg)
+
+## The part most tools skip
+
+**Most contrast tools lie by omission.**
+
+They show a ratio. They give you AA or AAA. They rarely tell you what they cannot evaluate.
+
+When building the Contrast Inspector for v2, I made a deliberate choice: only support what can be evaluated honestly.
+
+- **Supported:**
+  - solid on solid
+  - solid on single gradient
+  - single gradient on solid
+- **Explicitly unsupported:**
+  - dual gradients
+  - image fills
+  - mixed or complex paint stacks
+
+If the system cannot evaluate it reliably, it says so. No fake certainty. No "looks compliant" theater.
+
+**Accessibility tooling should reduce false confidence, not create it.**
+
+## What's new in v2.0.0
+
+- Contrast Inspector with on-canvas preview and gradient-aware checks
+- Light and dark modes with six readable accent themes
+- Templates for common checklist scopes
+- Markdown export with WCAG level coverage summary
+- Avatar activity tracking from real check and uncheck actions
+- Refreshed UI and faster performance
+
+Under the hood, this release also hardens the foundation:
+
+- Variable-first design-system guardrails and baseline checks
+- WCAG contrast automation scripts and nearest safe shade-step suggestions
+- Runtime contrast-safe accent resolution for themed UI states
+- Canonical variable imports and cleanup of legacy alias paths
+
+## Guided checklist, not automated audit
+
+This is a guided checklist, *not* an automated audit.
+
+It is built for real teams doing real reviews, in the file, with shared context visible in Figma and FigJam.
+
+That distinction matters. A ratio alone is not a full accessibility decision. You still need people, judgment, and explicit boundaries around what the tool can and cannot assert.
+
+## Why I keep tightening this
+
+***Accessibility is personal for me.*** I have been the eyes and ears for my legally blind and deaf brother for decades. I have watched him burn time on sites that do not care.
+
+That is why I built this, and why I keep tightening it.
+
+## Links
+
+- Figma Community:
+  - https://www.figma.com/community/widget/1509302611418259130
+- GitHub repository:
+  - https://github.com/marklearst/a11y-companion-widget
+- v2.0.0 changelog:
+  - https://github.com/marklearst/a11y-companion-widget/blob/main/CHANGELOG.md
+- WCAG 2.2 specification:
+  - https://www.w3.org/TR/WCAG22/

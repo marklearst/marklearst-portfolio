@@ -111,6 +111,14 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     duration: DURATION.workRoute,
     color: MONOKAI.cyan,
   },
+  '/artifacts/a11y-companion-v2': {
+    route: '/artifacts/a11y-companion-v2',
+    command: formatCommand('cat /artifacts/a11y-companion-v2'),
+    loading: 'Reading artifact...',
+    output: formatOutput('Ready', true),
+    duration: DURATION.workRoute,
+    color: MONOKAI.yellow,
+  },
 }
 
 /**
