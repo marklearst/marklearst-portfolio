@@ -2,7 +2,7 @@
 
 Coder to the core, think like a designer.
 
-This is my portfolio and a living build log. I am a senior frontend and design engineer who ships design systems, React UI architecture, and accessibility-first interfaces that hold up in production. I care about performance, motion with intent, and making the handoff between design and code feel invisible.
+This is my portfolio and a living build log. I am a lead ic frontend and design engineer who ships design systems, React UI architecture, and accessibility-first interfaces that hold up in production. I care about performance, motion with intent, and making the handoff between design and code feel invisible.
 
 What you will find here:
 
