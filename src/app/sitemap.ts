@@ -15,7 +15,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/privacy`, priority: 0.3 },
   ]
 
-  const workRoutes: MetadataRoute.Sitemap = PROJECTS.map((project) => ({
+  const workRoutes: MetadataRoute.Sitemap = PROJECTS.filter(
+    (project) => project.publishedAt != null,
+  ).map((project) => ({
     url: `${BASE_URL}${project.route}`,
     lastModified: project.publishedAt,
     priority: 0.6,
@@ -23,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const artifactRoutes: MetadataRoute.Sitemap = artifacts.map((artifact) => ({
     url: `${BASE_URL}/artifacts/${artifact.slug}`,
-    lastModified: artifact.published_at,
+    lastModified: artifact.publishedAt,
     priority: 0.6,
   }))
 
