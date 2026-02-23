@@ -166,7 +166,7 @@ export default function EnhancedHero() {
             className='hero-description-word inline-block'
             style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
           >
-            Senior
+            Lead
           </span>{' '}
           <span
             className='hero-description-word inline-block'
