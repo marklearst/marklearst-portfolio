@@ -1,40 +1,36 @@
 @import 'tailwindcss';
+@import './monolisa.css';
 
-/* Antique Condensed */
-@font-face {
-  font-family: 'Antique Condensed';
-  src: url('/fonts/AntiqueCon-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
-
-/* Tailwind theme with your fonts */
+/* Tailwind theme with MonoLisa */
 @theme {
-  --font-serif: 'Antique Condensed', ui-serif, Georgia, serif;
+  --font-mono: 'MonoLisa', 'SF Mono', 'Consolas', monospace;
   --font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, 'JetBrains Mono', 'Fira Code', monospace;
+  --font-serif: ui-serif, Georgia, serif;
 }
 
 /* Base styles */
 body {
-  @apply bg-black text-white/80 font-sans;
+  @apply bg-black text-white/80 font-mono;
+  font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
-/* Antique Condensed - ONLY for h1 and h2 */
+/* MonoLisa for headings - refined monospaced aesthetic */
 h1 {
-  @apply font-serif lowercase text-white;
-  letter-spacing: -0.015em; /* Tighter to connect K and L */
-  line-height: 1.1;
+  @apply font-mono lowercase text-white;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  font-weight: 400;
+  font-feature-settings: 'liga' 0, 'ss02' 1;
 }
 
 h2 {
-  @apply font-serif lowercase text-white;
-  letter-spacing: -0.01em; /* Slightly looser for readability */
-  line-height: 1.1;
+  @apply font-mono lowercase text-white;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  font-weight: 500;
 }
 
-/* Sans-serif - for h3-h6 (better readability at smaller sizes) */
+/* Sans-serif - for h3-h6 */
 h3,
 h4,
 h5,
@@ -49,4 +45,150 @@ code {
 
 a {
   @apply transition-all;
+}
+
+/* Premium focus states - accessibility meets beauty */
+:focus-visible {
+  outline: 2px solid #78dce8;
+  outline-offset: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 20px #78dce840, 0 0 40px #78dce820;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #78dce8;
+  outline-offset: 4px;
+  box-shadow: 0 0 20px #78dce840, 0 0 40px #78dce820;
+}
+
+/* Terminal cursor animation */
+.terminal-cursor {
+  display: inline-block;
+  animation: terminal-blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes terminal-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 8s ease infinite;
+}
+
+/* Button ripple effect */
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Terminal package lines */
+.terminal-package-line {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-family: 'MonoLisa', 'SF Mono', 'Consolas', monospace;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Prevent scroll restoration jump */
+html,
+body {
+  scroll-behavior: auto;
+  overflow-x: hidden;
+}
+
+/* Custom selection */
+::selection {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes particle {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(var(--tx, 20px), var(--ty, -40px)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes konami-fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.animate-konami-fade {
+  animation: konami-fade 4s ease-in-out;
 }
