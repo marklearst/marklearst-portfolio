@@ -1,29 +1,60 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next'
+import './globals.css'
+import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
+import ParticleHeader from '@/components/brand/ParticleHeader'
+import CursorOrbs from '@/components/ui/CursorOrbs'
+import CursorGlow from '@/components/ui/CursorGlow'
+import KonamiCode from '@/components/ui/KonamiCode'
+import ScrollProgress from '@/components/ui/ScrollProgress'
+import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 
 export const metadata: Metadata = {
-  title: "Mark Learst - Principal Design Engineer",
+  title: 'Mark Learst - Senior Frontend Engineer',
   description:
-    "Building design systems, developer tools, React components, WCAG compliant accessibility, health tech, and OSS projects.",
-};
+    'Senior Frontend Engineer specializing in React design systems and accessibility. Built Aurora at GM serving 4 brands with 60% component reuse. Open-source toolsmith building the stuff designers and developers actually want to use.',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/AntiqueCon-Regular.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body>{children}</body>
+    <html lang='en'>
+      <body>
+        {/* Global animated Monokai gradient line - appears on all pages */}
+        <div className='top-0 left-0 right-0 h-1 z-50'>
+          <div
+            className='w-full h-full animate-gradient-x'
+            style={{
+              background:
+                'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)',
+              backgroundSize: '200% 100%',
+            }}
+          />
+        </div>
+
+        {/* Scroll progress indicator - below the gradient line */}
+        <ScrollProgress />
+
+        {/* Header with ML logo */}
+        <header className='fixed top-8 left-8 z-40'>
+          <ParticleHeader />
+        </header>
+
+        {/* Subtle ambient cursor glow - premium lighting effect */}
+        <CursorGlow />
+
+        {/* Monokai cursor orbs - premium cursor trail */}
+        <CursorOrbs />
+
+        {/* Easter egg - Konami code */}
+        <KonamiCode />
+
+        <SmoothScrollProvider>
+          <TerminalNavigationProvider>{children}</TerminalNavigationProvider>
+        </SmoothScrollProvider>
+      </body>
     </html>
-  );
+  )
 }
