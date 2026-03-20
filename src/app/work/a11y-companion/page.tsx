@@ -23,7 +23,7 @@ export default function A11yCompanionPage() {
       links={[
         {
           label: 'Figma Community',
-          href: 'https://www.figma.com/community/widget/a11y-companion',
+          href: 'https://www.figma.com/community/widget/1509302611418259130/a11y-companion',
           icon: (
             <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
               <path d='M12 12.5c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm-3-3c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5 1.5-.672 1.5-1.5zm0-3c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5.672 1.5 1.5 1.5 1.5-.672 1.5-1.5zm3 0c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5zm3 3c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5-.672 1.5-1.5 1.5-1.5-.672-1.5-1.5z' />
@@ -47,15 +47,18 @@ export default function A11yCompanionPage() {
       impact={[
         {
           metric: '200+',
-          description: 'Active users across design teams at companies of all sizes',
+          description:
+            'Active users across design teams at companies of all sizes',
         },
         {
           metric: 'WCAG 2.2',
-          description: 'Complete checklist coverage with tooltips explaining each criterion',
+          description:
+            'Complete checklist coverage with tooltips explaining each criterion',
         },
         {
           metric: 'Open Source',
-          description: 'Published on Figma Community and GitHub for the a11y community',
+          description:
+            'Published on Figma Community and GitHub for the a11y community',
         },
       ]}
       gradient='from-green-500/20 via-emerald-500/10 to-transparent'
@@ -65,17 +68,36 @@ export default function A11yCompanionPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                Designers working on accessible interfaces faced a fundamental workflow challenge: accessibility checklists lived outside their design tools. This created:
+                Designers working on accessible interfaces faced a fundamental
+                workflow challenge: accessibility checklists lived outside their
+                design tools. This created:
               </p>
-              <ul className='space-y-3 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li>Context switching between Figma and external WCAG documentation</li>
-                <li>No way to track accessibility progress directly in design files</li>
-                <li>Accessibility often forgotten until developer handoff or QA</li>
-                <li>Teams reinventing accessibility checklists for each project</li>
-                <li>Designers unsure which WCAG criteria applied to their designs</li>
+              <ul
+                className='space-y-3 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  Context switching between Figma and external WCAG
+                  documentation
+                </li>
+                <li>
+                  No way to track accessibility progress directly in design
+                  files
+                </li>
+                <li>
+                  Accessibility often forgotten until developer handoff or QA
+                </li>
+                <li>
+                  Teams reinventing accessibility checklists for each project
+                </li>
+                <li>
+                  Designers unsure which WCAG criteria applied to their designs
+                </li>
               </ul>
               <p className='text-lg leading-relaxed'>
-                The A11Y Project had a comprehensive accessibility checklist, but it was a website—designers needed this information embedded in their design workflow, not a browser tab away.
+                The A11Y Project had a comprehensive accessibility checklist,
+                but it was a website—designers needed this information embedded
+                in their design workflow, not a browser tab away.
               </p>
             </div>
           ),
@@ -85,66 +107,117 @@ export default function A11yCompanionPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                <strong>a11y Companion</strong> is a Figma widget that embeds The A11Y Project Checklist directly into design files, making accessibility a first-class citizen in the design process.
+                <strong>a11y Companion</strong> is a Figma widget that embeds
+                The A11Y Project Checklist directly into design files, making
+                accessibility a first-class citizen in the design process.
               </p>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 Interactive Checklist
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                Built a widget interface that presents the full A11Y Project Checklist with:
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                Built a widget interface that presents the full A11Y Project
+                Checklist with:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Check/uncheck functionality to track completed items</li>
                 <li>Progress indicator showing completion percentage</li>
-                <li>Category organization (Content, Design, Development, etc.)</li>
+                <li>
+                  Category organization (Content, Design, Development, etc.)
+                </li>
                 <li>WCAG 2.2 tooltips explaining each criterion on hover</li>
                 <li>Persistent state saved with the Figma file</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 Search & Filtering
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                Designed search functionality allowing designers to quickly find relevant accessibility criteria:
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                Designed search functionality allowing designers to quickly find
+                relevant accessibility criteria:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Real-time search across all checklist items</li>
                 <li>Filter by category (Content, Design, Development, QA)</li>
-                <li>Filter by completion status (completed, incomplete, all)</li>
+                <li>
+                  Filter by completion status (completed, incomplete, all)
+                </li>
                 <li>Keyboard shortcuts for power users</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 Bulk Actions
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Added productivity features for managing checklists at scale:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Mark all items complete/incomplete in one action</li>
                 <li>Reset checklist to start fresh on new projects</li>
                 <li>Bulk select items by category</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 Export Capabilities
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Built export functionality for sharing progress with teams:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Markdown export for documentation</li>
                 <li>HTML export for standalone pages</li>
                 <li>JSON export for programmatic use</li>
                 <li>Copy to clipboard for quick sharing</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 Dark Mode Support
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                Implemented theme detection that matches Figma's interface mode, ensuring the widget is comfortable to use in any environment.
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                Implemented theme detection that matches Figma's interface mode,
+                ensuring the widget is comfortable to use in any environment.
               </p>
             </div>
           ),
@@ -153,39 +226,69 @@ export default function A11yCompanionPage() {
           title: 'Technical Implementation',
           content: (
             <div className='space-y-6'>
-              <h3 className='text-2xl font-mono mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 Figma Widget API
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Built using Figma's Widget API with React-like components:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>State management using Figma's widget storage API</li>
                 <li>Custom UI components matching Figma's design system</li>
                 <li>Event handling for checkbox toggles and search input</li>
-                <li>Performance optimized for rendering 100+ checklist items</li>
+                <li>
+                  Performance optimized for rendering 100+ checklist items
+                </li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 WCAG 2.2 Integration
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                Mapped each checklist item to specific WCAG 2.2 success criteria:
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                Mapped each checklist item to specific WCAG 2.2 success
+                criteria:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Tooltips explaining the "why" behind each item</li>
                 <li>Links to official WCAG documentation</li>
                 <li>Conformance level indicators (A, AA, AAA)</li>
                 <li>Context about which roles should address each item</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.green }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.green }}
+              >
                 Community Publishing
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Published to Figma Community with:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Detailed README with usage instructions</li>
                 <li>Screenshots demonstrating key features</li>
                 <li>Version history and changelog</li>
@@ -199,30 +302,56 @@ export default function A11yCompanionPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                a11y Companion has changed how design teams approach accessibility:
+                a11y Companion has changed how design teams approach
+                accessibility:
               </p>
-              <ul className='space-y-4 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-4 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>200+ active users</strong> across companies ranging from startups to Fortune 500 enterprises
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    200+ active users
+                  </strong>{' '}
+                  across companies ranging from startups to Fortune 500
+                  enterprises
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Accessibility shifts left</strong> by embedding WCAG criteria directly in design workflows
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Accessibility shifts left
+                  </strong>{' '}
+                  by embedding WCAG criteria directly in design workflows
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Progress tracking</strong> gives teams visibility into accessibility coverage before development
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Progress tracking
+                  </strong>{' '}
+                  gives teams visibility into accessibility coverage before
+                  development
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>WCAG 2.2 education</strong> through contextual tooltips that explain each criterion
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    WCAG 2.2 education
+                  </strong>{' '}
+                  through contextual tooltips that explain each criterion
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Export capabilities</strong> enable handoff documentation for developers and QA teams
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Export capabilities
+                  </strong>{' '}
+                  enable handoff documentation for developers and QA teams
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Open-source contribution</strong> to the accessibility community, making a11y easier to adopt
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Open-source contribution
+                  </strong>{' '}
+                  to the accessibility community, making a11y easier to adopt
                 </li>
               </ul>
               <p className='text-lg leading-relaxed mt-8'>
-                The widget is actively maintained on Figma Community and GitHub, serving as a foundational tool for teams committed to building accessible digital experiences.
+                The widget is actively maintained on Figma Community and GitHub,
+                serving as a foundational tool for teams committed to building
+                accessible digital experiences.
               </p>
             </div>
           ),
