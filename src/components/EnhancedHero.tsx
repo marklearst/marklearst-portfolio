@@ -1,20 +1,40 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useSyncExternalStore } from 'react'
 import { gsap } from 'gsap'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
+import NeuralNetwork from '@/components/ui/NeuralNetwork'
+
+// Hydration-safe client detection
+const subscribeNoop = () => () => {}
+const getClientSnapshot = () => true
+const getServerSnapshot = () => false
 
 export default function EnhancedHero() {
   const heroRef = useRef<HTMLDivElement>(null)
   const nameBoxRef = useRef<HTMLDivElement>(null)
+
+  const isClient = useSyncExternalStore(
+    subscribeNoop,
+    getClientSnapshot,
+    getServerSnapshot,
+  )
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Fast overlapping sequence - no slow junior animations
       const tl = gsap.timeline({ delay: 0.3 })
 
-      // Name box entrance
+      // Neural background fades in with 1s extra delay (runs independently)
+      gsap.to('.neural-bg', {
+        opacity: 1,
+        duration: 2,
+        delay: 1.5, // 0.3s timeline delay + 1s extra
+        ease: 'power3.out',
+      })
+
+      // Name box entrance - starts immediately with timeline
       tl.fromTo(
         nameBoxRef.current,
         { opacity: 0, scale: 0.95 },
@@ -43,191 +63,481 @@ export default function EnhancedHero() {
         '-=0.3',
       )
 
-      // Badges with stagger - smooth fade in, NO pop - FASTER
+      // Badges with stagger - smooth, elegant fade in
       tl.fromTo(
         '.hero-badge',
-        { opacity: 0, y: 15 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.3,
-          stagger: 0.03,
-          ease: 'power2.out',
+          duration: 0.6,
+          stagger: 0.08,
+          ease: 'power3.out',
         },
-        '-=0.35',
+        '-=0.2',
       )
 
-      // Background keywords - ORGANIC FLUID MOTION
+      // Background keywords - FLOATING IN NEURAL SPACE (slower for smooth line following)
       const keywords = gsap.utils.toArray<HTMLElement>('.bg-keyword')
 
-      keywords.forEach((el, i) => {
-        // Random parameters for each keyword - creates variety
-        const baseSpeedX = gsap.utils.random(20, 40)
-        const baseSpeedY = gsap.utils.random(25, 45)
-        const baseSpeedRotate = gsap.utils.random(30, 60)
-        const distanceX = gsap.utils.random(20, 50)
-        const distanceY = gsap.utils.random(15, 40)
-        const rotateAmount = gsap.utils.random(-8, 8)
-        const scaleVariance = gsap.utils.random(0.95, 1.05)
+      keywords.forEach((el) => {
+        // Gentle floating motion - slower so lines can follow smoothly
+        const driftX = gsap.utils.random(15, 30)
+        const driftY = gsap.utils.random(10, 25)
+        const durationX = gsap.utils.random(12, 18) // Slower for smooth line movement
+        const durationY = gsap.utils.random(14, 20)
 
-        // X-axis drift (independent timing)
+        // Horizontal drift
         gsap.to(el, {
-          x: `+=${distanceX}`,
-          duration: baseSpeedX,
+          x: `+=${driftX}`,
+          duration: durationX,
           repeat: -1,
           yoyo: true,
           ease: 'sine.inOut',
-          delay: i * 0.2 + Math.random() * 2,
+          delay: Math.random() * 3,
         })
 
-        // Y-axis drift (different timing for organic feel)
+        // Vertical drift
         gsap.to(el, {
-          y: `+=${distanceY}`,
-          duration: baseSpeedY,
+          y: `+=${driftY}`,
+          duration: durationY,
           repeat: -1,
           yoyo: true,
           ease: 'sine.inOut',
-          delay: i * 0.15 + Math.random() * 3,
+          delay: Math.random() * 3,
         })
 
-        // Subtle rotation (very slow, creates life)
+        // Very subtle rotation
         gsap.to(el, {
-          rotation: rotateAmount,
-          duration: baseSpeedRotate,
+          rotation: gsap.utils.random(-3, 3),
+          duration: gsap.utils.random(16, 24),
           repeat: -1,
           yoyo: true,
           ease: 'sine.inOut',
-          delay: i * 0.25,
-        })
-
-        // Subtle scale pulse (breathing effect)
-        gsap.to(el, {
-          scale: scaleVariance,
-          duration: gsap.utils.random(8, 15),
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: i * 0.3 + Math.random(),
-        })
-
-        // Subtle opacity pulse for depth
-        gsap.to(el, {
-          opacity: `*=${gsap.utils.random(0.7, 1.3)}`,
-          duration: gsap.utils.random(10, 20),
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: i * 0.1 + Math.random() * 2,
         })
       })
 
-      // Cursor repel effect
-      const handleMouseMove = (e: MouseEvent) => {
-        const mouseX = e.clientX
-        const mouseY = e.clientY
-
-        keywords.forEach((el) => {
-          const rect = el.getBoundingClientRect()
-          const centerX = rect.left + rect.width / 2
-          const centerY = rect.top + rect.height / 2
-
-          // Calculate distance from cursor to keyword center
-          const deltaX = centerX - mouseX
-          const deltaY = centerY - mouseY
-          const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY)
-
-          // Repel radius (how far the effect reaches)
-          const repelRadius = 150
-
-          if (distance < repelRadius) {
-            // Calculate repel force (stronger when closer)
-            const force = (repelRadius - distance) / repelRadius
-            const repelX = (deltaX / distance) * force * 40
-            const repelY = (deltaY / distance) * force * 40
-
-            // Apply repel with smooth animation
-            gsap.to(el, {
-              x: repelX,
-              y: repelY,
-              duration: 0.3,
-              ease: 'power2.out',
-            })
-          } else {
-            // Return to original position when cursor moves away
-            gsap.to(el, {
-              x: 0,
-              y: 0,
-              duration: 0.6,
-              ease: 'power2.out',
-            })
-          }
-        })
-      }
-
-      window.addEventListener('mousemove', handleMouseMove)
-
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove)
-      }
+      // No cursor repel - just let keywords float peacefully
     }, heroRef)
 
     return () => ctx.revert()
   }, [])
 
-  // DENSE background keywords with Monokai colors
+  // DENSE background keywords with Monokai colors - 15% larger text, slight opacity bump (+0.04)
   const keywords = [
     // Top left quadrant
-    { text: 'function', x: '5%', y: '8%', size: 'text-5xl', color: MONOKAI.pink, opacity: 0.12 },
-    { text: 'return', x: '8%', y: '15%', size: 'text-3xl', color: MONOKAI.pink, opacity: 0.08 },
-    { text: 'const', x: '3%', y: '22%', size: 'text-2xl', color: MONOKAI.green, opacity: 0.1 },
-    { text: 'interface', x: '12%', y: '12%', size: 'text-4xl', color: MONOKAI.cyan, opacity: 0.09 },
-    { text: 'color.primary', x: '6%', y: '28%', size: 'text-lg', color: MONOKAI.yellow, opacity: 0.08 },
-    { text: 'TS', x: '15%', y: '20%', size: 'text-6xl', color: MONOKAI.cyan, opacity: 0.06 },
-    { text: 'spacing.xl', x: '10%', y: '35%', size: 'text-base', color: MONOKAI.orange, opacity: 0.07 },
-    { text: 'dev', x: '4%', y: '42%', size: 'text-4xl', color: MONOKAI.purple, opacity: 0.1 },
+    {
+      text: 'function',
+      x: '5%',
+      y: '8%',
+      size: 'text-6xl',
+      color: MONOKAI.pink,
+      opacity: 0.16,
+    },
+    {
+      text: '<Component />',
+      x: '18%',
+      y: '6%',
+      size: 'text-3xl',
+      color: MONOKAI.cyan,
+      opacity: 0.13,
+    },
+    {
+      text: 'return',
+      x: '8%',
+      y: '15%',
+      size: 'text-4xl',
+      color: MONOKAI.pink,
+      opacity: 0.12,
+    },
+    {
+      text: 'const',
+      x: '3%',
+      y: '22%',
+      size: 'text-3xl',
+      color: MONOKAI.green,
+      opacity: 0.14,
+    },
+    {
+      text: 'interface',
+      x: '12%',
+      y: '12%',
+      size: 'text-5xl',
+      color: MONOKAI.cyan,
+      opacity: 0.13,
+    },
+    {
+      text: '{ }',
+      x: '22%',
+      y: '15%',
+      size: 'text-4xl',
+      color: MONOKAI.yellow,
+      opacity: 0.11,
+    },
+    {
+      text: 'color.primary',
+      x: '6%',
+      y: '28%',
+      size: 'text-xl',
+      color: MONOKAI.yellow,
+      opacity: 0.12,
+    },
+    {
+      text: 'TS',
+      x: '15%',
+      y: '20%',
+      size: 'text-7xl',
+      color: MONOKAI.cyan,
+      opacity: 0.1,
+    },
+    {
+      text: '() => {}',
+      x: '25%',
+      y: '25%',
+      size: 'text-3xl',
+      color: MONOKAI.pink,
+      opacity: 0.12,
+    },
+    {
+      text: 'spacing.xl',
+      x: '10%',
+      y: '35%',
+      size: 'text-lg',
+      color: MONOKAI.orange,
+      opacity: 0.11,
+    },
+    {
+      text: 'dev',
+      x: '4%',
+      y: '42%',
+      size: 'text-5xl',
+      color: MONOKAI.purple,
+      opacity: 0.14,
+    },
 
     // Top right quadrant
-    { text: 'design', x: '82%', y: '10%', size: 'text-5xl', color: MONOKAI.purple, opacity: 0.11 },
-    { text: 'code', x: '88%', y: '18%', size: 'text-4xl', color: MONOKAI.cyan, opacity: 0.09 },
-    { text: 'type', x: '85%', y: '25%', size: 'text-3xl', color: MONOKAI.pink, opacity: 0.08 },
-    { text: 'async', x: '90%', y: '32%', size: 'text-2xl', color: MONOKAI.pink, opacity: 0.07 },
-    { text: 'font.sans', x: '83%', y: '38%', size: 'text-lg', color: MONOKAI.yellow, opacity: 0.08 },
-    { text: 'JS', x: '92%', y: '15%', size: 'text-6xl', color: MONOKAI.yellow, opacity: 0.06 },
-    { text: 'design systems', x: '80%', y: '43%', size: 'text-xl', color: MONOKAI.cyan, opacity: 0.09 },
+    {
+      text: 'design tokens',
+      x: '82%',
+      y: '10%',
+      size: 'text-6xl',
+      color: MONOKAI.purple,
+      opacity: 0.15,
+    },
+    {
+      text: '[ ]',
+      x: '78%',
+      y: '6%',
+      size: 'text-4xl',
+      color: MONOKAI.yellow,
+      opacity: 0.11,
+    },
+    {
+      text: 'code',
+      x: '88%',
+      y: '18%',
+      size: 'text-5xl',
+      color: MONOKAI.cyan,
+      opacity: 0.13,
+    },
+    {
+      text: '<T>',
+      x: '95%',
+      y: '12%',
+      size: 'text-3xl',
+      color: MONOKAI.cyan,
+      opacity: 0.12,
+    },
+    {
+      text: 'type',
+      x: '85%',
+      y: '25%',
+      size: 'text-4xl',
+      color: MONOKAI.pink,
+      opacity: 0.12,
+    },
+    {
+      text: 'async',
+      x: '90%',
+      y: '32%',
+      size: 'text-3xl',
+      color: MONOKAI.pink,
+      opacity: 0.11,
+    },
+    {
+      text: 'font.sans',
+      x: '83%',
+      y: '38%',
+      size: 'text-xl',
+      color: MONOKAI.yellow,
+      opacity: 0.12,
+    },
+    {
+      text: 'JS',
+      x: '92%',
+      y: '15%',
+      size: 'text-7xl',
+      color: MONOKAI.yellow,
+      opacity: 0.1,
+    },
+    {
+      text: 'TypeScript',
+      x: '80%',
+      y: '43%',
+      size: 'text-2xl',
+      color: MONOKAI.cyan,
+      opacity: 0.13,
+    },
 
     // Middle left
-    { text: 'export', x: '7%', y: '48%', size: 'text-3xl', color: MONOKAI.pink, opacity: 0.08 },
-    { text: 'components', x: '4%', y: '55%', size: 'text-2xl', color: MONOKAI.green, opacity: 0.09 },
-    { text: 'import', x: '11%', y: '62%', size: 'text-3xl', color: MONOKAI.pink, opacity: 0.07 },
-    { text: 'border.radius', x: '5%', y: '68%', size: 'text-base', color: MONOKAI.orange, opacity: 0.08 },
-    { text: 'props', x: '14%', y: '58%', size: 'text-2xl', color: MONOKAI.orange, opacity: 0.07 },
+    {
+      text: 'export',
+      x: '7%',
+      y: '48%',
+      size: 'text-4xl',
+      color: MONOKAI.pink,
+      opacity: 0.12,
+    },
+    {
+      text: '[React, ...skills]',
+      x: '16%',
+      y: '45%',
+      size: 'text-xl',
+      color: MONOKAI.cyan,
+      opacity: 0.11,
+    },
+    {
+      text: 'components',
+      x: '4%',
+      y: '55%',
+      size: 'text-3xl',
+      color: MONOKAI.green,
+      opacity: 0.13,
+    },
+    {
+      text: 'import',
+      x: '11%',
+      y: '62%',
+      size: 'text-4xl',
+      color: MONOKAI.pink,
+      opacity: 0.11,
+    },
+    {
+      text: 'border.radius',
+      x: '5%',
+      y: '68%',
+      size: 'text-lg',
+      color: MONOKAI.orange,
+      opacity: 0.12,
+    },
+    {
+      text: 'props',
+      x: '14%',
+      y: '58%',
+      size: 'text-3xl',
+      color: MONOKAI.orange,
+      opacity: 0.11,
+    },
 
     // Middle right
-    { text: 'default', x: '85%', y: '50%', size: 'text-3xl', color: MONOKAI.pink, opacity: 0.08 },
-    { text: 'tokens', x: '90%', y: '57%', size: 'text-2xl', color: MONOKAI.purple, opacity: 0.09 },
-    { text: 'shadow.lg', x: '83%', y: '63%', size: 'text-lg', color: MONOKAI.yellow, opacity: 0.07 },
-    { text: 'await', x: '88%', y: '70%', size: 'text-2xl', color: MONOKAI.pink, opacity: 0.08 },
+    {
+      text: 'default',
+      x: '85%',
+      y: '50%',
+      size: 'text-4xl',
+      color: MONOKAI.pink,
+      opacity: 0.12,
+    },
+    {
+      text: '?.',
+      x: '92%',
+      y: '48%',
+      size: 'text-3xl',
+      color: MONOKAI.pink,
+      opacity: 0.11,
+    },
+    {
+      text: 'tokens',
+      x: '90%',
+      y: '57%',
+      size: 'text-3xl',
+      color: MONOKAI.purple,
+      opacity: 0.13,
+    },
+    {
+      text: 'shadow.lg',
+      x: '83%',
+      y: '63%',
+      size: 'text-xl',
+      color: MONOKAI.yellow,
+      opacity: 0.11,
+    },
+    {
+      text: 'await',
+      x: '88%',
+      y: '70%',
+      size: 'text-3xl',
+      color: MONOKAI.pink,
+      opacity: 0.12,
+    },
+    {
+      text: '&&',
+      x: '95%',
+      y: '65%',
+      size: 'text-2xl',
+      color: MONOKAI.pink,
+      opacity: 0.1,
+    },
 
     // Bottom left
-    { text: 'class', x: '6%', y: '75%', size: 'text-3xl', color: MONOKAI.cyan, opacity: 0.08 },
-    { text: 'accessibility', x: '3%', y: '82%', size: 'text-xl', color: MONOKAI.green, opacity: 0.09 },
-    { text: 'variables', x: '10%', y: '88%', size: 'text-2xl', color: MONOKAI.purple, opacity: 0.07 },
-    { text: 'transition', x: '5%', y: '92%', size: 'text-base', color: MONOKAI.orange, opacity: 0.08 },
+    {
+      text: 'class',
+      x: '6%',
+      y: '75%',
+      size: 'text-4xl',
+      color: MONOKAI.cyan,
+      opacity: 0.12,
+    },
+    {
+      text: '<Props>',
+      x: '15%',
+      y: '72%',
+      size: 'text-xl',
+      color: MONOKAI.cyan,
+      opacity: 0.11,
+    },
+    {
+      text: 'accessibility',
+      x: '3%',
+      y: '82%',
+      size: 'text-2xl',
+      color: MONOKAI.green,
+      opacity: 0.13,
+    },
+    {
+      text: 'variables',
+      x: '10%',
+      y: '88%',
+      size: 'text-3xl',
+      color: MONOKAI.purple,
+      opacity: 0.11,
+    },
+    {
+      text: 'transition',
+      x: '5%',
+      y: '92%',
+      size: 'text-lg',
+      color: MONOKAI.orange,
+      opacity: 0.12,
+    },
 
     // Bottom right
-    { text: 'JSX', x: '85%', y: '78%', size: 'text-5xl', color: MONOKAI.yellow, opacity: 0.08 },
-    { text: 'theme', x: '90%', y: '85%', size: 'text-3xl', color: MONOKAI.purple, opacity: 0.09 },
-    { text: 'motion', x: '82%', y: '92%', size: 'text-2xl', color: MONOKAI.pink, opacity: 0.07 },
+    {
+      text: 'JSX',
+      x: '85%',
+      y: '78%',
+      size: 'text-6xl',
+      color: MONOKAI.yellow,
+      opacity: 0.12,
+    },
+    {
+      text: '</>',
+      x: '78%',
+      y: '82%',
+      size: 'text-3xl',
+      color: MONOKAI.cyan,
+      opacity: 0.11,
+    },
+    {
+      text: 'theme',
+      x: '90%',
+      y: '85%',
+      size: 'text-4xl',
+      color: MONOKAI.purple,
+      opacity: 0.13,
+    },
+    {
+      text: 'motion',
+      x: '82%',
+      y: '92%',
+      size: 'text-3xl',
+      color: MONOKAI.pink,
+      opacity: 0.11,
+    },
+    {
+      text: '( )',
+      x: '95%',
+      y: '88%',
+      size: 'text-2xl',
+      color: MONOKAI.yellow,
+      opacity: 0.1,
+    },
 
-    // Center scattered
-    { text: 'hooks', x: '35%', y: '20%', size: 'text-2xl', color: MONOKAI.green, opacity: 0.07 },
-    { text: 'state', x: '45%', y: '15%', size: 'text-3xl', color: MONOKAI.cyan, opacity: 0.08 },
-    { text: 'utils', x: '55%', y: '22%', size: 'text-2xl', color: MONOKAI.orange, opacity: 0.06 },
-    { text: 'wcag', x: '65%', y: '18%', size: 'text-xl', color: MONOKAI.green, opacity: 0.08 },
-    { text: 'responsive', x: '40%', y: '82%', size: 'text-xl', color: MONOKAI.cyan, opacity: 0.07 },
-    { text: 'grid', x: '50%', y: '88%', size: 'text-2xl', color: MONOKAI.purple, opacity: 0.08 },
-    { text: 'flex', x: '60%', y: '85%', size: 'text-2xl', color: MONOKAI.cyan, opacity: 0.07 },
-    { text: 'scale', x: '70%', y: '90%', size: 'text-xl', color: MONOKAI.pink, opacity: 0.06 },
+    // Center scattered (top and bottom, avoiding main content)
+    {
+      text: 'hooks',
+      x: '35%',
+      y: '20%',
+      size: 'text-3xl',
+      color: MONOKAI.green,
+      opacity: 0.11,
+    },
+    {
+      text: 'state',
+      x: '45%',
+      y: '15%',
+      size: 'text-4xl',
+      color: MONOKAI.cyan,
+      opacity: 0.12,
+    },
+    {
+      text: 'utils',
+      x: '55%',
+      y: '22%',
+      size: 'text-3xl',
+      color: MONOKAI.orange,
+      opacity: 0.1,
+    },
+    {
+      text: 'wcag',
+      x: '65%',
+      y: '18%',
+      size: 'text-2xl',
+      color: MONOKAI.green,
+      opacity: 0.12,
+    },
+    {
+      text: 'responsive',
+      x: '40%',
+      y: '82%',
+      size: 'text-2xl',
+      color: MONOKAI.cyan,
+      opacity: 0.11,
+    },
+    {
+      text: 'grid',
+      x: '50%',
+      y: '88%',
+      size: 'text-3xl',
+      color: MONOKAI.purple,
+      opacity: 0.12,
+    },
+    {
+      text: 'flex',
+      x: '60%',
+      y: '85%',
+      size: 'text-3xl',
+      color: MONOKAI.cyan,
+      opacity: 0.11,
+    },
+    {
+      text: 'scale',
+      x: '70%',
+      y: '90%',
+      size: 'text-2xl',
+      color: MONOKAI.pink,
+      opacity: 0.1,
+    },
   ]
 
   return (
@@ -236,69 +546,31 @@ export default function EnhancedHero() {
       className='relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden'
       style={{ backgroundColor: MONOKAI.background }}
     >
-      {/* Mind map connection lines - SVG overlay */}
-      <svg
-        className='absolute inset-0 w-full h-full pointer-events-none'
-        style={{ opacity: 0.15 }}
+      {/* Neural background wrapper - fades in with hero */}
+      <div
+        className='neural-bg absolute inset-0 pointer-events-none'
+        style={{ opacity: 0 }}
       >
-        {/* Connection lines between related keywords */}
-        {/* function → return */}
-        <line x1='5%' y1='8%' x2='8%' y2='15%' stroke={MONOKAI.pink} strokeWidth='1' opacity='0.3' />
-        <circle cx='5%' cy='8%' r='3' fill={MONOKAI.pink} opacity='0.5' />
-        <circle cx='8%' cy='15%' r='3' fill={MONOKAI.pink} opacity='0.5' />
+        {/* Dynamic neural network - lines connect to text centers and follow movement */}
+        {isClient && <NeuralNetwork />}
 
-        {/* const → interface */}
-        <line x1='3%' y1='22%' x2='12%' y2='12%' stroke={MONOKAI.cyan} strokeWidth='1' opacity='0.3' />
-        <circle cx='3%' cy='22%' r='3' fill={MONOKAI.green} opacity='0.5' />
-        <circle cx='12%' cy='12%' r='3' fill={MONOKAI.cyan} opacity='0.5' />
-
-        {/* design → code */}
-        <line x1='82%' y1='10%' x2='88%' y2='18%' stroke={MONOKAI.purple} strokeWidth='1' opacity='0.3' />
-        <circle cx='82%' cy='10%' r='3' fill={MONOKAI.purple} opacity='0.5' />
-        <circle cx='88%' cy='18%' r='3' fill={MONOKAI.cyan} opacity='0.5' />
-
-        {/* dev → design systems */}
-        <line x1='4%' y1='42%' x2='80%' y2='43%' stroke={MONOKAI.cyan} strokeWidth='1' opacity='0.2' strokeDasharray='4 4' />
-        <circle cx='4%' cy='42%' r='3' fill={MONOKAI.purple} opacity='0.5' />
-        <circle cx='80%' cy='43%' r='3' fill={MONOKAI.cyan} opacity='0.5' />
-
-        {/* export → import */}
-        <line x1='7%' y1='48%' x2='11%' y2='62%' stroke={MONOKAI.pink} strokeWidth='1' opacity='0.3' />
-        <circle cx='7%' cy='48%' r='3' fill={MONOKAI.pink} opacity='0.5' />
-        <circle cx='11%' cy='62%' r='3' fill={MONOKAI.pink} opacity='0.5' />
-
-        {/* hooks → state */}
-        <line x1='35%' y1='20%' x2='45%' y2='15%' stroke={MONOKAI.cyan} strokeWidth='1' opacity='0.3' />
-        <circle cx='35%' cy='20%' r='3' fill={MONOKAI.green} opacity='0.5' />
-        <circle cx='45%' cy='15%' r='3' fill={MONOKAI.cyan} opacity='0.5' />
-
-        {/* components → tokens */}
-        <line x1='4%' y1='55%' x2='90%' y2='57%' stroke={MONOKAI.purple} strokeWidth='1' opacity='0.15' strokeDasharray='4 4' />
-        <circle cx='4%' cy='55%' r='3' fill={MONOKAI.green} opacity='0.5' />
-        <circle cx='90%' cy='57%' r='3' fill={MONOKAI.purple} opacity='0.5' />
-
-        {/* accessibility → wcag */}
-        <line x1='3%' y1='82%' x2='65%' y2='18%' stroke={MONOKAI.green} strokeWidth='1' opacity='0.2' strokeDasharray='4 4' />
-        <circle cx='3%' cy='82%' r='3' fill={MONOKAI.green} opacity='0.5' />
-        <circle cx='65%' cy='18%' r='3' fill={MONOKAI.green} opacity='0.5' />
-      </svg>
-
-      {/* Background code keywords - DENSE with Monokai colors */}
-      <div className='absolute inset-0 pointer-events-none overflow-hidden'>
-        {keywords.map((kw, i) => (
-          <div
-            key={i}
-            className={`bg-keyword absolute font-mono ${kw.size}`}
-            style={{
-              left: kw.x,
-              top: kw.y,
-              color: kw.color,
-              opacity: kw.opacity,
-            }}
-          >
-            {kw.text}
-          </div>
-        ))}
+        {/* Background code keywords - DENSE with Monokai colors */}
+        <div className='absolute inset-0 overflow-hidden'>
+          {keywords.map((kw, i) => (
+            <div
+              key={i}
+              className={`bg-keyword absolute font-mono ${kw.size}`}
+              style={{
+                left: kw.x,
+                top: kw.y,
+                color: kw.color,
+                opacity: kw.opacity,
+              }}
+            >
+              {kw.text}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Subtle gradient mesh - NOT dominant */}
@@ -324,18 +596,26 @@ export default function EnhancedHero() {
       {/* Main Content */}
       <div className='max-w-6xl w-full relative z-10'>
         {/* Terminal prompt - RESTORED */}
-        <div className='mb-16 font-mono text-sm space-y-2 pt-8' style={{ color: `${MONOKAI.foreground}60` }}>
-          <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.2s_forwards]'>
+        <div
+          className='mb-16 font-mono text-sm space-y-2 pt-8'
+          style={{ color: `${MONOKAI.foreground}60` }}
+        >
+          <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] pointer-events-none'>
             <span style={{ color: MONOKAI.green }}>❯</span>
-            <span style={{ color: `${MONOKAI.foreground}70` }}>~/portfolio</span>
+            <span style={{ color: `${MONOKAI.foreground}70` }}>
+              ~/portfolio
+            </span>
             <span style={{ color: MONOKAI.purple }}>on</span>
             <span style={{ color: MONOKAI.cyan }}>main</span>
             <span style={{ color: MONOKAI.yellow }}>✓</span>
           </div>
-          <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.4s_forwards]'>
+          <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.4s_forwards] pointer-events-none'>
             <span style={{ color: MONOKAI.green }}>❯</span>
             <span style={{ color: `${MONOKAI.foreground}90` }}>whoami</span>
-            <span className='inline-block w-2 h-4 ml-1 animate-pulse' style={{ backgroundColor: `${MONOKAI.foreground}60` }} />
+            <span
+              className='inline-block w-2 h-4 ml-1 animate-pulse'
+              style={{ backgroundColor: `${MONOKAI.foreground}60` }}
+            />
           </div>
         </div>
 
@@ -360,10 +640,13 @@ export default function EnhancedHero() {
             fontWeight: 400,
           }}
         >
-          <span style={{ color: MONOKAI.orange, letterSpacing: '0.02em' }}>Senior Frontend Engineer</span> who builds{' '}
-          <span style={{ color: MONOKAI.green }}>accessible</span>{' '}
+          <span style={{ color: MONOKAI.orange, letterSpacing: '0.02em' }}>
+            Senior Frontend Engineer
+          </span>{' '}
+          who builds <span style={{ color: MONOKAI.green }}>accessible</span>{' '}
           <span style={{ color: MONOKAI.purple }}>design systems</span> and{' '}
-          <span style={{ color: MONOKAI.cyan }}>React</span> component libraries that teams actually want to use.
+          <span style={{ color: MONOKAI.cyan }}>React</span> component libraries
+          that teams actually want to use.
         </p>
 
         {/* BIO - clean text, no inline pills */}
@@ -372,18 +655,20 @@ export default function EnhancedHero() {
             className='text-[clamp(15px,1.6vw,18px)] leading-relaxed max-w-4xl font-mono'
             style={{ color: `${MONOKAI.foreground}99` }}
           >
-            At <span style={{ color: MONOKAI.foreground }}>GM</span>, I architected Aurora serving 4 brands with{' '}
-            <span style={{ color: MONOKAI.yellow }}>60% component reuse</span> and WCAG 2.2 AA compliance.
-            I ship open-source with real adoption:{' '}
-            <span style={{ color: MONOKAI.cyan }}>a11y Companion</span> (200+ users),{' '}
+            At <span style={{ color: MONOKAI.foreground }}>GM</span>, I
+            architected Aurora serving 4 brands with{' '}
+            <span style={{ color: MONOKAI.yellow }}>60% component reuse</span>{' '}
+            and WCAG 2.2 AA compliance. I ship open-source with real adoption:{' '}
+            <span style={{ color: MONOKAI.cyan }}>a11y Companion</span> (200+
+            users),{' '}
             <span style={{ color: MONOKAI.purple }}>FigmaVars Hooks</span>,{' '}
             <span style={{ color: MONOKAI.pink }}>Diabetic Utils</span>.
           </p>
         </div>
 
-        {/* CTAs - Premium buttons with Monokai gradient effects */}
+        {/* CTAs - Clean buttons with expanding outline on hover */}
         <div className='hero-ctas flex flex-wrap items-center gap-4 mb-14 opacity-0'>
-          {/* Primary CTA - White default, animated Monokai gradient on hover */}
+          {/* Primary CTA - Solid with expanding cyan outline */}
           <button
             onClick={() => {
               const workSection = document.getElementById('work')
@@ -391,25 +676,26 @@ export default function EnhancedHero() {
                 workSection.scrollIntoView({ behavior: 'smooth' })
               }
             }}
-            className='group relative px-8 py-4 font-mono text-base font-bold rounded-xl overflow-hidden transition-all duration-300'
+            className='group relative px-8 py-4 font-mono text-base font-bold rounded-lg transition-all duration-300'
             style={{
               backgroundColor: MONOKAI.foreground,
               color: MONOKAI.background,
+              outline: `0px solid ${MONOKAI.cyan}`,
+              outlineOffset: '0px',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.outline = `3px solid ${MONOKAI.cyan}`
+              e.currentTarget.style.outlineOffset = '3px'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.outline = `0px solid ${MONOKAI.cyan}`
+              e.currentTarget.style.outlineOffset = '0px'
             }}
           >
-            {/* Animated gradient overlay - appears on hover */}
-            <div
-              className='absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
-              style={{
-                background: `linear-gradient(90deg, ${MONOKAI.pink}, ${MONOKAI.orange}, ${MONOKAI.yellow}, ${MONOKAI.green}, ${MONOKAI.cyan}, ${MONOKAI.purple}, ${MONOKAI.pink})`,
-                backgroundSize: '200% 100%',
-                animation: 'gradient-x 3s ease infinite',
-              }}
-            />
             <span className='relative z-10 flex items-center gap-2.5'>
               View Work
               <svg
-                className='w-4 h-4 transform group-hover:translate-y-0.5 transition-transform duration-300'
+                className='w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
@@ -424,34 +710,32 @@ export default function EnhancedHero() {
             </span>
           </button>
 
-          {/* GitHub button - glow on hover */}
+          {/* GitHub button - Ghost with expanding pink outline */}
           <a
             href='https://github.com/marklearst'
             target='_blank'
             rel='noopener noreferrer'
-            className='group px-8 py-4 font-mono text-base font-semibold rounded-xl transition-all duration-300 hover:scale-105'
+            className='group relative px-8 py-4 font-mono text-base font-semibold rounded-lg transition-all duration-300'
             style={{
               backgroundColor: 'transparent',
               border: `2px solid ${MONOKAI.foreground}40`,
               color: MONOKAI.foreground,
+              outline: `0px solid ${MONOKAI.pink}`,
+              outlineOffset: '0px',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = MONOKAI.cyan
-              e.currentTarget.style.boxShadow = `0 0 20px ${MONOKAI.cyan}40, 0 0 40px ${MONOKAI.cyan}20`
-              e.currentTarget.style.color = MONOKAI.cyan
+              e.currentTarget.style.borderColor = MONOKAI.foreground
+              e.currentTarget.style.outline = `3px solid ${MONOKAI.pink}`
+              e.currentTarget.style.outlineOffset = '3px'
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = `${MONOKAI.foreground}40`
-              e.currentTarget.style.boxShadow = 'none'
-              e.currentTarget.style.color = MONOKAI.foreground
+              e.currentTarget.style.outline = `0px solid ${MONOKAI.pink}`
+              e.currentTarget.style.outlineOffset = '0px'
             }}
           >
             <span className='flex items-center gap-2.5'>
-              <svg
-                className='w-5 h-5 transition-transform duration-300 group-hover:rotate-12'
-                fill='currentColor'
-                viewBox='0 0 24 24'
-              >
+              <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
                 <path
                   fillRule='evenodd'
                   d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z'
@@ -466,7 +750,7 @@ export default function EnhancedHero() {
         {/* Badges - Correct order: Design Systems, React, WCAG, Open Source, Dev Tools, Health Tech */}
         <div className='flex flex-wrap gap-3 font-mono text-sm'>
           <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 transition-all duration-300 hover:scale-105'
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
               backgroundColor: `${MONOKAI.cyan}20`,
               color: MONOKAI.cyan,
@@ -477,7 +761,7 @@ export default function EnhancedHero() {
           </span>
 
           <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 transition-all duration-300 hover:scale-105'
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
               backgroundColor: `${MONOKAI.purple}20`,
               color: MONOKAI.purple,
@@ -488,7 +772,7 @@ export default function EnhancedHero() {
           </span>
 
           <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 transition-all duration-300 hover:scale-105'
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
               backgroundColor: `${MONOKAI.yellow}20`,
               color: MONOKAI.yellow,
@@ -499,7 +783,7 @@ export default function EnhancedHero() {
           </span>
 
           <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 transition-all duration-300 hover:scale-105'
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
               backgroundColor: `${MONOKAI.pink}20`,
               color: MONOKAI.pink,
@@ -510,7 +794,7 @@ export default function EnhancedHero() {
           </span>
 
           <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 transition-all duration-300 hover:scale-105'
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
               backgroundColor: `${MONOKAI.orange}20`,
               color: MONOKAI.orange,
@@ -521,7 +805,7 @@ export default function EnhancedHero() {
           </span>
 
           <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 transition-all duration-300 hover:scale-105'
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
               backgroundColor: `${MONOKAI.green}20`,
               color: MONOKAI.green,
@@ -532,7 +816,6 @@ export default function EnhancedHero() {
           </span>
         </div>
       </div>
-
     </section>
   )
 }
