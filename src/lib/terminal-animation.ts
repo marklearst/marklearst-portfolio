@@ -1,4 +1,5 @@
 import { gsap } from 'gsap'
+import { TYPING_SPEED } from './terminal-timing'
 
 /**
  * Terminal typing animation utilities
@@ -20,8 +21,8 @@ export interface TypingOptions {
 export function typeText({
   element,
   text,
-  minSpeed = 40,
-  maxSpeed = 100,
+  minSpeed = TYPING_SPEED.min,
+  maxSpeed = TYPING_SPEED.max,
   onComplete,
   cursor = true,
 }: TypingOptions): gsap.core.Timeline {
