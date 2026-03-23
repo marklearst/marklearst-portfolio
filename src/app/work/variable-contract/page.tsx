@@ -23,7 +23,7 @@ export default function VariableContractPage() {
       links={[
         {
           label: 'GitHub Specification',
-          href: 'https://github.com/marklearst/variable-contract',
+          href: 'https://github.com/marklearst/variables-contract',
           icon: (
             <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
               <path
