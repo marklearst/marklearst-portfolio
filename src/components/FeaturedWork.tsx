@@ -22,25 +22,25 @@ interface Project {
 const projects: Project[] = [
   {
     category: 'DESIGN SYSTEMS',
-    categoryColor: 'cyan', // Monokai Pro cyan #78dce8
+    categoryColor: 'purple', // Monokai Pro purple #ab9df2
     title: 'Aurora Design System',
     description:
       "Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance.",
     href: '/work/aurora-gm',
     tags: ['React', 'Design Tokens', 'Storybook'],
     commitHash: 'a3f9c2d',
-    gradient: 'from-teal-500/10 via-cyan-500/5 to-transparent',
+    gradient: 'from-purple-500/10 via-pink-500/5 to-transparent',
   },
   {
     category: 'DEVELOPER TOOLS',
-    categoryColor: 'purple', // Monokai Pro purple #ab9df2
+    categoryColor: 'cyan', // Monokai Pro cyan #78dce8
     title: 'FigmaVars Hooks',
     description:
       'React 19 hooks library and CLI for Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage.',
     href: '/work/figmavars-hooks',
     tags: ['React 19', 'TypeScript', 'Figma API'],
     commitHash: 'b7e4f1a',
-    gradient: 'from-purple-500/10 via-pink-500/5 to-transparent',
+    gradient: 'from-teal-500/10 via-cyan-500/5 to-transparent',
   },
   {
     category: 'ACCESSIBILITY',
@@ -55,25 +55,25 @@ const projects: Project[] = [
   },
   {
     category: 'HEALTH TECH',
-    categoryColor: 'orange', // Monokai Pro orange #fb9866
+    categoryColor: 'pink', // Monokai Pro pink #ff6188
     title: 'Diabetic Utils',
     description:
       'TypeScript library for glucose, A1C, and TIR calculations. Featured in Google AI Overview with 100% test coverage and adopted by health tech teams.',
     href: '/work/diabetic-utils',
     tags: ['TypeScript', 'npm', 'Health Tech'],
     commitHash: 'e4a7b3f',
-    gradient: 'from-orange-500/10 via-yellow-500/5 to-transparent',
+    gradient: 'from-pink-500/10 via-red-500/5 to-transparent',
   },
   {
     category: 'STANDARDS',
-    categoryColor: 'pink', // Monokai Pro pink #ff6188
+    categoryColor: 'orange', // Monokai Pro orange #fb9866
     title: 'Variables Contract',
     description:
       'Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, solving tool lock-in and version control gaps.',
     href: '/work/variable-contract',
     tags: ['Specification', 'Design Tokens', 'W3C'],
     commitHash: 'f9c231d',
-    gradient: 'from-purple-500/10 via-indigo-500/5 to-transparent',
+    gradient: 'from-orange-500/10 via-yellow-500/5 to-transparent',
   },
   {
     category: 'CONSULTING',
@@ -104,6 +104,19 @@ export default function FeaturedWork() {
         opacity: 0,
         y: 60,
         duration: 1.4,
+        ease: 'expo.out',
+      })
+
+      // Subtitle reveal
+      gsap.from('.section-subtitle', {
+        scrollTrigger: {
+          trigger: '.section-subtitle',
+          start: 'top 75%',
+        },
+        opacity: 0,
+        x: -20,
+        duration: 1,
+        delay: 0.3,
         ease: 'expo.out',
       })
 
@@ -151,7 +164,7 @@ export default function FeaturedWork() {
               featured work
             </h2>
           </div>
-          <div className='flex items-center gap-3 font-mono text-sm text-white/30'>
+          <div className='section-subtitle flex items-center gap-3 font-mono text-sm text-white/30'>
             <span>{'//  '}</span>
             <span>Latest projects & case studies</span>
           </div>
@@ -178,6 +191,117 @@ export default function FeaturedWork() {
   )
 }
 
+// Category icon helper - defined outside component to avoid re-creation
+const getCategoryIcon = (category: string) => {
+  const iconStyle = { width: '14px', height: '14px' }
+
+  switch (category) {
+    case 'DESIGN SYSTEMS':
+      return (
+        <svg
+          style={iconStyle}
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z'
+          />
+        </svg>
+      )
+    case 'DEVELOPER TOOLS':
+      return (
+        <svg
+          style={iconStyle}
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'
+          />
+        </svg>
+      )
+    case 'ACCESSIBILITY':
+      return (
+        <svg
+          style={iconStyle}
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+          />
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+          />
+        </svg>
+      )
+    case 'HEALTH TECH':
+      return (
+        <svg
+          style={iconStyle}
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
+          />
+        </svg>
+      )
+    case 'STANDARDS':
+      return (
+        <svg
+          style={iconStyle}
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+          />
+        </svg>
+      )
+    case 'CONSULTING':
+      return (
+        <svg
+          style={iconStyle}
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+          />
+        </svg>
+      )
+    default:
+      return null
+  }
+}
+
 interface ProjectCardProps {
   project: Project
   index: number
@@ -187,10 +311,9 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
-  ({ project, index, isActive, onHover, onLeave }, ref) => {
+  ({ project, isActive, onHover, onLeave }, ref) => {
     const cardRef = useRef<HTMLDivElement>(null)
     const glowRef = useRef<HTMLDivElement>(null)
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
     // Combine refs
     useEffect(() => {
@@ -207,8 +330,6 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
       const rect = cardRef.current.getBoundingClientRect()
       const x = e.clientX - rect.left
       const y = e.clientY - rect.top
-
-      setMousePosition({ x, y })
 
       // Update glow position
       if (glowRef.current) {
@@ -236,117 +357,6 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
     }
 
     const categoryColor = getCategoryColor(project.categoryColor)
-
-    // Category icon components
-    const CategoryIcon = () => {
-      const iconStyle = { width: '14px', height: '14px' }
-
-      switch (project.category) {
-        case 'DESIGN SYSTEMS':
-          return (
-            <svg
-              style={iconStyle}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z'
-              />
-            </svg>
-          )
-        case 'DEVELOPER TOOLS':
-          return (
-            <svg
-              style={iconStyle}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'
-              />
-            </svg>
-          )
-        case 'ACCESSIBILITY':
-          return (
-            <svg
-              style={iconStyle}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-              />
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-              />
-            </svg>
-          )
-        case 'HEALTH TECH':
-          return (
-            <svg
-              style={iconStyle}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'
-              />
-            </svg>
-          )
-        case 'STANDARDS':
-          return (
-            <svg
-              style={iconStyle}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-              />
-            </svg>
-          )
-        case 'CONSULTING':
-          return (
-            <svg
-              style={iconStyle}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-              />
-            </svg>
-          )
-        default:
-          return null
-      }
-    }
 
     return (
       <div
@@ -390,7 +400,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
               <div className='flex items-center gap-2'>
                 {/* Category icon */}
                 <div style={{ color: categoryColor }}>
-                  <CategoryIcon />
+                  {getCategoryIcon(project.category)}
                 </div>
                 {/* Category badge */}
                 <div
