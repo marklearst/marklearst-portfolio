@@ -58,6 +58,19 @@ export default function Testimonials() {
         ease: 'expo.out',
       })
 
+      // Subtitle reveal
+      gsap.from('.testimonials-subtitle', {
+        scrollTrigger: {
+          trigger: '.testimonials-subtitle',
+          start: 'top 75%',
+        },
+        opacity: 0,
+        x: -20,
+        duration: 1,
+        delay: 0.3,
+        ease: 'expo.out',
+      })
+
       // Stagger testimonials with sophisticated timing
       testimonialRefs.current.forEach((testimonial, index) => {
         if (testimonial) {
@@ -124,7 +137,7 @@ export default function Testimonials() {
           <h2 className='testimonials-title text-[clamp(48px,8vw,84px)] font-mono lowercase leading-none mb-4'>
             what colleagues say
           </h2>
-          <div className='flex items-center gap-3 font-mono text-sm text-white/30'>
+          <div className='testimonials-subtitle flex items-center gap-3 font-mono text-sm text-white/30'>
             <span>{'//  '}</span>
             <span>Testimonials from industry leaders</span>
           </div>

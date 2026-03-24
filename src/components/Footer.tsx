@@ -38,13 +38,8 @@ function SocialLink({ link }: { link: SocialLinkData }) {
         target.style.backgroundColor = `${link.color}10`
       }}
     >
-      <span style={{ color: link.color }}>
-        {link.icon}
-      </span>
-      <span
-        className='font-mono text-sm'
-        style={{ color: link.color }}
-      >
+      <span style={{ color: link.color }}>{link.icon}</span>
+      <span className='font-mono text-sm' style={{ color: link.color }}>
         {link.name}
       </span>
     </a>
@@ -88,7 +83,12 @@ export default function Footer() {
       // Fallback: ensure visibility after a delay in case ScrollTrigger doesn't fire
       setTimeout(() => {
         gsap.to('.footer-content', { opacity: 1, y: 0, duration: 0.5 })
-        gsap.to('.footer-link', { opacity: 1, y: 0, duration: 0.5, stagger: 0.05 })
+        gsap.to('.footer-link', {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.05,
+        })
       }, 2000)
     }, footerRef)
 
@@ -142,11 +142,10 @@ export default function Footer() {
     },
   ]
 
-
   return (
     <footer
       ref={footerRef}
-      className='relative py-20 px-6 border-t border-white/5 overflow-hidden'
+      className='bg-black relative py-20 px-6 border-t border-white/5 overflow-hidden'
     >
       {/* Background elements */}
       <div className='absolute inset-0'>
@@ -162,7 +161,9 @@ export default function Footer() {
               marklearst
             </h3>
             <p className='text-white/50 text-sm leading-relaxed mb-6 max-w-md font-mono'>
-              I architect design systems, build developer tools designers actually want to use, and ship open-source that solves real problems.
+              I architect design systems, build developer tools designers
+              actually want to use, and ship open-source that solves real
+              problems.
             </p>
             <div className='inline-block px-3 py-1.5 bg-white/5 border border-white/10 rounded-full'>
               <div className='flex items-center gap-2'>
