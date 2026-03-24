@@ -7,8 +7,8 @@ export default function AuroraGMPage() {
   return (
     <CaseStudyLayout
       title='Aurora Design System'
-      category='Design Systems'
-      categoryColor='cyan'
+      category='DESIGN SYSTEMS'
+      categoryColor='purple'
       description="Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance embedded into every component."
       role='Senior Design Engineer, Lead - Authored Design Token Governance Document'
       timeline='Jun 2021 - Sep 2024 (3+ years)'
@@ -25,8 +25,8 @@ export default function AuroraGMPage() {
       ]}
       links={[
         {
-          label: 'General Motors',
-          href: 'https://www.designsystem.gm.com',
+          label: 'Aurora Design System',
+          href: 'https://zeroheight.com/8ee82a8f9/v/0/p/64b823-whats-new',
           icon: (
             <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
               <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' />
@@ -50,7 +50,7 @@ export default function AuroraGMPage() {
           description: 'Engineers and designers trained on Aurora adoption',
         },
       ]}
-      gradient='from-cyan-500/20 via-teal-500/10 to-transparent'
+      gradient='from-purple-500/20 via-pink-500/10 to-transparent'
       sections={[
         {
           title: 'The Challenge',
@@ -100,7 +100,7 @@ export default function AuroraGMPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.cyan }}
+                style={{ color: MONOKAI.purple }}
               >
                 Cross-Brand Component Architecture
               </h3>
@@ -131,7 +131,7 @@ export default function AuroraGMPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.cyan }}
+                style={{ color: MONOKAI.purple }}
               >
                 Token Pipeline Automation
               </h3>
@@ -147,7 +147,7 @@ export default function AuroraGMPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.cyan }}
+                style={{ color: MONOKAI.purple }}
               >
                 WCAG 2.1 AA Compliance
               </h3>
@@ -171,7 +171,7 @@ export default function AuroraGMPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.cyan }}
+                style={{ color: MONOKAI.purple }}
               >
                 Storybook-Driven Development
               </h3>
@@ -193,7 +193,7 @@ export default function AuroraGMPage() {
             <div className='space-y-6'>
               <h3
                 className='text-2xl font-mono mb-4'
-                style={{ color: MONOKAI.cyan }}
+                style={{ color: MONOKAI.purple }}
               >
                 Multi-Platform Library Strategy
               </h3>
@@ -209,7 +209,7 @@ export default function AuroraGMPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.cyan }}
+                style={{ color: MONOKAI.purple }}
               >
                 Token Governance Rollout
               </h3>
@@ -226,7 +226,7 @@ export default function AuroraGMPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.cyan }}
+                style={{ color: MONOKAI.purple }}
               >
                 Team Enablement
               </h3>
