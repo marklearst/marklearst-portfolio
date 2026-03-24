@@ -7,16 +7,15 @@ export default function FigmaVarsHooksPage() {
   return (
     <CaseStudyLayout
       title='FigmaVars Hooks'
-      category='Developer Tools'
-      categoryColor='purple'
-      description='React 19 hooks library and CLI for the official Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage and Zod validation.'
+      category='DEVELOPER TOOLS'
+      categoryColor='cyan'
+      description='React 19 hooks library and CLI for the official Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage.'
       role='Creator & Maintainer'
       timeline='2024 - Present'
       technologies={[
         'React 19',
         'TypeScript',
         'Figma REST API',
-        'Zod',
         'Vitest',
         'Node.js',
         'CLI',
@@ -49,35 +48,58 @@ export default function FigmaVarsHooksPage() {
       impact={[
         {
           metric: '100%',
-          description: 'Test coverage with Vitest ensuring reliability for production use',
+          description:
+            'Test coverage with Vitest ensuring reliability for production use',
         },
         {
           metric: 'Type-Safe',
-          description: 'Full TypeScript support with Zod validation for runtime safety',
+          description:
+            'Full TypeScript support with Zod validation for runtime safety',
         },
         {
           metric: 'Open Source',
-          description: 'MIT licensed and actively maintained for the design systems community',
+          description:
+            'MIT licensed and actively maintained for the design systems community',
         },
       ]}
-      gradient='from-purple-500/20 via-pink-500/10 to-transparent'
+      gradient='from-cyan-500/20 via-teal-500/10 to-transparent'
       sections={[
         {
           title: 'The Problem',
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                Design systems teams using Figma Variables faced a critical workflow challenge: there was no official way to programmatically access Figma's design variables from React applications. This created:
+                Design systems teams using Figma Variables faced a critical
+                workflow challenge: there was no official way to
+                programmatically access Figma's design variables from React
+                applications. This created:
               </p>
-              <ul className='space-y-3 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li>Manual copy-paste workflows to sync design tokens from Figma to code</li>
-                <li>Version drift between Figma variables and application code</li>
+              <ul
+                className='space-y-3 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  Manual copy-paste workflows to sync design tokens from Figma
+                  to code
+                </li>
+                <li>
+                  Version drift between Figma variables and application code
+                </li>
                 <li>No way to validate variables at runtime in React apps</li>
-                <li>Inability to dynamically load Figma variables in Storybook or dev tools</li>
-                <li>Fragmented token export solutions that didn't leverage official APIs</li>
+                <li>
+                  Inability to dynamically load Figma variables in Storybook or
+                  dev tools
+                </li>
+                <li>
+                  Fragmented token export solutions that didn't leverage
+                  official APIs
+                </li>
               </ul>
               <p className='text-lg leading-relaxed'>
-                When Figma released their Variables REST API in 2024, I saw an opportunity to build the missing piece: a React hooks library that made Figma Variables a first-class citizen in React development.
+                When Figma released their Variables REST API in 2024, I saw an
+                opportunity to build the missing piece: a React hooks library
+                that made Figma Variables a first-class citizen in React
+                development.
               </p>
             </div>
           ),
@@ -87,50 +109,144 @@ export default function FigmaVarsHooksPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                <strong>FigmaVars Hooks</strong> is a React 19 hooks library that provides type-safe access to the Figma Variables REST API, paired with a CLI tool for exporting variables into CI/CD pipelines.
+                <strong>FigmaVars Hooks</strong> is a React 19 hooks library
+                that provides type-safe access to the Figma Variables REST API,
+                paired with a CLI tool for exporting variables into CI/CD
+                pipelines.
               </p>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.purple }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.cyan }}
+              >
                 React Hooks API
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                Built custom React hooks that fetch and cache Figma variables at runtime:
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                Built custom React hooks that fetch and cache Figma variables at
+                runtime:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.purple}20`, color: MONOKAI.purple }}>useFigmaVariables()</code> - Fetch all variables from a Figma file</li>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.purple}20`, color: MONOKAI.purple }}>useFigmaVariable()</code> - Get a specific variable by ID or name</li>
-                <li><code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.purple}20`, color: MONOKAI.purple }}>useFigmaCollection()</code> - Access variable collections</li>
-                <li>Built-in caching and request deduplication for performance</li>
-                <li>Full TypeScript support with inferred types from Zod schemas</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.cyan}20`,
+                      color: MONOKAI.cyan,
+                    }}
+                  >
+                    useFigmaVariables()
+                  </code>{' '}
+                  - Fetch all variables from a Figma file
+                </li>
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.cyan}20`,
+                      color: MONOKAI.cyan,
+                    }}
+                  >
+                    useFigmaVariable()
+                  </code>{' '}
+                  - Get a specific variable by ID or name
+                </li>
+                <li>
+                  <code
+                    className='text-sm px-2 py-1 rounded'
+                    style={{
+                      backgroundColor: `${MONOKAI.cyan}20`,
+                      color: MONOKAI.cyan,
+                    }}
+                  >
+                    useFigmaCollection()
+                  </code>{' '}
+                  - Access variable collections
+                </li>
+                <li>
+                  Built-in caching and request deduplication for performance
+                </li>
+                <li>
+                  Full TypeScript support with inferred types from Zod schemas
+                </li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.purple }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.cyan }}
+              >
                 CLI Export Tool
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                Created <code className='text-sm px-2 py-1 rounded' style={{ backgroundColor: `${MONOKAI.purple}20`, color: MONOKAI.purple }}>figma-vars-export</code> CLI for exporting Figma variables as JSON in CI/CD pipelines:
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                Created{' '}
+                <code
+                  className='text-sm px-2 py-1 rounded'
+                  style={{
+                    backgroundColor: `${MONOKAI.cyan}20`,
+                    color: MONOKAI.cyan,
+                  }}
+                >
+                  figma-vars-export
+                </code>{' '}
+                CLI for exporting Figma variables as JSON in CI/CD pipelines:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Runs in GitHub Actions or any CI environment</li>
-                <li>Exports variables to JSON format compatible with Style Dictionary</li>
-                <li>Supports filtering by collection, mode, or variable name</li>
-                <li>Validates exported data against Zod schemas before writing</li>
+                <li>
+                  Exports variables to JSON format compatible with Style
+                  Dictionary
+                </li>
+                <li>
+                  Supports filtering by collection, mode, or variable name
+                </li>
+                <li>
+                  Validates exported data against Zod schemas before writing
+                </li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.purple }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.cyan }}
+              >
                 Zod Validation
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
-                All API responses are validated at runtime using Zod schemas, ensuring type safety beyond TypeScript's compile-time checks. This prevents runtime errors from malformed API data and provides clear error messages when validation fails.
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                All API responses are validated at runtime using Zod schemas,
+                ensuring type safety beyond TypeScript's compile-time checks.
+                This prevents runtime errors from malformed API data and
+                provides clear error messages when validation fails.
               </p>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.purple }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.cyan }}
+              >
                 100% Test Coverage
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Built comprehensive test suite with Vitest covering:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>All hook behaviors and edge cases</li>
                 <li>API request/response mocking and error handling</li>
                 <li>Zod schema validation for all data structures</li>
@@ -143,42 +259,79 @@ export default function FigmaVarsHooksPage() {
           title: 'Technical Architecture',
           content: (
             <div className='space-y-6'>
-              <h3 className='text-2xl font-mono mb-4' style={{ color: MONOKAI.purple }}>
+              <h3
+                className='text-2xl font-mono mb-4'
+                style={{ color: MONOKAI.cyan }}
+              >
                 React 19 Features
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Leveraged React 19's new capabilities:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li>Server Components for initial data fetching when used in Next.js</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  Server Components for initial data fetching when used in
+                  Next.js
+                </li>
                 <li>Use hook for async data loading</li>
                 <li>Built-in caching strategies with React's cache function</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.purple }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.cyan }}
+              >
                 Developer Experience
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Optimized for DX:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>Clear error messages with suggestions for common issues</li>
                 <li>Comprehensive TypeScript types exported from package</li>
                 <li>Detailed README with code examples and API reference</li>
                 <li>Minimal configuration required to get started</li>
               </ul>
 
-              <h3 className='text-2xl font-mono mt-8 mb-4' style={{ color: MONOKAI.purple }}>
+              <h3
+                className='text-2xl font-mono mt-8 mb-4'
+                style={{ color: MONOKAI.cyan }}
+              >
                 Use Cases
               </h3>
-              <p className='leading-relaxed' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <p
+                className='leading-relaxed'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 Enables powerful workflows:
               </p>
-              <ul className='space-y-2 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
-                <li>Live Storybook integration showing actual Figma variables</li>
-                <li>Design token validation tools that check Figma against codebase</li>
+              <ul
+                className='space-y-2 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
+                <li>
+                  Live Storybook integration showing actual Figma variables
+                </li>
+                <li>
+                  Design token validation tools that check Figma against
+                  codebase
+                </li>
                 <li>Admin panels for managing design tokens across teams</li>
-                <li>CI/CD pipelines that auto-sync Figma changes to code repos</li>
+                <li>
+                  CI/CD pipelines that auto-sync Figma changes to code repos
+                </li>
               </ul>
             </div>
           ),
@@ -188,27 +341,52 @@ export default function FigmaVarsHooksPage() {
           content: (
             <div className='space-y-6'>
               <p className='text-lg leading-relaxed'>
-                FigmaVars Hooks bridges the gap between Figma Variables and React development:
+                FigmaVars Hooks bridges the gap between Figma Variables and
+                React development:
               </p>
-              <ul className='space-y-4 ml-6 list-disc' style={{ color: `${MONOKAI.foreground}b3` }}>
+              <ul
+                className='space-y-4 ml-6 list-disc'
+                style={{ color: `${MONOKAI.foreground}b3` }}
+              >
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Eliminates manual token sync</strong> by providing programmatic access to Figma Variables directly from React
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Eliminates manual token sync
+                  </strong>{' '}
+                  by providing programmatic access to Figma Variables directly
+                  from React
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Type-safe runtime validation</strong> using Zod ensures variables are valid before use in applications
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Type-safe runtime validation
+                  </strong>{' '}
+                  using Zod ensures variables are valid before use in
+                  applications
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>100% test coverage</strong> provides confidence for teams adopting the library in production
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    100% test coverage
+                  </strong>{' '}
+                  provides confidence for teams adopting the library in
+                  production
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>Open-source contribution</strong> to the design systems community, filling a critical gap in the Figma Variables ecosystem
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    Open-source contribution
+                  </strong>{' '}
+                  to the design systems community, filling a critical gap in the
+                  Figma Variables ecosystem
                 </li>
                 <li>
-                  <strong style={{ color: MONOKAI.foreground }}>CLI tool enables CI/CD</strong> workflows that auto-sync design tokens on every Figma change
+                  <strong style={{ color: MONOKAI.foreground }}>
+                    CLI tool enables CI/CD
+                  </strong>{' '}
+                  workflows that auto-sync design tokens on every Figma change
                 </li>
               </ul>
               <p className='text-lg leading-relaxed mt-8'>
-                The library is published on npm, actively maintained, and serves as a foundation for teams building design token workflows with Figma Variables.
+                The library is published on npm, actively maintained, and serves
+                as a foundation for teams building design token workflows with
+                Figma Variables.
               </p>
             </div>
           ),
