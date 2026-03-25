@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { MONOKAI } from '@/lib/monokai-colors'
 import {
@@ -8,7 +8,8 @@ import {
   animateProgressBar,
   showPackages,
 } from '@/lib/terminal-animation'
-import { getCommandForRoute, type TerminalCommand } from '@/lib/terminal-commands'
+import { getCommandForRoute } from '@/lib/terminal-commands'
+import { DURATION } from '@/lib/terminal-timing'
 
 interface TerminalTransitionProps {
   isActive: boolean
@@ -28,28 +29,22 @@ export default function TerminalTransition({
   const progressBarRef = useRef<HTMLDivElement>(null)
   const outputRef = useRef<HTMLDivElement>(null)
 
-  const [command, setCommand] = useState<TerminalCommand | null>(null)
+  // Derive command from targetRoute using useMemo (no state needed)
+  const command = useMemo(() => {
+    return targetRoute ? getCommandForRoute(targetRoute) : null
+  }, [targetRoute])
 
   useEffect(() => {
-    if (!isActive || !targetRoute) return
+    if (!isActive || !targetRoute || !command) return
 
-    const cmd = getCommandForRoute(targetRoute)
-    setCommand(cmd)
+    const cmd = command
 
-    const master = gsap.timeline({
-      onComplete: () => {
-        // Short buffer before triggering navigation
-        setTimeout(() => {
-          // Trigger navigation - overlay stays visible until new page loads
-          if (onComplete) onComplete()
-        }, 300)
-      },
-    })
+    const master = gsap.timeline()
 
     // 1. Show overlay with faster fade-in
     master.to(overlayRef.current, {
       opacity: 1,
-      duration: 0.2, // Reduced from 0.3s
+      duration: DURATION.overlayFadeIn,
       ease: 'power2.out',
     })
 
@@ -59,8 +54,6 @@ export default function TerminalTransition({
         typeText({
           element: commandRef.current,
           text: cmd.command,
-          minSpeed: 60,
-          maxSpeed: 100,
           cursor: true,
         }),
       )
@@ -74,7 +67,7 @@ export default function TerminalTransition({
           gsap.fromTo(
             loadingRef.current,
             { opacity: 0, y: 5 },
-            { opacity: 1, y: 0, duration: 0.3 },
+            { opacity: 1, y: 0, duration: DURATION.loadingFadeIn },
           )
         }
       })
@@ -82,13 +75,20 @@ export default function TerminalTransition({
 
     // 4. Show progress bar
     if (progressBarRef.current) {
-      master.add(animateProgressBar(progressBarRef.current, 0.8), '-=0.2')
+      master.add(
+        animateProgressBar(progressBarRef.current, DURATION.progressBar),
+        '-=0.2',
+      )
     }
 
     // 5. Show packages if exists
     if (cmd.packages && cmd.packages.length > 0 && packagesRef.current) {
       master.add(
-        showPackages(packagesRef.current, cmd.packages, 0.12),
+        showPackages(
+          packagesRef.current,
+          cmd.packages,
+          DURATION.packageStagger,
+        ),
         '-=0.4',
       )
     }
@@ -98,34 +98,50 @@ export default function TerminalTransition({
       master.call(() => {
         if (outputRef.current) {
           outputRef.current.textContent = cmd.output || ''
-          gsap.fromTo(
-            outputRef.current,
-            { opacity: 0, scale: 0.95 },
-            {
-              opacity: 1,
-              scale: 1,
-              duration: 0.4,
-              ease: 'back.out(1.7)',
-            },
-          )
+          // Set color to match project color for branding consistency
+          const outputColor = cmd.color || MONOKAI.terminal.success
+          outputRef.current.style.color = outputColor
         }
       }, [])
+
+      // Animate output reveal (this blocks the timeline)
+      master.fromTo(
+        outputRef.current,
+        { opacity: 0, scale: 0.95 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: DURATION.outputReveal,
+          ease: 'back.out(1.7)',
+        },
+      )
     }
 
-    // 7. Hold for a moment before hiding
-    master.to({}, { duration: 0.3 })
+    // 7. Hold briefly then trigger navigation
+    // Use longer hold time for home route (whoami) to let user see the output
+    const holdDuration =
+      targetRoute === '/' ? DURATION.holdBeforeNavHome : DURATION.holdBeforeNav
+    master.to({}, { duration: holdDuration })
+
+    // 8. Trigger navigation while overlay is still visible
+    master.call(() => {
+      if (onComplete) onComplete()
+    })
+
+    // 9. Keep overlay visible a bit longer for smooth transition
+    master.to({}, { duration: DURATION.navDelay / 1000 })
 
     return () => {
       master.kill()
     }
-  }, [isActive, targetRoute, onComplete])
+  }, [command, isActive, targetRoute, onComplete])
 
   if (!isActive) return null
 
   return (
     <div
       ref={overlayRef}
-      className='fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none'
+      className='fixed inset-0 z-9999 flex items-center justify-center pointer-events-none'
       style={{
         backgroundColor: MONOKAI.background,
         opacity: 0,
@@ -164,7 +180,7 @@ export default function TerminalTransition({
             ref={progressBarRef}
             className='h-full rounded-full'
             style={{
-              backgroundColor: MONOKAI.terminal.success,
+              backgroundColor: command?.color || MONOKAI.terminal.success,
               width: '0%',
             }}
           />
@@ -172,10 +188,7 @@ export default function TerminalTransition({
 
         {/* Packages list */}
         {command?.packages && command.packages.length > 0 && (
-          <div
-            ref={packagesRef}
-            className='mb-4 space-y-1 text-sm font-mono'
-          />
+          <div ref={packagesRef} className='mb-4 space-y-1 text-sm font-mono' />
         )}
 
         {/* Output/success message */}
