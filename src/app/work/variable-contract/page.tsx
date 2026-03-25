@@ -7,8 +7,8 @@ export default function VariableContractPage() {
   return (
     <CaseStudyLayout
       title='Variable Contract'
-      category='Standards & Specification'
-      categoryColor='purple'
+      category='STANDARDS'
+      categoryColor='orange'
       description='Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, addressing tool lock-in and broken design-code handoff workflows affecting design systems teams globally.'
       role='Specification Author & W3C Community Contributor'
       timeline='2024 - Present'
@@ -120,7 +120,7 @@ export default function VariableContractPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 Contract Structure
               </h3>
@@ -158,7 +158,7 @@ export default function VariableContractPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 Semantic Versioning
               </h3>
@@ -192,7 +192,7 @@ export default function VariableContractPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 Validation Schema
               </h3>
@@ -214,7 +214,7 @@ export default function VariableContractPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 Tool Adapters
               </h3>
@@ -248,7 +248,7 @@ export default function VariableContractPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 Governance Model
               </h3>
@@ -280,7 +280,7 @@ export default function VariableContractPage() {
             <div className='space-y-6'>
               <h3
                 className='text-2xl font-mono mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 DTCG Compliance
               </h3>
@@ -302,7 +302,7 @@ export default function VariableContractPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 Real-World Testing
               </h3>
@@ -327,7 +327,7 @@ export default function VariableContractPage() {
 
               <h3
                 className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
+                style={{ color: MONOKAI.orange }}
               >
                 Documentation & Spec
               </h3>
