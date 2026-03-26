@@ -22,7 +22,7 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     command: '❯ whoami',
     output: 'marklearst',
     duration: DURATION.homeRoute,
-    color: MONOKAI.cyan, // Cyan for terminal/command vibe
+    color: MONOKAI.cyan,
   },
 
   '/work/variable-contract': {
@@ -32,19 +32,17 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     packages: ['@dtcg/validator@1.0.0', 'typescript@5.3.3', 'semver@7.5.4'],
     output: '✓ Ready',
     duration: DURATION.workRouteWithPackages,
+    color: MONOKAI.orange,
   },
 
   '/work/glucoseiq': {
     route: '/work/glucoseiq',
     command: '❯ cd /work/glucoseiq',
     loading: 'Loading health tech project...',
-    packages: [
-      '@apple/healthkit@2.0.0',
-      'core-ml@1.5.0',
-      'swift-bridge@0.8.2',
-    ],
+    packages: ['@apple/healthkit@2.0.0', 'core-ml@1.5.0', 'swift-bridge@0.8.2'],
     output: '✓ Ready',
     duration: DURATION.workRouteWithPackages,
+    color: MONOKAI.pink,
   },
 
   '/work/diabetic-utils': {
@@ -54,6 +52,63 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     packages: ['typescript@5.3.3', 'vitest@1.0.0', 'tsup@8.0.0'],
     output: '✓ Ready',
     duration: DURATION.workRouteWithPackages,
+    color: MONOKAI.pink,
+  },
+
+  '/work/figmavars-hooks': {
+    route: '/work/figmavars-hooks',
+    command: '❯ cd /work/@figmavars/hooks',
+    loading: 'Loading open source library...',
+    packages: [
+      'react@19.2.3',
+      'react-dom@19.2.3',
+      'typescript@5.3.3',
+      '@vitest/ui@2.1.9',
+      'swr@2.3.7',
+    ],
+    output: '✓ Ready',
+    duration: DURATION.workRouteWithPackages,
+    color: MONOKAI.cyan,
+  },
+
+  '/work/aurora-gm': {
+    route: '/work/aurora-gm',
+    command: '❯ cd /work/aurora-gm',
+    loading: 'Loading design system...',
+    packages: ['react@18.2.0', 'react-dom@18.2.0', 'storybook@9.0.15'],
+    output: '✓ Ready',
+    duration: DURATION.workRouteWithPackages,
+    color: MONOKAI.purple,
+  },
+
+  '/work/skydio-autonomy-widget': {
+    route: '/work/skydio-autonomy-widget',
+    command: '❯ cd /work/skydio-autonomy-widget',
+    loading: 'Loading Storybook...',
+    packages: [
+      'react@19.1.0',
+      'react-dom@^19.1.0',
+      'storybook@9.0.15',
+      'tailwindcss@4.1.11',
+    ],
+    output: '✓ Ready',
+    duration: DURATION.workRouteWithPackages,
+    color: MONOKAI.yellow,
+  },
+
+  '/work/a11y-companion': {
+    route: '/work/a11y-companion',
+    command: '❯ cd /work/a11y-companion',
+    loading: 'Loading Figma Widget...',
+    packages: [
+      '@figma/widget-typings@*',
+      'typescript@5.3.2',
+      'eslint@8.54.0',
+      'esbuild@*',
+    ],
+    output: '✓ Ready',
+    duration: DURATION.workRouteWithPackages,
+    color: MONOKAI.green,
   },
 }
 
@@ -66,7 +121,7 @@ const ROUTE_COLORS: Record<string, string> = {
   '/work/a11y-companion': MONOKAI.green, // Accessibility
   '/work/diabetic-utils': MONOKAI.pink, // Health Tech
   '/work/variable-contract': MONOKAI.orange, // Standards
-  '/work/skydio': MONOKAI.yellow, // Consulting
+  '/work/skydio-autonomy-widget': MONOKAI.yellow, // Consulting
 }
 
 /**

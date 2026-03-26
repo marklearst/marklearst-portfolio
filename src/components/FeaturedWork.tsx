@@ -81,7 +81,7 @@ const projects: Project[] = [
     title: 'Skydio Component Library',
     description:
       'Built React/Storybook component library and onboarded product and engineering teams on adoption patterns for autonomous drone platform.',
-    href: '/work/skydio',
+    href: '/work/skydio-autonomy-widget',
     tags: ['React', 'Storybook', 'Consulting'],
     commitHash: 'd8e5c7b',
     gradient: 'from-teal-500/10 via-blue-500/5 to-transparent',
