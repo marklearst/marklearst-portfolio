@@ -8,7 +8,10 @@ import {
   animateProgressBar,
   showPackages,
 } from '@/lib/terminal-animation'
-import { getCommandForRoute, type TerminalCommand } from '@/lib/terminal-commands'
+import {
+  getCommandForRoute,
+  type TerminalCommand,
+} from '@/lib/terminal-commands'
 
 interface TerminalTransitionProps {
   isActive: boolean
@@ -158,10 +161,7 @@ export default function TerminalTransition({
 
     // 7. Show packages with stagger
     if (cmd.packages && cmd.packages.length > 0 && packagesRef.current) {
-      master.add(
-        showPackages(packagesRef.current, cmd.packages, 0.08),
-        '-=0.5',
-      )
+      master.add(showPackages(packagesRef.current, cmd.packages, 0.08), '-=0.5')
     }
 
     // 8. Show output with scale bounce
@@ -200,7 +200,7 @@ export default function TerminalTransition({
       {/* Main overlay with CRT effect */}
       <div
         ref={overlayRef}
-        className='fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none'
+        className='fixed inset-0 z-9999 flex items-center justify-center pointer-events-none'
         style={{
           backgroundColor: MONOKAI.background,
           opacity: 0,
