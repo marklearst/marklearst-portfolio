@@ -1,25 +1,21 @@
 'use client'
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
+import { getProjectBySlug } from '@/data/projects'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function A11yCompanionPage() {
+  const project = getProjectBySlug('a11y-companion')
+
   return (
     <CaseStudyLayout
-      title='a11y Companion'
-      category='ACCESSIBILITY'
-      categoryColor='green'
-      description='Figma widget bringing The A11Y Project Checklist into design workflows. 200+ active users across design teams with WCAG 2.2 tooltips, progress tracking, bulk actions, and MD/HTML/JSON export capabilities.'
-      role='Creator & Maintainer'
-      timeline='2023 - Present'
-      technologies={[
-        'Figma Widget API',
-        'TypeScript',
-        'WCAG 2.2',
-        'React',
-        'Figma Design',
-        'Accessibility',
-      ]}
+      title={project.title}
+      category={project.category}
+      categoryColor={project.categoryColor}
+      description={project.description}
+      role={project.role}
+      timeline={project.timeline}
+      technologies={project.technologies}
       links={[
         {
           label: 'Figma Community',
@@ -61,7 +57,7 @@ export default function A11yCompanionPage() {
             'Published on Figma Community and GitHub for the a11y community',
         },
       ]}
-      gradient='from-green-500/20 via-emerald-500/10 to-transparent'
+      gradient={project.caseStudyGradient}
       sections={[
         {
           title: 'The Problem',
