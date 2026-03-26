@@ -21,6 +21,7 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     route: '/',
     command: '❯ whoami',
     output: 'marklearst',
+    packages: ['Senior Frontend Engineer'],
     duration: DURATION.homeRoute,
     color: MONOKAI.cyan,
   },
