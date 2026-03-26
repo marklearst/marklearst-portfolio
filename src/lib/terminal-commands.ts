@@ -1,5 +1,10 @@
-import { DURATION } from './terminal-timing'
+import {
+  PROJECTS,
+  type ProjectCategoryColor,
+  type ProjectTerminalDurationKey,
+} from '@/data/projects'
 import { MONOKAI } from './monokai-colors'
+import { DURATION } from './terminal-timing'
 
 /**
  * Terminal command configurations for route-specific transitions
@@ -16,100 +21,69 @@ export interface TerminalCommand {
   color?: string // Progress bar color (Monokai color)
 }
 
+const COMMAND_PREFIX = '❯ '
+const OUTPUT_PREFIX = '✓ '
+
+const CATEGORY_COLORS: Record<ProjectCategoryColor, string> = {
+  purple: MONOKAI.purple,
+  cyan: MONOKAI.cyan,
+  green: MONOKAI.green,
+  pink: MONOKAI.pink,
+  orange: MONOKAI.orange,
+  yellow: MONOKAI.yellow,
+}
+
+const DURATION_BY_KEY: Record<ProjectTerminalDurationKey, number> = {
+  homeRoute: DURATION.homeRoute,
+  workRoute: DURATION.workRoute,
+  workRouteWithPackages: DURATION.workRouteWithPackages,
+}
+
+const formatCommand = (command: string) => `${COMMAND_PREFIX}${command}`
+
+const formatOutput = (output: string, withCheck?: boolean) =>
+  withCheck ? `${OUTPUT_PREFIX}${output}` : output
+
+const PROJECT_ROUTE_COMMANDS = PROJECTS.reduce<Record<string, TerminalCommand>>(
+  (acc, project) => {
+    const terminal = project.terminal
+    const output = terminal.output
+      ? formatOutput(terminal.output, terminal.outputWithCheck)
+      : undefined
+
+    acc[project.route] = {
+      route: project.route,
+      command: formatCommand(terminal.command),
+      loading: terminal.loading,
+      packages: terminal.packages,
+      output,
+      duration: DURATION_BY_KEY[terminal.durationKey],
+      color: CATEGORY_COLORS[project.categoryColor],
+    }
+
+    return acc
+  },
+  {},
+)
+
 export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
   '/': {
     route: '/',
-    command: '❯ whoami',
+    command: formatCommand('whoami'),
     output: 'marklearst',
     packages: ['Senior Frontend Engineer'],
     duration: DURATION.homeRoute,
     color: MONOKAI.cyan,
   },
-
-  '/work/variable-contract': {
-    route: '/work/variable-contract',
-    command: '❯ cd /work/variable-contract',
-    loading: 'Initializing design system...',
-    packages: ['@dtcg/validator@1.0.0', 'typescript@5.3.3', 'semver@7.5.4'],
-    output: '✓ Ready',
-    duration: DURATION.workRouteWithPackages,
-    color: MONOKAI.orange,
-  },
-
+  ...PROJECT_ROUTE_COMMANDS,
   '/work/glucoseiq': {
     route: '/work/glucoseiq',
-    command: '❯ cd /work/glucoseiq',
+    command: formatCommand('cd /work/glucoseiq'),
     loading: 'Loading health tech project...',
     packages: ['@apple/healthkit@2.0.0', 'core-ml@1.5.0', 'swift-bridge@0.8.2'],
-    output: '✓ Ready',
+    output: formatOutput('Ready', true),
     duration: DURATION.workRouteWithPackages,
     color: MONOKAI.pink,
-  },
-
-  '/work/diabetic-utils': {
-    route: '/work/diabetic-utils',
-    command: '❯ cd /work/diabetic-utils',
-    loading: 'Loading open source library...',
-    packages: ['typescript@5.3.3', 'vitest@1.0.0', 'tsup@8.0.0'],
-    output: '✓ Ready',
-    duration: DURATION.workRouteWithPackages,
-    color: MONOKAI.pink,
-  },
-
-  '/work/figmavars-hooks': {
-    route: '/work/figmavars-hooks',
-    command: '❯ cd /work/@figmavars/hooks',
-    loading: 'Loading open source library...',
-    packages: [
-      'react@19.2.3',
-      'react-dom@19.2.3',
-      'typescript@5.3.3',
-      '@vitest/ui@2.1.9',
-      'swr@2.3.7',
-    ],
-    output: '✓ Ready',
-    duration: DURATION.workRouteWithPackages,
-    color: MONOKAI.cyan,
-  },
-
-  '/work/aurora-gm': {
-    route: '/work/aurora-gm',
-    command: '❯ cd /work/aurora-gm',
-    loading: 'Loading design system...',
-    packages: ['react@18.2.0', 'react-dom@18.2.0', 'storybook@9.0.15'],
-    output: '✓ Ready',
-    duration: DURATION.workRouteWithPackages,
-    color: MONOKAI.purple,
-  },
-
-  '/work/skydio-autonomy-widget': {
-    route: '/work/skydio-autonomy-widget',
-    command: '❯ cd /work/skydio-autonomy-widget',
-    loading: 'Loading Storybook...',
-    packages: [
-      'react@19.1.0',
-      'react-dom@^19.1.0',
-      'storybook@9.0.15',
-      'tailwindcss@4.1.11',
-    ],
-    output: '✓ Ready',
-    duration: DURATION.workRouteWithPackages,
-    color: MONOKAI.yellow,
-  },
-
-  '/work/a11y-companion': {
-    route: '/work/a11y-companion',
-    command: '❯ cd /work/a11y-companion',
-    loading: 'Loading Figma Widget...',
-    packages: [
-      '@figma/widget-typings@*',
-      'typescript@5.3.2',
-      'eslint@8.54.0',
-      'esbuild@*',
-    ],
-    output: '✓ Ready',
-    duration: DURATION.workRouteWithPackages,
-    color: MONOKAI.green,
   },
 }
 
@@ -117,12 +91,11 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
  * Map of routes to their project colors
  */
 const ROUTE_COLORS: Record<string, string> = {
-  '/work/aurora-gm': MONOKAI.purple, // Design Systems
-  '/work/figmavars-hooks': MONOKAI.cyan, // Developer Tools
-  '/work/a11y-companion': MONOKAI.green, // Accessibility
-  '/work/diabetic-utils': MONOKAI.pink, // Health Tech
-  '/work/variable-contract': MONOKAI.orange, // Standards
-  '/work/skydio-autonomy-widget': MONOKAI.yellow, // Consulting
+  ...PROJECTS.reduce<Record<string, string>>((acc, project) => {
+    acc[project.route] = CATEGORY_COLORS[project.categoryColor]
+    return acc
+  }, {}),
+  '/work/glucoseiq': MONOKAI.pink,
 }
 
 /**
@@ -142,9 +115,9 @@ export function getCommandForRoute(route: string): TerminalCommand {
 
     return {
       route,
-      command: `❯ cd ${route}`,
+      command: formatCommand(`cd ${route}`),
       loading: `Loading ${slug}...`,
-      output: '✓ Ready',
+      output: formatOutput('Ready', true),
       duration: DURATION.workRoute,
       color,
     }
@@ -155,9 +128,9 @@ export function getCommandForRoute(route: string): TerminalCommand {
     const slug = route.split('/').pop() || 'post'
     return {
       route,
-      command: `❯ cat ~/blog/${slug}.md`,
+      command: formatCommand(`cat ~/blog/${slug}.md`),
       loading: 'Reading markdown file...',
-      output: '✓ Loaded',
+      output: formatOutput('Loaded', true),
       duration: DURATION.blogRoute,
     }
   }
@@ -167,9 +140,9 @@ export function getCommandForRoute(route: string): TerminalCommand {
     const slug = route.split('/').pop() || 'experiment'
     return {
       route,
-      command: `❯ npm run lab:${slug}`,
+      command: formatCommand(`npm run lab:${slug}`),
       loading: 'Starting experiment...',
-      output: '✓ Running',
+      output: formatOutput('Running', true),
       duration: DURATION.labRoute,
     }
   }
@@ -177,8 +150,8 @@ export function getCommandForRoute(route: string): TerminalCommand {
   // Generic fallback
   return {
     route,
-    command: `❯ cd ${route}`,
-    output: '✓ Ready',
+    command: formatCommand(`cd ${route}`),
+    output: formatOutput('Ready', true),
     duration: DURATION.homeRoute,
   }
 }
