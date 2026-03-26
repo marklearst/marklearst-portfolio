@@ -1,25 +1,21 @@
 'use client'
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
+import { getProjectBySlug } from '@/data/projects'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function VariableContractPage() {
+  const project = getProjectBySlug('variable-contract')
+
   return (
     <CaseStudyLayout
-      title='Variable Contract'
-      category='STANDARDS'
-      categoryColor='orange'
-      description='Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, addressing tool lock-in and broken design-code handoff workflows affecting design systems teams globally.'
-      role='Specification Author & W3C Community Contributor'
-      timeline='2024 - Present'
-      technologies={[
-        'JSON Schema',
-        'DTCG Spec',
-        'Design Tokens',
-        'Version Control',
-        'Cross-Tool Integration',
-        'Governance Models',
-      ]}
+      title={project.title}
+      category={project.category}
+      categoryColor={project.categoryColor}
+      description={project.description}
+      role={project.role}
+      timeline={project.timeline}
+      technologies={project.technologies}
       links={[
         {
           label: 'GitHub Specification',
@@ -61,7 +57,7 @@ export default function VariableContractPage() {
             'Public draft specification driving community discussion',
         },
       ]}
-      gradient='from-purple-500/20 via-indigo-500/10 to-transparent'
+      gradient={project.caseStudyGradient}
       sections={[
         {
           title: 'The Problem',
