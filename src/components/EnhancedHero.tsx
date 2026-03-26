@@ -217,7 +217,7 @@ export default function EnhancedHero() {
 
     // Top right quadrant
     {
-      text: 'design tokens',
+      text: 'tokens',
       x: '82%',
       y: '10%',
       size: 'text-6xl',
