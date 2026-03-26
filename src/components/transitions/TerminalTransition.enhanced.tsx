@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { gsap } from 'gsap'
 import { MONOKAI } from '@/lib/monokai-colors'
 import {
@@ -33,13 +33,15 @@ export default function TerminalTransition({
   const outputRef = useRef<HTMLDivElement>(null)
   const scanlineRef = useRef<HTMLDivElement>(null)
 
-  const [command, setCommand] = useState<TerminalCommand | null>(null)
+  const command = useMemo<TerminalCommand | null>(() => {
+    if (!isActive || !targetRoute) return null
+    return getCommandForRoute(targetRoute)
+  }, [isActive, targetRoute])
 
   useEffect(() => {
-    if (!isActive || !targetRoute) return
+    if (!isActive || !command) return
 
-    const cmd = getCommandForRoute(targetRoute)
-    setCommand(cmd)
+    const cmd = command
 
     const master = gsap.timeline({
       onComplete: () => {
@@ -191,7 +193,7 @@ export default function TerminalTransition({
     return () => {
       master.kill()
     }
-  }, [isActive, targetRoute, onComplete])
+  }, [isActive, command, onComplete])
 
   if (!isActive) return null
 
