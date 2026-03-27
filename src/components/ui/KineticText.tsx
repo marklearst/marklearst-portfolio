@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { gsap } from 'gsap'
 
 interface KineticTextProps {
@@ -11,10 +11,8 @@ interface KineticTextProps {
 
 export default function KineticText({ text, className = '', style }: KineticTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null)
-  const [isHovering, setIsHovering] = useState(false)
 
   const handleMouseEnter = () => {
-    setIsHovering(true)
     if (!containerRef.current) return
 
     const chars = containerRef.current.querySelectorAll('.kinetic-char')
@@ -29,7 +27,6 @@ export default function KineticText({ text, className = '', style }: KineticText
   }
 
   const handleMouseLeave = () => {
-    setIsHovering(false)
     if (!containerRef.current) return
 
     const chars = containerRef.current.querySelectorAll('.kinetic-char')
