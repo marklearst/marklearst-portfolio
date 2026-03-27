@@ -102,8 +102,6 @@ export default function ParticleLogo({
         return // STOP
       }
 
-      let allSettled = false
-
       // Phase 1: Scatter (0-500ms)
       if (elapsed < 500) {
         setPhase('scatter')
@@ -117,9 +115,9 @@ export default function ParticleLogo({
       else if (elapsed < 2500) {
         if (phase !== 'attract') setPhase('attract')
         if (isMobile) {
-          allSettled = updateParticlesSimple(particlesRef.current, 0.15)
+          updateParticlesSimple(particlesRef.current, 0.15)
         } else {
-          allSettled = updateParticles(particlesRef.current, 0.85, 0.08)
+          updateParticles(particlesRef.current, 0.85, 0.08)
         }
       }
       // Phase 3: Settle (2500-3500ms)
@@ -130,9 +128,9 @@ export default function ParticleLogo({
         }
 
         if (isMobile) {
-          allSettled = updateParticlesSimple(particlesRef.current, 0.2)
+          updateParticlesSimple(particlesRef.current, 0.2)
         } else {
-          allSettled = updateParticles(particlesRef.current, 0.9, 0.15)
+          updateParticles(particlesRef.current, 0.9, 0.15)
         }
 
         if (now - settledTimeRef.current > 300) {

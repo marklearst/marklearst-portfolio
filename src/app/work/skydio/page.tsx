@@ -2,25 +2,21 @@
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
 import CodeBlock from '@/components/CodeBlock'
+import { getProjectBySlug } from '@/data/projects'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function SkydioPage() {
+  const project = getProjectBySlug('skydio')
+
   return (
     <CaseStudyLayout
-      title='Skydio Autonomy Widget'
-      category='CONSULTING'
-      categoryColor='yellow'
-      description="Built production-grade React widget system for Skydio's Rivit design language, enabling real-time drone control with config-driven UI architecture and Storybook documentation."
-      role='Frontend Consultant - Component Architecture & Storybook'
-      timeline='2024 (Contract)'
-      technologies={[
-        'React',
-        'TypeScript',
-        'Storybook 9',
-        'Tailwind CSS v4',
-        'Vite',
-        'Config-Driven UI',
-      ]}
+      title={project.title}
+      category={project.category}
+      categoryColor={project.categoryColor}
+      description={project.description}
+      role={project.role}
+      timeline={project.timeline}
+      technologies={project.technologies}
       links={[
         {
           label: 'GitHub (private)',
@@ -61,7 +57,7 @@ export default function SkydioPage() {
           description: 'Action-based architecture enabling UI-as-API pattern',
         },
       ]}
-      gradient='from-cyan-500/20 via-blue-500/10 to-transparent'
+      gradient={project.caseStudyGradient}
       sections={[
         {
           title: 'The Challenge',

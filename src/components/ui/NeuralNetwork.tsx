@@ -8,12 +8,6 @@ import { MONOKAI } from '@/lib/monokai-colors'
  * Lines connect to actual text centers and move with floating keywords
  */
 
-// Node definitions with IDs matching keyword indices
-interface NodeDef {
-  id: number
-  color: string
-}
-
 // Connection definitions referencing node IDs
 interface ConnectionDef {
   from: number

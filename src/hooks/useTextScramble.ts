@@ -17,7 +17,6 @@ export function useTextScramble(originalText: string, duration: number = 800) {
     frameRef.current = 0
 
     const totalFrames = Math.floor(duration / 16) // ~60fps
-    const revealSpeed = originalText.length / (totalFrames * 0.6) // Reveal chars over 60% of animation
 
     const animate = () => {
       frameRef.current++
