@@ -4,89 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import React from 'react'
+import { PROJECTS, type ProjectMeta } from '@/data/projects'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 gsap.registerPlugin(ScrollTrigger)
-
-interface Project {
-  category: string
-  categoryColor: string
-  title: string
-  description: string
-  href: string
-  tags: string[]
-  commitHash: string
-  gradient: string
-}
-
-const projects: Project[] = [
-  {
-    category: 'DESIGN SYSTEMS',
-    categoryColor: 'purple', // Monokai Pro purple #ab9df2
-    title: 'Aurora Design System',
-    description:
-      "Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance.",
-    href: '/work/aurora-gm',
-    tags: ['React', 'Design Tokens', 'Storybook'],
-    commitHash: 'a3f9c2d',
-    gradient: 'from-purple-500/10 via-pink-500/5 to-transparent',
-  },
-  {
-    category: 'DEVELOPER TOOLS',
-    categoryColor: 'cyan', // Monokai Pro cyan #78dce8
-    title: 'FigmaVars Hooks',
-    description:
-      'React 19 hooks library and CLI for Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage.',
-    href: '/work/figmavars-hooks',
-    tags: ['React 19', 'TypeScript', 'Figma API'],
-    commitHash: 'b7e4f1a',
-    gradient: 'from-teal-500/10 via-cyan-500/5 to-transparent',
-  },
-  {
-    category: 'ACCESSIBILITY',
-    categoryColor: 'green', // Monokai Pro green #a9dc75
-    title: 'a11y Companion',
-    description:
-      'Figma widget bringing A11Y Project Checklist into design workflows. 200+ active users with WCAG 2.2 tooltips, progress tracking, and bulk actions.',
-    href: '/work/a11y-companion',
-    tags: ['Figma Widget', 'WCAG 2.2', 'Accessibility'],
-    commitHash: 'c9d2e8b',
-    gradient: 'from-green-500/10 via-emerald-500/5 to-transparent',
-  },
-  {
-    category: 'HEALTH TECH',
-    categoryColor: 'pink', // Monokai Pro pink #ff6188
-    title: 'Diabetic Utils',
-    description:
-      'TypeScript library for glucose, A1C, and TIR calculations. Featured in Google AI Overview with 100% test coverage and adopted by health tech teams.',
-    href: '/work/diabetic-utils',
-    tags: ['TypeScript', 'npm', 'Health Tech'],
-    commitHash: 'e4a7b3f',
-    gradient: 'from-pink-500/10 via-red-500/5 to-transparent',
-  },
-  {
-    category: 'STANDARDS',
-    categoryColor: 'orange', // Monokai Pro orange #fb9866
-    title: 'Variables Contract',
-    description:
-      'Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, solving tool lock-in and version control gaps.',
-    href: '/work/variable-contract',
-    tags: ['Specification', 'Design Tokens', 'W3C'],
-    commitHash: 'f9c231d',
-    gradient: 'from-orange-500/10 via-yellow-500/5 to-transparent',
-  },
-  {
-    category: 'CONSULTING',
-    categoryColor: 'yellow', // Monokai Pro yellow #ffd866
-    title: 'Skydio Component Library',
-    description:
-      'Built React/Storybook component library and onboarded product and engineering teams on adoption patterns for autonomous drone platform.',
-    href: '/work/skydio-autonomy-widget',
-    tags: ['React', 'Storybook', 'Consulting'],
-    commitHash: 'd8e5c7b',
-    gradient: 'from-teal-500/10 via-blue-500/5 to-transparent',
-  },
-]
 
 export default function FeaturedWork() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -172,9 +93,9 @@ export default function FeaturedWork() {
 
         {/* Cards Grid - Consistent spacing with equal height rows */}
         <div className='grid lg:grid-cols-3 gap-6 auto-rows-fr'>
-          {projects.map((project, index) => (
+          {PROJECTS.map((project, index) => (
             <ProjectCard
-              key={project.title}
+              key={project.slug}
               project={project}
               index={index}
               isActive={activeCard === index}
@@ -303,7 +224,7 @@ const getCategoryIcon = (category: string) => {
 }
 
 interface ProjectCardProps {
-  project: Project
+  project: ProjectMeta
   index: number
   isActive: boolean
   onHover: () => void
@@ -383,7 +304,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
             className={`
               absolute inset-0 opacity-0 group-hover:opacity-100
               transition-opacity duration-700
-              bg-linear-to-br ${project.gradient}
+              bg-linear-to-br ${project.cardGradient}
             `}
           />
 
@@ -427,12 +348,12 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
 
             {/* Title */}
             <h3 className='text-3xl mb-5 font-mono font-medium group-hover:text-white transition-colors duration-500 leading-tight'>
-              {project.title}
+              {project.cardTitle}
             </h3>
 
             {/* Description - grows to fill space */}
             <p className='text-white/60 leading-relaxed text-sm flex-1'>
-              {project.description}
+              {project.summary}
             </p>
 
             {/* Tags + CTA pinned to bottom */}
@@ -456,7 +377,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
 
               {/* CTA Link */}
               <a
-                href={project.href}
+                href={project.route}
                 className='inline-flex items-center gap-2.5 text-white/80 hover:text-white font-medium transition-all duration-300 group/link'
               >
                 <span className='font-mono text-sm'>Read case study</span>
@@ -489,7 +410,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
           <div
             className={`
               absolute top-0 right-0 w-20 h-20
-              bg-linear-to-br ${project.gradient}
+              bg-linear-to-br ${project.cardGradient}
               opacity-0 group-hover:opacity-100
               blur-2xl
               transition-opacity duration-700
@@ -502,7 +423,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
           className={`
             absolute inset-0 -z-10 rounded-2xl opacity-0 group-hover:opacity-100
             blur-xl transition-opacity duration-700
-            bg-linear-to-br ${project.gradient}
+            bg-linear-to-br ${project.cardGradient}
           `}
         />
       </div>
