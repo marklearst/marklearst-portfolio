@@ -1,5 +1,6 @@
 'use client'
 
+import type { CSSProperties } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { MONOKAI } from '@/lib/monokai-colors'
 
@@ -10,7 +11,7 @@ interface CodeBlockProps {
 }
 
 // Custom Monokai Pro theme matching our brand colors
-const monokaiProTheme: any = {
+const monokaiProTheme: Record<string, CSSProperties> = {
   'code[class*="language-"]': {
     color: MONOKAI.foreground,
     background: 'transparent',
@@ -157,12 +158,12 @@ export default function CodeBlock({
   return (
     <div className='relative group mt-4 mb-6'>
       {/* Hover glow effect */}
-      <div className='absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
+      <div className='absolute -inset-1 bg-linear-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
 
       {/* Code container */}
       <div className='relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden'>
         {/* macOS window dots */}
-        <div className='absolute top-4 right-4 flex gap-2 z-10'>
+        <div className='absolute top-4 left-4 flex gap-2 z-10'>
           <div className='w-3 h-3 rounded-full bg-red-500/30' />
           <div className='w-3 h-3 rounded-full bg-yellow-500/30' />
           <div className='w-3 h-3 rounded-full bg-green-500/30' />
@@ -184,6 +185,7 @@ export default function CodeBlock({
               style: {
                 fontFamily: '"MonoLisa", "SF Mono", Consolas, monospace',
                 fontFeatureSettings: '"liga" 1, "calt" 1',
+                backgroundColor: 'transparent',
               },
             }}
           >
