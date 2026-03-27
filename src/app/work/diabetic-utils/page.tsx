@@ -1,25 +1,21 @@
 'use client'
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
+import { getProjectBySlug } from '@/data/projects'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function DiabeticUtilsPage() {
+  const project = getProjectBySlug('diabetic-utils')
+
   return (
     <CaseStudyLayout
-      title='Diabetic Utils'
-      category='HEALTH TECH'
-      categoryColor='pink'
-      description='TypeScript library for glucose, A1C, and Time in Range (TIR) calculations. Featured in Google AI Overview for diabetes developer tools with 100% test coverage and adopted by health tech teams.'
-      role='Creator & Maintainer'
-      timeline='2023 - Present'
-      technologies={[
-        'TypeScript',
-        'Vitest',
-        'npm',
-        'Open Source',
-        'Clinical Algorithms',
-        'HealthKit',
-      ]}
+      title={project.title}
+      category={project.category}
+      categoryColor={project.categoryColor}
+      description={project.description}
+      role={project.role}
+      timeline={project.timeline}
+      technologies={project.technologies}
       links={[
         {
           label: 'GitHub',
@@ -61,7 +57,7 @@ export default function DiabeticUtilsPage() {
             'Adopted by health tech teams for glucose monitoring apps',
         },
       ]}
-      gradient='from-orange-500/20 via-yellow-500/10 to-transparent'
+      gradient={project.caseStudyGradient}
       sections={[
         {
           title: 'The Problem',

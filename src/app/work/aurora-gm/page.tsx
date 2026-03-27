@@ -1,28 +1,21 @@
 'use client'
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
+import { getProjectBySlug } from '@/data/projects'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function AuroraGMPage() {
+  const project = getProjectBySlug('aurora-gm')
+
   return (
     <CaseStudyLayout
-      title='Aurora Design System'
-      category='DESIGN SYSTEMS'
-      categoryColor='purple'
-      description="Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance embedded into every component."
-      role='Senior Design Engineer, Lead - Authored Design Token Governance Document'
-      timeline='Jun 2021 - Sep 2024 (3+ years)'
-      technologies={[
-        'React',
-        'React Native',
-        'TypeScript',
-        'Storybook 10',
-        'Style Dictionary',
-        'Design Tokens',
-        'WCAG 2.1 AA',
-        'Figma Variables',
-        'GitHub Actions',
-      ]}
+      title={project.title}
+      category={project.category}
+      categoryColor={project.categoryColor}
+      description={project.description}
+      role={project.role}
+      timeline={project.timeline}
+      technologies={project.technologies}
       links={[
         {
           label: 'Aurora Design System',
@@ -50,7 +43,7 @@ export default function AuroraGMPage() {
           description: 'Engineers and designers trained on Aurora adoption',
         },
       ]}
-      gradient='from-purple-500/20 via-pink-500/10 to-transparent'
+      gradient={project.caseStudyGradient}
       sections={[
         {
           title: 'The Challenge',
