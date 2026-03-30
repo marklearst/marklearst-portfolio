@@ -4,6 +4,7 @@ interface TransitionState {
   isTransitioning: boolean
   targetRoute: string | null
   onNavigate: (() => void) | null
+  transitionKey: number
   startTransition: (route: string, onNavigate: () => void) => void
   completeTransition: () => void
   triggerNavigation: () => void
@@ -13,9 +14,15 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
   isTransitioning: false,
   targetRoute: null,
   onNavigate: null,
+  transitionKey: 0,
 
   startTransition: (route: string, onNavigate: () => void) => {
-    set({ isTransitioning: true, targetRoute: route, onNavigate })
+    set((state) => ({
+      isTransitioning: true,
+      targetRoute: route,
+      onNavigate,
+      transitionKey: state.transitionKey + 1,
+    }))
   },
 
   triggerNavigation: () => {

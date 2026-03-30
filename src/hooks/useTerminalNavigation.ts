@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useTransitionStore } from '@/store/transition-store'
 
@@ -11,11 +11,68 @@ import { useTransitionStore } from '@/store/transition-store'
 export function useTerminalNavigation() {
   const pathname = usePathname()
   const router = useRouter()
-  const { startTransition, completeTransition } = useTransitionStore()
+  const { startTransition, completeTransition, isTransitioning } =
+    useTransitionStore()
+  const pathnameRef = useRef(pathname)
+  const routerRef = useRef(router)
+  const startTransitionRef = useRef(startTransition)
+  const isTransitioningRef = useRef(isTransitioning)
+  const pendingNavigationRef = useRef<{
+    targetPath: string
+    nextHref: string
+    hash: string
+  } | null>(null)
+
+  useEffect(() => {
+    pathnameRef.current = pathname
+    routerRef.current = router
+    startTransitionRef.current = startTransition
+    isTransitioningRef.current = isTransitioning
+  }, [pathname, router, startTransition, isTransitioning])
+
+  const normalizePathname = (path: string) =>
+    path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path
+
+  const startNavigation = (
+    targetPath: string,
+    nextHref: string,
+    hash: string,
+  ) => {
+    startTransitionRef.current(targetPath, () => {
+      routerRef.current.push(nextHref)
+      // Scroll to hash or top after navigation
+      setTimeout(() => {
+        if (hash) {
+          const element = document.getElementById(hash)
+          if (element) {
+            element.scrollIntoView({ behavior: 'instant' })
+          }
+        } else {
+          window.scrollTo({ top: 0, behavior: 'instant' })
+        }
+      }, 100)
+    })
+  }
+
+  useEffect(() => {
+    if (isTransitioning) return
+
+    const pending = pendingNavigationRef.current
+    if (!pending) return
+
+    pendingNavigationRef.current = null
+    const currentPath = normalizePathname(pathnameRef.current)
+    if (pending.targetPath === currentPath) return
+
+    startNavigation(pending.targetPath, pending.nextHref, pending.hash)
+  }, [isTransitioning])
 
   useEffect(() => {
     // Intercept all link clicks
     const handleClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0) return
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+
       const target = e.target as HTMLElement
       const link = target.closest('a')
 
@@ -35,16 +92,19 @@ export function useTerminalNavigation() {
 
       // Don't intercept hash links to the same page (e.g., /#work from /)
       // or cross-page hash links where we're already on that page
-      const [hrefPath, hrefHash] = href.split('#')
-      const targetPath = hrefPath || '/'
+      const url = new URL(href, window.location.origin)
+      const targetPath = normalizePathname(url.pathname)
+      const hrefHash = url.hash.replace('#', '')
+      const currentPath = normalizePathname(pathnameRef.current)
+      const nextHref = `${url.pathname}${url.search}${url.hash}`
 
-      if (targetPath === pathname && hrefHash) {
+      if (targetPath === currentPath && hrefHash) {
         // Same page, just scroll to hash - don't transition
         return
       }
 
       // Don't intercept if it's the same page (no hash)
-      if (href === pathname) {
+      if (targetPath === currentPath) {
         return
       }
 
@@ -59,29 +119,25 @@ export function useTerminalNavigation() {
       // Start terminal transition with navigation callback
       // The TerminalTransition component will trigger navigation
       // when animation actually completes
-      startTransition(hrefPath || href, () => {
-        router.push(href)
-        // Scroll to hash or top after navigation
-        setTimeout(() => {
-          if (hrefHash) {
-            const element = document.getElementById(hrefHash)
-            if (element) {
-              element.scrollIntoView({ behavior: 'instant' })
-            }
-          } else {
-            window.scrollTo({ top: 0, behavior: 'instant' })
-          }
-        }, 100)
-      })
+      if (isTransitioningRef.current) {
+        pendingNavigationRef.current = {
+          targetPath,
+          nextHref,
+          hash: hrefHash,
+        }
+        return
+      }
+
+      startNavigation(targetPath, nextHref, hrefHash)
     }
 
     // Handle browser back/forward buttons
     const handlePopState = () => {
       // Get the current path after popstate
-      const currentPath = window.location.pathname
+      const currentPath = normalizePathname(window.location.pathname)
 
       // Trigger terminal transition for back/forward navigation
-      startTransition(currentPath, () => {
+      startTransitionRef.current(currentPath, () => {
         // Path already changed, just scroll to top
         window.scrollTo({ top: 0, behavior: 'instant' })
       })
@@ -94,7 +150,7 @@ export function useTerminalNavigation() {
       document.removeEventListener('click', handleClick)
       window.removeEventListener('popstate', handlePopState)
     }
-  }, [pathname, router, startTransition, completeTransition])
+  }, [])
 
   return {
     startTransition,
