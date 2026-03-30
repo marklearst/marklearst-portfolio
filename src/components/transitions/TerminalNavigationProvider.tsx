@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { useTerminalNavigation } from '@/hooks/useTerminalNavigation'
 import { useTransitionStore } from '@/store/transition-store'
@@ -19,8 +19,16 @@ export default function TerminalNavigationProvider({
   const hasInitializedRef = useRef(false)
 
   // Get transition state
-  const { isTransitioning, targetRoute, triggerNavigation, completeTransition } =
-    useTransitionStore()
+  const {
+    isTransitioning,
+    targetRoute,
+    triggerNavigation,
+    completeTransition,
+    transitionKey,
+  } = useTransitionStore()
+
+  const normalizePathname = (path: string) =>
+    path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path
 
   // On mount, ensure no stuck transition state from previous session
   useEffect(() => {
@@ -48,11 +56,44 @@ export default function TerminalNavigationProvider({
     }
   }, [pathname, isTransitioning, completeTransition])
 
-  const handleComplete = () => {
+  useEffect(() => {
+    if (!isTransitioning || !targetRoute) return
+
+    const key = transitionKey
+    let finalizeTimeout: ReturnType<typeof setTimeout> | null = null
+
+    const fallbackTimeout = setTimeout(() => {
+      const state = useTransitionStore.getState()
+      if (!state.isTransitioning || state.transitionKey !== key) return
+
+      const currentPath = normalizePathname(window.location.pathname)
+      const targetPath = normalizePathname(state.targetRoute || '')
+
+      if (targetPath && currentPath !== targetPath) {
+        state.triggerNavigation()
+      }
+
+      finalizeTimeout = setTimeout(() => {
+        const nextState = useTransitionStore.getState()
+        if (nextState.isTransitioning && nextState.transitionKey === key) {
+          nextState.completeTransition()
+        }
+      }, 600)
+    }, 4500)
+
+    return () => {
+      clearTimeout(fallbackTimeout)
+      if (finalizeTimeout) {
+        clearTimeout(finalizeTimeout)
+      }
+    }
+  }, [isTransitioning, targetRoute, transitionKey])
+
+  const handleComplete = useCallback(() => {
     // Only trigger navigation, don't complete transition yet
     // Transition will complete when pathname changes (useEffect above)
     triggerNavigation()
-  }
+  }, [triggerNavigation])
 
   return (
     <>
