@@ -1,11 +1,19 @@
 'use client'
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
+import { GitHubIcon, NpmIcon } from '@/components/CaseStudyLinkIcons'
+import {
+  CaseStudyMutedList,
+  CaseStudyMutedText,
+  CaseStudySubheading,
+} from '@/components/CaseStudyTypography'
 import { getProjectBySlug } from '@/data/projects'
+import { getCategoryColor } from '@/lib/project-categories'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function DiabeticUtilsPage() {
   const project = getProjectBySlug('diabetic-utils')
+  const accent = getCategoryColor(project.categoryColor)
 
   return (
     <CaseStudyLayout
@@ -20,24 +28,12 @@ export default function DiabeticUtilsPage() {
         {
           label: 'GitHub',
           href: 'https://github.com/marklearst/diabetic-utils',
-          icon: (
-            <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
-              <path
-                fillRule='evenodd'
-                d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z'
-                clipRule='evenodd'
-              />
-            </svg>
-          ),
+          icon: <GitHubIcon />,
         },
         {
           label: 'npm Package',
           href: 'https://www.npmjs.com/package/diabetic-utils',
-          icon: (
-            <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
-              <path d='M0 0v24h6.75v-1.5H18V24h6V0H0zm6.75 22.5H1.5V1.5h21v19.5H19.5v-18h-9v18H6.75v-18h-5.25v21z' />
-            </svg>
-          ),
+          icon: <NpmIcon />,
         },
       ]}
       impact={[
@@ -68,10 +64,7 @@ export default function DiabeticUtilsPage() {
                 challenge: there's no standardized, tested library for glucose
                 calculations. This creates:
               </p>
-              <ul
-                className='space-y-3 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              <CaseStudyMutedList className='space-y-3'>
                 <li>
                   Teams reinventing the same glucose conversion algorithms
                   (mg/dL ↔ mmol/L)
@@ -88,7 +81,7 @@ export default function DiabeticUtilsPage() {
                 <li>
                   Clinical calculation errors that could impact patient care
                 </li>
-              </ul>
+              </CaseStudyMutedList>
               <p className='text-lg leading-relaxed'>
                 I built GlucoseIQ (Apple Watch app) and kept rewriting the same
                 utility functions. I realized the diabetes developer community
@@ -108,22 +101,13 @@ export default function DiabeticUtilsPage() {
                 A1C estimation, and Time in Range metrics.
               </p>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent}>
                 Glucose Conversions
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Type-safe functions for converting between mg/dL and mmol/L:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>
                   <code
                     className='text-sm px-2 py-1 rounded'
@@ -153,25 +137,16 @@ export default function DiabeticUtilsPage() {
                   Uses standard conversion factor (18.0182) from clinical
                   guidelines
                 </li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent}>
                 A1C Calculations
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Estimated A1C (eA1C) calculation from average glucose using the
                 ADAG formula:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>
                   <code
                     className='text-sm px-2 py-1 rounded'
@@ -189,24 +164,15 @@ export default function DiabeticUtilsPage() {
                 </li>
                 <li>Supports both mg/dL and mmol/L input</li>
                 <li>Returns A1C as percentage (e.g., 7.2%)</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent}>
                 Time in Range (TIR)
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Calculate TIR metrics following ADA/ATTD consensus guidelines:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>
                   <code
                     className='text-sm px-2 py-1 rounded'
@@ -247,31 +213,22 @@ export default function DiabeticUtilsPage() {
                   Configurable target ranges for personalized therapy goals
                 </li>
                 <li>Handles missing data and validates reading counts</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent}>
                 100% Test Coverage
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Comprehensive test suite with Vitest covering:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>All calculation formulas against known medical values</li>
                 <li>
                   Edge cases: boundary values, negative numbers, zero handling
                 </li>
                 <li>Input validation and error handling</li>
                 <li>Precision and rounding behavior</li>
-              </ul>
+              </CaseStudyMutedList>
             </div>
           ),
         },
@@ -279,94 +236,58 @@ export default function DiabeticUtilsPage() {
           title: 'Technical Implementation',
           content: (
             <div className='space-y-6'>
-              <h3
-                className='text-2xl font-mono mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent} className='mt-0'>
                 TypeScript-First Design
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Built with TypeScript for type safety:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Strongly typed glucose reading objects</li>
                 <li>Enum types for units (mg/dL, mmol/L)</li>
                 <li>Generic functions supporting both unit systems</li>
                 <li>Full IntelliSense support in IDEs</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent}>
                 Clinical Accuracy
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Formulas validated against clinical sources:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>A1C calculation uses ADAG Study consensus formula</li>
                 <li>TIR ranges follow ADA/ATTD 2019 guidelines</li>
                 <li>Conversion factors match international standards</li>
                 <li>Test cases derived from published medical examples</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent}>
                 Developer Experience
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Designed for ease of use:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Zero dependencies - pure TypeScript implementation</li>
                 <li>Tree-shakeable exports for minimal bundle size</li>
                 <li>Comprehensive JSDoc documentation</li>
                 <li>Published on npm with semantic versioning</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.pink }}
-              >
+              <CaseStudySubheading color={accent}>
                 Use Cases
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Powers glucose monitoring features in:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>CGM (Continuous Glucose Monitor) companion apps</li>
                 <li>Diabetes management dashboards</li>
                 <li>Apple Watch and wearable health apps (like GlucoseIQ)</li>
                 <li>HealthKit integration layers</li>
                 <li>Clinical research data processing</li>
-              </ul>
+              </CaseStudyMutedList>
             </div>
           ),
         },
@@ -378,10 +299,7 @@ export default function DiabeticUtilsPage() {
                 Diabetic Utils fills a critical gap in the health tech developer
                 ecosystem:
               </p>
-              <ul
-                className='space-y-4 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              <CaseStudyMutedList className='space-y-4'>
                 <li>
                   <strong style={{ color: MONOKAI.foreground }}>
                     Featured in Google AI Overview
@@ -423,7 +341,7 @@ export default function DiabeticUtilsPage() {
                   makes it safe to adopt in production health apps with strict
                   security requirements
                 </li>
-              </ul>
+              </CaseStudyMutedList>
               <p className='text-lg leading-relaxed mt-8'>
                 The library is actively maintained on npm and serves as the
                 calculation engine for GlucoseIQ (Apple Watch app) and other
