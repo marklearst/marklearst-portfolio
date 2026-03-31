@@ -1,11 +1,19 @@
 'use client'
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
+import { ExternalLinkIcon } from '@/components/CaseStudyLinkIcons'
+import {
+  CaseStudyMutedList,
+  CaseStudyMutedText,
+  CaseStudySubheading,
+} from '@/components/CaseStudyTypography'
 import { getProjectBySlug } from '@/data/projects'
+import { getCategoryColor } from '@/lib/project-categories'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function AuroraGMPage() {
   const project = getProjectBySlug('aurora-gm')
+  const accent = getCategoryColor(project.categoryColor)
 
   return (
     <CaseStudyLayout
@@ -20,11 +28,7 @@ export default function AuroraGMPage() {
         {
           label: 'Aurora Design System',
           href: 'https://zeroheight.com/8ee82a8f9/v/0/p/64b823-whats-new',
-          icon: (
-            <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
-              <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' />
-            </svg>
-          ),
+          icon: <ExternalLinkIcon />,
         },
       ]}
       impact={[
@@ -55,10 +59,7 @@ export default function AuroraGMPage() {
                 development teams building their own digital experiences. This
                 fragmentation created:
               </p>
-              <ul
-                className='space-y-3 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              <CaseStudyMutedList className='space-y-3'>
                 <li>
                   Duplicated effort across teams building similar components
                 </li>
@@ -70,7 +71,7 @@ export default function AuroraGMPage() {
                 </li>
                 <li>Slow release velocity due to repeated work</li>
                 <li>Knowledge silos preventing cross-team collaboration</li>
-              </ul>
+              </CaseStudyMutedList>
               <p className='text-lg leading-relaxed'>
                 The goal was ambitious: create a unified design system that
                 could serve all 4 brands while respecting their unique brand
@@ -91,25 +92,16 @@ export default function AuroraGMPage() {
                 platforms.
               </p>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
-              >
+              <CaseStudySubheading color={accent}>
                 Cross-Brand Component Architecture
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Built a sophisticated theming system using design tokens that
                 allowed 60% of components to be shared across all 4 brands,
                 while the remaining 40% could be customized per-brand through
                 token overrides. This meant teams could:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>
                   Import core Aurora components that worked out-of-the-box
                 </li>
@@ -120,63 +112,42 @@ export default function AuroraGMPage() {
                 <li>
                   Extend components only when brand-specific behavior was needed
                 </li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
-              >
+              <CaseStudySubheading color={accent}>
                 Token Pipeline Automation
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Designed and built automated token workflows that synced design
                 tokens from Figma Variables through Style Dictionary into React
                 and React Native codebases. This removed manual handoff steps
                 and ensured design-code consistency across all 4 brand teams.
-              </p>
+              </CaseStudyMutedText>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
-              >
+              <CaseStudySubheading color={accent}>
                 WCAG 2.1 AA Compliance
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Embedded accessibility into every component from day one. All
                 Aurora components shipped with:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Proper ARIA patterns and semantic HTML</li>
                 <li>Keyboard navigation and focus management</li>
                 <li>Screen reader testing with NVDA and JAWS</li>
                 <li>Color contrast validation (4.5:1 minimum for text)</li>
                 <li>Automated accessibility testing in CI/CD pipeline</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
-              >
+              <CaseStudySubheading color={accent}>
                 Storybook-Driven Development
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Built comprehensive Storybook documentation for every component,
                 showcasing all variants, states, and accessibility features.
                 This became the central hub for designers, developers, and QA to
                 reference Aurora's capabilities.
-              </p>
+              </CaseStudyMutedText>
             </div>
           ),
         },
@@ -184,54 +155,36 @@ export default function AuroraGMPage() {
           title: 'Technical Implementation',
           content: (
             <div className='space-y-6'>
-              <h3
-                className='text-2xl font-mono mb-4'
-                style={{ color: MONOKAI.purple }}
-              >
+              <CaseStudySubheading color={accent} className='mt-0'>
                 Multi-Platform Library Strategy
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Unified React and React Native component library strategy that
                 increased release velocity by 30%. Components were architected
                 to share core logic while platform-specific rendering was
                 handled through adapters.
-              </p>
+              </CaseStudyMutedText>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
-              >
+              <CaseStudySubheading color={accent}>
                 Token Governance Rollout
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Opened Rosen Studio and established naming conventions, modes,
                 and approval rules to keep tokens consistent at scale.
                 Implemented semantic token structure (primitive → semantic →
                 component tokens) that gave teams flexibility while maintaining
                 brand consistency.
-              </p>
+              </CaseStudyMutedText>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.purple }}
-              >
+              <CaseStudySubheading color={accent}>
                 Team Enablement
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Trained and onboarded 50+ engineers and designers on Aurora
                 adoption, reducing onboarding time by approximately 40%. Created
                 workshops, documentation, and office hours to ensure smooth
                 adoption across all brand teams.
-              </p>
+              </CaseStudyMutedText>
             </div>
           ),
         },
@@ -242,10 +195,7 @@ export default function AuroraGMPage() {
               <p className='text-lg leading-relaxed'>
                 Aurora transformed how GM builds digital experiences:
               </p>
-              <ul
-                className='space-y-4 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              <CaseStudyMutedList className='space-y-4'>
                 <li>
                   <strong style={{ color: MONOKAI.foreground }}>
                     60% component reuse
@@ -280,7 +230,7 @@ export default function AuroraGMPage() {
                   through automated token pipelines, removing manual translation
                   steps
                 </li>
-              </ul>
+              </CaseStudyMutedList>
               <p className='text-lg leading-relaxed mt-8'>
                 Aurora established the foundation for GM's design system
                 practice and set the standard for cross-brand component
