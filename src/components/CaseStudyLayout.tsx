@@ -46,54 +46,80 @@ export default function CaseStudyLayout({
   const pageRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLElement>(null)
   const categoryTone = getCategoryColor(categoryColor)
+  const categoryRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
+  const metaRefs = useRef<Array<HTMLDivElement | null>>([])
+  const linksRef = useRef<HTMLDivElement>(null)
+  const impactRefs = useRef<Array<HTMLDivElement | null>>([])
+  const sectionRefs = useRef<Array<HTMLDivElement | null>>([])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Hero animations
       const tl = gsap.timeline({ delay: 0.2 })
+      const categoryEl = categoryRef.current
+      const titleEl = titleRef.current
+      const descriptionEl = descriptionRef.current
+      const metaEls = [...metaRefs.current, linksRef.current].filter(
+        (item): item is HTMLDivElement => Boolean(item),
+      )
+      const sections = [...impactRefs.current, ...sectionRefs.current].filter(
+        (item): item is HTMLDivElement => Boolean(item),
+      )
+
+      if (!categoryEl || !titleEl || !descriptionEl) {
+        return
+      }
 
       tl.fromTo(
-        '.case-study-category',
+        categoryEl,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
       )
 
       tl.fromTo(
-        '.case-study-title',
+        titleEl,
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
         '-=0.4',
       )
 
       tl.fromTo(
-        '.case-study-description',
+        descriptionEl,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
         '-=0.4',
       )
 
-      tl.fromTo(
-        '.case-study-meta',
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' },
-        '-=0.3',
-      )
+      if (metaEls.length > 0) {
+        tl.fromTo(
+          metaEls,
+          { opacity: 0, y: 15 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'power2.out',
+          },
+          '-=0.3',
+        )
+      }
 
       // Section reveals
-      gsap.utils
-        .toArray<HTMLElement>('.case-study-section')
-        .forEach((section) => {
-          gsap.from(section, {
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 80%',
-            },
-            opacity: 0,
-            y: 60,
-            duration: 1,
-            ease: 'power3.out',
-          })
+      sections.forEach((section) => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+          },
+          opacity: 0,
+          y: 60,
+          duration: 1,
+          ease: 'power3.out',
         })
+      })
     }, pageRef)
 
     return () => ctx.revert()
@@ -141,7 +167,10 @@ export default function CaseStudyLayout({
           </Link>
 
           {/* Category */}
-          <div className='case-study-category flex items-center gap-3 mb-6 opacity-0'>
+          <div
+            ref={categoryRef}
+            className='flex items-center gap-3 mb-6 opacity-0'
+          >
             <div style={{ color: categoryTone }}>
               {getCategoryIcon(category)}
             </div>
@@ -155,7 +184,8 @@ export default function CaseStudyLayout({
 
           {/* Title */}
           <h1
-            className='case-study-title text-[clamp(48px,8vw,96px)] font-mono font-bold! lowercase leading-[0.9] mb-8 opacity-0'
+            ref={titleRef}
+            className='text-[clamp(48px,8vw,96px)] font-mono font-bold! lowercase leading-[0.9] mb-8 opacity-0'
             style={{ color: MONOKAI.foreground }}
           >
             {title}
@@ -163,7 +193,8 @@ export default function CaseStudyLayout({
 
           {/* Description */}
           <p
-            className='case-study-description text-[clamp(20px,2.5vw,28px)] leading-relaxed mb-16 max-w-3xl opacity-0'
+            ref={descriptionRef}
+            className='text-[clamp(20px,2.5vw,28px)] leading-relaxed mb-16 max-w-3xl opacity-0'
             style={{ color: `${MONOKAI.foreground}cc` }}
           >
             {description}
@@ -171,7 +202,12 @@ export default function CaseStudyLayout({
 
           {/* Meta Grid */}
           <div className='grid md:grid-cols-3 gap-8 mb-12'>
-            <div className='case-study-meta opacity-0'>
+            <div
+              ref={(node) => {
+                metaRefs.current[0] = node
+              }}
+              className='opacity-0'
+            >
               <div
                 className='text-xs font-mono uppercase tracking-wider mb-2'
                 style={{ color: `${MONOKAI.foreground}50` }}
@@ -186,7 +222,12 @@ export default function CaseStudyLayout({
               </div>
             </div>
 
-            <div className='case-study-meta opacity-0'>
+            <div
+              ref={(node) => {
+                metaRefs.current[1] = node
+              }}
+              className='opacity-0'
+            >
               <div
                 className='text-xs font-mono uppercase tracking-wider mb-2'
                 style={{ color: `${MONOKAI.foreground}50` }}
@@ -201,7 +242,12 @@ export default function CaseStudyLayout({
               </div>
             </div>
 
-            <div className='case-study-meta opacity-0'>
+            <div
+              ref={(node) => {
+                metaRefs.current[2] = node
+              }}
+              className='opacity-0'
+            >
               <div
                 className='text-xs font-mono uppercase tracking-wider mb-2'
                 style={{ color: `${MONOKAI.foreground}50` }}
@@ -227,7 +273,10 @@ export default function CaseStudyLayout({
 
           {/* Links */}
           {links.length > 0 && (
-            <div className='case-study-meta flex flex-wrap gap-4 opacity-0'>
+            <div
+              ref={linksRef}
+              className='flex flex-wrap gap-4 opacity-0'
+            >
               {links.map((link) => {
                 const isDisabled = !link.href || link.href === ''
 
@@ -291,7 +340,12 @@ export default function CaseStudyLayout({
             </h2>
             <div className='grid md:grid-cols-3 gap-12'>
               {impact.map((item, index) => (
-                <div key={index} className='case-study-section'>
+                <div
+                  key={index}
+                  ref={(node) => {
+                    impactRefs.current[index] = node
+                  }}
+                >
                   <div
                     className='text-[clamp(32px,5vw,48px)] font-mono font-bold mb-3'
                     style={{ color: categoryTone }}
@@ -322,7 +376,12 @@ export default function CaseStudyLayout({
       <section className='py-20 px-6'>
         <div className='max-w-5xl mx-auto space-y-20'>
           {sections.map((section, index) => (
-            <div key={index} className='case-study-section'>
+            <div
+              key={index}
+              ref={(node) => {
+                sectionRefs.current[index] = node
+              }}
+            >
               <h2
                 className='text-[clamp(28px,4vw,42px)] font-mono lowercase mb-8'
                 style={{ color: MONOKAI.foreground }}
