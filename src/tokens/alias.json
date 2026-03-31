@@ -1,0 +1,24 @@
+{
+  "color": {
+    "canvas": { "$type": "color", "$value": { "$ref": "color.base.black" } },
+    "surface": { "$type": "color", "$value": { "$ref": "color.base.smoke" } },
+    "ink": {
+      "primary": { "$type": "color", "$value": { "$ref": "color.base.white" } },
+      "muted": { "$type": "color", "$value": "rgba(255, 255, 255, 0.6)" }
+    },
+    "accent": {
+      "primary": { "$type": "color", "$value": { "$ref": "color.monokai.cyan" } },
+      "secondary": { "$type": "color", "$value": { "$ref": "color.monokai.purple" } },
+      "success": { "$type": "color", "$value": { "$ref": "color.monokai.green" } },
+      "danger": { "$type": "color", "$value": { "$ref": "color.monokai.pink" } }
+    },
+    "border": {
+      "subtle": { "$type": "color", "$value": "rgba(255, 255, 255, 0.08)" }
+    }
+  },
+  "font": {
+    "body": { "$type": "fontFamily", "$value": { "$ref": "font.mono" } },
+    "display": { "$type": "fontFamily", "$value": { "$ref": "font.mono" } },
+    "ui": { "$type": "fontFamily", "$value": { "$ref": "font.sans" } }
+  }
+}

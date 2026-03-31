@@ -1,0 +1,15 @@
+{
+  "light": {
+    "color": {
+      "canvas": { "$type": "color", "$value": "#f8f8f2" },
+      "surface": { "$type": "color", "$value": "#ffffff" },
+      "ink": {
+        "primary": { "$type": "color", "$value": "#0b0b0e" },
+        "muted": { "$type": "color", "$value": "rgba(11, 11, 14, 0.6)" }
+      },
+      "border": {
+        "subtle": { "$type": "color", "$value": "rgba(11, 11, 14, 0.08)" }
+      }
+    }
+  }
+}
