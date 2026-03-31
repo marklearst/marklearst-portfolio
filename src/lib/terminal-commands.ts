@@ -1,8 +1,5 @@
-import {
-  PROJECTS,
-  type ProjectCategoryColor,
-  type ProjectTerminalDurationKey,
-} from '@/data/projects'
+import { PROJECTS, type ProjectTerminalDurationKey } from '@/data/projects'
+import { CATEGORY_COLORS } from '@/lib/category-colors'
 import { MONOKAI } from './monokai-colors'
 import { DURATION } from './terminal-timing'
 
@@ -23,15 +20,6 @@ export interface TerminalCommand {
 
 const COMMAND_PREFIX = '❯ '
 const OUTPUT_PREFIX = '✓ '
-
-const CATEGORY_COLORS: Record<ProjectCategoryColor, string> = {
-  purple: MONOKAI.purple,
-  cyan: MONOKAI.cyan,
-  green: MONOKAI.green,
-  pink: MONOKAI.pink,
-  orange: MONOKAI.orange,
-  yellow: MONOKAI.yellow,
-}
 
 const DURATION_BY_KEY: Record<ProjectTerminalDurationKey, number> = {
   homeRoute: DURATION.homeRoute,
