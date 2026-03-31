@@ -1,11 +1,22 @@
 'use client'
 
 import CaseStudyLayout from '@/components/CaseStudyLayout'
+import {
+  ExternalLinkIcon,
+  GitHubIcon,
+} from '@/components/CaseStudyLinkIcons'
+import {
+  CaseStudyMutedList,
+  CaseStudyMutedText,
+  CaseStudySubheading,
+} from '@/components/CaseStudyTypography'
 import { getProjectBySlug } from '@/data/projects'
+import { getCategoryColor } from '@/lib/project-categories'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 export default function VariableContractPage() {
   const project = getProjectBySlug('variable-contract')
+  const accent = getCategoryColor(project.categoryColor)
 
   return (
     <CaseStudyLayout
@@ -20,24 +31,12 @@ export default function VariableContractPage() {
         {
           label: 'GitHub Specification',
           href: 'https://github.com/marklearst/variables-contract',
-          icon: (
-            <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
-              <path
-                fillRule='evenodd'
-                d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z'
-                clipRule='evenodd'
-              />
-            </svg>
-          ),
+          icon: <GitHubIcon />,
         },
         {
           label: 'Variables Contract',
           href: 'https://variables-contract.vercel.app/',
-          icon: (
-            <svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
-              <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' />
-            </svg>
-          ),
+          icon: <ExternalLinkIcon />,
         },
       ]}
       impact={[
@@ -69,10 +68,7 @@ export default function VariableContractPage() {
                 be versioned, governed, and synchronized across tools. This
                 creates:
               </p>
-              <ul
-                className='space-y-3 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              <CaseStudyMutedList className='space-y-3'>
                 <li>
                   <strong>Tool lock-in:</strong> Figma Variables, Adobe, and
                   code-based token systems use incompatible formats
@@ -93,7 +89,7 @@ export default function VariableContractPage() {
                   <strong>Sync failures:</strong> Manual processes to keep
                   Figma, Style Dictionary, and codebases aligned
                 </li>
-              </ul>
+              </CaseStudyMutedList>
               <p className='text-lg leading-relaxed'>
                 After building Aurora at GM and seeing these pain points
                 firsthand, I realized the industry needed an open specification
@@ -114,22 +110,13 @@ export default function VariableContractPage() {
                 cross-tool synchronization.
               </p>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent}>
                 Contract Structure
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Defines a standardized JSON contract format:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>
                   <strong>Metadata:</strong> Contract version, schema version,
                   source of truth, timestamps
@@ -150,24 +137,15 @@ export default function VariableContractPage() {
                   <strong>Change log:</strong> Git-style commit history for
                   variable changes
                 </li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent}>
                 Semantic Versioning
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Applies SemVer to design variables:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>
                   <strong>MAJOR:</strong> Breaking changes (variable renamed or
                   removed)
@@ -184,46 +162,28 @@ export default function VariableContractPage() {
                   Enables teams to understand impact before deploying token
                   updates
                 </li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent}>
                 Validation Schema
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 JSON Schema for validating contracts:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Validates contract structure before deployment</li>
                 <li>Ensures DTCG compliance for token definitions</li>
                 <li>Checks for breaking changes between versions</li>
                 <li>Prevents accidental variable deletions or renames</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent}>
                 Tool Adapters
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Reference implementations for cross-tool sync:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>
                   <strong>Figma Variables Adapter:</strong> Export Figma
                   Variables to contract format
@@ -240,24 +200,15 @@ export default function VariableContractPage() {
                   <strong>CI/CD Integration:</strong> Validate contracts in pull
                   requests
                 </li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent}>
                 Governance Model
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Defines approval workflows:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Required approvers for MAJOR vs MINOR vs PATCH changes</li>
                 <li>
                   Multi-brand approval gates (e.g., GM's 4-brand scenario)
@@ -266,7 +217,7 @@ export default function VariableContractPage() {
                   Rollback procedures when deployed tokens break production
                 </li>
                 <li>Audit trail for all variable changes</li>
-              </ul>
+              </CaseStudyMutedList>
             </div>
           ),
         },
@@ -274,44 +225,26 @@ export default function VariableContractPage() {
           title: 'Technical Implementation',
           content: (
             <div className='space-y-6'>
-              <h3
-                className='text-2xl font-mono mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent} className='mt-0'>
                 DTCG Compliance
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Aligned with W3C Design Tokens Community Group:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Uses DTCG 2025.10 token format as foundation</li>
                 <li>Extends spec with versioning and governance metadata</li>
                 <li>Maintains compatibility with existing DTCG tools</li>
                 <li>Contributed feedback to W3C community discussions</li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent}>
                 Real-World Testing
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Developed from hands-on experience:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Patterns tested during Aurora (GM) implementation</li>
                 <li>Governance model based on real 4-brand token workflows</li>
                 <li>Validation rules informed by production token failures</li>
@@ -319,30 +252,21 @@ export default function VariableContractPage() {
                   Adapter designs driven by Figma Variables → Style Dictionary
                   pipelines
                 </li>
-              </ul>
+              </CaseStudyMutedList>
 
-              <h3
-                className='text-2xl font-mono mt-8 mb-4'
-                style={{ color: MONOKAI.orange }}
-              >
+              <CaseStudySubheading color={accent}>
                 Documentation & Spec
-              </h3>
-              <p
-                className='leading-relaxed'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudySubheading>
+              <CaseStudyMutedText>
                 Comprehensive specification docs:
-              </p>
-              <ul
-                className='space-y-2 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              </CaseStudyMutedText>
+              <CaseStudyMutedList className='space-y-2'>
                 <li>Contract schema definition with examples</li>
                 <li>Versioning strategy guidelines</li>
                 <li>Adapter implementation patterns</li>
                 <li>Governance workflow templates</li>
                 <li>Migration guides from existing token systems</li>
-              </ul>
+              </CaseStudyMutedList>
             </div>
           ),
         },
@@ -354,10 +278,7 @@ export default function VariableContractPage() {
                 Variable Contract addresses foundational infrastructure gaps in
                 the design systems ecosystem:
               </p>
-              <ul
-                className='space-y-4 ml-6 list-disc'
-                style={{ color: `${MONOKAI.foreground}b3` }}
-              >
+              <CaseStudyMutedList className='space-y-4'>
                 <li>
                   <strong style={{ color: MONOKAI.foreground }}>
                     Solves tool lock-in
@@ -399,7 +320,7 @@ export default function VariableContractPage() {
                   </strong>{' '}
                   drives community discussion and potential standardization
                 </li>
-              </ul>
+              </CaseStudyMutedList>
               <p className='text-lg leading-relaxed mt-8'>
                 The specification is published on GitHub as a living document,
                 with ongoing development informed by design systems
