@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
-import { MONOKAI } from './monokai-colors'
+import { CATEGORY_COLORS } from './category-colors'
 
 const ICON_STYLE = { width: '14px', height: '14px' }
 
@@ -129,4 +129,4 @@ export const getCategoryIcon = (category: string): ReactNode | null => {
 }
 
 export const getCategoryColor = (color: ProjectCategoryColor): string =>
-  MONOKAI[color]
+  CATEGORY_COLORS[color]
