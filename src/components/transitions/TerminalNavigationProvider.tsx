@@ -41,6 +41,27 @@ export default function TerminalNavigationProvider({
     }
   }, [isTransitioning, completeTransition])
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+
+    const root = document.documentElement
+    const body = document.body
+
+    if (isTransitioning) {
+      const scrollbarWidth = window.innerWidth - root.clientWidth
+      root.style.setProperty(
+        '--transition-scrollbar-width',
+        `${scrollbarWidth}px`,
+      )
+      root.setAttribute('data-transitioning', 'true')
+      body.setAttribute('data-transitioning', 'true')
+    } else {
+      root.removeAttribute('data-transitioning')
+      body.removeAttribute('data-transitioning')
+      root.style.removeProperty('--transition-scrollbar-width')
+    }
+  }, [isTransitioning])
+
   // Complete transition when pathname actually changes (new page loaded)
   useEffect(() => {
     if (pathname !== previousPathRef.current) {
@@ -91,11 +112,14 @@ export default function TerminalNavigationProvider({
     }
   }, [isTransitioning, targetRoute, transitionKey])
 
-  const handleComplete = useCallback((key: number) => {
-    // Only trigger navigation, don't complete transition yet
-    // Transition will complete when pathname changes (useEffect above)
-    triggerNavigation(key)
-  }, [triggerNavigation])
+  const handleComplete = useCallback(
+    (key: number) => {
+      // Only trigger navigation, don't complete transition yet
+      // Transition will complete when pathname changes (useEffect above)
+      triggerNavigation(key)
+    },
+    [triggerNavigation],
+  )
 
   return (
     <>
