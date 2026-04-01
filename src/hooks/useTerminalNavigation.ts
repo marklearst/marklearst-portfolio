@@ -51,7 +51,7 @@ export function useTerminalNavigation() {
           window.scrollTo({ top: 0, behavior: 'instant' })
         }
       }, 100)
-    })
+    }, nextHref)
   }
 
   useEffect(() => {
@@ -138,17 +138,21 @@ export function useTerminalNavigation() {
       if (isTransitioningRef.current) return
 
       // Trigger terminal transition for back/forward navigation
-      startTransitionRef.current(currentPath, () => {
+      startTransitionRef.current(
+        currentPath,
+        () => {
         // Path already changed, just scroll to top
-        window.scrollTo({ top: 0, behavior: 'instant' })
-      })
+          window.scrollTo({ top: 0, behavior: 'instant' })
+        },
+        `${window.location.pathname}${window.location.search}${window.location.hash}`,
+      )
     }
 
-    document.addEventListener('click', handleClick)
+    document.addEventListener('click', handleClick, true)
     window.addEventListener('popstate', handlePopState)
 
     return () => {
-      document.removeEventListener('click', handleClick)
+      document.removeEventListener('click', handleClick, true)
       window.removeEventListener('popstate', handlePopState)
     }
   }, [])
