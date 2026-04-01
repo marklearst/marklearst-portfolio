@@ -45,16 +45,18 @@ export default function TerminalNavigationProvider({
   useEffect(() => {
     if (pathname !== previousPathRef.current) {
       previousPathRef.current = pathname
+      if (!isTransitioning) return
 
       // Only complete transition after enough time for animation to finish
       // If transition is active, wait longer for terminal animation to complete
       const delay = isTransitioning ? 1200 : 100
+      const key = transitionKey
 
       setTimeout(() => {
-        completeTransition()
+        completeTransition(key)
       }, delay)
     }
-  }, [pathname, isTransitioning, completeTransition])
+  }, [pathname, isTransitioning, transitionKey, completeTransition])
 
   useEffect(() => {
     if (!isTransitioning || !targetRoute) return
@@ -70,13 +72,13 @@ export default function TerminalNavigationProvider({
       const targetPath = normalizePathname(state.targetRoute || '')
 
       if (targetPath && currentPath !== targetPath) {
-        state.triggerNavigation()
+        state.triggerNavigation(key)
       }
 
       finalizeTimeout = setTimeout(() => {
         const nextState = useTransitionStore.getState()
         if (nextState.isTransitioning && nextState.transitionKey === key) {
-          nextState.completeTransition()
+          nextState.completeTransition(key)
         }
       }, 600)
     }, 4500)
@@ -89,10 +91,10 @@ export default function TerminalNavigationProvider({
     }
   }, [isTransitioning, targetRoute, transitionKey])
 
-  const handleComplete = useCallback(() => {
+  const handleComplete = useCallback((key: number) => {
     // Only trigger navigation, don't complete transition yet
     // Transition will complete when pathname changes (useEffect above)
-    triggerNavigation()
+    triggerNavigation(key)
   }, [triggerNavigation])
 
   return (
@@ -109,6 +111,7 @@ export default function TerminalNavigationProvider({
       <TerminalTransition
         isActive={isTransitioning}
         targetRoute={targetRoute || ''}
+        transitionKey={transitionKey}
         onComplete={handleComplete}
       />
     </>
