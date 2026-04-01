@@ -14,12 +14,14 @@ import { DURATION } from '@/lib/terminal-timing'
 interface TerminalTransitionProps {
   isActive: boolean
   targetRoute: string
-  onComplete?: () => void
+  transitionKey: number
+  onComplete?: (key: number) => void
 }
 
 export default function TerminalTransition({
   isActive,
   targetRoute,
+  transitionKey,
   onComplete,
 }: TerminalTransitionProps) {
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -130,7 +132,7 @@ export default function TerminalTransition({
 
     // 8. Trigger navigation while overlay is still visible
     master.call(() => {
-      if (onCompleteRef.current) onCompleteRef.current()
+      if (onCompleteRef.current) onCompleteRef.current(transitionKey)
     })
 
     // 9. Keep overlay visible a bit longer for smooth transition
@@ -139,7 +141,7 @@ export default function TerminalTransition({
     return () => {
       master.kill()
     }
-  }, [command, isActive, targetRoute])
+  }, [command, isActive, targetRoute, transitionKey])
 
   if (!isActive) return null
 
