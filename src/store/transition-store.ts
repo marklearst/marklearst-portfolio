@@ -6,9 +6,14 @@ interface TransitionState {
   isTransitioning: boolean
   phase: TransitionPhase
   targetRoute: string | null
+  targetHref: string | null
   onNavigate: (() => void) | null
   transitionKey: number
-  startTransition: (route: string, onNavigate: () => void) => void
+  startTransition: (
+    route: string,
+    onNavigate: () => void,
+    href?: string,
+  ) => void
   completeTransition: (key?: number) => void
   triggerNavigation: (key?: number) => void
 }
@@ -17,10 +22,11 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
   isTransitioning: false,
   phase: 'idle',
   targetRoute: null,
+  targetHref: null,
   onNavigate: null,
   transitionKey: 0,
 
-  startTransition: (route: string, onNavigate: () => void) => {
+  startTransition: (route: string, onNavigate: () => void, href?: string) => {
     set((state) => {
       const nextKey = state.transitionKey + 1
       if (process.env.NODE_ENV === 'development') {
@@ -34,6 +40,7 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
         isTransitioning: true,
         phase: 'animating',
         targetRoute: route,
+        targetHref: href ?? route,
         onNavigate,
         transitionKey: nextKey,
       }
@@ -68,6 +75,7 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
       isTransitioning: false,
       phase: 'idle',
       targetRoute: null,
+      targetHref: null,
       onNavigate: null,
     })
   },

@@ -21,7 +21,9 @@ export default function TerminalNavigationProvider({
   // Get transition state
   const {
     isTransitioning,
+    phase,
     targetRoute,
+    targetHref,
     triggerNavigation,
     completeTransition,
     transitionKey,
@@ -29,6 +31,12 @@ export default function TerminalNavigationProvider({
 
   const normalizePathname = (path: string) =>
     path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path
+  const isReadyToExit = Boolean(
+    isTransitioning &&
+      phase === 'navigating' &&
+      targetRoute &&
+      normalizePathname(pathname) === normalizePathname(targetRoute),
+  )
 
   // On mount, ensure no stuck transition state from previous session
   useEffect(() => {
@@ -66,18 +74,38 @@ export default function TerminalNavigationProvider({
   useEffect(() => {
     if (pathname !== previousPathRef.current) {
       previousPathRef.current = pathname
-      if (!isTransitioning) return
+      if (!isTransitioning || phase !== 'navigating') return
 
       // Only complete transition after enough time for animation to finish
       // If transition is active, wait longer for terminal animation to complete
-      const delay = isTransitioning ? 1200 : 100
+      const delay = isTransitioning ? 650 : 100
       const key = transitionKey
 
       setTimeout(() => {
         completeTransition(key)
       }, delay)
     }
-  }, [pathname, isTransitioning, transitionKey, completeTransition])
+  }, [pathname, isTransitioning, phase, transitionKey, completeTransition])
+
+  useEffect(() => {
+    if (!isTransitioning || phase !== 'navigating' || !targetRoute) return
+
+    const currentPath = normalizePathname(pathname)
+    const targetPath = normalizePathname(targetRoute)
+    if (currentPath !== targetPath) return
+
+    const key = transitionKey
+    const settleTimeout = setTimeout(() => {
+      const state = useTransitionStore.getState()
+      if (state.isTransitioning && state.transitionKey === key) {
+        state.completeTransition(key)
+      }
+    }, 350)
+
+    return () => {
+      clearTimeout(settleTimeout)
+    }
+  }, [isTransitioning, phase, targetRoute, pathname, transitionKey])
 
   useEffect(() => {
     if (!isTransitioning || !targetRoute) return
@@ -98,10 +126,23 @@ export default function TerminalNavigationProvider({
 
       finalizeTimeout = setTimeout(() => {
         const nextState = useTransitionStore.getState()
-        if (nextState.isTransitioning && nextState.transitionKey === key) {
-          nextState.completeTransition(key)
+        if (!nextState.isTransitioning || nextState.transitionKey !== key) {
+          return
         }
-      }, 600)
+
+        const nowPath = normalizePathname(window.location.pathname)
+        const nextTarget = normalizePathname(nextState.targetRoute || '')
+
+        if (nextTarget && nowPath !== nextTarget) {
+          const fallbackHref = nextState.targetHref || nextState.targetRoute
+          if (fallbackHref) {
+            window.location.assign(fallbackHref)
+            return
+          }
+        }
+
+        nextState.completeTransition(key)
+      }, 1200)
     }, 4500)
 
     return () => {
@@ -110,7 +151,7 @@ export default function TerminalNavigationProvider({
         clearTimeout(finalizeTimeout)
       }
     }
-  }, [isTransitioning, targetRoute, transitionKey])
+  }, [isTransitioning, targetRoute, targetHref, transitionKey])
 
   const handleComplete = useCallback(
     (key: number) => {
@@ -125,9 +166,13 @@ export default function TerminalNavigationProvider({
     <>
       <div
         style={{
-          opacity: isTransitioning ? 0 : 1,
-          transition: 'opacity 0.3s ease-out',
-          visibility: isTransitioning ? 'hidden' : 'visible',
+          opacity: !isTransitioning || phase === 'navigating' ? 1 : 0,
+          transition: 'opacity 0.4s ease-out',
+          visibility:
+            !isTransitioning || phase === 'navigating' ? 'visible' : 'hidden',
+          pointerEvents:
+            !isTransitioning || phase === 'navigating' ? 'auto' : 'none',
+          willChange: 'opacity',
         }}
       >
         {children}
@@ -136,6 +181,7 @@ export default function TerminalNavigationProvider({
         isActive={isTransitioning}
         targetRoute={targetRoute || ''}
         transitionKey={transitionKey}
+        shouldExit={isReadyToExit}
         onComplete={handleComplete}
       />
     </>
