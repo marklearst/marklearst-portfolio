@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 interface OrbState {
@@ -33,61 +33,72 @@ const TRAIL_BASE_SPEED = 0.12 // Base follow speed
 const TRAIL_SPEED_DECAY = 0.016 // Speed reduction per orb
 
 export default function CursorOrbs() {
-  const [orbs, setOrbs] = useState<OrbState[]>(() =>
-    COLORS.map((_, i) => ({
-      x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
-      y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0,
+  const [hasInteracted, setHasInteracted] = useState(false)
+  const orbsRef = useRef<OrbState[]>([])
+  const orbElementsRef = useRef<(HTMLDivElement | null)[]>([])
+  const mousePosRef = useRef({ x: 0, y: 0 })
+  const lastMousePosRef = useRef({ x: 0, y: 0 })
+  const isMovingRef = useRef(false)
+  const isIdleRef = useRef(false)
+  const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const stopTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const rafRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const startX = window.innerWidth / 2
+    const startY = window.innerHeight / 2
+    orbsRef.current = COLORS.map((_, i) => ({
+      x: startX,
+      y: startY,
       angle: (i / COLORS.length) * Math.PI * 2,
       scale: 1,
       opacity: 1,
-    })),
-  )
-
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [isMoving, setIsMoving] = useState(false)
-  const [hasInteracted, setHasInteracted] = useState(false)
-  const [isIdle, setIsIdle] = useState(false)
-  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const lastMousePos = useRef({ x: 0, y: 0 })
+    }))
+    mousePosRef.current = { x: startX, y: startY }
+    lastMousePosRef.current = { x: startX, y: startY }
+  }, [])
 
   // Handle mouse movement
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout
-
     const handleMouseMove = (e: MouseEvent) => {
       const newPos = { x: e.clientX, y: e.clientY }
 
       // Calculate distance moved
-      const dx = newPos.x - lastMousePos.current.x
-      const dy = newPos.y - lastMousePos.current.y
+      const dx = newPos.x - lastMousePosRef.current.x
+      const dy = newPos.y - lastMousePosRef.current.y
       const distance = Math.sqrt(dx * dx + dy * dy)
 
-      setMousePos(newPos)
-      setHasInteracted(true)
+      mousePosRef.current = newPos
+      if (!hasInteracted) {
+        setHasInteracted(true)
+      }
 
       // Only trigger trailing mode if movement exceeds threshold
       if (distance > MOVEMENT_THRESHOLD) {
-        setIsMoving(true)
-        lastMousePos.current = newPos
+        isMovingRef.current = true
+        lastMousePosRef.current = newPos
       }
 
       // If we were idle, wake up the orbs
-      if (isIdle) {
-        setIsIdle(false)
+      if (isIdleRef.current) {
+        isIdleRef.current = false
       }
 
       // Clear existing idle timeout
+      if (stopTimeoutRef.current) {
+        clearTimeout(stopTimeoutRef.current)
+      }
       if (idleTimeoutRef.current) {
         clearTimeout(idleTimeoutRef.current)
       }
 
-      clearTimeout(timeoutId)
-      timeoutId = setTimeout(() => {
-        setIsMoving(false)
+      stopTimeoutRef.current = setTimeout(() => {
+        isMovingRef.current = false
 
         // Start idle timer
         idleTimeoutRef.current = setTimeout(() => {
-          setIsIdle(true)
+          isIdleRef.current = true
         }, IDLE_FADE_DELAY)
       }, STOP_DELAY)
     }
@@ -95,89 +106,73 @@ export default function CursorOrbs() {
     window.addEventListener('mousemove', handleMouseMove)
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
-      clearTimeout(timeoutId)
-      if (idleTimeoutRef.current) {
-        clearTimeout(idleTimeoutRef.current)
-      }
+      if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current)
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current)
     }
-  }, [isIdle])
+  }, [hasInteracted])
 
   // Animation loop
   useEffect(() => {
     if (!hasInteracted) return
-
-    let animationId: number
-
     const animate = () => {
-      setOrbs((prevOrbs) => {
-        return prevOrbs.map((orb, index) => {
-          // Calculate target scale and opacity based on idle state
-          const targetScale = isIdle ? 0 : 1
-          const targetOpacity = isIdle ? 0 : 1
+      const orbs = orbsRef.current
+      const mousePos = mousePosRef.current
+      const isMoving = isMovingRef.current
+      const isIdle = isIdleRef.current
 
-          // Staggered collapse/expand speeds per orb
-          const collapseDelay = index * 0.02
-          const expandDelay = (COLORS.length - 1 - index) * 0.02
+      orbs.forEach((orb, index) => {
+        // Calculate target scale and opacity based on idle state
+        const targetScale = isIdle ? 0 : 1
+        const targetOpacity = isIdle ? 0 : 1
 
-          // Smooth interpolation with different speeds for collapse vs expand
-          const scaleSpeed = isIdle ? 0.04 - collapseDelay : 0.08 - expandDelay
-          const opacitySpeed = isIdle ? 0.03 - collapseDelay : 0.1 - expandDelay
+        // Staggered collapse/expand speeds per orb
+        const collapseDelay = index * 0.02
+        const expandDelay = (COLORS.length - 1 - index) * 0.02
 
-          const newScale =
-            orb.scale + (targetScale - orb.scale) * Math.max(scaleSpeed, 0.02)
-          const newOpacity =
-            orb.opacity +
-            (targetOpacity - orb.opacity) * Math.max(opacitySpeed, 0.02)
+        // Smooth interpolation with different speeds for collapse vs expand
+        const scaleSpeed = isIdle ? 0.04 - collapseDelay : 0.08 - expandDelay
+        const opacitySpeed = isIdle ? 0.03 - collapseDelay : 0.1 - expandDelay
 
-          if (isMoving) {
-            // TRAILING MODE: Each orb follows cursor at different speeds
-            // Pink (index 0) is fastest, Purple (index 5) is slowest
-            const speed = TRAIL_BASE_SPEED - index * TRAIL_SPEED_DECAY
+        orb.scale += (targetScale - orb.scale) * Math.max(scaleSpeed, 0.02)
+        orb.opacity += (targetOpacity - orb.opacity) * Math.max(opacitySpeed, 0.02)
 
-            return {
-              ...orb,
-              x: orb.x + (mousePos.x - orb.x) * speed,
-              y: orb.y + (mousePos.y - orb.y) * speed,
-              angle: orb.angle,
-              scale: newScale,
-              opacity: newOpacity,
-            }
-          } else if (isIdle) {
-            // COLLAPSE MODE: All orbs converge to cursor center while fading
-            const collapseSpeed = 0.05
+        if (isMoving) {
+          // TRAILING MODE: Each orb follows cursor at different speeds
+          // Pink (index 0) is fastest, Purple (index 5) is slowest
+          const speed = TRAIL_BASE_SPEED - index * TRAIL_SPEED_DECAY
+          orb.x += (mousePos.x - orb.x) * speed
+          orb.y += (mousePos.y - orb.y) * speed
+        } else if (isIdle) {
+          // COLLAPSE MODE: All orbs converge to cursor center while fading
+          const collapseSpeed = 0.05
+          orb.x += (mousePos.x - orb.x) * collapseSpeed
+          orb.y += (mousePos.y - orb.y) * collapseSpeed
+        } else {
+          // ORBIT MODE: Rotate around cursor position
+          orb.angle += ROTATION_SPEED
+          const targetX = mousePos.x + Math.cos(orb.angle) * ORBIT_RADIUS
+          const targetY = mousePos.y + Math.sin(orb.angle) * ORBIT_RADIUS
+          orb.x += (targetX - orb.x) * 0.08
+          orb.y += (targetY - orb.y) * 0.08
+        }
 
-            return {
-              ...orb,
-              x: orb.x + (mousePos.x - orb.x) * collapseSpeed,
-              y: orb.y + (mousePos.y - orb.y) * collapseSpeed,
-              angle: orb.angle,
-              scale: newScale,
-              opacity: newOpacity,
-            }
-          } else {
-            // ORBIT MODE: Rotate around cursor position
-            const newAngle = orb.angle + ROTATION_SPEED
-            const targetX = mousePos.x + Math.cos(newAngle) * ORBIT_RADIUS
-            const targetY = mousePos.y + Math.sin(newAngle) * ORBIT_RADIUS
-
-            return {
-              ...orb,
-              x: orb.x + (targetX - orb.x) * 0.08,
-              y: orb.y + (targetY - orb.y) * 0.08,
-              angle: newAngle,
-              scale: newScale,
-              opacity: newOpacity,
-            }
-          }
-        })
+        const orbEl = orbElementsRef.current[index]
+        if (orbEl) {
+          orbEl.style.transform = `translate3d(${orb.x}px, ${orb.y}px, 0) translate(-50%, -50%) scale(${orb.scale})`
+          orbEl.style.opacity = orb.opacity.toString()
+        }
       })
 
-      animationId = requestAnimationFrame(animate)
+      rafRef.current = requestAnimationFrame(animate)
     }
 
-    animationId = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(animationId)
-  }, [isMoving, isIdle, mousePos, hasInteracted])
+    rafRef.current = requestAnimationFrame(animate)
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [hasInteracted])
 
   if (!hasInteracted) return null
 
@@ -189,18 +184,18 @@ export default function CursorOrbs() {
         mixBlendMode: 'screen',
       }}
     >
-      {orbs.map((orb, index) => (
+      {COLORS.map((color, index) => (
         <div
           key={index}
-          className='absolute rounded-full'
+          ref={(node) => {
+            orbElementsRef.current[index] = node
+          }}
+          className='absolute left-0 top-0 rounded-full'
           style={{
-            left: orb.x,
-            top: orb.y,
             width: ORB_SIZE,
             height: ORB_SIZE,
-            transform: `translate(-50%, -50%) scale(${orb.scale})`,
-            opacity: orb.opacity,
-            backgroundColor: COLORS[index],
+            backgroundColor: color,
+            willChange: 'transform, opacity',
           }}
         />
       ))}

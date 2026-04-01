@@ -125,19 +125,24 @@ export default function NeuralNetwork() {
   const svgRef = useRef<SVGSVGElement>(null)
   const orbsRef = useRef<Orb[]>([])
   const orbIdRef = useRef(0)
+  const keywordNodesRef = useRef<HTMLElement[]>([])
   const nodePositionsRef = useRef<Map<number, NodePosition>>(new Map())
   const dimensionsRef = useRef({ width: 0, height: 0 })
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
   const linesRef = useRef<SVGLineElement[]>([])
   const dotsRef = useRef<SVGCircleElement[]>([])
+  const lastUpdateRef = useRef(0)
+
+  const POSITION_UPDATE_INTERVAL = 50
 
   // Get center position of a keyword element
   const getNodeCenter = useCallback((index: number): NodePosition | null => {
-    const keywords = document.querySelectorAll('.bg-keyword')
-    const el = keywords[index] as HTMLElement
+    const el = keywordNodesRef.current[index]
     if (!el) return null
 
     const rect = el.getBoundingClientRect()
-    const containerRect = el.offsetParent?.getBoundingClientRect() || { left: 0, top: 0 }
+    const containerRect =
+      canvasRef.current?.getBoundingClientRect() || { left: 0, top: 0 }
 
     return {
       x: rect.left - containerRect.left + rect.width / 2,
@@ -147,8 +152,7 @@ export default function NeuralNetwork() {
 
   // Update all node positions
   const updateNodePositions = useCallback(() => {
-    const keywords = document.querySelectorAll('.bg-keyword')
-    keywords.forEach((_, index) => {
+    keywordNodesRef.current.forEach((_, index) => {
       const pos = getNodeCenter(index)
       if (pos) {
         nodePositionsRef.current.set(index, pos)
@@ -211,12 +215,17 @@ export default function NeuralNetwork() {
 
       const ctx = canvas.getContext('2d')
       if (ctx) {
-        ctx.scale(dpr, dpr)
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+        ctxRef.current = ctx
       }
     }
 
     updateDimensions()
     window.addEventListener('resize', updateDimensions)
+
+    keywordNodesRef.current = Array.from(
+      document.querySelectorAll<HTMLElement>('.bg-keyword'),
+    )
 
     // Create SVG elements
     // Lines - with 0.1 opacity for subtle appearance
@@ -237,9 +246,8 @@ export default function NeuralNetwork() {
     })
 
     // Get colors for each node from keywords
-    const keywords = document.querySelectorAll('.bg-keyword')
     uniqueNodes.forEach((nodeId) => {
-      const el = keywords[nodeId] as HTMLElement
+      const el = keywordNodesRef.current[nodeId]
       const color = el?.style.color || MONOKAI.cyan
 
       const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
@@ -270,7 +278,7 @@ export default function NeuralNetwork() {
     }
 
     const render = () => {
-      const ctx = canvas.getContext('2d')
+      const ctx = ctxRef.current
       if (!ctx) {
         animationId = requestAnimationFrame(render)
         return
@@ -278,11 +286,15 @@ export default function NeuralNetwork() {
 
       const { width, height } = dimensionsRef.current
 
-      // Update node positions from DOM
-      updateNodePositions()
+      const now = performance.now()
+      if (now - lastUpdateRef.current >= POSITION_UPDATE_INTERVAL) {
+        // Update node positions from DOM
+        updateNodePositions()
 
-      // Update SVG lines and dots
-      updateSVGElements()
+        // Update SVG lines and dots
+        updateSVGElements()
+        lastUpdateRef.current = now
+      }
 
       // Clear canvas
       ctx.clearRect(0, 0, width, height)
@@ -358,6 +370,8 @@ export default function NeuralNetwork() {
       dotsRef.current.forEach((dot) => dot.remove())
       linesRef.current = []
       dotsRef.current = []
+      orbsRef.current = []
+      keywordNodesRef.current = []
     }
   }, [updateNodePositions, updateSVGElements])
 
