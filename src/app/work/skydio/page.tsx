@@ -32,8 +32,8 @@ export default function SkydioPage() {
           icon: <GitHubIcon />,
         },
         {
-          label: 'Skydio (request password)',
-          href: '',
+          label: 'Storybook (password)',
+          href: 'https://skydio-storybook-protected.vercel.app',
           icon: <ExternalLinkIcon />,
         },
       ]}
@@ -264,9 +264,7 @@ import IconButton from '@/components/IconButton'`}
               <CaseStudySubheading color={accent}>
                 Build & Tooling
               </CaseStudySubheading>
-              <CaseStudyMutedText>
-                Modern development stack:
-              </CaseStudyMutedText>
+              <CaseStudyMutedText>Modern development stack:</CaseStudyMutedText>
               <CaseStudyMutedList className='space-y-2'>
                 <li>Vite for fast builds and HMR</li>
                 <li>pnpm workspace management</li>
