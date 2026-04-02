@@ -15,6 +15,7 @@ interface TerminalTransitionProps {
   isActive: boolean
   targetRoute: string
   transitionKey: number
+  shouldExit?: boolean
   onComplete?: (key: number) => void
 }
 
@@ -22,19 +23,31 @@ export default function TerminalTransition({
   isActive,
   targetRoute,
   transitionKey,
+  shouldExit = false,
   onComplete,
 }: TerminalTransitionProps) {
   const overlayRef = useRef<HTMLDivElement>(null)
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
   const commandRef = useRef<HTMLDivElement>(null)
   const loadingRef = useRef<HTMLDivElement>(null)
   const packagesRef = useRef<HTMLDivElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
   const outputRef = useRef<HTMLDivElement>(null)
   const onCompleteRef = useRef(onComplete)
+  const exitTimelineRef = useRef<gsap.core.Timeline | null>(null)
+  const hasExitRef = useRef(false)
 
   useEffect(() => {
     onCompleteRef.current = onComplete
   }, [onComplete])
+
+  useEffect(() => {
+    hasExitRef.current = false
+    if (exitTimelineRef.current) {
+      exitTimelineRef.current.kill()
+      exitTimelineRef.current = null
+    }
+  }, [transitionKey])
 
   // Derive command from targetRoute using useMemo (no state needed)
   const command = useMemo(() => {
@@ -46,6 +59,29 @@ export default function TerminalTransition({
 
     const cmd = command
 
+    if (commandRef.current) {
+      commandRef.current.textContent = ''
+    }
+    if (loadingRef.current) {
+      loadingRef.current.textContent = ''
+    }
+    if (packagesRef.current) {
+      packagesRef.current.innerHTML = ''
+    }
+    if (outputRef.current) {
+      outputRef.current.textContent = ''
+    }
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = '0%'
+    }
+
+    gsap.set(overlayRef.current, { opacity: 0 })
+    gsap.set(contentWrapperRef.current, {
+      opacity: 0,
+      y: 18,
+      scale: 0.98,
+    })
+
     const master = gsap.timeline()
 
     // 1. Show overlay with faster fade-in
@@ -55,7 +91,20 @@ export default function TerminalTransition({
       ease: 'power2.out',
     })
 
-    // 2. Type command
+    // 2. Bring in content wrapper
+    master.to(
+      contentWrapperRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: DURATION.overlayContentIn,
+        ease: 'power3.out',
+      },
+      '-=0.05',
+    )
+
+    // 3. Type command
     if (commandRef.current) {
       master.add(
         typeText({
@@ -63,24 +112,30 @@ export default function TerminalTransition({
           text: cmd.command,
           cursor: true,
         }),
+        '+=0.05',
       )
     }
 
-    // 3. Show loading text if exists
+    // 4. Show loading text if exists
     if (cmd.loading && loadingRef.current) {
-      master.call(() => {
-        if (loadingRef.current) {
-          loadingRef.current.textContent = cmd.loading || ''
-          gsap.fromTo(
-            loadingRef.current,
-            { opacity: 0, y: 5 },
-            { opacity: 1, y: 0, duration: DURATION.loadingFadeIn },
-          )
-        }
-      })
+      master.fromTo(
+        loadingRef.current,
+        { opacity: 0, y: 5 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: DURATION.loadingFadeIn,
+          ease: 'power2.out',
+          onStart: () => {
+            if (loadingRef.current) {
+              loadingRef.current.textContent = cmd.loading || ''
+            }
+          },
+        },
+      )
     }
 
-    // 4. Show progress bar
+    // 5. Show progress bar
     if (progressBarRef.current) {
       master.add(
         animateProgressBar(progressBarRef.current, DURATION.progressBar),
@@ -88,7 +143,7 @@ export default function TerminalTransition({
       )
     }
 
-    // 5. Show packages if exists
+    // 6. Show packages if exists
     if (cmd.packages && cmd.packages.length > 0 && packagesRef.current) {
       master.add(
         showPackages(
@@ -100,7 +155,7 @@ export default function TerminalTransition({
       )
     }
 
-    // 6. Show output/success message
+    // 7. Show output/success message
     if (cmd.output && outputRef.current) {
       master.call(() => {
         if (outputRef.current) {
@@ -124,24 +179,59 @@ export default function TerminalTransition({
       )
     }
 
-    // 7. Hold briefly then trigger navigation
+    // 8. Hold briefly then trigger navigation
     // Use longer hold time for home route (whoami) to let user see the output
-    const holdDuration =
+    const defaultHold =
       targetRoute === '/' ? DURATION.holdBeforeNavHome : DURATION.holdBeforeNav
+    const minHold = cmd.duration
+      ? Math.max(0, cmd.duration / 1000 - master.duration())
+      : 0
+    const holdDuration = Math.max(defaultHold, minHold)
     master.to({}, { duration: holdDuration })
 
-    // 8. Trigger navigation while overlay is still visible
+    // 9. Trigger navigation while overlay is still visible
     master.call(() => {
       if (onCompleteRef.current) onCompleteRef.current(transitionKey)
     })
-
-    // 9. Keep overlay visible a bit longer for smooth transition
-    master.to({}, { duration: DURATION.navDelay / 1000 })
 
     return () => {
       master.kill()
     }
   }, [command, isActive, targetRoute, transitionKey])
+
+  useEffect(() => {
+    if (!isActive || !shouldExit || hasExitRef.current) return
+    hasExitRef.current = true
+
+    const exitTimeline = gsap.timeline()
+    exitTimeline.to({}, { duration: DURATION.navDelay / 1000 })
+    exitTimeline.to(
+      contentWrapperRef.current,
+      {
+        opacity: 0,
+        y: -12,
+        scale: 0.98,
+        duration: DURATION.overlayContentOut,
+        ease: 'power2.in',
+      },
+      '<',
+    )
+    exitTimeline.to(
+      overlayRef.current,
+      {
+        opacity: 0,
+        duration: DURATION.overlayFadeOut,
+        ease: 'power2.in',
+      },
+      '<',
+    )
+
+    exitTimelineRef.current = exitTimeline
+
+    return () => {
+      exitTimeline.kill()
+    }
+  }, [isActive, shouldExit, transitionKey])
 
   if (!isActive) return null
 
@@ -155,7 +245,10 @@ export default function TerminalTransition({
       }}
     >
       {/* Terminal content */}
-      <div className='w-full max-w-3xl px-8 font-mono text-base'>
+      <div
+        ref={contentWrapperRef}
+        className='relative w-full max-w-3xl px-8 font-mono text-base'
+      >
         {/* Command line */}
         <div
           ref={commandRef}
