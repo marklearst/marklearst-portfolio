@@ -143,6 +143,8 @@ export function showPackages(
     )
   })
 
+  tl.to({}, { duration: packages.length * staggerDelay })
+
   return tl
 }
 

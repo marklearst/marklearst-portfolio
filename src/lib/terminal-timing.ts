@@ -26,13 +26,16 @@ export const TYPING_SPEED = {
  */
 export const DURATION = {
   // Terminal transition stages
-  overlayFadeIn: timing(0.2), // seconds
-  progressBar: timing(0.8), // seconds
+  overlayFadeIn: timing(0.25), // seconds
+  overlayFadeOut: timing(0.3), // seconds
+  overlayContentIn: timing(0.35), // seconds
+  overlayContentOut: timing(0.25), // seconds
+  progressBar: timing(0.9), // seconds
   packageStagger: timing(0.12), // seconds per package
-  outputReveal: timing(0.3), // seconds - show "✓ Ready" faster
-  holdBeforeNav: timing(0.05), // seconds - almost instant transition for work routes
-  holdBeforeNavHome: timing(0.6), // seconds - longer hold for whoami command only
-  navDelay: timing(300), // milliseconds - keep overlay visible during page load
+  outputReveal: timing(0.35), // seconds - show "✓ Ready" faster
+  holdBeforeNav: timing(0.12), // seconds - quick but readable for work routes
+  holdBeforeNavHome: timing(1.1), // seconds - longer hold for whoami command only
+  navDelay: timing(220), // milliseconds - keep overlay visible during page load
 
   // Text animations
   loadingFadeIn: timing(0.3), // seconds
