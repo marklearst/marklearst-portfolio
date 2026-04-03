@@ -6,6 +6,7 @@ import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
 import NeuralNetwork from '@/components/ui/NeuralNetwork'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 // Hydration-safe client detection
 const subscribeNoop = () => () => {}
@@ -13,6 +14,8 @@ const getClientSnapshot = () => true
 const getServerSnapshot = () => false
 
 export default function EnhancedHero() {
+  const { trackHeroCTAClick, trackExternalLinkClick, getPlatformFromUrl } =
+    useAnalytics()
   const heroRef = useRef<HTMLDivElement>(null)
   const nameBoxRef = useRef<HTMLDivElement>(null)
 
@@ -155,6 +158,7 @@ export default function EnhancedHero() {
           {/* Primary CTA - Solid with expanding cyan outline */}
           <button
             onClick={() => {
+              trackHeroCTAClick({ action: 'scroll_to_work', location: 'hero' })
               const workSection = document.getElementById('work')
               if (workSection) {
                 workSection.scrollIntoView({ behavior: 'smooth' })
@@ -199,6 +203,13 @@ export default function EnhancedHero() {
             href='https://github.com/marklearst'
             target='_blank'
             rel='noopener noreferrer'
+            onClick={() => {
+              trackExternalLinkClick({
+                platform: getPlatformFromUrl('https://github.com/marklearst'),
+                url: 'https://github.com/marklearst',
+                location: 'hero',
+              })
+            }}
             className='group relative px-8 py-4 font-mono text-base font-semibold rounded-lg transition-all duration-300'
             style={{
               backgroundColor: 'transparent',
