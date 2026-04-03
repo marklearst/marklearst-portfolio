@@ -1,47 +1,47 @@
 {
   "color": {
     "base": {
-      "black": { "$type": "color", "$value": "#0b0b0e" },
-      "white": { "$type": "color", "$value": "#ffffff" },
-      "smoke": { "$type": "color", "$value": "#141418" }
+      "black": { "$type": "color", "$value": { "r": 11, "g": 11, "b": 14 } },
+      "white": { "$type": "color", "$value": { "r": 255, "g": 255, "b": 255 } },
+      "smoke": { "$type": "color", "$value": { "r": 20, "g": 20, "b": 24 } }
     },
     "monokai": {
-      "pink": { "$type": "color", "$value": "#ff6188" },
-      "orange": { "$type": "color", "$value": "#fb9866" },
-      "yellow": { "$type": "color", "$value": "#ffd866" },
-      "green": { "$type": "color", "$value": "#a9dc75" },
-      "cyan": { "$type": "color", "$value": "#78dce8" },
-      "purple": { "$type": "color", "$value": "#ab9df2" },
-      "background": { "$type": "color", "$value": "#231f22" },
-      "background-alt": { "$type": "color", "$value": "#2e2a2e" },
-      "foreground": { "$type": "color", "$value": "#fcfcfa" }
+      "pink": { "$type": "color", "$value": { "r": 255, "g": 97, "b": 136 } },
+      "orange": { "$type": "color", "$value": { "r": 251, "g": 152, "b": 102 } },
+      "yellow": { "$type": "color", "$value": { "r": 255, "g": 216, "b": 102 } },
+      "green": { "$type": "color", "$value": { "r": 169, "g": 220, "b": 117 } },
+      "cyan": { "$type": "color", "$value": { "r": 120, "g": 220, "b": 232 } },
+      "purple": { "$type": "color", "$value": { "r": 171, "g": 157, "b": 242 } },
+      "background": { "$type": "color", "$value": { "r": 35, "g": 31, "b": 34 } },
+      "background-alt": { "$type": "color", "$value": { "r": 46, "g": 42, "b": 46 } },
+      "foreground": { "$type": "color", "$value": { "r": 252, "g": 252, "b": 250 } }
     }
   },
   "font": {
     "mono": {
       "$type": "fontFamily",
-      "$value": "MonoLisa, \"SF Mono\", Consolas, monospace"
+      "$value": ["MonoLisa", "SF Mono", "Consolas", "monospace"]
     },
     "sans": {
       "$type": "fontFamily",
-      "$value": "ui-sans-serif, system-ui, -apple-system, sans-serif"
+      "$value": ["ui-sans-serif", "system-ui", "-apple-system", "sans-serif"]
     },
     "serif": {
       "$type": "fontFamily",
-      "$value": "ui-serif, Georgia, serif"
+      "$value": ["ui-serif", "Georgia", "serif"]
     }
   },
   "space": {
-    "xs": { "$type": "dimension", "$value": "4px" },
-    "sm": { "$type": "dimension", "$value": "8px" },
-    "md": { "$type": "dimension", "$value": "16px" },
-    "lg": { "$type": "dimension", "$value": "24px" },
-    "xl": { "$type": "dimension", "$value": "32px" },
-    "2xl": { "$type": "dimension", "$value": "48px" }
+    "xs": { "$type": "dimension", "$value": { "value": 4, "unit": "px" } },
+    "sm": { "$type": "dimension", "$value": { "value": 8, "unit": "px" } },
+    "md": { "$type": "dimension", "$value": { "value": 16, "unit": "px" } },
+    "lg": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
+    "xl": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
+    "2xl": { "$type": "dimension", "$value": { "value": 48, "unit": "px" } }
   },
   "radius": {
-    "soft": { "$type": "dimension", "$value": "6px" },
-    "card": { "$type": "dimension", "$value": "12px" },
-    "pill": { "$type": "dimension", "$value": "999px" }
+    "soft": { "$type": "dimension", "$value": { "value": 6, "unit": "px" } },
+    "card": { "$type": "dimension", "$value": { "value": 12, "unit": "px" } },
+    "pill": { "$type": "dimension", "$value": { "value": 999, "unit": "px" } }
   }
 }

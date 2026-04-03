@@ -2,7 +2,7 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-:root {
+:root[data-theme='light'] {
   --token-color-base-black: 11 11 14;
   --token-color-base-white: 255 255 255;
   --token-color-base-smoke: 20 20 24;
@@ -15,15 +15,15 @@
   --token-color-monokai-background: 35 31 34;
   --token-color-monokai-background-alt: 46 42 46;
   --token-color-monokai-foreground: 252 252 250;
-  --token-color-canvas: 11 11 14;
-  --token-color-surface: 20 20 24;
-  --token-color-ink-primary: 255 255 255;
-  --token-color-ink-muted: 255 255 255 / 0.6;
+  --token-color-canvas: 248 248 242;
+  --token-color-surface: 255 255 255;
+  --token-color-ink-primary: 11 11 14;
+  --token-color-ink-muted: 11 11 14 / 0.6;
   --token-color-accent-primary: 120 220 232;
   --token-color-accent-secondary: 171 157 242;
   --token-color-accent-success: 169 220 117;
   --token-color-accent-danger: 255 97 136;
-  --token-color-border-subtle: 255 255 255 / 0.08;
+  --token-color-border-subtle: 11 11 14 / 0.08;
   --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace;
   --token-font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --token-font-serif: ui-serif, Georgia, serif;
@@ -44,6 +44,6 @@
   --token-component-terminal-accent: 120 220 232;
   --token-component-terminal-success: 169 220 117;
   --token-component-terminal-error: 255 97 136;
-  --token-component-card-border: 255 255 255 / 0.08;
+  --token-component-card-border: 11 11 14 / 0.08;
   --token-component-card-shadow: 0px 30px 80px 0px rgba(0, 0, 0, 0.45);
 }
