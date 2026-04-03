@@ -11,6 +11,7 @@
     "tokens:validate": "node scripts/validate-tokens.mjs"
   },
   "dependencies": {
+    "@figma-vars/hooks": "^4.0.0",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/three": "0.160.0",
     "gsap": "^3.14.2",
