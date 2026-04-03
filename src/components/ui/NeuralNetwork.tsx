@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 /**
@@ -106,6 +106,8 @@ const CONNECTIONS: ConnectionDef[] = [
   { from: 47, to: 49, color: MONOKAI.purple },  // grid -> scale
 ]
 
+const REDUCED_CONNECTIONS = CONNECTIONS.filter((_, index) => index % 2 === 0)
+
 interface Orb {
   id: number
   connectionIndex: number
@@ -121,6 +123,7 @@ interface NodePosition {
 }
 
 export default function NeuralNetwork() {
+  const [profile, setProfile] = useState<'micro' | 'low' | 'full' | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const orbsRef = useRef<Orb[]>([])
@@ -132,8 +135,7 @@ export default function NeuralNetwork() {
   const linesRef = useRef<SVGLineElement[]>([])
   const dotsRef = useRef<SVGCircleElement[]>([])
   const lastUpdateRef = useRef(0)
-
-  const POSITION_UPDATE_INTERVAL = 50
+  const connectionsRef = useRef<ConnectionDef[]>(CONNECTIONS)
 
   // Get center position of a keyword element
   const getNodeCenter = useCallback((index: number): NodePosition | null => {
@@ -165,9 +167,10 @@ export default function NeuralNetwork() {
     const { width, height } = dimensionsRef.current
     if (width === 0 || height === 0) return
 
+    const connections = connectionsRef.current
     // Update lines
     linesRef.current.forEach((line, i) => {
-      const conn = CONNECTIONS[i]
+      const conn = connections[i]
       if (!conn) return
 
       const fromPos = nodePositionsRef.current.get(conn.from)
@@ -183,7 +186,7 @@ export default function NeuralNetwork() {
 
     // Update dots - collect unique node positions
     const uniqueNodes = new Set<number>()
-    CONNECTIONS.forEach((conn) => {
+    connections.forEach((conn) => {
       uniqueNodes.add(conn.from)
       uniqueNodes.add(conn.to)
     })
@@ -202,9 +205,46 @@ export default function NeuralNetwork() {
   }, [])
 
   useEffect(() => {
+    const updateProfile = () => {
+      if (typeof window === 'undefined') return
+      const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+      const width = window.innerWidth
+
+      if (isCoarsePointer || width < 1280) {
+        setProfile('micro')
+        return
+      }
+
+      if (width < 1536) {
+        setProfile('low')
+        return
+      }
+
+      setProfile('full')
+    }
+
+    updateProfile()
+    window.addEventListener('resize', updateProfile)
+    return () => {
+      window.removeEventListener('resize', updateProfile)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (profile === null) return
     const canvas = canvasRef.current
     const svg = svgRef.current
     if (!canvas || !svg) return
+
+    connectionsRef.current =
+      profile === 'full' ? CONNECTIONS : REDUCED_CONNECTIONS
+    const connections = connectionsRef.current
+    const settings =
+      profile === 'full'
+        ? { maxOrbs: 18, spawnRate: 0.025, initialOrbs: 10, interval: 50 }
+        : profile === 'low'
+          ? { maxOrbs: 8, spawnRate: 0.012, initialOrbs: 4, interval: 120 }
+          : { maxOrbs: 6, spawnRate: 0.01, initialOrbs: 3, interval: 160 }
 
     const updateDimensions = () => {
       const rect = canvas.getBoundingClientRect()
@@ -229,7 +269,7 @@ export default function NeuralNetwork() {
 
     // Create SVG elements
     // Lines - with 0.1 opacity for subtle appearance
-    CONNECTIONS.forEach((conn) => {
+    connections.forEach((conn) => {
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
       line.setAttribute('stroke', conn.color)
       line.setAttribute('stroke-width', '1')
@@ -240,7 +280,7 @@ export default function NeuralNetwork() {
 
     // Dots - one per unique node
     const uniqueNodes = new Set<number>()
-    CONNECTIONS.forEach((conn) => {
+    connections.forEach((conn) => {
       uniqueNodes.add(conn.from)
       uniqueNodes.add(conn.to)
     })
@@ -261,10 +301,10 @@ export default function NeuralNetwork() {
     let animationId: number
 
     const spawnOrb = () => {
-      if (orbsRef.current.length >= 18) return // Increased from 12 to 18
+      if (orbsRef.current.length >= settings.maxOrbs) return
 
-      const connIdx = Math.floor(Math.random() * CONNECTIONS.length)
-      const conn = CONNECTIONS[connIdx]
+      const connIdx = Math.floor(Math.random() * connections.length)
+      const conn = connections[connIdx]
       const direction = Math.random() > 0.5 ? 1 : -1
 
       orbsRef.current.push({
@@ -287,7 +327,7 @@ export default function NeuralNetwork() {
       const { width, height } = dimensionsRef.current
 
       const now = performance.now()
-      if (now - lastUpdateRef.current >= POSITION_UPDATE_INTERVAL) {
+      if (now - lastUpdateRef.current >= settings.interval) {
         // Update node positions from DOM
         updateNodePositions()
 
@@ -300,14 +340,14 @@ export default function NeuralNetwork() {
       ctx.clearRect(0, 0, width, height)
 
       // Spawn new orbs more frequently
-      if (Math.random() < 0.025) {
+      if (Math.random() < settings.spawnRate) {
         spawnOrb()
       }
 
       // Update and draw orbs
       for (let i = orbsRef.current.length - 1; i >= 0; i--) {
         const orb = orbsRef.current[i]
-        const conn = CONNECTIONS[orb.connectionIndex]
+        const conn = connections[orb.connectionIndex]
 
         // Get actual positions
         const fromPos = nodePositionsRef.current.get(conn.from)
@@ -353,7 +393,7 @@ export default function NeuralNetwork() {
     }
 
     // Start with more orbs for immediate activity
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < settings.initialOrbs; i++) {
       spawnOrb()
       if (orbsRef.current.length > 0) {
         orbsRef.current[orbsRef.current.length - 1].progress = Math.random()
@@ -373,7 +413,11 @@ export default function NeuralNetwork() {
       orbsRef.current = []
       keywordNodesRef.current = []
     }
-  }, [updateNodePositions, updateSVGElements])
+  }, [profile, updateNodePositions, updateSVGElements])
+
+  if (profile === null) {
+    return null
+  }
 
   return (
     <>

@@ -24,11 +24,11 @@
   --token-color-accent-success: 169 220 117;
   --token-color-accent-danger: 255 97 136;
   --token-color-border-subtle: 255 255 255 / 0.08;
-  --token-font-mono: MonoLisa, "SF Mono", Consolas, monospace;
+  --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace;
   --token-font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --token-font-serif: ui-serif, Georgia, serif;
-  --token-font-body: MonoLisa, "SF Mono", Consolas, monospace;
-  --token-font-display: MonoLisa, "SF Mono", Consolas, monospace;
+  --token-font-body: MonoLisa, 'SF Mono', Consolas, monospace;
+  --token-font-display: MonoLisa, 'SF Mono', Consolas, monospace;
   --token-font-ui: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --token-space-xs: 4px;
   --token-space-sm: 8px;
@@ -45,5 +45,5 @@
   --token-component-terminal-success: 169 220 117;
   --token-component-terminal-error: 255 97 136;
   --token-component-card-border: 255 255 255 / 0.08;
-  --token-component-card-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  --token-component-card-shadow: 0px 30px 80px 0px rgba(0, 0, 0, 0.45);
 }
