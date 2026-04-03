@@ -6,13 +6,20 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { PROJECTS } from '@/data/projects'
 import ProjectCard from '@/components/FeaturedWorkCard'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { useSectionViewTracking } from '@/hooks/useAnalytics'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function FeaturedWork() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLElement | null>(null)
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
   const [activeCard, setActiveCard] = useState<number | null>(null)
+
+  useSectionViewTracking({
+    ref: sectionRef as React.RefObject<HTMLElement>,
+    section: 'featured_work',
+    data: { location: 'home' },
+  })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -59,7 +66,7 @@ export default function FeaturedWork() {
           })
         }
       })
-    }, sectionRef)
+    }, sectionRef as React.RefObject<HTMLElement>)
 
     return () => ctx.revert()
   }, [])

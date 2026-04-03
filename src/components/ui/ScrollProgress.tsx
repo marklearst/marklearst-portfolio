@@ -6,15 +6,17 @@ import { MONOKAI } from '@/lib/monokai-colors'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function ScrollProgress() {
-  const { trackScrollMilestone } = useAnalytics()
+  const { trackScrollMilestone, trackCaseStudyReadCompletion } = useAnalytics()
   const pathname = usePathname()
   const [progress, setProgress] = useState(0)
   const trackedMilestones = useRef<Set<number>>(new Set())
+  const caseStudyReadTrackedRef = useRef(false)
 
   useEffect(() => {
     // Reset tracked milestones when page changes
     trackedMilestones.current.clear()
-  }, [pathname])
+    caseStudyReadTrackedRef.current = false
+  }, [pathname, trackScrollMilestone])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,15 +36,28 @@ export default function ScrollProgress() {
           trackedMilestones.current.add(milestone)
           trackScrollMilestone({
             percent: milestone,
-            page: pathname,
+            route: pathname,
           })
+
+          if (
+            milestone === 100 &&
+            !caseStudyReadTrackedRef.current &&
+            pathname.startsWith('/work/')
+          ) {
+            const project = pathname.split('/').pop() || 'unknown'
+            caseStudyReadTrackedRef.current = true
+            trackCaseStudyReadCompletion({
+              project,
+              route: pathname,
+            })
+          }
         }
       })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [pathname])
+  }, [pathname, trackScrollMilestone, trackCaseStudyReadCompletion])
 
   return (
     <div
