@@ -2,9 +2,13 @@
 
 import { useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function ParticleHeader() {
+  const { trackNavigationClick, trackLogoHover } = useAnalytics()
+  const pathname = usePathname()
   const mRef = useRef<HTMLSpanElement>(null)
   const middleRef = useRef<HTMLSpanElement>(null)
   const lRef = useRef<HTMLSpanElement>(null)
@@ -21,6 +25,7 @@ export default function ParticleHeader() {
     }
 
     isExpandedRef.current = true
+    trackLogoHover({ action: 'expand' })
 
     const middleText = 'ark'
     const endText = 'earst'
@@ -60,7 +65,7 @@ export default function ParticleHeader() {
     }
 
     typeMiddle()
-  }, [])
+  }, [trackLogoHover])
 
   const typeBack = useCallback(() => {
     if (timelineRef.current) {
@@ -68,6 +73,7 @@ export default function ParticleHeader() {
     }
 
     isExpandedRef.current = false
+    trackLogoHover({ action: 'collapse' })
 
     let endLength = endRef.current?.textContent?.length || 0
     let middleLength = middleRef.current?.textContent?.length || 0
@@ -107,11 +113,20 @@ export default function ParticleHeader() {
     }
 
     deleteEnd()
-  }, [])
+  }, [trackLogoHover])
 
   return (
     <Link
       href='/'
+      onClick={() => {
+        if (pathname !== '/') {
+          trackNavigationClick({
+            action: 'logo_click',
+            from: pathname,
+            to: '/',
+          })
+        }
+      }}
       className='block'
       onMouseEnter={typeOut}
       onMouseLeave={typeBack}
