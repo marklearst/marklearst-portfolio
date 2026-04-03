@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { Analytics } from '@vercel/analytics/next'
 import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
 import ParticleHeader from '@/components/brand/ParticleHeader'
 import CursorOrbs from '@/components/ui/CursorOrbs'
@@ -68,6 +69,10 @@ export default function RootLayout({
           </SmoothScrollProvider>
           <FigmaVarsDebug />
         </FigmaVarsContextProvider>
+        <Analytics
+        // Automatically enabled in production
+        // debug={process.env.NODE_ENV === 'development'}
+        />
       </body>
     </html>
   )

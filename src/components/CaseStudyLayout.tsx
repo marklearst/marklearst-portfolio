@@ -7,7 +7,9 @@ import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
 import { getCategoryColor, getCategoryIcon } from '@/lib/project-categories'
 import { MONOKAI } from '@/lib/monokai-colors'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import Footer from './Footer'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -43,6 +45,10 @@ export default function CaseStudyLayout({
   impact,
   gradient,
 }: CaseStudyLayoutProps) {
+  const { trackNavigationClick, trackCaseStudyLinkClick, getLinkTypeFromUrl } =
+    useAnalytics()
+  const pathname = usePathname()
+  const projectSlug = pathname.split('/').pop() || 'unknown'
   const pageRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLElement>(null)
   const categoryTone = getCategoryColor(categoryColor)
@@ -147,6 +153,14 @@ export default function CaseStudyLayout({
           {/* Back button */}
           <Link
             href='/#work'
+            onClick={() => {
+              trackNavigationClick({
+                action: 'back_to_work',
+                from: pathname,
+                to: '/#work',
+                location: 'top',
+              })
+            }}
             className='inline-flex items-center gap-2 mb-12 font-mono text-sm transition-colors duration-300 group'
             style={{ color: `${MONOKAI.foreground}80` }}
           >
@@ -273,10 +287,7 @@ export default function CaseStudyLayout({
 
           {/* Links */}
           {links.length > 0 && (
-            <div
-              ref={linksRef}
-              className='flex flex-wrap gap-4 opacity-0'
-            >
+            <div ref={linksRef} className='flex flex-wrap gap-4 opacity-0'>
               {links.map((link) => {
                 const isDisabled = !link.href || link.href === ''
 
@@ -308,6 +319,13 @@ export default function CaseStudyLayout({
                     onClick={(e) => {
                       if (isDisabled) {
                         e.preventDefault()
+                      } else {
+                        trackCaseStudyLinkClick({
+                          label: link.label,
+                          href: link.href,
+                          project: projectSlug,
+                          linkType: getLinkTypeFromUrl(link.href),
+                        })
                       }
                     }}
                   >
@@ -412,6 +430,14 @@ export default function CaseStudyLayout({
         <div className='max-w-5xl mx-auto flex justify-center'>
           <Link
             href='/#work'
+            onClick={() => {
+              trackNavigationClick({
+                action: 'back_to_work',
+                from: pathname,
+                to: '/#work',
+                location: 'bottom',
+              })
+            }}
             className='inline-flex items-center gap-2 px-6 py-3 font-mono text-sm rounded-lg transition-all duration-300 hover:scale-105'
             style={{
               backgroundColor: `${MONOKAI.foreground}10`,
