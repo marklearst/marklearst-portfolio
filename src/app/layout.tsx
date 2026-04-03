@@ -6,6 +6,8 @@ import CursorOrbs from '@/components/ui/CursorOrbs'
 import KonamiCode from '@/components/ui/KonamiCode'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import SmoothScrollProvider from '@/components/SmoothScrollProvider'
+import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
+import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
 
 export const metadata: Metadata = {
   title: 'Mark Learst - Senior Frontend Engineer',
@@ -60,9 +62,12 @@ export default function RootLayout({
         {/* Easter egg - Konami code */}
         <KonamiCode />
 
-        <SmoothScrollProvider>
-          <TerminalNavigationProvider>{children}</TerminalNavigationProvider>
-        </SmoothScrollProvider>
+        <FigmaVarsContextProvider>
+          <SmoothScrollProvider>
+            <TerminalNavigationProvider>{children}</TerminalNavigationProvider>
+          </SmoothScrollProvider>
+          <FigmaVarsDebug />
+        </FigmaVarsContextProvider>
       </body>
     </html>
   )

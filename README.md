@@ -12,6 +12,8 @@ Personal portfolio site built with Next.js showcasing my work as a senior fronte
 - Three.js for 3D elements
 - Zustand for state management
 - Lenis for smooth scrolling
+- Style Dictionary for token builds
+- FigmaVars Hooks for variables integration
 
 ## Getting Started
 
@@ -29,6 +31,19 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the site.
 
+## Figma Variables (optional)
+
+The app is wired to `@figma-vars/hooks` with a local fallback JSON so it can run without the Figma API. Update `src/data/figma-variables.json` with exported variables when ready.
+
+To enable live Figma Variables locally, set these in `.env.local`:
+
+```bash
+NEXT_PUBLIC_FIGMA_TOKEN=your_personal_access_token
+NEXT_PUBLIC_FIGMA_FILE_KEY=your_figma_file_key
+```
+
+In dev, a small overlay shows collection/variable counts and logs status to the console.
+
 ## Project Structure
 
 ```
@@ -39,12 +54,19 @@ src/
 │   └── page.tsx          # Home page
 ├── components/            # React components
 │   ├── brand/            # Branding components (logo, particles)
+│   ├── dev/              # Dev-only overlays/debug tools
+│   ├── providers/        # App-level context providers
 │   ├── transitions/      # Terminal-style navigation transitions
 │   └── ui/               # UI components (cursor, neural network, etc.)
+├── data/                  # Local JSON assets (e.g., Figma variables fallback)
+├── tokens/                # Design tokens (Variables Contract JSON)
 ├── lib/                   # Utilities and helpers
 │   ├── terminal-*.ts     # Terminal animation utilities
 │   └── monokai-colors.ts  # Color system
 └── hooks/                 # Custom React hooks
+
+scripts/
+└── style-dictionary/       # Style Dictionary transforms/filters
 ```
 
 ## Key Features
