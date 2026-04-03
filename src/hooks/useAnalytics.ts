@@ -4,7 +4,9 @@
  * Wraps core functions from @/lib/analytics to prevent duplication
  */
 
-import { useCallback } from 'react'
+import type { RefObject } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import * as Analytics from '@/lib/analytics'
 
 export function useAnalytics() {
@@ -49,6 +51,11 @@ export function useAnalytics() {
       Analytics.trackProjectCardHover(data),
     [],
   )
+  const trackProjectCardImpression = useCallback(
+    (data: Parameters<typeof Analytics.trackProjectCardImpression>[0]) =>
+      Analytics.trackProjectCardImpression(data),
+    [],
+  )
   const trackScrollMilestone = useCallback(
     (data: Parameters<typeof Analytics.trackScrollMilestone>[0]) =>
       Analytics.trackScrollMilestone(data),
@@ -69,6 +76,56 @@ export function useAnalytics() {
       Analytics.trackHashNavigation(data),
     [],
   )
+  const trackSectionView = useCallback(
+    (data: Parameters<typeof Analytics.trackSectionView>[0]) =>
+      Analytics.trackSectionView(data),
+    [],
+  )
+  const trackCaseStudyView = useCallback(
+    (data: Parameters<typeof Analytics.trackCaseStudyView>[0]) =>
+      Analytics.trackCaseStudyView(data),
+    [],
+  )
+  const trackCaseStudyLinkImpression = useCallback(
+    (data: Parameters<typeof Analytics.trackCaseStudyLinkImpression>[0]) =>
+      Analytics.trackCaseStudyLinkImpression(data),
+    [],
+  )
+  const trackCaseStudyImpactView = useCallback(
+    (data: Parameters<typeof Analytics.trackCaseStudyImpactView>[0]) =>
+      Analytics.trackCaseStudyImpactView(data),
+    [],
+  )
+  const trackCaseStudySectionDwell = useCallback(
+    (data: Parameters<typeof Analytics.trackCaseStudySectionDwell>[0]) =>
+      Analytics.trackCaseStudySectionDwell(data),
+    [],
+  )
+  const trackCodeBlockView = useCallback(
+    (data: Parameters<typeof Analytics.trackCodeBlockView>[0]) =>
+      Analytics.trackCodeBlockView(data),
+    [],
+  )
+  const trackCaseStudyReadCompletion = useCallback(
+    (data: Parameters<typeof Analytics.trackCaseStudyReadCompletion>[0]) =>
+      Analytics.trackCaseStudyReadCompletion(data),
+    [],
+  )
+  const trackCaseStudySectionView = useCallback(
+    (data: Parameters<typeof Analytics.trackCaseStudySectionView>[0]) =>
+      Analytics.trackCaseStudySectionView(data),
+    [],
+  )
+  const trackEngagementTime = useCallback(
+    (data: Parameters<typeof Analytics.trackEngagementTime>[0]) =>
+      Analytics.trackEngagementTime(data),
+    [],
+  )
+  const trackThemePreference = useCallback(
+    (data: Parameters<typeof Analytics.trackThemePreference>[0]) =>
+      Analytics.trackThemePreference(data),
+    [],
+  )
 
   return {
     trackCaseStudyClick,
@@ -80,12 +137,99 @@ export function useAnalytics() {
     trackHeroCTAClick,
     trackNavigationClick,
     trackProjectCardHover,
+    trackProjectCardImpression,
     trackScrollMilestone,
     trackThemeToggle,
     trackLogoHover,
     trackHashNavigation,
+    trackSectionView,
+    trackCaseStudyView,
+    trackCaseStudyLinkImpression,
+    trackCaseStudyImpactView,
+    trackCaseStudySectionDwell,
+    trackCaseStudySectionView,
+    trackCodeBlockView,
+    trackCaseStudyReadCompletion,
+    trackEngagementTime,
+    trackThemePreference,
     // Helper functions
     getPlatformFromUrl: Analytics.getPlatformFromUrl,
     getLinkTypeFromUrl: Analytics.getLinkTypeFromUrl,
+    getDwellBucket: Analytics.getDwellBucket,
   }
+}
+
+const DEFAULT_ENGAGEMENT_THRESHOLDS = [10, 30, 60, 120]
+
+type SectionTrackingData = {
+  location?: string
+  project?: string
+}
+
+export function useSectionViewTracking(options: {
+  ref: RefObject<HTMLElement | null>
+  section: string
+  threshold?: number
+  once?: boolean
+  data?: SectionTrackingData
+}) {
+  const pathname = usePathname()
+  const { ref, section, threshold = 0.35, once = true, data } = options
+  const hasTrackedRef = useRef(false)
+  const dataRef = useRef<SectionTrackingData | undefined>(data)
+
+  useEffect(() => {
+    dataRef.current = data
+  }, [data])
+
+  useEffect(() => {
+    hasTrackedRef.current = false
+  }, [pathname, section])
+
+  useEffect(() => {
+    if (!ref.current || typeof IntersectionObserver === 'undefined') return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          if (once && hasTrackedRef.current) return
+
+          hasTrackedRef.current = true
+          Analytics.trackSectionView({
+            section,
+            route: pathname,
+            ...(dataRef.current ?? {}),
+          })
+        })
+      },
+      { threshold },
+    )
+
+    observer.observe(ref.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [ref, section, pathname, threshold, once])
+}
+
+export function useEngagementTracking(options?: { thresholds?: number[] }) {
+  const pathname = usePathname()
+  const thresholds = useMemo(
+    () => options?.thresholds ?? DEFAULT_ENGAGEMENT_THRESHOLDS,
+    [options?.thresholds],
+  )
+
+  useEffect(() => {
+    const timeouts = thresholds.map((seconds) =>
+      setTimeout(() => {
+        Analytics.trackEngagementTime({ route: pathname, seconds })
+      }, seconds * 1000),
+    )
+
+    return () => {
+      timeouts.forEach((timeoutId) => clearTimeout(timeoutId))
+    }
+  }, [pathname, thresholds])
 }

@@ -9,7 +9,7 @@ import { MONOKAI } from '@/lib/monokai-colors'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -45,20 +45,185 @@ export default function CaseStudyLayout({
   impact,
   gradient,
 }: CaseStudyLayoutProps) {
-  const { trackNavigationClick, trackCaseStudyLinkClick, getLinkTypeFromUrl } =
-    useAnalytics()
+  const {
+    trackNavigationClick,
+    trackCaseStudyLinkClick,
+    getLinkTypeFromUrl,
+    trackCaseStudyView,
+    trackCaseStudySectionView,
+    trackCaseStudyLinkImpression,
+    trackCaseStudyImpactView,
+    trackCaseStudySectionDwell,
+    getDwellBucket,
+  } = useAnalytics()
   const pathname = usePathname()
   const projectSlug = pathname.split('/').pop() || 'unknown'
   const pageRef = useRef<HTMLDivElement>(null)
-  const heroRef = useRef<HTMLElement>(null)
+  const heroRef = useRef<HTMLElement | null>(null)
   const categoryTone = getCategoryColor(categoryColor)
   const categoryRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
   const descriptionRef = useRef<HTMLParagraphElement>(null)
   const metaRefs = useRef<Array<HTMLDivElement | null>>([])
   const linksRef = useRef<HTMLDivElement>(null)
+  const linkRefs = useRef<Array<HTMLAnchorElement | null>>([])
   const impactRefs = useRef<Array<HTMLDivElement | null>>([])
   const sectionRefs = useRef<Array<HTMLDivElement | null>>([])
+  const impactSectionRef = useRef<HTMLElement | null>(null)
+  const trackedLinkImpressionsRef = useRef<Set<number>>(new Set())
+  const trackedImpactViewsRef = useRef<Set<number>>(new Set())
+  const sectionDwellStartRef = useRef<Map<number, number>>(new Map())
+  const trackedSectionDwellRef = useRef<Set<number>>(new Set())
+
+  useEffect(() => {
+    trackCaseStudyView({
+      project: projectSlug,
+      category,
+      route: pathname,
+    })
+  }, [trackCaseStudyView, projectSlug, category, pathname])
+
+  useSectionViewTracking({
+    ref: heroRef,
+    section: 'case_study_hero',
+    data: { project: projectSlug },
+  })
+
+  useSectionViewTracking({
+    ref: impactSectionRef,
+    section: 'case_study_impact',
+    data: { project: projectSlug },
+  })
+
+  useEffect(() => {
+    trackedLinkImpressionsRef.current.clear()
+    trackedImpactViewsRef.current.clear()
+    trackedSectionDwellRef.current.clear()
+    sectionDwellStartRef.current.clear()
+  }, [projectSlug])
+
+  useEffect(() => {
+    if (links.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const index = linkRefs.current.findIndex(
+            (link) => link === entry.target,
+          )
+          if (index === -1) return
+          if (trackedLinkImpressionsRef.current.has(index)) return
+
+          const link = links[index]
+          if (!link || !link.href) return
+
+          trackedLinkImpressionsRef.current.add(index)
+          trackCaseStudyLinkImpression({
+            label: link.label,
+            href: link.href,
+            project: projectSlug,
+            linkType: getLinkTypeFromUrl(link.href),
+          })
+        })
+      },
+      { threshold: 0.6 },
+    )
+
+    linkRefs.current.forEach((link) => {
+      if (link) observer.observe(link)
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [
+    links,
+    projectSlug,
+    trackCaseStudyLinkImpression,
+    getLinkTypeFromUrl,
+  ])
+
+  useEffect(() => {
+    if (!impact || impact.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const index = impactRefs.current.findIndex(
+            (node) => node === entry.target,
+          )
+          if (index === -1) return
+          if (trackedImpactViewsRef.current.has(index)) return
+
+          const metric = impact[index]?.metric
+          if (!metric) return
+
+          trackedImpactViewsRef.current.add(index)
+          trackCaseStudyImpactView({
+            project: projectSlug,
+            metric,
+            index,
+          })
+        })
+      },
+      { threshold: 0.6 },
+    )
+
+    impactRefs.current.forEach((node) => {
+      if (node) observer.observe(node)
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [impact, projectSlug, trackCaseStudyImpactView])
+
+  useEffect(() => {
+    if (sectionRefs.current.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = sectionRefs.current.findIndex(
+            (node) => node === entry.target,
+          )
+          if (index === -1) return
+
+          if (entry.isIntersecting) {
+            sectionDwellStartRef.current.set(index, performance.now())
+            return
+          }
+
+          const start = sectionDwellStartRef.current.get(index)
+          if (!start) return
+          if (trackedSectionDwellRef.current.has(index)) return
+
+          const seconds = (performance.now() - start) / 1000
+          if (seconds < 3) return
+
+          const sectionTitle = sections[index]?.title ?? `section_${index + 1}`
+          trackedSectionDwellRef.current.add(index)
+          trackCaseStudySectionDwell({
+            project: projectSlug,
+            section: sectionTitle,
+            index,
+            dwellBucket: getDwellBucket(seconds),
+          })
+        })
+      },
+      { threshold: 0.55 },
+    )
+
+    sectionRefs.current.forEach((node) => {
+      if (node) observer.observe(node)
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [sections, projectSlug, trackCaseStudySectionDwell, getDwellBucket])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -70,9 +235,10 @@ export default function CaseStudyLayout({
       const metaEls = [...metaRefs.current, linksRef.current].filter(
         (item): item is HTMLDivElement => Boolean(item),
       )
-      const sections = [...impactRefs.current, ...sectionRefs.current].filter(
-        (item): item is HTMLDivElement => Boolean(item),
-      )
+      const contentSections = [
+        ...impactRefs.current,
+        ...sectionRefs.current,
+      ].filter((item): item is HTMLDivElement => Boolean(item))
 
       if (!categoryEl || !titleEl || !descriptionEl) {
         return
@@ -114,7 +280,7 @@ export default function CaseStudyLayout({
       }
 
       // Section reveals
-      sections.forEach((section) => {
+      contentSections.forEach((section) => {
         gsap.from(section, {
           scrollTrigger: {
             trigger: section,
@@ -126,10 +292,27 @@ export default function CaseStudyLayout({
           ease: 'power3.out',
         })
       })
+
+      sectionRefs.current.forEach((section, index) => {
+        if (!section) return
+        const sectionTitle = sections[index]?.title ?? `section_${index + 1}`
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 75%',
+          once: true,
+          onEnter: () => {
+            trackCaseStudySectionView({
+              project: projectSlug,
+              section: sectionTitle,
+              index,
+            })
+          },
+        })
+      })
     }, pageRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [projectSlug, sections, trackCaseStudySectionView])
 
   return (
     <div
@@ -288,12 +471,15 @@ export default function CaseStudyLayout({
           {/* Links */}
           {links.length > 0 && (
             <div ref={linksRef} className='flex flex-wrap gap-4 opacity-0'>
-              {links.map((link) => {
+              {links.map((link, index) => {
                 const isDisabled = !link.href || link.href === ''
 
                 return (
                   <a
                     key={link.label}
+                    ref={(node) => {
+                      linkRefs.current[index] = node
+                    }}
                     href={isDisabled ? undefined : link.href}
                     target={isDisabled ? undefined : '_blank'}
                     rel={isDisabled ? undefined : 'noopener noreferrer'}
@@ -341,7 +527,7 @@ export default function CaseStudyLayout({
 
       {/* Impact Section */}
       {impact && impact.length > 0 && (
-        <section className='py-20 px-6'>
+        <section ref={impactSectionRef} className='py-20 px-6'>
           {/* Subtle divider line matching content width */}
           <div className='max-w-5xl mx-auto mb-20'>
             <div
