@@ -5,12 +5,19 @@ import EnhancedHero from '@/components/EnhancedHero'
 import FeaturedWork from '@/components/FeaturedWork'
 import Testimonials from '@/components/Testimonials'
 import Footer from '@/components/Footer'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function Home() {
+  const { trackHashNavigation } = useAnalytics()
+
   useEffect(() => {
     // Only handle hash-based navigation, let browser restore scroll position otherwise
     const hash = window.location.hash.slice(1)
     if (hash) {
+      trackHashNavigation({
+        hash,
+        source: window.location.hash ? 'direct_link' : 'scroll',
+      })
       // Small delay to ensure DOM is ready
       setTimeout(() => {
         const element = document.getElementById(hash)
@@ -20,7 +27,7 @@ export default function Home() {
       }, 100)
     }
     // Browser will automatically restore scroll position on refresh
-  }, [])
+  }, [trackHashNavigation])
 
   // Smart hash clearing - remove hash when user scrolls away from target section
   useEffect(() => {

@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { gsap } from 'gsap'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { trackKonamiCode } from '@/lib/analytics'
 
 // Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A
 const KONAMI_CODE = [
@@ -38,6 +39,7 @@ export default function KonamiCode() {
         setActivated(true)
         setShowMessage(true)
         inputRef.current = []
+        trackKonamiCode()
 
         // Hide message after 4 seconds
         setTimeout(() => {
@@ -70,7 +72,8 @@ export default function KonamiCode() {
       particle.style.width = '8px'
       particle.style.height = '8px'
       particle.style.borderRadius = '50%'
-      particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
+      particle.style.backgroundColor =
+        colors[Math.floor(Math.random() * colors.length)]
       particle.style.left = '50%'
       particle.style.top = '50%'
       particle.style.pointerEvents = 'none'
@@ -98,12 +101,13 @@ export default function KonamiCode() {
 
   return (
     <>
-      <div ref={particlesRef} className='fixed inset-0 pointer-events-none z-[10000]' />
+      <div
+        ref={particlesRef}
+        className='fixed inset-0 pointer-events-none z-10000'
+      />
 
       {showMessage && (
-        <div
-          className='fixed inset-0 flex items-center justify-center pointer-events-none z-[9999] animate-konami-fade'
-        >
+        <div className='fixed inset-0 flex items-center justify-center pointer-events-none z-9999 animate-konami-fade'>
           <div
             className='px-8 py-6 rounded-2xl font-mono text-center'
             style={{
@@ -122,10 +126,16 @@ export default function KonamiCode() {
             >
               Achievement Unlocked!
             </div>
-            <div className='text-sm' style={{ color: `${MONOKAI.foreground}99` }}>
+            <div
+              className='text-sm'
+              style={{ color: `${MONOKAI.foreground}99` }}
+            >
               You found the easter egg. You're definitely a dev.
             </div>
-            <div className='text-xs mt-3' style={{ color: `${MONOKAI.foreground}60` }}>
+            <div
+              className='text-xs mt-3'
+              style={{ color: `${MONOKAI.foreground}60` }}
+            >
               ↑ ↑ ↓ ↓ ← → ← → B A
             </div>
           </div>

@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import type { ProjectMeta } from '@/data/projects'
 import { getCategoryColor, getCategoryIcon } from '@/lib/project-categories'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 interface ProjectCardProps {
   project: ProjectMeta
@@ -14,7 +15,8 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
-  ({ project, isActive, onHover, onLeave }, ref) => {
+  ({ project, index, isActive, onHover, onLeave }, ref) => {
+    const { trackCaseStudyClick, trackProjectCardHover } = useAnalytics()
     const cardRef = useRef<HTMLDivElement>(null)
     const glowRef = useRef<HTMLDivElement>(null)
 
@@ -52,7 +54,10 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
       <div
         ref={cardRef}
         className='group relative h-full'
-        onMouseEnter={onHover}
+        onMouseEnter={() => {
+          onHover()
+          trackProjectCardHover({ project: project.slug, index: index })
+        }}
         onMouseLeave={onLeave}
         onMouseMove={handleMouseMove}
       >
@@ -147,6 +152,14 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
               {/* CTA Link */}
               <a
                 href={project.route}
+                onClick={() => {
+                  trackCaseStudyClick({
+                    project: project.slug,
+                    category: project.category,
+                    route: project.route,
+                    source: 'featured_work',
+                  })
+                }}
                 className='inline-flex items-center gap-2.5 text-white/80 hover:text-white font-medium transition-all duration-300 group/link'
               >
                 <span className='font-mono text-sm'>Read case study</span>
