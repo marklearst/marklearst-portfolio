@@ -16,9 +16,15 @@ interface ProjectCardProps {
 
 const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
   ({ project, index, isActive, onHover, onLeave }, ref) => {
-    const { trackCaseStudyClick, trackProjectCardHover } = useAnalytics()
+    const {
+      trackCaseStudyClick,
+      trackProjectCardHover,
+      trackProjectCardImpression,
+    } = useAnalytics()
     const cardRef = useRef<HTMLDivElement>(null)
     const glowRef = useRef<HTMLDivElement>(null)
+    const hasTrackedHoverRef = useRef(false)
+    const hasTrackedImpressionRef = useRef(false)
 
     // Combine refs
     useEffect(() => {
@@ -28,6 +34,32 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
         ref.current = cardRef.current
       }
     }, [ref])
+
+    useEffect(() => {
+      if (!cardRef.current || hasTrackedImpressionRef.current) return
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting || hasTrackedImpressionRef.current) return
+            hasTrackedImpressionRef.current = true
+            trackProjectCardImpression({
+              project: project.slug,
+              index,
+              location: 'featured_work',
+            })
+            observer.disconnect()
+          })
+        },
+        { threshold: 0.6 },
+      )
+
+      observer.observe(cardRef.current)
+
+      return () => {
+        observer.disconnect()
+      }
+    }, [index, project.slug, trackProjectCardImpression])
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
       if (!cardRef.current) return
@@ -56,7 +88,14 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
         className='group relative h-full'
         onMouseEnter={() => {
           onHover()
-          trackProjectCardHover({ project: project.slug, index: index })
+          if (!hasTrackedHoverRef.current) {
+            hasTrackedHoverRef.current = true
+            trackProjectCardHover({
+              project: project.slug,
+              index,
+              location: 'featured_work',
+            })
+          }
         }}
         onMouseLeave={onLeave}
         onMouseMove={handleMouseMove}

@@ -24,6 +24,7 @@ export default function KonamiCode() {
   const [showMessage, setShowMessage] = useState(false)
   const inputRef = useRef<string[]>([])
   const particlesRef = useRef<HTMLDivElement>(null)
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,14 +43,22 @@ export default function KonamiCode() {
         trackKonamiCode()
 
         // Hide message after 4 seconds
-        setTimeout(() => {
+        if (hideTimeoutRef.current) {
+          clearTimeout(hideTimeoutRef.current)
+        }
+        hideTimeoutRef.current = setTimeout(() => {
           setShowMessage(false)
         }, 4000)
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current)
+      }
+    }
   }, [])
 
   // Particle explosion effect when activated
