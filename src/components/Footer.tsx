@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MONOKAI } from '@/lib/monokai-colors'
 import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
 import AnalyticsOptOutToggle from '@/components/ui/AnalyticsOptOutToggle'
+import { usePathname } from 'next/navigation'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -64,6 +65,8 @@ function SocialLink({ link }: { link: SocialLinkData }) {
 export default function Footer() {
   const footerRef = useRef<HTMLElement | null>(null)
   const { trackNavigationClick } = useAnalytics()
+  const pathname = usePathname()
+  const showPrivacyLink = pathname !== '/privacy'
 
   useSectionViewTracking({
     ref: footerRef as React.RefObject<HTMLElement>,
@@ -227,19 +230,21 @@ export default function Footer() {
 
             <div className='flex items-center gap-4'>
               <AnalyticsOptOutToggle />
-              <Link
-                href='/privacy'
-                onClick={() => {
-                  trackNavigationClick({
-                    action: 'privacy_page',
-                    to: '/privacy',
-                    location: 'footer',
-                  })
-                }}
-                className='font-mono text-[10px] uppercase tracking-wider text-white/30 transition hover:text-white/70'
-              >
-                privacy
-              </Link>
+              {showPrivacyLink && (
+                <Link
+                  href='/privacy'
+                  onClick={() => {
+                    trackNavigationClick({
+                      action: 'privacy_page',
+                      to: '/privacy',
+                      location: 'footer',
+                    })
+                  }}
+                  className='font-mono text-[10px] uppercase tracking-wider text-white/30 transition hover:text-white/70'
+                >
+                  privacy
+                </Link>
+              )}
               <div className='font-mono text-xs text-white/20'>
                 <span className='text-teal-400/50'>v</span>2026.1.0
               </div>
