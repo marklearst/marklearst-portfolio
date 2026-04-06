@@ -109,6 +109,7 @@ export default function SkydioPage() {
               </CaseStudyMutedText>
               <CodeBlock
                 language='typescript'
+                analyticsLabel='action_configs'
                 code={`// AutonomyWidget.configs.ts
 const ACTION_CONFIGS = {
   pause: {
@@ -219,6 +220,7 @@ const ACTION_CONFIGS = {
               </CaseStudyMutedText>
               <CodeBlock
                 language='typescript'
+                analyticsLabel='barrel_architecture'
                 code={`// Clean imports via barrel pattern
 import {
   AutonomyWidget,

@@ -51,7 +51,11 @@ export default function CursorOrbs() {
       const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches
       const isFinePointer = window.matchMedia('(pointer: fine)').matches
       const isHoverCapable = window.matchMedia('(hover: hover)').matches
-      setIsEnabled(isLargeScreen && isFinePointer && isHoverCapable)
+      const nextEnabled = isLargeScreen && isFinePointer && isHoverCapable
+      setIsEnabled(nextEnabled)
+      if (!nextEnabled) {
+        setHasInteracted(false)
+      }
     }
 
     updateEnabled()
@@ -63,10 +67,7 @@ export default function CursorOrbs() {
   }, [])
 
   useEffect(() => {
-    if (!isEnabled) {
-      setHasInteracted(false)
-      return
-    }
+    if (!isEnabled) return
     if (typeof window === 'undefined') return
     const startX = window.innerWidth / 2
     const startY = window.innerHeight / 2

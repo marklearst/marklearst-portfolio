@@ -32,13 +32,13 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
       const nextKey = state.transitionKey + 1
       if (process.env.NODE_ENV === 'development') {
         console.log('[transition]', {
-          event: 'start',
+          phase: 'start',
           key: nextKey,
           route,
         })
       }
       trackTerminalTransition({
-        event: 'start',
+        phase: 'start',
         route,
         transitionKey: nextKey,
       })
@@ -59,13 +59,13 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
     if (!onNavigate || phase === 'navigating') return
     if (process.env.NODE_ENV === 'development') {
       console.log('[transition]', {
-        event: 'navigate',
+        phase: 'navigate',
         key: transitionKey,
       })
     }
     if (targetRoute) {
       trackTerminalTransition({
-        event: 'navigate',
+        phase: 'navigate',
         route: targetRoute,
         transitionKey,
       })
@@ -80,13 +80,13 @@ export const useTransitionStore = create<TransitionState>((set, get) => ({
     if (key && key !== transitionKey) return
     if (process.env.NODE_ENV === 'development') {
       console.log('[transition]', {
-        event: 'complete',
+        phase: 'complete',
         key: transitionKey,
       })
     }
     if (targetRoute) {
       trackTerminalTransition({
-        event: 'complete',
+        phase: 'complete',
         route: targetRoute,
         transitionKey,
       })
