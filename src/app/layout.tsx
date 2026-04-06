@@ -10,6 +10,7 @@ import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
 import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
 import AnalyticsManager from '@/components/AnalyticsManager'
+import NavigationHistoryTracker from '@/components/NavigationHistoryTracker'
 
 export const metadata: Metadata = {
   title: 'Mark Learst - Senior Frontend Engineer',
@@ -71,6 +72,7 @@ export default function RootLayout({
           <FigmaVarsDebug />
         </FigmaVarsContextProvider>
         <AnalyticsManager />
+        <NavigationHistoryTracker />
       </body>
     </html>
   )
