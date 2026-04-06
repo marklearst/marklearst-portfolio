@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@figma-vars/hooks": "^4.0.0",
-    "@vercel/analytics": "^1.4.1",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/three": "0.160.0",
     "@vercel/analytics": "^1.6.1",
