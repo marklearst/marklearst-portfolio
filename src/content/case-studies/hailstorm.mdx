@@ -1,0 +1,168 @@
+---
+slug: hailstorm
+title: Hailstorm Design System
+category: DESIGN SYSTEMS
+categoryColor: purple
+description: "Modernized Abusix's Hailstorm design system to a React 19, Tailwind v4, Storybook 10 stack with WCAG 2.2 AA patterns, token governance, and automated QA."
+role: "Design Systems Engineer, Modernization Lead"
+timeline: "2025 - Present"
+technologies:
+  - React 19
+  - TypeScript
+  - Tailwind CSS v4
+  - Storybook 10
+  - Headless UI
+  - Vitest
+  - Testing Library
+  - Playwright
+  - Rollup
+links:
+  - label: GitHub
+    href: https://github.com/marklearst/hailstorm
+    icon: github
+  - label: Design System
+    href: https://hailstorm-design-sytstem.vercel.app/
+    icon: external
+impact:
+  - metric: "2026-ready"
+    description: "Upgraded legacy stack to React 19, Tailwind v4 tokens, and Storybook 10"
+  - metric: "WCAG 2.2"
+    description: "Accessibility-first patterns with keyboard and ARIA defaults"
+  - metric: "QA"
+    description: "Vitest + Testing Library + Playwright browser coverage"
+gradient: from-purple-500/20 via-blue-500/10 to-transparent
+---
+
+<CaseStudySection title="The Challenge">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Hailstorm is the Abusix design system. The original system shipped real
+      UI, but the stack had fallen behind modern React patterns, token workflows,
+      and accessibility expectations. The goal was not a rewrite for its own
+      sake. It was to modernize the foundation without breaking product teams.
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-3">
+      <li>Legacy tooling made it hard to evolve components safely</li>
+      <li>Tokens existed but lacked a clear, enforceable workflow</li>
+      <li>Storybook docs did not reflect the actual production APIs</li>
+      <li>Accessibility defaults needed to align with WCAG 2.2 AA</li>
+      <li>QA coverage was fragmented and hard to trust</li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph>
+      The modernization had to keep API stability while upgrading the stack to a
+      2026-ready baseline: React 19, Tailwind v4 tokens, Storybook 10, and
+      consistent automated tests.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="The Solution">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      I rebuilt the Hailstorm foundation as a React 19 component library with
+      token-driven styling, Storybook-first documentation, and accessibility
+      defaults baked into every primitive. This fork is maintained by Mark
+      Learst and focuses on long-term system health.
+    </CaseStudyParagraph>
+
+    <CaseStudySubheading>Token-Driven Foundations</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Tailwind v4 tokens now define the visual system, keeping themes consistent
+      and changes predictable.
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Semantic token naming for color, spacing, and typography</li>
+      <li>Single source of truth for component styling</li>
+      <li>Token pipeline designed for long-term governance</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Storybook as Source of Truth</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Storybook 10 + MDX docs are the canonical reference for component usage,
+      variants, and accessibility behavior.
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>MDX docs aligned with actual component APIs</li>
+      <li>Visual QA and interaction states documented in one place</li>
+      <li>Design token guidance lives alongside component examples</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Accessibility-First Primitives</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Hailstorm uses Headless UI primitives and WCAG 2.2 AA defaults to ensure
+      keyboard, focus, and ARIA patterns are correct out of the box.
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Keyboard interactions and focus management baked in</li>
+      <li>Semantic HTML first, ARIA only when needed</li>
+      <li>Accessible patterns documented and tested</li>
+    </CaseStudyMutedList>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Technical Implementation">
+  <div className="space-y-6">
+    <CaseStudySubheading className="mt-0">Modernized Build + QA</CaseStudySubheading>
+    <CaseStudyMutedText>
+      The system now ships with Rollup builds, Vite for local development, and a
+      modern test stack that covers logic and interactions.
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>React 19 + TypeScript for stable component contracts</li>
+      <li>Rollup for library builds, Vite for local dev speed</li>
+      <li>Vitest + Testing Library + Playwright browser mode for QA</li>
+      <li>Storybook 10 for docs, visual QA, and design review</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Core Workflow</CaseStudySubheading>
+    <CaseStudyMutedText>
+      The repo ships with a predictable loop for docs, tests, and builds.
+    </CaseStudyMutedText>
+    <CodeBlock
+      language="bash"
+      analyticsLabel="hailstorm_workflow"
+      code={[
+        "pnpm storybook",
+        "pnpm test",
+        "pnpm run build",
+      ].join('\n')}
+    />
+
+    <CaseStudySubheading>Token Location</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Tokens live in <code>src/styles/index.css</code> and are referenced in
+      component styles so updates stay centralized.
+    </CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Impact & Outcomes">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Hailstorm now runs on a modern, stable foundation while preserving the
+      existing component APIs teams rely on.
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-4">
+      <li>
+        <strong>Modern stack</strong> with React 19, Tailwind v4 tokens, and
+        Storybook 10
+      </li>
+      <li>
+        <strong>Accessibility defaults</strong> aligned to WCAG 2.2 AA patterns
+        and keyboard-first interactions
+      </li>
+      <li>
+        <strong>Testable workflows</strong> with Vitest, Testing Library, and
+        browser-level checks
+      </li>
+      <li>
+        <strong>Clear documentation</strong> that reflects real component usage
+        and design guidance
+      </li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph className="mt-8">
+      The system is positioned for long-term governance and faster iteration
+      without sacrificing design or accessibility quality.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
