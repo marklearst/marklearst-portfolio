@@ -30,7 +30,7 @@ export default function EnhancedHero() {
   return (
     <section
       ref={heroRef}
-      className='relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden'
+      className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-24 sm:pt-0 overflow-hidden'
       style={{ backgroundColor: MONOKAI.background }}
     >
       {/* Neural background wrapper - fades in with hero */}
@@ -84,7 +84,7 @@ export default function EnhancedHero() {
       <div className='max-w-6xl w-full relative z-10'>
         {/* Terminal prompt - RESTORED */}
         <div
-          className='mb-16 font-mono text-sm space-y-2 pt-8'
+          className='mb-10 sm:mb-16 font-mono text-sm space-y-2 pt-4 sm:pt-8'
           style={{ color: `${MONOKAI.foreground}60` }}
         >
           <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] pointer-events-none'>
@@ -109,7 +109,7 @@ export default function EnhancedHero() {
         {/* NAME - Clean, powerful, with kinetic hover effect */}
         <div ref={nameBoxRef} className='mb-6 opacity-0'>
           <h1
-            className='text-[clamp(64px,10vw,140px)] leading-[0.9] font-mono tracking-[-0.02em]'
+            className='text-[clamp(36px,12vw,84px)] sm:text-[clamp(64px,10vw,140px)] leading-[0.9] font-mono tracking-[-0.03em] sm:tracking-[-0.02em] whitespace-nowrap'
             style={{
               fontWeight: 700,
               color: MONOKAI.foreground,
