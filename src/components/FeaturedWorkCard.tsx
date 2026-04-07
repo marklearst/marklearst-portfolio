@@ -12,10 +12,11 @@ interface ProjectCardProps {
   isActive: boolean
   onHover: () => void
   onLeave: () => void
+  location?: string
 }
 
 const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
-  ({ project, index, isActive, onHover, onLeave }, ref) => {
+  ({ project, index, isActive, onHover, onLeave, location }, ref) => {
     const {
       trackCaseStudyClick,
       trackProjectCardHover,
@@ -38,6 +39,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
     useEffect(() => {
       if (!cardRef.current || hasTrackedImpressionRef.current) return
 
+      const trackingLocation = location ?? 'featured_work'
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -46,7 +48,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
             trackProjectCardImpression({
               project: project.slug,
               index,
-              location: 'featured_work',
+              location: trackingLocation,
             })
             observer.disconnect()
           })
@@ -59,7 +61,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
       return () => {
         observer.disconnect()
       }
-    }, [index, project.slug, trackProjectCardImpression])
+    }, [index, location, project.slug, trackProjectCardImpression])
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
       if (!cardRef.current) return
@@ -93,7 +95,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
             trackProjectCardHover({
               project: project.slug,
               index,
-              location: 'featured_work',
+              location: location ?? 'featured_work',
             })
           }
         }}
@@ -196,7 +198,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
                     project: project.slug,
                     category: project.category,
                     route: project.route,
-                    source: 'featured_work',
+                    source: location ?? 'featured_work',
                   })
                 }}
                 className='inline-flex items-center gap-2.5 text-white/80 hover:text-white font-medium transition-all duration-300 group/link'

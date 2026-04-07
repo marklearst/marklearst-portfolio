@@ -39,6 +39,9 @@ export interface ProjectMeta {
   description: string
   role: string
   timeline: string
+  publishedAt?: string
+  pinned?: boolean
+  featured?: boolean
   technologies: string[]
   tags: string[]
   commitHash: string
@@ -61,6 +64,9 @@ export const PROJECTS: ProjectMeta[] = [
       "Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance embedded into every component.",
     role: 'Senior Design Engineer, Lead - Authored Design Token Governance Document',
     timeline: 'Jun 2021 - Sep 2024 (3+ years)',
+    publishedAt: '2024-09-01',
+    pinned: true,
+    featured: true,
     technologies: [
       'React',
       'React Native',
@@ -98,6 +104,9 @@ export const PROJECTS: ProjectMeta[] = [
       'React 19 hooks library and CLI for the official Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage.',
     role: 'Creator & Maintainer',
     timeline: '2024 - Present',
+    publishedAt: '2024-12-01',
+    pinned: true,
+    featured: true,
     technologies: [
       'React 19',
       'TypeScript',
@@ -139,6 +148,7 @@ export const PROJECTS: ProjectMeta[] = [
       'Figma widget bringing The A11Y Project Checklist into design workflows. 200+ active users across design teams with WCAG 2.2 tooltips, progress tracking, bulk actions, and MD/HTML/JSON export capabilities.',
     role: 'Creator & Maintainer',
     timeline: '2023 - Present',
+    publishedAt: '2023-08-01',
     technologies: [
       'Figma Widget API',
       'TypeScript',
@@ -178,6 +188,8 @@ export const PROJECTS: ProjectMeta[] = [
       'TypeScript library for glucose, A1C, and Time in Range (TIR) calculations. Featured in Google AI Overview for diabetes developer tools with 100% test coverage and adopted by health tech teams.',
     role: 'Creator & Maintainer',
     timeline: '2023 - Present',
+    publishedAt: '2023-10-01',
+    featured: true,
     technologies: [
       'TypeScript',
       'Vitest',
@@ -212,6 +224,7 @@ export const PROJECTS: ProjectMeta[] = [
       'Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, addressing tool lock-in and broken design-code handoff workflows affecting design systems teams globally.',
     role: 'Specification Author & W3C Community Contributor',
     timeline: '2024 - Present',
+    publishedAt: '2024-10-01',
     technologies: [
       'JSON Schema',
       'DTCG Spec',
@@ -246,6 +259,7 @@ export const PROJECTS: ProjectMeta[] = [
       "Built production-grade React widget system for Skydio's Rivit design language, enabling real-time drone control with config-driven UI architecture and Storybook documentation.",
     role: 'Frontend Consultant - Component Architecture & Storybook',
     timeline: '2024 (Contract)',
+    publishedAt: '2024-05-01',
     technologies: [
       'React',
       'TypeScript',
@@ -273,6 +287,10 @@ export const PROJECTS: ProjectMeta[] = [
     },
   },
 ]
+
+export const FEATURED_PROJECTS = PROJECTS.filter(
+  (project) => project.featured,
+)
 
 export const PROJECTS_BY_ROUTE = PROJECTS.reduce<Record<string, ProjectMeta>>(
   (acc, project) => {

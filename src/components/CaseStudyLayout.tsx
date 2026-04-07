@@ -380,12 +380,12 @@ export default function CaseStudyLayout({
         <div className='max-w-5xl mx-auto relative z-10'>
           {/* Back button */}
           <Link
-            href='/#work'
+            href='/work'
             onClick={() => {
               trackNavigationClick({
                 action: 'back_to_work',
                 from: pathname,
-                to: '/#work',
+                to: '/work',
                 location: 'top',
               })
             }}
@@ -661,12 +661,12 @@ export default function CaseStudyLayout({
         </div>
         <div className='max-w-5xl mx-auto flex justify-center'>
           <Link
-            href='/#work'
+            href='/work'
             onClick={() => {
               trackNavigationClick({
                 action: 'back_to_work',
                 from: pathname,
-                to: '/#work',
+                to: '/work',
                 location: 'bottom',
               })
             }}
@@ -689,7 +689,7 @@ export default function CaseStudyLayout({
                 d='M10 19l-7-7m0 0l7-7m-7 7h18'
               />
             </svg>
-            View all projects
+            View all work
           </Link>
         </div>
       </section>

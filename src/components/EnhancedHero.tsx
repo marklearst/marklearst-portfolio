@@ -247,9 +247,9 @@ export default function EnhancedHero() {
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.cyan}20`,
-              color: MONOKAI.cyan,
-              border: `1px solid ${MONOKAI.cyan}40`,
+              backgroundColor: `${MONOKAI.purple}20`,
+              color: MONOKAI.purple,
+              border: `1px solid ${MONOKAI.purple}40`,
             }}
           >
             Design Systems
@@ -258,9 +258,9 @@ export default function EnhancedHero() {
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.purple}20`,
-              color: MONOKAI.purple,
-              border: `1px solid ${MONOKAI.purple}40`,
+              backgroundColor: `${MONOKAI.cyan}20`,
+              color: MONOKAI.cyan,
+              border: `1px solid ${MONOKAI.cyan}40`,
             }}
           >
             React • TypeScript
@@ -269,23 +269,12 @@ export default function EnhancedHero() {
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.yellow}20`,
-              color: MONOKAI.yellow,
-              border: `1px solid ${MONOKAI.yellow}40`,
+              backgroundColor: `${MONOKAI.green}20`,
+              color: MONOKAI.green,
+              border: `1px solid ${MONOKAI.green}40`,
             }}
           >
             WCAG • A11y
-          </span>
-
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.pink}20`,
-              color: MONOKAI.pink,
-              border: `1px solid ${MONOKAI.pink}40`,
-            }}
-          >
-            Open Source
           </span>
 
           <span
@@ -296,15 +285,26 @@ export default function EnhancedHero() {
               border: `1px solid ${MONOKAI.orange}40`,
             }}
           >
+            Open Source
+          </span>
+
+          <span
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
+            style={{
+              backgroundColor: `${MONOKAI.yellow}20`,
+              color: MONOKAI.yellow,
+              border: `1px solid ${MONOKAI.yellow}40`,
+            }}
+          >
             Developer Tools
           </span>
 
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.green}20`,
-              color: MONOKAI.green,
-              border: `1px solid ${MONOKAI.green}40`,
+              backgroundColor: `${MONOKAI.pink}20`,
+              color: MONOKAI.pink,
+              border: `1px solid ${MONOKAI.pink}40`,
             }}
           >
             Health Tech
