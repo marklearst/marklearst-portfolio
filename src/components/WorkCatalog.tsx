@@ -80,7 +80,7 @@ const sortProjects = (projects: ProjectMeta[]) =>
     return a.title.localeCompare(b.title)
   })
 
-export default function WorkCatalog() {
+export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) {
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [activeCatalogCard, setActiveCatalogCard] = useState<number | null>(
     null,
@@ -115,10 +115,6 @@ export default function WorkCatalog() {
           <h2 className='mt-4 text-[clamp(32px,4vw,48px)] font-mono lowercase text-white !font-bold'>
             All work
           </h2>
-          <p className='mt-3 max-w-3xl font-mono text-[clamp(16px,1.6vw,20px)] leading-relaxed text-white/70'>
-            Everything I ship, from design systems and OSS to health tech and
-            developer tooling. Filter by focus area to scan fast.
-          </p>
         </div>
 
         {ENABLE_FILTERS ? (
@@ -166,6 +162,22 @@ export default function WorkCatalog() {
           </div>
         ) : null}
       </div>
+
+      {aboutSummary ? (
+        <div
+          className='mb-12 w-full rounded-2xl border px-6 py-5 font-mono'
+          style={{
+            borderColor: `${MONOKAI.cyan}35`,
+            backgroundColor: `${MONOKAI.cyan}10`,
+            color: MONOKAI.cyan,
+          }}
+        >
+          <div className='text-xs uppercase tracking-wider mb-2'>About</div>
+          <p className='text-[clamp(16px,1.6vw,20px)] leading-relaxed'>
+            {aboutSummary}
+          </p>
+        </div>
+      ) : null}
 
       {filteredProjects.length ? (
         <div className='grid gap-6 md:grid-cols-2 xl:grid-cols-3 auto-rows-fr'>
