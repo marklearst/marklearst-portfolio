@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { PROJECTS } from '@/data/projects'
+import { FEATURED_PROJECTS, PROJECTS } from '@/data/projects'
 import ProjectCard from '@/components/FeaturedWorkCard'
 import { MONOKAI } from '@/lib/monokai-colors'
 import { useSectionViewTracking } from '@/hooks/useAnalytics'
@@ -39,10 +39,10 @@ export default function FeaturedWork() {
       gsap.from('.section-subtitle', {
         scrollTrigger: {
           trigger: '.section-subtitle',
-          start: 'top 75%',
+          start: 'top 80%',
         },
         opacity: 0,
-        x: -20,
+        y: 30,
         duration: 1,
         delay: 0.3,
         ease: 'expo.out',
@@ -55,7 +55,7 @@ export default function FeaturedWork() {
           gsap.from(card, {
             scrollTrigger: {
               trigger: card,
-              start: 'top 80%',
+              start: 'top 90%',
             },
             opacity: 0,
             y: 100,
@@ -100,7 +100,9 @@ export default function FeaturedWork() {
 
         {/* Cards Grid - Consistent spacing with equal height rows */}
         <div className='grid lg:grid-cols-3 gap-6 auto-rows-fr'>
-          {PROJECTS.map((project, index) => (
+          {(FEATURED_PROJECTS.length ? FEATURED_PROJECTS : PROJECTS)
+            .slice(0, 3)
+            .map((project, index) => (
             <ProjectCard
               key={project.slug}
               project={project}
@@ -112,7 +114,7 @@ export default function FeaturedWork() {
                 cardsRef.current[index] = el
               }}
             />
-          ))}
+            ))}
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, ReactNode } from 'react'
+import { isValidElement, useEffect, useMemo, useRef, ReactNode } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
@@ -10,10 +10,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
 import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
+import { CaseStudySection as CaseStudySectionMarker } from '@/components/CaseStudySection'
 
 gsap.registerPlugin(ScrollTrigger)
 
-interface CaseStudySection {
+interface CaseStudySectionData {
   title: string
   content: ReactNode
 }
@@ -27,9 +28,10 @@ interface CaseStudyLayoutProps {
   timeline: string
   technologies: string[]
   links?: { label: string; href: string; icon?: ReactNode }[]
-  sections: CaseStudySection[]
+  sections?: CaseStudySectionData[]
   impact?: { metric: string; description: string }[]
   gradient: string
+  children?: ReactNode
 }
 
 export default function CaseStudyLayout({
@@ -44,6 +46,7 @@ export default function CaseStudyLayout({
   sections,
   impact,
   gradient,
+  children,
 }: CaseStudyLayoutProps) {
   const {
     trackNavigationClick,
@@ -74,6 +77,44 @@ export default function CaseStudyLayout({
   const trackedImpactViewsRef = useRef<Set<number>>(new Set())
   const sectionDwellStartRef = useRef<Map<number, number>>(new Map())
   const trackedSectionDwellRef = useRef<Set<number>>(new Set())
+  const resolvedSections = useMemo(() => {
+    if (sections && sections.length > 0) {
+      return sections
+    }
+
+    const extracted: CaseStudySectionData[] = []
+    const collectSections = (node: ReactNode) => {
+      if (Array.isArray(node)) {
+        node.forEach(collectSections)
+        return
+      }
+      if (!isValidElement(node)) return
+      const element = node as React.ReactElement<{
+        title?: string
+        children?: ReactNode
+      }>
+
+      if (element.type === CaseStudySectionMarker) {
+        const { title: sectionTitle, children: sectionContent } = element.props
+
+        if (sectionTitle) {
+          extracted.push({
+            title: sectionTitle,
+            content: sectionContent ?? null,
+          })
+        }
+        return
+      }
+
+      if (element.props.children !== undefined) {
+        collectSections(element.props.children)
+      }
+    }
+
+    collectSections(children)
+
+    return extracted
+  }, [children, sections])
 
   useEffect(() => {
     trackCaseStudyView({
@@ -137,12 +178,7 @@ export default function CaseStudyLayout({
     return () => {
       observer.disconnect()
     }
-  }, [
-    links,
-    projectSlug,
-    trackCaseStudyLinkImpression,
-    getLinkTypeFromUrl,
-  ])
+  }, [links, projectSlug, trackCaseStudyLinkImpression, getLinkTypeFromUrl])
 
   useEffect(() => {
     if (!impact || impact.length === 0) return
@@ -203,7 +239,8 @@ export default function CaseStudyLayout({
           const seconds = (performance.now() - start) / 1000
           if (seconds < 3) return
 
-          const sectionTitle = sections[index]?.title ?? `section_${index + 1}`
+          const sectionTitle =
+            resolvedSections[index]?.title ?? `section_${index + 1}`
           trackedSectionDwellRef.current.add(index)
           trackCaseStudySectionDwell({
             project: projectSlug,
@@ -223,7 +260,12 @@ export default function CaseStudyLayout({
     return () => {
       observer.disconnect()
     }
-  }, [sections, projectSlug, trackCaseStudySectionDwell, getDwellBucket])
+  }, [
+    resolvedSections,
+    projectSlug,
+    trackCaseStudySectionDwell,
+    getDwellBucket,
+  ])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -236,9 +278,9 @@ export default function CaseStudyLayout({
         (item): item is HTMLDivElement => Boolean(item),
       )
       const contentSections = [
-        ...impactRefs.current,
+        impactSectionRef.current,
         ...sectionRefs.current,
-      ].filter((item): item is HTMLDivElement => Boolean(item))
+      ].filter((item): item is HTMLElement => Boolean(item))
 
       if (!categoryEl || !titleEl || !descriptionEl) {
         return
@@ -281,13 +323,15 @@ export default function CaseStudyLayout({
 
       // Section reveals
       contentSections.forEach((section) => {
-        gsap.from(section, {
+        gsap.set(section, { y: 100 })
+        gsap.to(section, {
           scrollTrigger: {
             trigger: section,
-            start: 'top 80%',
+            start: 'top 90%',
+            once: true,
           },
-          opacity: 0,
-          y: 60,
+          autoAlpha: 1,
+          y: 0,
           duration: 1,
           ease: 'power3.out',
         })
@@ -295,10 +339,11 @@ export default function CaseStudyLayout({
 
       sectionRefs.current.forEach((section, index) => {
         if (!section) return
-        const sectionTitle = sections[index]?.title ?? `section_${index + 1}`
+        const sectionTitle =
+          resolvedSections[index]?.title ?? `section_${index + 1}`
         ScrollTrigger.create({
           trigger: section,
-          start: 'top 75%',
+          start: 'top 92%',
           once: true,
           onEnter: () => {
             trackCaseStudySectionView({
@@ -312,7 +357,7 @@ export default function CaseStudyLayout({
     }, pageRef)
 
     return () => ctx.revert()
-  }, [projectSlug, sections, trackCaseStudySectionView])
+  }, [projectSlug, resolvedSections, trackCaseStudySectionView])
 
   return (
     <div
@@ -335,12 +380,12 @@ export default function CaseStudyLayout({
         <div className='max-w-5xl mx-auto relative z-10'>
           {/* Back button */}
           <Link
-            href='/#work'
+            href='/work'
             onClick={() => {
               trackNavigationClick({
                 action: 'back_to_work',
                 from: pathname,
-                to: '/#work',
+                to: '/work',
                 location: 'top',
               })
             }}
@@ -527,9 +572,9 @@ export default function CaseStudyLayout({
 
       {/* Impact Section */}
       {impact && impact.length > 0 && (
-        <section ref={impactSectionRef} className='py-20 px-6'>
+        <section ref={impactSectionRef} className='py-6 px-6 opacity-0'>
           {/* Subtle divider line matching content width */}
-          <div className='max-w-5xl mx-auto mb-20'>
+          <div className='max-w-5xl mx-auto mb-6'>
             <div
               className='h-px w-full'
               style={{ backgroundColor: `${MONOKAI.foreground}15` }}
@@ -537,12 +582,12 @@ export default function CaseStudyLayout({
           </div>
           <div className='max-w-5xl mx-auto'>
             <h2
-              className='text-sm font-mono uppercase tracking-wider mb-12'
+              className='text-sm font-mono uppercase tracking-wider mb-4'
               style={{ color: `${MONOKAI.foreground}50` }}
             >
               Impact
             </h2>
-            <div className='grid md:grid-cols-3 gap-12'>
+            <div className='grid md:grid-cols-3 gap-6'>
               {impact.map((item, index) => (
                 <div
                   key={index}
@@ -568,7 +613,7 @@ export default function CaseStudyLayout({
             </div>
           </div>
           {/* Bottom divider line matching content width */}
-          <div className='max-w-5xl mx-auto mt-20'>
+          <div className='max-w-5xl mx-auto mt-6'>
             <div
               className='h-px w-full'
               style={{ backgroundColor: `${MONOKAI.foreground}15` }}
@@ -578,14 +623,15 @@ export default function CaseStudyLayout({
       )}
 
       {/* Content Sections */}
-      <section className='py-20 px-6'>
-        <div className='max-w-5xl mx-auto space-y-20'>
-          {sections.map((section, index) => (
+      <section className='py-8 px-6'>
+        <div className='max-w-5xl mx-auto space-y-10'>
+          {resolvedSections.map((section, index) => (
             <div
               key={index}
               ref={(node) => {
                 sectionRefs.current[index] = node
               }}
+              className='opacity-0'
             >
               <h2
                 className='text-[clamp(28px,4vw,42px)] font-mono lowercase mb-8'
@@ -615,12 +661,12 @@ export default function CaseStudyLayout({
         </div>
         <div className='max-w-5xl mx-auto flex justify-center'>
           <Link
-            href='/#work'
+            href='/work'
             onClick={() => {
               trackNavigationClick({
                 action: 'back_to_work',
                 from: pathname,
-                to: '/#work',
+                to: '/work',
                 location: 'bottom',
               })
             }}
@@ -643,7 +689,7 @@ export default function CaseStudyLayout({
                 d='M10 19l-7-7m0 0l7-7m-7 7h18'
               />
             </svg>
-            View all projects
+            View all work
           </Link>
         </div>
       </section>

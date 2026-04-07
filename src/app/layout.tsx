@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
 import ParticleHeader from '@/components/brand/ParticleHeader'
+import PrimaryNav from '@/components/PrimaryNav'
 import CursorOrbs from '@/components/ui/CursorOrbs'
 import KonamiCode from '@/components/ui/KonamiCode'
 import ScrollProgress from '@/components/ui/ScrollProgress'
+import CommandPalette from '@/components/ui/CommandPalette'
 import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
 import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
@@ -55,8 +56,9 @@ export default function RootLayout({
         <ScrollProgress />
 
         {/* Header with ML logo */}
-        <header className='fixed top-8 left-8 z-40 flex items-center gap-4'>
+        <header className='fixed top-4 left-4 right-4 sm:top-8 sm:left-8 sm:right-8 z-40 flex items-center justify-between gap-4'>
           <ParticleHeader />
+          <PrimaryNav />
         </header>
 
         {/* Monokai cursor orbs - premium cursor trail */}
@@ -71,6 +73,7 @@ export default function RootLayout({
           </SmoothScrollProvider>
           <FigmaVarsDebug />
         </FigmaVarsContextProvider>
+        <CommandPalette />
         <AnalyticsManager />
         <NavigationHistoryTracker />
       </body>
