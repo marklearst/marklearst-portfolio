@@ -1,0 +1,48 @@
+---
+title: SemVer for Design Variables
+slug: variable-contract-semver
+summary: A lightweight framing for versioning tokens so design and code stay in lockstep.
+tags:
+  - design-systems
+  - tokens
+  - standards
+published_at: 2026-01-12
+pinned: false
+---
+
+## The framing
+
+Design variables change like APIs. If the naming, structure, or type changes, downstream teams need a clear signal about impact. SemVer gives designers and engineers the same shared language for change.
+
+### Contract shape
+
+A contract is just a typed payload with a schema version and a contract version. The version tells teams whether a change is safe, risky, or breaking.
+
+```json
+{
+  "contractVersion": "1.4.0",
+  "schemaVersion": "2025.10",
+  "source": "design",
+  "publishedAt": "2026-01-15",
+  "tokens": {
+    "color.brand.primary": {
+      "type": "color",
+      "value": "#4ea1ff"
+    }
+  }
+}
+```
+
+### Release rules
+
+- MAJOR: rename or remove a token, or change its type.
+- MINOR: add new tokens or new variants that do not break existing usage.
+- PATCH: adjust values without touching structure.
+
+### Governance payoff
+
+When tokens are versioned like code, you can audit changes, validate compatibility in CI, and roll back without guesswork. It turns variable drift into a predictable release cycle.
+
+## Why I use it
+
+This keeps design, engineering, and product aligned. The spec does not just document the change, it explains the impact in a language every team already understands.

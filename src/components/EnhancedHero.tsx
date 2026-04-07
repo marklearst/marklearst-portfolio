@@ -5,6 +5,7 @@ import { HERO_KEYWORDS } from '@/data/hero-keywords'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
+import Link from 'next/link'
 import NeuralNetwork from '@/components/ui/NeuralNetwork'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
@@ -30,7 +31,7 @@ export default function EnhancedHero() {
   return (
     <section
       ref={heroRef}
-      className='relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden'
+      className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-24 sm:pt-0 overflow-hidden'
       style={{ backgroundColor: MONOKAI.background }}
     >
       {/* Neural background wrapper - fades in with hero */}
@@ -84,7 +85,7 @@ export default function EnhancedHero() {
       <div className='max-w-6xl w-full relative z-10'>
         {/* Terminal prompt - RESTORED */}
         <div
-          className='mb-16 font-mono text-sm space-y-2 pt-8'
+          className='mb-10 sm:mb-16 font-mono text-sm space-y-2 pt-4 sm:pt-8'
           style={{ color: `${MONOKAI.foreground}60` }}
         >
           <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] pointer-events-none'>
@@ -109,7 +110,7 @@ export default function EnhancedHero() {
         {/* NAME - Clean, powerful, with kinetic hover effect */}
         <div ref={nameBoxRef} className='mb-6 opacity-0'>
           <h1
-            className='text-[clamp(64px,10vw,140px)] leading-[0.9] font-mono tracking-[-0.02em]'
+            className='text-[clamp(36px,12vw,84px)] sm:text-[clamp(64px,10vw,140px)] leading-[0.9] font-mono tracking-[-0.03em] sm:tracking-[-0.02em] whitespace-nowrap'
             style={{
               fontWeight: 700,
               color: MONOKAI.foreground,
@@ -156,13 +157,10 @@ export default function EnhancedHero() {
         {/* CTAs - Clean buttons with expanding outline on hover */}
         <div className='hero-ctas flex flex-wrap items-center gap-4 mb-14 opacity-0'>
           {/* Primary CTA - Solid with expanding cyan outline */}
-          <button
+          <Link
+            href='/work'
             onClick={() => {
-              trackHeroCTAClick({ action: 'scroll_to_work', location: 'hero' })
-              const workSection = document.getElementById('work')
-              if (workSection) {
-                workSection.scrollIntoView({ behavior: 'smooth' })
-              }
+              trackHeroCTAClick({ action: 'view_work', location: 'hero' })
             }}
             className='group relative px-8 py-4 font-mono text-base font-bold rounded-lg transition-all duration-300'
             style={{
@@ -196,7 +194,7 @@ export default function EnhancedHero() {
                 />
               </svg>
             </span>
-          </button>
+          </Link>
 
           {/* GitHub button - Ghost with expanding pink outline */}
           <a
@@ -247,9 +245,9 @@ export default function EnhancedHero() {
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.cyan}20`,
-              color: MONOKAI.cyan,
-              border: `1px solid ${MONOKAI.cyan}40`,
+              backgroundColor: `${MONOKAI.purple}20`,
+              color: MONOKAI.purple,
+              border: `1px solid ${MONOKAI.purple}40`,
             }}
           >
             Design Systems
@@ -258,9 +256,9 @@ export default function EnhancedHero() {
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.purple}20`,
-              color: MONOKAI.purple,
-              border: `1px solid ${MONOKAI.purple}40`,
+              backgroundColor: `${MONOKAI.cyan}20`,
+              color: MONOKAI.cyan,
+              border: `1px solid ${MONOKAI.cyan}40`,
             }}
           >
             React • TypeScript
@@ -269,23 +267,12 @@ export default function EnhancedHero() {
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.yellow}20`,
-              color: MONOKAI.yellow,
-              border: `1px solid ${MONOKAI.yellow}40`,
+              backgroundColor: `${MONOKAI.green}20`,
+              color: MONOKAI.green,
+              border: `1px solid ${MONOKAI.green}40`,
             }}
           >
             WCAG • A11y
-          </span>
-
-          <span
-            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
-            style={{
-              backgroundColor: `${MONOKAI.pink}20`,
-              color: MONOKAI.pink,
-              border: `1px solid ${MONOKAI.pink}40`,
-            }}
-          >
-            Open Source
           </span>
 
           <span
@@ -296,15 +283,26 @@ export default function EnhancedHero() {
               border: `1px solid ${MONOKAI.orange}40`,
             }}
           >
+            Open Source
+          </span>
+
+          <span
+            className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
+            style={{
+              backgroundColor: `${MONOKAI.yellow}20`,
+              color: MONOKAI.yellow,
+              border: `1px solid ${MONOKAI.yellow}40`,
+            }}
+          >
             Developer Tools
           </span>
 
           <span
             className='hero-badge px-4 py-2.5 rounded-lg font-medium opacity-0 pointer-events-none'
             style={{
-              backgroundColor: `${MONOKAI.green}20`,
-              color: MONOKAI.green,
-              border: `1px solid ${MONOKAI.green}40`,
+              backgroundColor: `${MONOKAI.pink}20`,
+              color: MONOKAI.pink,
+              border: `1px solid ${MONOKAI.pink}40`,
             }}
           >
             Health Tech

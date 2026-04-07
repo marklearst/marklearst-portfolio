@@ -1,36 +1,33 @@
-import type { ReactNode } from 'react'
+import type { ComponentPropsWithoutRef } from 'react'
 import { MONOKAI } from '@/lib/monokai-colors'
 
 const MUTED_TEXT = `${MONOKAI.foreground}b3`
 const SUBHEADING_CLASS = 'text-2xl font-mono mt-8 mb-4'
 
-interface CaseStudySubheadingProps {
-  children: ReactNode
-  color: string
-  className?: string
+interface CaseStudySubheadingProps
+  extends ComponentPropsWithoutRef<'h3'> {
+  color?: string
 }
 
-interface CaseStudyMutedTextProps {
-  children: ReactNode
-  className?: string
-}
+type CaseStudyMutedTextProps = ComponentPropsWithoutRef<'div'>
 
-interface CaseStudyMutedListProps {
-  children: ReactNode
-  className?: string
-}
+type CaseStudyMutedListProps = ComponentPropsWithoutRef<'ul'>
+
+type CaseStudyParagraphProps = ComponentPropsWithoutRef<'div'>
 
 export function CaseStudySubheading({
   children,
   color,
   className,
+  ...rest
 }: CaseStudySubheadingProps) {
   const classes = className
     ? `${SUBHEADING_CLASS} ${className}`
     : SUBHEADING_CLASS
+  const accent = color ?? MONOKAI.foreground
 
   return (
-    <h3 className={classes} style={{ color }}>
+    <h3 className={classes} style={{ color: accent }} {...rest}>
       {children}
     </h3>
   )
@@ -39,25 +36,48 @@ export function CaseStudySubheading({
 export function CaseStudyMutedText({
   children,
   className,
+  ...rest
 }: CaseStudyMutedTextProps) {
   const classes = className ? `leading-relaxed ${className}` : 'leading-relaxed'
 
   return (
-    <p className={classes} style={{ color: MUTED_TEXT }}>
+    <div className={classes} style={{ color: MUTED_TEXT }} {...rest}>
       {children}
-    </p>
+    </div>
   )
 }
 
 export function CaseStudyMutedList({
   children,
   className,
+  ...rest
 }: CaseStudyMutedListProps) {
-  const classes = className ? `ml-6 list-disc ${className}` : 'ml-6 list-disc'
+  const baseClasses = 'ml-6 list-disc [&_strong]:text-white'
+  const classes = className ? `${baseClasses} ${className}` : baseClasses
 
   return (
-    <ul className={classes} style={{ color: MUTED_TEXT }}>
+    <ul className={classes} style={{ color: MUTED_TEXT }} {...rest}>
       {children}
     </ul>
+  )
+}
+
+export function CaseStudyParagraph({
+  children,
+  className,
+  ...rest
+}: CaseStudyParagraphProps) {
+  const classes = className
+    ? `text-lg leading-relaxed ${className}`
+    : 'text-lg leading-relaxed'
+
+  return (
+    <div
+      className={classes}
+      style={{ color: `${MONOKAI.foreground}cc` }}
+      {...rest}
+    >
+      {children}
+    </div>
   )
 }

@@ -64,6 +64,22 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     duration: DURATION.homeRoute,
     color: MONOKAI.cyan,
   },
+  '/work': {
+    route: '/work',
+    command: formatCommand('ls /work'),
+    loading: 'Indexing case studies...',
+    output: formatOutput('Ready', true),
+    duration: DURATION.workRoute,
+    color: MONOKAI.purple,
+  },
+  '/artifacts': {
+    route: '/artifacts',
+    command: formatCommand('ls /artifacts'),
+    loading: 'Indexing artifacts...',
+    output: formatOutput('Ready', true),
+    duration: DURATION.workRoute,
+    color: MONOKAI.cyan,
+  },
   ...PROJECT_ROUTE_COMMANDS,
   '/work/glucoseiq': {
     route: '/work/glucoseiq',
