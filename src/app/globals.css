@@ -43,19 +43,16 @@ a {
   @apply transition-all;
 }
 
-/* Premium focus states - accessibility meets beauty */
-:focus-visible {
-  outline: 2px solid #78dce8;
-  outline-offset: 4px;
-  border-radius: 4px;
-  box-shadow: 0 0 20px #78dce840, 0 0 40px #78dce820;
-}
-
+/* Focus states - subtle, readable */
 button:focus-visible,
-a:focus-visible {
-  outline: 2px solid #78dce8;
-  outline-offset: 4px;
-  box-shadow: 0 0 20px #78dce840, 0 0 40px #78dce820;
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 1px solid rgba(120, 220, 232, 0.45);
+  outline-offset: 2px;
+  box-shadow: none;
+  border-radius: 6px;
 }
 
 /* Terminal cursor animation */

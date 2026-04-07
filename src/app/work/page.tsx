@@ -28,11 +28,13 @@ export default async function WorkPage() {
   const aboutSummary = await loadAboutSummary()
   return (
     <main
-      className='min-h-screen pt-36 pb-32 px-6'
+      className='min-h-screen pt-36'
       style={{ backgroundColor: MONOKAI.background }}
     >
-      <div className='max-w-7xl mx-auto'>
-        <WorkCatalog aboutSummary={aboutSummary} />
+      <div className='px-6 pb-24'>
+        <div className='max-w-7xl mx-auto'>
+          <WorkCatalog aboutSummary={aboutSummary} />
+        </div>
       </div>
       <Footer />
     </main>

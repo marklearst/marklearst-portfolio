@@ -38,8 +38,7 @@ const WORK_FILTERS: WorkFilter[] = [
     matches: (project) =>
       project.technologies.some((tech) =>
         tech.toLowerCase().includes('react'),
-      ) ||
-      project.tags.some((tag) => tag.toLowerCase().includes('react')),
+      ) || project.tags.some((tag) => tag.toLowerCase().includes('react')),
   },
   {
     id: 'wcag',
@@ -71,8 +70,7 @@ const WORK_FILTERS: WorkFilter[] = [
 
 const ENABLE_FILTERS = true
 
-const getTimestamp = (value?: string) =>
-  value ? new Date(value).getTime() : 0
+const getTimestamp = (value?: string) => (value ? new Date(value).getTime() : 0)
 
 const sortProjects = (projects: ProjectMeta[]) =>
   [...projects].sort((a, b) => {
@@ -82,7 +80,11 @@ const sortProjects = (projects: ProjectMeta[]) =>
     return a.title.localeCompare(b.title)
   })
 
-export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) {
+export default function WorkCatalog({
+  aboutSummary,
+}: {
+  aboutSummary: string
+}) {
   const sectionRef = useRef<HTMLElement | null>(null)
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [activeCatalogCard, setActiveCatalogCard] = useState<number | null>(
@@ -112,34 +114,38 @@ export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) 
       gsap.from('.work-kicker', {
         scrollTrigger: {
           trigger: '.work-kicker',
-          start: 'top 80%',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
         },
         opacity: 0,
-        y: 20,
-        duration: 0.8,
+        y: 34,
+        duration: 1.3,
         ease: 'expo.out',
       })
 
       gsap.from('.work-title', {
         scrollTrigger: {
           trigger: '.work-title',
-          start: 'top 80%',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
         },
         opacity: 0,
-        y: 30,
-        duration: 1,
+        y: 64,
+        duration: 1.5,
+        delay: 0.08,
         ease: 'expo.out',
       })
 
       gsap.from('.work-summary', {
         scrollTrigger: {
           trigger: '.work-summary',
-          start: 'top 80%',
+          start: 'top 85%',
+          toggleActions: 'play none none none',
         },
         opacity: 0,
-        y: 20,
-        duration: 0.9,
-        delay: 0.1,
+        y: 54,
+        duration: 1.5,
+        delay: 0.14,
         ease: 'expo.out',
       })
 
@@ -147,44 +153,34 @@ export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) 
         scrollTrigger: {
           trigger: '.work-filters',
           start: 'top 85%',
+          toggleActions: 'play none none none',
         },
         opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.1,
+        y: 44,
+        duration: 1.3,
+        delay: 0.2,
         ease: 'expo.out',
       })
 
-      if (aboutSummary) {
-        gsap.from('.work-about', {
-          scrollTrigger: {
-            trigger: '.work-about',
-            start: 'top 85%',
-          },
-          opacity: 0,
-          y: 20,
-          duration: 0.8,
-          ease: 'expo.out',
-        })
-      }
-
-      gsap.utils.toArray<HTMLElement>('.work-card').forEach((card) => {
+      gsap.utils.toArray<HTMLElement>('.work-card').forEach((card, index) => {
         gsap.from(card, {
           scrollTrigger: {
             trigger: card,
-            start: 'top 90%',
+            start: 'top 85%',
+            toggleActions: 'play none none none',
           },
           opacity: 0,
-          y: 80,
+          y: 140,
           rotateX: -10,
-          duration: 1,
+          duration: 1.4,
+          delay: index * 0.08,
           ease: 'expo.out',
         })
       })
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [aboutSummary, filteredProjects.length])
+  }, [filteredProjects.length])
 
   return (
     <section ref={sectionRef}>
@@ -193,7 +189,7 @@ export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) 
           <span>{'//  '}</span>
           <span>full catalog</span>
         </div>
-        <h2 className='work-title mt-4 text-[clamp(32px,4vw,48px)] font-mono lowercase text-white !font-bold'>
+        <h2 className='work-title text-[clamp(48px,7vw,96px)] font-mono font-bold! lowercase leading-[0.9] mb-6'>
           All work
         </h2>
         <p className='work-summary mt-4 max-w-none font-mono text-[clamp(16px,2vw,22px)] leading-relaxed text-white/70'>
@@ -217,8 +213,8 @@ export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) 
               color: MONOKAI.foreground,
               backgroundColor:
                 activeFilters.length === 0
-                  ? `${MONOKAI.foreground}15`
-                  : 'transparent',
+                  ? `${MONOKAI.foreground}20`
+                  : `${MONOKAI.foreground}10`,
             }}
             aria-pressed={activeFilters.length === 0}
           >
@@ -226,18 +222,16 @@ export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) 
           </button>
           {WORK_FILTERS.map((filter) => {
             const isActive = activeFilters.includes(filter.id)
-            const backgroundStrength = isActive ? '25' : '12'
-            const borderStrength = isActive ? '70' : '45'
             return (
               <button
                 key={filter.id}
                 type='button'
                 onClick={() => toggleFilter(filter.id)}
-                className='px-3 py-1.5 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200'
+                className='px-3 py-1.5 rounded-full border text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer'
                 style={{
-                  borderColor: `${filter.color}${borderStrength}`,
+                  borderColor: `${filter.color}${isActive ? '60' : '40'}`,
                   color: filter.color,
-                  backgroundColor: `${filter.color}${backgroundStrength}`,
+                  backgroundColor: `${filter.color}${isActive ? '30' : '20'}`,
                 }}
                 aria-pressed={isActive}
               >
@@ -251,7 +245,7 @@ export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) 
         </div>
       ) : null}
 
-      {aboutSummary ? (
+      {/* {aboutSummary ? (
         <div
           className='work-about mb-12 w-full rounded-2xl border px-6 py-5 font-mono'
           style={{
@@ -265,7 +259,7 @@ export default function WorkCatalog({ aboutSummary }: { aboutSummary: string }) 
             {aboutSummary}
           </p>
         </div>
-      ) : null}
+      ) : null} */}
 
       {filteredProjects.length ? (
         <div className='grid gap-6 lg:grid-cols-3 auto-rows-fr'>
