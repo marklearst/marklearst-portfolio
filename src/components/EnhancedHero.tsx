@@ -5,6 +5,7 @@ import { HERO_KEYWORDS } from '@/data/hero-keywords'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
+import Link from 'next/link'
 import NeuralNetwork from '@/components/ui/NeuralNetwork'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
@@ -156,13 +157,10 @@ export default function EnhancedHero() {
         {/* CTAs - Clean buttons with expanding outline on hover */}
         <div className='hero-ctas flex flex-wrap items-center gap-4 mb-14 opacity-0'>
           {/* Primary CTA - Solid with expanding cyan outline */}
-          <button
+          <Link
+            href='/work'
             onClick={() => {
-              trackHeroCTAClick({ action: 'scroll_to_work', location: 'hero' })
-              const workSection = document.getElementById('work')
-              if (workSection) {
-                workSection.scrollIntoView({ behavior: 'smooth' })
-              }
+              trackHeroCTAClick({ action: 'view_work', location: 'hero' })
             }}
             className='group relative px-8 py-4 font-mono text-base font-bold rounded-lg transition-all duration-300'
             style={{
@@ -196,7 +194,7 @@ export default function EnhancedHero() {
                 />
               </svg>
             </span>
-          </button>
+          </Link>
 
           {/* GitHub button - Ghost with expanding pink outline */}
           <a
