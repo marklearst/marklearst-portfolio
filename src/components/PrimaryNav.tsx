@@ -8,7 +8,7 @@ import { MONOKAI } from '@/lib/monokai-colors'
 
 const navItems = [
   { label: 'about', href: '/about', key: 'about' },
-  { label: 'work', href: '/#work', key: 'work' },
+  { label: 'work', href: '/work', key: 'work' },
   { label: 'artifacts', href: '/artifacts', key: 'artifacts' },
 ]
 

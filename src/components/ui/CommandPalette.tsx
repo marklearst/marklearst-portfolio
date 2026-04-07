@@ -16,7 +16,7 @@ type CommandItem = {
 
 const baseItems: CommandItem[] = [
   { id: 'about', label: 'About', href: '/about', group: 'Navigation' },
-  { id: 'work', label: 'Work', href: '/#work', group: 'Navigation' },
+  { id: 'work', label: 'Work', href: '/work', group: 'Navigation' },
   { id: 'artifacts', label: 'Artifacts', href: '/artifacts', group: 'Navigation' },
 ]
 
