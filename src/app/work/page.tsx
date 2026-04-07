@@ -1,7 +1,4 @@
 import type { Metadata } from 'next'
-import path from 'node:path'
-import fs from 'node:fs/promises'
-import matter from 'gray-matter'
 import Footer from '@/components/Footer'
 import WorkCatalog from '@/components/WorkCatalog'
 import { MONOKAI } from '@/lib/monokai-colors'
@@ -12,20 +9,7 @@ export const metadata: Metadata = {
     'Full catalog of case studies, open source, and design system work by Mark Learst.',
 }
 
-type AboutFrontmatter = {
-  summary: string
-}
-
-const ABOUT_PATH = path.join(process.cwd(), 'src', 'content', 'about.mdx')
-
-const loadAboutSummary = async () => {
-  const raw = await fs.readFile(ABOUT_PATH, 'utf8')
-  const { data } = matter(raw)
-  return (data as AboutFrontmatter).summary ?? ''
-}
-
 export default async function WorkPage() {
-  const aboutSummary = await loadAboutSummary()
   return (
     <main
       className='min-h-screen pt-36'
@@ -33,7 +17,7 @@ export default async function WorkPage() {
     >
       <div className='px-6 pb-24'>
         <div className='max-w-7xl mx-auto'>
-          <WorkCatalog aboutSummary={aboutSummary} />
+          <WorkCatalog />
         </div>
       </div>
       <Footer />
