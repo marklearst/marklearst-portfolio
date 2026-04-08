@@ -140,7 +140,7 @@ export default function PrimaryNav() {
                 location: 'header',
               })
             }}
-            className='px-2 pt-2 pb-1.5 text-xs font-mono uppercase tracking-wider transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent'
+            className='primary-nav-link px-2 pt-2 pb-1.5 text-xs font-mono uppercase tracking-wider transition-colors duration-200'
             aria-current={active ? 'page' : undefined}
             style={{
               color: active ? MONOKAI.foreground : `${MONOKAI.foreground}80`,

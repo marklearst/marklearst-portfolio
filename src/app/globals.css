@@ -55,6 +55,18 @@ select:focus-visible {
   border-radius: 6px;
 }
 
+.primary-nav-link:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.work-filter-pill:focus-visible {
+  outline: none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 1px var(--filter-ring-color, rgba(255, 255, 255, 0.35));
+  border-radius: 9999px;
+}
+
 /* Terminal cursor animation */
 .terminal-cursor {
   display: inline-block;
