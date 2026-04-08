@@ -92,6 +92,48 @@ export const PROJECTS: ProjectMeta[] = [
     },
   },
   {
+    slug: 'hailstorm',
+    route: '/work/hailstorm',
+    title: 'Hailstorm Design System',
+    cardTitle: 'Hailstorm Design System',
+    category: 'DESIGN SYSTEMS',
+    categoryColor: 'purple',
+    summary:
+      'Modernized Abusix design system to React 19, Tailwind v4 tokens, Storybook 10, and WCAG 2.2 AA patterns.',
+    description:
+      'Modernized Abusix design system into a React 19 component library with token-driven styling, Storybook 10 docs, and automated QA.',
+    role: 'Design Systems Engineer, Modernization Lead',
+    timeline: '2025 - Present',
+    publishedAt: '2025-11-01',
+    technologies: [
+      'React 19',
+      'TypeScript',
+      'Tailwind CSS v4',
+      'Storybook 10',
+      'Headless UI',
+      'WCAG 2.2',
+      'Vitest',
+      'Testing Library',
+      'Playwright',
+    ],
+    tags: ['Design Tokens', 'Storybook', 'Accessibility'],
+    commitHash: 'h7a15c1',
+    cardGradient: 'from-purple-500/10 via-indigo-500/5 to-transparent',
+    caseStudyGradient: 'from-purple-500/20 via-blue-500/10 to-transparent',
+    terminal: {
+      command: 'cd /work/hailstorm',
+      loading: 'Loading design system...',
+      packages: [
+        'react@19.2.3',
+        'storybook@10.1.11',
+        'tailwindcss@4.1.18',
+      ],
+      output: 'Ready',
+      outputWithCheck: true,
+      durationKey: 'workRouteWithPackages',
+    },
+  },
+  {
     slug: 'figmavars-hooks',
     route: '/work/figmavars-hooks',
     title: 'FigmaVars Hooks',
@@ -149,6 +191,7 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Creator & Maintainer',
     timeline: '2023 - Present',
     publishedAt: '2023-08-01',
+    featured: true,
     technologies: [
       'Figma Widget API',
       'TypeScript',
@@ -225,6 +268,7 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Specification Author & W3C Community Contributor',
     timeline: '2024 - Present',
     publishedAt: '2024-10-01',
+    featured: true,
     technologies: [
       'JSON Schema',
       'DTCG Spec',
@@ -260,6 +304,7 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Frontend Consultant - Component Architecture & Storybook',
     timeline: '2024 (Contract)',
     publishedAt: '2024-05-01',
+    featured: true,
     technologies: [
       'React',
       'TypeScript',

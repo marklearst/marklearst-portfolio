@@ -13,6 +13,7 @@ import A11yCompanionContent from '@/content/case-studies/a11y-companion.mdx'
 import AuroraGMContent from '@/content/case-studies/aurora-gm.mdx'
 import DiabeticUtilsContent from '@/content/case-studies/diabetic-utils.mdx'
 import FigmaVarsHooksContent from '@/content/case-studies/figmavars-hooks.mdx'
+import HailstormContent from '@/content/case-studies/hailstorm.mdx'
 import SkydioContent from '@/content/case-studies/skydio.mdx'
 import VariableContractContent from '@/content/case-studies/variable-contract.mdx'
 
@@ -80,6 +81,10 @@ const CASE_STUDY_ENTRIES: Record<
   'diabetic-utils': {
     Content: DiabeticUtilsContent,
     fileName: 'diabetic-utils.mdx',
+  },
+  hailstorm: {
+    Content: HailstormContent,
+    fileName: 'hailstorm.mdx',
   },
   'variable-contract': {
     Content: VariableContractContent,
