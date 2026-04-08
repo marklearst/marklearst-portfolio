@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
 import ParticleHeader from '@/components/brand/ParticleHeader'
@@ -76,6 +77,7 @@ export default function RootLayout({
         <CommandPalette />
         <AnalyticsManager />
         <NavigationHistoryTracker />
+        <SpeedInsights />
       </body>
     </html>
   )
