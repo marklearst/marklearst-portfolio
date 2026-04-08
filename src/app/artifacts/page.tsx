@@ -40,7 +40,7 @@ export default async function ArtifactsPage() {
             artifacts
           </h1>
           <p
-            className='text-[clamp(16px,2vw,22px)] leading-relaxed max-w-3xl'
+            className='text-[clamp(16px,2vw,22px)] leading-relaxed max-w-5xl'
             style={{ color: `${MONOKAI.foreground}b3` }}
           >
             Technical writeups and experiments across design systems, motion,
