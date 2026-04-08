@@ -129,7 +129,7 @@ export default function EnhancedHero() {
           }}
         >
           <span style={{ color: MONOKAI.orange, letterSpacing: '0.02em' }}>
-            Senior Frontend Engineer
+            Senior Frontend & Design Engineer
           </span>{' '}
           who builds <span style={{ color: MONOKAI.green }}>accessible</span>{' '}
           <span style={{ color: MONOKAI.purple }}>design systems</span> and{' '}

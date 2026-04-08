@@ -7,7 +7,7 @@ import { MONOKAI } from '@/lib/monokai-colors'
 export const metadata: Metadata = {
   title: 'Artifacts - Mark Learst',
   description:
-    'Technical writeups and experiments across design systems, motion, and frontend engineering.',
+    'Technical writeups and experiments across design systems, motion, frontend, design engineering, and tooling.',
 }
 
 export default async function ArtifactsPage() {
@@ -44,8 +44,8 @@ export default async function ArtifactsPage() {
             style={{ color: `${MONOKAI.foreground}b3` }}
           >
             Technical writeups and experiments across design systems, motion,
-            frontend architecture, and tooling. Short, sharp, and built for
-            scanning.
+            frontend architecture, design engineering, and tooling. Short,
+            sharp, and built for scanning.
           </p>
         </div>
       </section>
