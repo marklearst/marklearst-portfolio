@@ -34,7 +34,7 @@ export async function generateMetadata({
     return {
       title: 'Artifacts - Mark Learst',
       description:
-        'Technical writeups and experiments across design systems, motion, and frontend engineering.',
+        'Technical writeups and experiments across design systems, motion, frontend, design engineering, and tooling.',
     }
   }
 
@@ -71,9 +71,7 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
   const accent = getArtifactAccentColor(artifact.tags)
   const mdxComponents = createArtifactMdxComponents(accent)
   const Content = artifact.Content
-  const content = stripFrontmatter(
-    Content({ components: mdxComponents }),
-  )
+  const content = stripFrontmatter(Content({ components: mdxComponents }))
 
   return (
     <main
