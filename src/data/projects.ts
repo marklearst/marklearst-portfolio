@@ -123,11 +123,7 @@ export const PROJECTS: ProjectMeta[] = [
     terminal: {
       command: 'cd /work/hailstorm',
       loading: 'Loading design system...',
-      packages: [
-        'react@19.2.3',
-        'storybook@10.1.11',
-        'tailwindcss@4.1.18',
-      ],
+      packages: ['react@19.2.3', 'storybook@10.1.11', 'tailwindcss@4.1.18'],
       output: 'Ready',
       outputWithCheck: true,
       durationKey: 'workRouteWithPackages',
@@ -255,10 +251,10 @@ export const PROJECTS: ProjectMeta[] = [
     },
   },
   {
-    slug: 'variable-contract',
-    route: '/work/variable-contract',
-    title: 'Variable Contract',
-    cardTitle: 'Variables Contract',
+    slug: 'variable-design-standard',
+    route: '/work/variable-design-standard',
+    title: 'Variable Design Standard',
+    cardTitle: 'Variable Design Standard',
     category: 'STANDARDS',
     categoryColor: 'orange',
     summary:
@@ -282,7 +278,7 @@ export const PROJECTS: ProjectMeta[] = [
     cardGradient: 'from-orange-500/10 via-yellow-500/5 to-transparent',
     caseStudyGradient: 'from-purple-500/20 via-indigo-500/10 to-transparent',
     terminal: {
-      command: 'cd /work/variable-contract',
+      command: 'cd /work/variable-design-standard',
       loading: 'Initializing design system...',
       packages: ['@dtcg/validator@1.0.0', 'typescript@5.3.3', 'semver@7.5.4'],
       output: 'Ready',
@@ -333,9 +329,7 @@ export const PROJECTS: ProjectMeta[] = [
   },
 ]
 
-export const FEATURED_PROJECTS = PROJECTS.filter(
-  (project) => project.featured,
-)
+export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured)
 
 export const PROJECTS_BY_ROUTE = PROJECTS.reduce<Record<string, ProjectMeta>>(
   (acc, project) => {

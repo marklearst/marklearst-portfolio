@@ -15,7 +15,7 @@ import DiabeticUtilsContent from '@/content/case-studies/diabetic-utils.mdx'
 import FigmaVarsHooksContent from '@/content/case-studies/figmavars-hooks.mdx'
 import HailstormContent from '@/content/case-studies/hailstorm.mdx'
 import SkydioContent from '@/content/case-studies/skydio.mdx'
-import VariableContractContent from '@/content/case-studies/variable-contract.mdx'
+import VariableDesignStandardContent from '@/content/case-studies/variable-design-standard.mdx'
 
 type CaseStudyLinkIcon = 'github' | 'npm' | 'figma' | 'external'
 
@@ -52,12 +52,7 @@ export type CaseStudyContent = Omit<CaseStudyFrontmatter, 'links'> & {
 type MDXComponents = Record<string, ComponentType<unknown>>
 type MDXContent = (props: { components?: MDXComponents }) => ReactElement
 
-const CONTENT_ROOT = path.join(
-  process.cwd(),
-  'src',
-  'content',
-  'case-studies',
-)
+const CONTENT_ROOT = path.join(process.cwd(), 'src', 'content', 'case-studies')
 
 const CASE_STUDY_ENTRIES: Record<
   string,
@@ -86,9 +81,9 @@ const CASE_STUDY_ENTRIES: Record<
     Content: HailstormContent,
     fileName: 'hailstorm.mdx',
   },
-  'variable-contract': {
-    Content: VariableContractContent,
-    fileName: 'variable-contract.mdx',
+  'variable-design-standard': {
+    Content: VariableDesignStandardContent,
+    fileName: 'variable-design-standard.mdx',
   },
   skydio: {
     Content: SkydioContent,
