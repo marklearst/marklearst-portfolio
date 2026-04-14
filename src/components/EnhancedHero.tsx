@@ -8,6 +8,7 @@ import KineticText from '@/components/ui/KineticText'
 import Link from 'next/link'
 import NeuralNetwork from '@/components/ui/NeuralNetwork'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { useEffectsStore } from '@/stores/cursor-orbs-store'
 
 // Hydration-safe client detection
 const subscribeNoop = () => () => {}
@@ -19,6 +20,7 @@ export default function EnhancedHero() {
     useAnalytics()
   const heroRef = useRef<HTMLDivElement | null>(null)
   const nameBoxRef = useRef<HTMLDivElement>(null)
+  const neuralTextVisible = useEffectsStore((state) => state.neuralTextVisible)
 
   const isClient = useSyncExternalStore(
     subscribeNoop,
@@ -43,7 +45,10 @@ export default function EnhancedHero() {
         {isClient && <NeuralNetwork />}
 
         {/* Background code keywords - DENSE with Monokai colors */}
-        <div className='absolute inset-0 overflow-hidden'>
+        <div
+          className='absolute inset-0 overflow-hidden transition-opacity duration-500'
+          style={{ opacity: neuralTextVisible ? 1 : 0 }}
+        >
           {HERO_KEYWORDS.map((kw, i) => (
             <div
               key={i}

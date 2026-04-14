@@ -112,6 +112,15 @@ select:focus-visible {
   animation: gradient-x 8s ease infinite;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes keyword-fade {
   to {
     opacity: 0;

@@ -13,7 +13,7 @@ What you will find here:
 ## Tech
 
 - [Next.js](https://nextjs.org) 16 (App Router), [React](https://react.dev) 19, [TypeScript](https://www.typescriptlang.org)
-- [Style Dictionary](https://github.com/amzn/style-dictionary), [Variables Contract](https://variables-contract.vercel.app/), [FigmaVars Hooks](https://github.com/marklearst/figma-vars-hooks)
+- [Style Dictionary](https://github.com/amzn/style-dictionary), [Variables Design Standard](https://variable-design-standard.vercel.app), [FigmaVars Hooks](https://github.com/marklearst/figma-vars-hooks)
 - [Tailwind CSS](https://tailwindcss.com) v4, [GSAP](https://greensock.com/gsap/), [Three.js](https://threejs.org)
 - [Zustand](https://zustand-demo.pmnd.rs/), [Lenis](https://lenis.darkroom.engineering/)
 
@@ -36,7 +36,7 @@ Route (app)
 ├ ○ /about
 ├ ○ /artifacts
 ├ ● /artifacts/[slug]
-│ ├ /artifacts/variable-contract-semver
+│ ├ /artifacts/variable-design-standard-semver
 │ └ /artifacts/terminal-navigation
 ├ ○ /privacy
 ├ ○ /work/a11y-companion
@@ -44,7 +44,7 @@ Route (app)
 ├ ○ /work/diabetic-utils
 ├ ○ /work/figmavars-hooks
 ├ ○ /work/skydio
-└ ○ /work/variable-contract
+└ ○ /work/variable-design-standard
 ```
 
 ## Run locally
