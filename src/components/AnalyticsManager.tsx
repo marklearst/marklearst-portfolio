@@ -8,9 +8,9 @@ const ENGAGEMENT_THRESHOLDS = [10, 30, 60, 120]
 const redactUrlParams = (rawUrl: string) => {
   try {
     const base =
-      typeof window === 'undefined'
-        ? 'https://example.com'
-        : window.location.origin
+      typeof window === 'undefined' ?
+        'https://example.com'
+      : window.location.origin
     const url = new URL(rawUrl, base)
     const sensitiveParams = [
       'token',

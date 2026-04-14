@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { useEffectsStore } from '@/stores/cursor-orbs-store'
 
 interface OrbState {
   x: number
@@ -33,6 +34,7 @@ const TRAIL_BASE_SPEED = 0.12 // Base follow speed
 const TRAIL_SPEED_DECAY = 0.016 // Speed reduction per orb
 
 export default function CursorOrbs() {
+  const isVisible = useEffectsStore((state) => state.orbsVisible)
   const [hasInteracted, setHasInteracted] = useState(false)
   const [isEnabled, setIsEnabled] = useState(false)
   const orbsRef = useRef<OrbState[]>([])
@@ -199,7 +201,7 @@ export default function CursorOrbs() {
     }
   }, [hasInteracted, isEnabled])
 
-  if (!isEnabled || !hasInteracted) return null
+  if (!isEnabled || !hasInteracted || !isVisible) return null
 
   return (
     <div
