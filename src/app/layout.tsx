@@ -3,6 +3,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
 import ParticleHeader from '@/components/brand/ParticleHeader'
+import NeuralBackground from '@/components/brand/NeuralBackground'
 import PrimaryNav from '@/components/PrimaryNav'
 import CursorOrbs from '@/components/ui/CursorOrbs'
 import KonamiCode from '@/components/ui/KonamiCode'
@@ -41,6 +42,8 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
+        <NeuralBackground />
+        
         {/* Global animated Monokai gradient line - appears on all pages */}
         <div className='top-0 left-0 right-0 h-1 z-50'>
           <div
