@@ -14,46 +14,74 @@ const navItems = [
 ]
 
 function CodeToggleIcon({ active }: { active: boolean }) {
-  // Match orbs icon dimensions: size 24, with visual weight at radius ~9
-  const size = 24
-  const textColor = active ? MONOKAI.foreground : '#777777'
-  // Filled circle background like the orbs' visual footprint
-  const bgColor = active ? `${MONOKAI.foreground}18` : '#77777718'
+  const [text, setText] = useState(active ? '<On />' : '<Off />')
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null)
+  const isFirstRender = useRef(true)
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+
+    const sequence =
+      active ?
+        ['<Off />', '<Of />', '<O />', '<On />']
+      : ['<On />', '<O />', '<Of />', '<Off />']
+
+    let currentIndex = 0
+
+    const animate = () => {
+      if (currentIndex < sequence.length) {
+        setText(sequence[currentIndex])
+        currentIndex++
+        timeoutRef.current = setTimeout(animate, 50)
+      }
+    }
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    animate()
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [active])
+
+  // Increased size for better visibility
+  const size = 32
+  const color = active ? MONOKAI.cyan : MONOKAI.foreground
+  const bgColor = active ? `${MONOKAI.green}08` : `${MONOKAI.pink}08`
 
   return (
     <svg
-      width={size}
+      width={size * 2}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       fill='none'
       style={{
-        opacity: active ? 1 : 0.8,
-        transition: 'opacity 300ms',
         cursor: 'pointer',
         userSelect: 'none',
+        opacity: active ? 1 : 0.3,
       }}
     >
-      {/* Filled circle background - radius 11 to match orbs visual weight */}
       <circle
-        cx={12}
-        cy={12}
-        r={11}
+        cx={size / 2}
+        cy={size / 2}
+        r={size / 2 - 2}
         fill={bgColor}
-        // style={{ transition: 'fill 300ms' }}
+        style={{ transition: 'fill 300ms' }}
       />
-      {/* Single line: <On /> or <Off /> */}
       <text
-        x='12'
-        y='13.5'
-        fontSize='7'
+        x='50%'
+        y='55%'
+        fontSize='16'
         fontFamily='monospace'
         fontWeight='600'
-        fill={textColor}
+        fill={color}
         textAnchor='middle'
         dominantBaseline='middle'
-        // style={{ transition: 'fill 300ms' }}
       >
-        {active ? '<On/>' : '<Off/>'}
+        {text}
       </text>
     </svg>
   )
