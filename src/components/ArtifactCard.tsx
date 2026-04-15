@@ -37,7 +37,7 @@ export default function ArtifactCard({
       className={`group relative block ${featured ? 'md:col-span-2' : ''}`}
     >
       <div
-        className={`relative h-full p-7 rounded-2xl bg-white/2 backdrop-blur-xl border border-white/10 transition-all duration-700 ease-out overflow-hidden hover:border-white/20 ${
+        className={`relative h-full p-7 rounded-2xl backdrop-blur-xl border border-white/10 transition-all duration-700 ease-out overflow-hidden hover:border-white/20 bg-white/2 ${
           featured ? 'min-h-[260px]' : ''
         }`}
       >

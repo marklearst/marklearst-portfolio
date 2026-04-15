@@ -13,7 +13,6 @@ export default async function WorkPage() {
   return (
     <main
       className='min-h-screen pt-36'
-      style={{ backgroundColor: MONOKAI.background }}
     >
       <div className='px-6 pb-24'>
         <div className='max-w-7xl mx-auto'>
