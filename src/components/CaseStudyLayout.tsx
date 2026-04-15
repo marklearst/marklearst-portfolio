@@ -363,7 +363,6 @@ export default function CaseStudyLayout({
     <div
       ref={pageRef}
       className='min-h-screen'
-      style={{ backgroundColor: MONOKAI.background }}
     >
       {/* Hero Section */}
       <section
