@@ -59,10 +59,14 @@ export default function RootLayout({
         {/* Scroll progress indicator - below the gradient line */}
         <ScrollProgress />
 
-        {/* Header with ML logo */}
+        {/* Header with ML logo - staggered entrance */}
         <header className='fixed top-4 left-4 right-4 sm:top-8 sm:left-8 sm:right-8 z-40 flex items-center justify-between gap-4'>
-          <ParticleHeader />
-          <PrimaryNav />
+          <div className='opacity-0 animate-[fadeIn_0.5s_ease-out_0.8s_forwards]'>
+            <ParticleHeader />
+          </div>
+          <div className='opacity-0 animate-[fadeIn_0.5s_ease-out_1s_forwards]'>
+            <PrimaryNav />
+          </div>
         </header>
 
         {/* Monokai cursor orbs - premium cursor trail */}

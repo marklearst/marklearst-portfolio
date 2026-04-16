@@ -17,9 +17,9 @@ interface EffectsState {
 export const useEffectsStore = create<EffectsState>()(
   persist(
     (set) => ({
-      orbsVisible: true,
-      neuralTextVisible: true,
-      homeNeuralState: true,
+      orbsVisible: false,
+      neuralTextVisible: false,
+      homeNeuralState: false,
       toggleOrbs: () => set((state) => ({ orbsVisible: !state.orbsVisible })),
       toggleNeuralText: () =>
         set((state) => ({ neuralTextVisible: !state.neuralTextVisible })),

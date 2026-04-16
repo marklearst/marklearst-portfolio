@@ -339,6 +339,7 @@ export default function PrimaryNav() {
         type='button'
         onClick={handleToggleNeuralText}
         onMouseEnter={() => setHoverKey(null)}
+        className='animate-discovery-pulse'
         aria-label={
           neuralTextVisible ? 'Hide code keywords' : 'Show code keywords'
         }
@@ -350,8 +351,8 @@ export default function PrimaryNav() {
         type='button'
         onClick={toggleOrbs}
         onMouseEnter={() => setHoverKey(null)}
-        className='p-2'
-        style={{ color: MONOKAI.foreground }}
+        className='p-2 animate-discovery-pulse'
+        style={{ color: MONOKAI.foreground, animationDelay: '2.3s' }}
         aria-label={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
         title={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
       >

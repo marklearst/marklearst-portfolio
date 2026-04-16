@@ -27,11 +27,29 @@ export function useHeroAnimation(
         '-=0.3', // Overlap by 0.3s
       )
 
+      // Badges with stagger - appears right after description
+      tl.fromTo(
+        '.hero-badges span',
+        { opacity: 0, y: 12, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.4,
+          stagger: 0.05,
+          ease: 'power2.out',
+        },
+        '-=0.2',
+      )
+
+      // Make the badges container visible
+      tl.set('.hero-badges', { opacity: 1 }, '<')
+
       tl.fromTo(
         '.hero-bio',
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
-        '-=0.3',
+        '-=0.2',
       )
 
       tl.fromTo(
@@ -39,20 +57,6 @@ export function useHeroAnimation(
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
         '-=0.3',
-      )
-
-      // Badges with stagger - smooth, elegant fade in
-      tl.fromTo(
-        '.hero-badge',
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: 'power3.out',
-        },
-        '-=0.2',
       )
 
       // No cursor repel - just let keywords float peacefully
