@@ -1,17 +1,62 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
 import Link from 'next/link'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
+// Typewriter component for terminal effect
+function Typewriter({
+  text,
+  delay = 0,
+  speed = 50,
+  onComplete,
+  className,
+  style,
+}: {
+  text: string
+  delay?: number
+  speed?: number
+  onComplete?: () => void
+  className?: string
+  style?: React.CSSProperties
+}) {
+  const [displayed, setDisplayed] = useState('')
+  const [started, setStarted] = useState(false)
+
+  useEffect(() => {
+    const startTimeout = setTimeout(() => setStarted(true), delay)
+    return () => clearTimeout(startTimeout)
+  }, [delay])
+
+  useEffect(() => {
+    if (!started) return
+    if (displayed.length < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayed(text.slice(0, displayed.length + 1))
+      }, speed)
+      return () => clearTimeout(timeout)
+    } else if (onComplete) {
+      onComplete()
+    }
+  }, [started, displayed, text, speed, onComplete])
+
+  return (
+    <span className={className} style={style}>
+      {displayed}
+    </span>
+  )
+}
+
 export default function EnhancedHero() {
   const { trackHeroCTAClick, trackExternalLinkClick, getPlatformFromUrl } =
     useAnalytics()
   const heroRef = useRef<HTMLDivElement | null>(null)
   const nameBoxRef = useRef<HTMLDivElement>(null)
+  const [line1Done, setLine1Done] = useState(false)
+  const [line2Done, setLine2Done] = useState(false)
 
   useHeroAnimation(heroRef as React.RefObject<HTMLDivElement>, nameBoxRef)
 
@@ -41,27 +86,55 @@ export default function EnhancedHero() {
 
       {/* Main Content */}
       <div className='max-w-6xl w-full relative z-10'>
-        {/* Terminal prompt - RESTORED */}
+        {/* Terminal prompt - Typewriter animation */}
         <div
           className='mb-10 sm:mb-16 font-mono text-sm space-y-2 pt-4 sm:pt-8'
           style={{ color: `${MONOKAI.foreground}60` }}
         >
-          <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.2s_forwards] pointer-events-none'>
+          <div className='flex items-center gap-2 pointer-events-none'>
             <span style={{ color: MONOKAI.green }}>❯</span>
-            <span style={{ color: `${MONOKAI.foreground}70` }}>
-              ~/portfolio
-            </span>
-            <span style={{ color: MONOKAI.purple }}>on</span>
-            <span style={{ color: MONOKAI.cyan }}>main</span>
-            <span style={{ color: MONOKAI.yellow }}>✓</span>
+            {!line1Done ? (
+              // Typing phase - all muted color
+              <Typewriter
+                text='~/portfolio on main ✓'
+                delay={200}
+                speed={35}
+                onComplete={() => setLine1Done(true)}
+                style={{ color: `${MONOKAI.foreground}60` }}
+              />
+            ) : (
+              // Complete - colorized segments, no animation
+              <>
+                <span style={{ color: `${MONOKAI.foreground}70` }}>
+                  ~/portfolio
+                </span>
+                <span style={{ color: MONOKAI.purple }}>on</span>
+                <span style={{ color: MONOKAI.cyan }}>main</span>
+                <span style={{ color: MONOKAI.yellow }}>✓</span>
+              </>
+            )}
           </div>
-          <div className='flex items-center gap-2 opacity-0 animate-[fadeIn_0.8s_ease-out_0.4s_forwards] pointer-events-none'>
+          <div
+            className={`flex items-center gap-2 pointer-events-none transition-opacity duration-300 ${
+              line1Done ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
             <span style={{ color: MONOKAI.green }}>❯</span>
-            <span style={{ color: `${MONOKAI.foreground}90` }}>whoami</span>
-            <span
-              className='inline-block w-2 h-4 ml-1 animate-pulse'
-              style={{ backgroundColor: `${MONOKAI.foreground}60` }}
-            />
+            {line1Done && (
+              <Typewriter
+                text='whoami'
+                delay={100}
+                speed={60}
+                onComplete={() => setLine2Done(true)}
+                style={{ color: `${MONOKAI.foreground}90` }}
+              />
+            )}
+            {line2Done && (
+              <span
+                className='inline-block w-2 h-4 ml-1 animate-pulse'
+                style={{ backgroundColor: `${MONOKAI.foreground}60` }}
+              />
+            )}
           </div>
         </div>
 
@@ -78,16 +151,16 @@ export default function EnhancedHero() {
           </h1>
         </div>
 
-        {/* TAGLINE - Full width, with color accents and letter spacing */}
+        {/* TAGLINE - Full width, semantic color accents */}
         <p
-          className='hero-description text-[clamp(20px,2.5vw,32px)] leading-[1.4] mb-8 max-w-5xl opacity-0 font-mono'
+          className='hero-description text-[clamp(20px,2.5vw,32px)] leading-[1.4] mb-6 max-w-5xl opacity-0 font-mono'
           style={{
             color: `${MONOKAI.foreground}dd`,
             fontWeight: 400,
           }}
         >
-          <span style={{ color: MONOKAI.orange, letterSpacing: '0.02em' }}>
-            Senior Frontend & Design Engineer
+          <span style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}>
+            Senior Design Engineer
           </span>{' '}
           who builds <span style={{ color: MONOKAI.green }}>accessible</span>{' '}
           <span style={{ color: MONOKAI.purple }}>design systems</span> and{' '}
@@ -95,7 +168,31 @@ export default function EnhancedHero() {
           that teams actually want to use.
         </p>
 
-        {/* BIO - clean text, no inline pills */}
+        {/* Skill badges - minimal, background only, no border, no hover */}
+        <div className='hero-badges flex flex-wrap gap-2 mb-8 opacity-0'>
+          {[
+            { label: 'React', color: MONOKAI.cyan },
+            { label: 'TypeScript', color: MONOKAI.cyan },
+            { label: 'Design Systems', color: MONOKAI.purple },
+            { label: 'Storybook', color: MONOKAI.orange },
+            { label: 'WCAG 2.2', color: MONOKAI.green },
+            { label: 'Claude Code', color: MONOKAI.yellow },
+            { label: 'Open Source', color: MONOKAI.pink },
+          ].map((badge) => (
+            <span
+              key={badge.label}
+              className='px-3 py-1 font-mono text-xs rounded'
+              style={{
+                color: badge.color,
+                backgroundColor: `${badge.color}15`,
+              }}
+            >
+              {badge.label}
+            </span>
+          ))}
+        </div>
+
+        {/* BIO - semantic color for each mention */}
         <div className='hero-bio relative mb-10 opacity-0'>
           <p
             className='text-[clamp(15px,1.6vw,18px)] leading-relaxed max-w-4xl font-mono'
@@ -103,12 +200,37 @@ export default function EnhancedHero() {
           >
             At <span style={{ color: MONOKAI.foreground }}>GM</span>, I
             architected Aurora serving 4 brands with{' '}
-            <span style={{ color: MONOKAI.yellow }}>60% component reuse</span>{' '}
-            and WCAG 2.2 AA compliance. I ship open-source with real adoption:{' '}
-            <span style={{ color: MONOKAI.cyan }}>a11y Companion</span> (200+
-            users),{' '}
-            <span style={{ color: MONOKAI.purple }}>FigmaVars Hooks</span>,{' '}
-            <span style={{ color: MONOKAI.pink }}>Diabetic Utils</span>.
+            <span style={{ color: MONOKAI.purple }}>60% component reuse</span>{' '}
+            and <span style={{ color: MONOKAI.green }}>WCAG 2.2 AA</span>{' '}
+            compliance. I ship{' '}
+            <span style={{ color: MONOKAI.pink }}>open-source</span> with real
+            adoption:{' '}
+            <span style={{ color: MONOKAI.green }}>a11y Companion</span> (200+
+            users), <span style={{ color: MONOKAI.cyan }}>FigmaVars Hooks</span>
+            , <span style={{ color: MONOKAI.pink }}>Diabetic Utils</span>.
+          </p>
+          {/* VDS teaser */}
+          <p
+            className='mt-3 text-xs font-mono'
+            style={{ color: `${MONOKAI.foreground}50` }}
+          >
+            Building{' '}
+            <a
+              href='https://variable-design-standard.vercel.app/'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='transition-colors hover:underline'
+              style={{ color: MONOKAI.purple }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = MONOKAI.foreground)
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = MONOKAI.purple)
+              }
+            >
+              Variable Design Standard
+            </a>{' '}
+            — spec-driven design token governance.
           </p>
         </div>
 
@@ -139,13 +261,17 @@ export default function EnhancedHero() {
             <span className='relative z-10 flex items-center gap-2.5'>
               View Work
               <svg
-                className='w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5'
+                className='w-4 h-4 transition-transform duration-300 group-hover:translate-x-1'
                 fill='none'
                 viewBox='0 0 24 24'
                 stroke='currentColor'
                 strokeWidth={2.5}
               >
                 <path
+                  style={{
+                    transform: 'rotate(-90deg)',
+                    transformOrigin: '50% 50%',
+                  }}
                   strokeLinecap='round'
                   strokeLinejoin='round'
                   d='M19 14l-7 7m0 0l-7-7m7 7V3'
