@@ -30,15 +30,15 @@ impact:
 gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 ---
 
-<CaseStudySection title="The Problem">
-  <div className="space-y-6">
+<CaseStudySection title='The Problem'>
+  <div className='space-y-6'>
     <CaseStudyParagraph>
       Everyone calls them something different--design tokens, style properties,
       variables, constants. The terminology split is a symptom of a deeper
       problem: there is no standard for how design variables should be governed
       across tools and teams. This creates:
     </CaseStudyParagraph>
-    <CaseStudyMutedList className="space-y-3">
+    <CaseStudyMutedList className='space-y-3'>
       <li>
         <strong>Naming confusion:</strong> Designers call them one thing,
         developers another. Handoff breaks because vocabulary is split.
@@ -60,16 +60,16 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
         build failures downstream.
       </li>
       <li>
-        <strong>Layer proliferation:</strong> Teams add <em>mapped</em> collections
-        between base and semantic layers to solve brand switching. Each extra
-        layer means extra reference hops, extra naming decisions, and extra
-        surfaces to audit. Variables should be easy to reason about--not require
-        a specialist to untangle.
+        <strong>Layer proliferation:</strong> Teams add <em>mapped</em>{' '}
+        collections between base and semantic layers to solve brand switching.
+        Each extra layer means extra reference hops, extra naming decisions, and
+        extra surfaces to audit. Variables should be easy to reason about--not
+        require a specialist to untangle.
       </li>
     </CaseStudyMutedList>
     <CaseStudyParagraph>
-      After building Aurora at GM and experiencing these pain points across
-      4 brands, I realized the industry needed something different--not a new
+      After building Aurora at GM and experiencing these pain points across 4
+      brands, I realized the industry needed something different--not a new
       format, but a governance layer on an existing one. One that solves
       multi-brand without adding complexity.
     </CaseStudyParagraph>
@@ -92,24 +92,24 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     </CaseStudyMutedText>
 
 <CodeBlock
-  language="json"
-  analyticsLabel="vds_contract_example"
+  language='json'
+  analyticsLabel='vds_contract_example'
   code={`{
-  "color": {
-    "text": {
-      "primary": {
-        "$type": "color",
-        "$value": "{color.gray.900}",
-        "$description": "Primary text color for body content"
-      }
-    },
-    "surface": {
-      "brand": {
-        "$type": "color",
-        "$value": "{color.brand.primary}"
+    "color": {
+      "text": {
+        "primary": {
+          "$type": "color",
+          "$value": "{color.gray.900}",
+          "$description": "Primary text color for body content"
+        }
+      },
+      "surface": {
+        "brand": {
+          "$type": "color",
+          "$value": "{color.brand.primary}"
+        }
       }
     }
-  }
 }`}
 />
 
@@ -140,40 +140,40 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     </CaseStudyMutedText>
 
 <CodeBlock
-  language="json"
-  analyticsLabel="vds_adapter_before"
+  language='json'
+  analyticsLabel='vds_adapter_before'
   code={`// Before: Figma export (tool-specific)
 {
-  "@primitives": {
-    "$color": {
-      "primary": {
-        "$type": "color",
-        "$value": "{@primitives.$color.blue.500}",
-        "$variable_metadata": {
-          "figmaId": "VariableID:502:227"
+    "@primitives": {
+      "$color": {
+        "primary": {
+          "$type": "color",
+          "$value": "{@primitives.$color.blue.500}",
+          "$variable_metadata": {
+            "figmaId": "VariableID:502:227"
+          }
         }
       }
     }
-  }
 }`}
 />
 
 <CodeBlock
-  language="json"
-  analyticsLabel="vds_adapter_after"
+  language='json'
+  analyticsLabel='vds_adapter_after'
   code={`// After: VDS contract (normalized)
 {
-  "primitives": {
-    "color": {
-      "primary": {
-        "$type": "color",
-        "$value": "{primitives.color.blue.500}",
-        "$extensions": {
-          "figma": { "variableId": "VariableID:502:227" }
+    "primitives": {
+      "color": {
+        "primary": {
+          "$type": "color",
+          "$value": "{primitives.color.blue.500}",
+          "$extensions": {
+            "figma": { "variableId": "VariableID:502:227" }
+          }
         }
       }
     }
-  }
 }`}
 />
 
@@ -187,6 +187,7 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
       <li>Breaking changes require MAJOR version bump</li>
       <li>Deprecation strategy with migration paths</li>
     </CaseStudyMutedList>
+
   </div>
 </CaseStudySection>
 
@@ -235,20 +236,20 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     </CaseStudyMutedList>
 
 <CodeBlock
-  language="json"
-  analyticsLabel="vds_non_conformant"
+  language='json'
+  analyticsLabel='vds_non_conformant'
   code={`// Non-conformant: Mapped layer adds overhead
 {
-  "mapped": {
-    "brand": {
-      "primary": { "$type": "color", "$value": "{color.blue.500}" }
+    "mapped": {
+      "brand": {
+        "primary": { "$type": "color", "$value": "{color.blue.500}" }
+      }
+    },
+    "color": {
+      "surface": {
+        "brand": { "$type": "color", "$value": "{mapped.brand.primary}" }
+      }
     }
-  },
-  "color": {
-    "surface": {
-      "brand": { "$type": "color", "$value": "{mapped.brand.primary}" }
-    }
-  }
 }`}
 />
 
@@ -260,8 +261,8 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     </CaseStudyMutedText>
 
 <CodeBlock
-  language="text"
-  analyticsLabel="vds_file_selection"
+  language='text'
+  analyticsLabel='vds_file_selection'
   code={`tokens/
   base/              # Shared scales (all brands)
     color.json
@@ -273,14 +274,14 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 />
 
 <CodeBlock
-  language="json"
-  analyticsLabel="vds_build_selection"
+  language='json'
+  analyticsLabel='vds_build_selection'
   code={`// Build config selects brand by source list
 {
-  "source": [
-    "tokens/base/**/*.json",
-    "tokens/brand-a/**/*.json"
-  ]
+    "source": [
+      "tokens/base/**/*.json",
+      "tokens/brand-a/**/*.json"
+    ]
 }`}
 />
 
@@ -290,8 +291,8 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     </CaseStudyMutedText>
 
 <CodeBlock
-  language="css"
-  analyticsLabel="vds_css_layers"
+  language='css'
+  analyticsLabel='vds_css_layers'
   code={`/* CSS cascade layers for brand selection at consumption */
 @layer base, brand;
 @import "variables-base.css" layer(base);
@@ -339,6 +340,7 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
       Mapped layers are a workaround for tools that cannot do file selection.
       We have tools that can.
     </CaseStudyMutedText>
+
   </div>
 </CaseStudySection>
 
@@ -351,34 +353,34 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     </CaseStudyMutedText>
 
 <CodeBlock
-  language="json"
-  analyticsLabel="vds_dtcg_types"
+  language='json'
+  analyticsLabel='vds_dtcg_types'
   code={`{
-  "border": {
-    "default": {
-      "$type": "border",
-      "$value": {
-        "width": { "value": 1, "unit": "px" },
-        "color": {
-          "colorSpace": "srgb",
-          "components": [0.88, 0.88, 0.88],
-          "hex": "#e0e0e0"
-        },
-        "style": "solid"
+    "border": {
+      "default": {
+        "$type": "border",
+        "$value": {
+          "width": { "value": 1, "unit": "px" },
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0.88, 0.88, 0.88],
+            "hex": "#e0e0e0"
+          },
+          "style": "solid"
+        }
+      }
+    },
+    "typography": {
+      "heading": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font.family.primary}",
+          "fontSize": "{font.size.lg}",
+          "fontWeight": "{font.weight.bold}",
+          "lineHeight": 1.5
+        }
       }
     }
-  },
-  "typography": {
-    "heading": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{font.family.primary}",
-        "fontSize": "{font.size.lg}",
-        "fontWeight": "{font.weight.bold}",
-        "lineHeight": 1.5
-      }
-    }
-  }
 }`}
 />
 
@@ -399,23 +401,23 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     </CaseStudyMutedList>
 
 <CodeBlock
-  language="json"
-  analyticsLabel="vds_deprecation"
+  language='json'
+  analyticsLabel='vds_deprecation'
   code={`{
-  "color": {
-    "primary": {
-      "$type": "color",
-      "$value": "#0066cc",
-      "$deprecated": true,
-      "$description": "Use color.brand.primary instead"
-    },
-    "brand": {
+    "color": {
       "primary": {
         "$type": "color",
-        "$value": "#0066cc"
+        "$value": "#0066cc",
+        "$deprecated": true,
+        "$description": "Use color.brand.primary instead"
+      },
+      "brand": {
+        "primary": {
+          "$type": "color",
+          "$value": "#0066cc"
+        }
       }
     }
-  }
 }`}
 />
 
@@ -430,6 +432,7 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
       <li>Mode key consistency within collections</li>
       <li>Breaking change detection with release notes requirements</li>
     </CaseStudyMutedList>
+
   </div>
 </CaseStudySection>
 
@@ -458,15 +461,16 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
       validated automatically, design and code stay aligned, and tools work
       together via DTCG format and adapters.
     </CaseStudyParagraph>
+
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Impact & Vision">
-  <div className="space-y-6">
+<CaseStudySection title='Impact & Vision'>
+  <div className='space-y-6'>
     <CaseStudyParagraph>
       Variable Design Standard addresses foundational infrastructure gaps:
     </CaseStudyParagraph>
-    <CaseStudyMutedList className="space-y-4">
+    <CaseStudyMutedList className='space-y-4'>
       <li>
         <strong>Solves tool lock-in</strong> through adapter patterns that
         normalize any tool output into a portable contract format
@@ -492,11 +496,11 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
         W3C standards and the broader tooling ecosystem
       </li>
     </CaseStudyMutedList>
-    <CaseStudyParagraph className="mt-8">
+    <CaseStudyParagraph className='mt-8'>
       The specification is published as a living document, informed by real
       design systems work at scale. The goal is to establish an industry
-      standard for design variable governance that teams can adopt regardless
-      of their tool stack--because the contract should outlive any tool choice.
+      standard for design variable governance that teams can adopt regardless of
+      their tool stack--because the contract should outlive any tool choice.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
