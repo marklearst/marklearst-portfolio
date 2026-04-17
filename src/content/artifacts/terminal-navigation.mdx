@@ -11,25 +11,73 @@ published_at: 2026-01-10
 pinned: false
 ---
 
-## Intent
+## Why a terminal
 
-I wanted navigation to feel like a tool, not a page swap. The terminal overlay buys a beat so the motion reads, the command feels intentional, and the transition does not eat scroll position or analytics.
+The terminal metaphor is the closest thing to my everyday state—it signals that this site is a system, not just a gallery. I wanted navigation to feel like issuing a command, not clicking a link and watching a flash.
 
-### Why a terminal
+The goal: buy a beat so the motion reads, the command feels intentional, and the transition doesn't eat scroll position or analytics fidelity.
 
-The terminal metaphor is the closest thing to my everyday state. It also signals that the site is a system, not just a gallery. The goal was to make routing feel like an action, not a flash.
+## Motion language
 
-### Motion language
+| Phase        | Duration | Easing       | Purpose                                       |
+| ------------ | -------- | ------------ | --------------------------------------------- |
+| Overlay in   | 150ms    | `expo.out`   | Fast entry, immediate response to click       |
+| Command type | 300ms    | linear       | Typewriter effect, builds anticipation        |
+| Hold         | 100ms    | —            | Let the eye settle before content swap        |
+| Overlay out  | 400ms    | `expo.inOut` | Slower exit, content arrival feels deliberate |
 
-- Fast fade in, slower fade out so the content arrival feels deliberate.
-- A single command line as the focal point to avoid noisy overlays.
-- Minimal color accents so the content remains the star.
+The asymmetry is intentional. Fast in, slow out. The user should never feel like they're waiting, but the content arrival should feel earned.
 
-## Implementation notes
+## Implementation
 
-### Transition handshake
+### The transition store
 
-The page does not navigate until the terminal animation reaches its peak. That gives motion time to land while still keeping the route change honest.
+State machine that coordinates the overlay, the navigation, and the cleanup.
+
+```ts
+import { create } from 'zustand'
+
+type TransitionState = 'idle' | 'entering' | 'holding' | 'exiting'
+
+interface TransitionStore {
+  state: TransitionState
+  targetHref: string | null
+  command: string | null
+  startTransition: (href: string, navigate: () => void, command: string) => void
+  completeTransition: () => void
+}
+
+export const useTransitionStore = create<TransitionStore>((set, get) => ({
+  state: 'idle',
+  targetHref: null,
+  command: null,
+
+  startTransition: (href, navigate, command) => {
+    if (get().state !== 'idle') return
+    if (href === window.location.pathname) return // same route, skip
+
+    set({ state: 'entering', targetHref: href, command })
+
+    // Phase 1: Overlay enters (150ms)
+    setTimeout(() => {
+      set({ state: 'holding' })
+      // Phase 2: Navigate at peak
+      navigate()
+      // Phase 3: Hold then exit (100ms hold + 400ms exit)
+      setTimeout(() => set({ state: 'exiting' }), 100)
+      setTimeout(() => get().completeTransition(), 500)
+    }, 450) // 150ms enter + 300ms type
+  },
+
+  completeTransition: () => {
+    set({ state: 'idle', targetHref: null, command: null })
+  },
+}))
+```
+
+### The hook
+
+Clean API for components. Returns a function that triggers the transition.
 
 ```ts
 import { useRouter } from 'next/navigation'
@@ -37,26 +85,113 @@ import { useTransitionStore } from '@/store/transition-store'
 
 export const useTerminalLink = () => {
   const router = useRouter()
-  const startTransition = useTransitionStore((state) => state.startTransition)
+  const startTransition = useTransitionStore((s) => s.startTransition)
 
-  return (href: string) => {
-    startTransition(href, () => router.push(href), href)
+  return (href: string, command?: string) => {
+    const displayCommand = command || `cd ${href}`
+    startTransition(href, () => router.push(href), displayCommand)
   }
 }
 ```
 
-### Guardrails
+### The overlay component
 
-- If the user clicks the same route, skip the transition.
-- If a transition stalls, force navigation and clear the state.
-- Respect hash links so in-page navigation stays instant.
+GSAP handles the motion. The typewriter effect is a simple interval that reveals characters.
 
-### The intent behind the choices
+```tsx
+'use client'
 
-The overlay exists to make the click feel like a command, not to slow the user down. It is about giving the UI a confident cadence while still keeping scroll and analytics consistent.
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+import { useRef, useState, useEffect } from 'react'
+import { useTransitionStore } from '@/store/transition-store'
 
-## What I would improve next
+export function TransitionOverlay() {
+  const { state, command } = useTransitionStore()
+  const overlayRef = useRef<HTMLDivElement>(null)
+  const [displayedCommand, setDisplayedCommand] = useState('')
 
-- Preload the next route while the terminal animates.
-- Add a short transition preset for hash links.
-- Expose a tiny API so sections can register their own transition copy.
+  // Typewriter effect
+  useEffect(() => {
+    if (state !== 'entering' || !command) return
+    setDisplayedCommand('')
+
+    let i = 0
+    const interval = setInterval(() => {
+      if (i < command.length) {
+        setDisplayedCommand(command.slice(0, i + 1))
+        i++
+      } else {
+        clearInterval(interval)
+      }
+    }, 300 / command.length) // Distribute across 300ms
+
+    return () => clearInterval(interval)
+  }, [state, command])
+
+  useGSAP(
+    () => {
+      if (!overlayRef.current) return
+
+      if (state === 'entering') {
+        gsap.fromTo(
+          overlayRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.15, ease: 'expo.out' },
+        )
+      } else if (state === 'exiting') {
+        gsap.to(overlayRef.current, {
+          opacity: 0,
+          duration: 0.4,
+          ease: 'expo.inOut',
+        })
+      }
+    },
+    { dependencies: [state] },
+  )
+
+  if (state === 'idle') return null
+
+  return (
+    <div
+      ref={overlayRef}
+      className='fixed inset-0 z-50 bg-black/95 flex items-center justify-center'
+    >
+      <div className='font-mono text-white/80 text-sm'>
+        <span className='text-green-400'>→</span> {displayedCommand}
+        <span className='animate-pulse'>_</span>
+      </div>
+    </div>
+  )
+}
+```
+
+## Guardrails
+
+Three edge cases that will break this if you don't handle them:
+
+1. **Same route click.** Check `href === window.location.pathname` before starting. Otherwise you get an overlay that goes nowhere.
+
+2. **Stalled transition.** If navigation fails or takes too long, force complete after 2 seconds. Otherwise the user is stuck in overlay purgatory.
+
+3. **Hash links.** In-page anchors should be instant. Check for `href.startsWith('#')` and skip the transition entirely.
+
+```ts
+// In startTransition
+if (href === window.location.pathname) return
+if (href.startsWith('#')) {
+  navigate()
+  return
+}
+
+// Failsafe timeout
+setTimeout(() => {
+  if (get().state !== 'idle') get().completeTransition()
+}, 2000)
+```
+
+## Next iteration
+
+- **Preload.** Start fetching the next route during the overlay animation. The hold phase is dead time that could be doing work.
+- **Custom commands.** Let sections register their own transition copy. `/work` could show `ls ./projects`, `/about` could show `cat ./readme.md`.
+- **Reduced motion.** Respect `prefers-reduced-motion`. Skip the overlay, instant navigation.
