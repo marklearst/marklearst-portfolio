@@ -40,18 +40,24 @@ function SocialLink({ link }: { link: SocialLinkData }) {
       style={{
         backgroundColor: 'transparent',
         color: MONOKAI.foreground,
-        outline: `0px solid ${link.color}`,
-        outlineOffset: '0px',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = link.color
-        e.currentTarget.style.outline = `3px solid ${link.color}`
-        e.currentTarget.style.outlineOffset = '3px'
+        gsap.killTweensOf(e.currentTarget)
+        gsap.to(e.currentTarget, {
+          boxShadow: `0 0 0 2px ${MONOKAI.background}, 0 0 0 5px ${link.color}`,
+          scale: 1.02,
+          duration: 0.4,
+          ease: 'expo.out',
+        })
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = `${link.color}40`
-        e.currentTarget.style.outline = `0px solid ${link.color}`
-        e.currentTarget.style.outlineOffset = '0px'
+        gsap.killTweensOf(e.currentTarget)
+        gsap.to(e.currentTarget, {
+          boxShadow: `0 0 0 0px ${MONOKAI.background}, 0 0 0 0px ${link.color}`,
+          scale: 1,
+          duration: 0.3,
+          ease: 'expo.out',
+        })
       }}
     >
       <span style={{ color: link.color }}>{link.icon}</span>
