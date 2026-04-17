@@ -1,7 +1,7 @@
 ---
-title: 'The Rise of the Senior Design Engineer (and the Stack that Powers Them)'
+title: 'Agentic Workflows for Design Engineers'
 slug: agentic-workflows
-summary: The "Frontend vs. Backend" divide is dead. The 2026 "Hybrid Supercycle" of Cursor and Claude Code has crowned a new king--the Senior Design Engineer. Here is their playbook.
+summary: Configuration patterns, failure modes, and the scripts I use to orchestrate Claude Code across complex UIs. A practitioner playbook from the hybrid trenches.
 tags:
   - tooling
   - ai
@@ -13,31 +13,35 @@ published_at: 2026-01-28
 pinned: true
 ---
 
-## The "Think Different" Moment for Hybrids
+## Why This Workflow Exists
 
-For a decade, the industry didn't know what to do with us.
-Designers told us we "cared too much about code."
-Engineers told us we "cared too much about pixels."
+I've spent most of my career bridging the gap between design and engineering. Not as a generalist who knows a little of everything, but as someone who went deep on both sides—component architecture and motion design, backend contracts and interaction patterns. For a long time, that felt like an uncomfortable middle ground. Too technical for design teams. Too visual for engineering teams.
 
-We were the hybrids. The misfits. The rebels. The ones who saw the world differently and were often punished for it.
+The industry is finally catching up. Companies building complex, stateful UIs—orchestration workflows, agentic surfaces, anything where the interaction *is* the product—are realizing they need people who can own UX from intent to production. Design in code. Ship directly. Eliminate the handoff.
 
-**In 2026, we finally get the respect we deserve.**
+This is the workflow I've developed for that kind of work. It uses Claude Code as the orchestration layer (terminal-based, works in any editor or iTerm) and Cursor for visual iteration where sub-100ms feedback matters. The combination took a feature I'd estimated at 40 hours down to 12. I'm including the parts that still break, because every article about AI workflows glosses over the friction, and friction is where the actual knowledge lives.
 
-This is our "Think Different" moment. The AI revolution didn't replace engineers; it automated the *boring* parts of engineering, effectively clearing the path for the **Senior Design Engineer**. We are the only ones equipped to orchestrate the new stack because we speak both languages fluently. We aren't just "using AI"; we are directing a Supernova of productivity using **Cursor** and **Claude Code**.
+## 1. The Stack: Loop and Arc
 
-## 1. The Stack: The Loop and The Arc
+The mental model that finally clicked: **Loop for visual iteration, Arc for autonomous reasoning.**
 
-Stop asking "Which one should I use?" That's a junior question. The Design Engineer uses both, effectively creating a **Supernova** of productivity.
+- **The Loop** = tight iteration cycles, sub-100ms feedback. I use Cursor here—perfecting spring physics on a modal, adjusting stagger timing on a gallery, tweaking the exact frame where an opacity transition feels right. The visual feedback loop is the point. You can't delegate taste.
 
-*   **Cursor** is the **Loop** (The interactive, sub-100ms visual state). This is where we perfect the spring physics of a modal using **GSAP** and `useGSAP()`.
-*   **Claude Code** is the **Arc** (The autonomous, multi-hour reasoning state). This is where we refactor the data layer while we sleep.
+- **The Arc** = autonomous reasoning across files and time. Claude Code runs in a terminal, editor-agnostic. I use it for multi-file refactors, reading backend contracts, and anything where I'd otherwise lose 30 minutes to context-switching. It handles the structural work while I focus on the surface.
 
-## 2. The Configuration Layer: Design Systems as Code
+This isn't about which tool is "better." It's about matching the tool to the cognitive mode. Some days I'm in Cursor for 8 hours because the work is entirely visual. Other days I'm orchestrating 5 Claude Code agents in parallel because I'm refactoring a design system. The mental model helps me choose.
 
-The difference between the "I code in Vim on a ThinkPad" purist and a Senior Design Engineer in 2026 isn't skill--it's their **Configuration Layer**. We don't guess; we encode our taste into the machine.
+**Where this breaks:** Don't use Claude Code for visual polish. It will "improve" your animation by refactoring it into something "cleaner" that looks objectively worse. I learned this after it replaced a hand-tuned `expo.out` curve with `power2.inOut` because the GSAP docs mentioned it more frequently. The code was more "correct." The interaction felt dead.
 
-### Cursor: Context Gating via `.mdc`
-We use the `.cursor/rules/` directory to force the AI to respect our design system tokens and motion standards.
+## 2. The Configuration Layer
+
+The difference between fighting the AI and directing it is the configuration layer. This is also where you protect the design system—AI tools will happily extend your system in ways that fragment it, creating one-off tokens and utility functions that slowly erode consistency. The config is your defense.
+
+Every bad autonomous decision becomes a constraint. This is the part that took months to get right. (I've been working on something more structural—a [Variable Design Standard](https://variable-design-standard.vercel.app/) that addresses this fragmentation at the spec level, but that's a separate deep dive.)
+
+### Cursor: `.mdc` Rules
+
+The `.cursor/rules/` directory gates context by file pattern. Here's what I actually use:
 
 ```yaml
 # .cursor/rules/design-system.mdc
@@ -55,73 +59,244 @@ globs: src/components/**/*.tsx
 - Colors: Use semantic tokens `text-monokai-pink` over hex codes.
 ```
 
-### Claude Code: The Recursive Constitution
-We treat the `.claude/` directory as our "System Architecture" documentation. We use custom slash commands to script complex agent behaviors.
+**Why each rule exists:**
+- `useGSAP()` isn't preference—it's memory leak prevention. Without it, animations created in `useEffect` don't clean up on unmount. I had a modal that accumulated 47 orphaned tweens before I caught it.
+- `gsap.utils.selector(ref)` scopes queries to the component. Without it, Cursor generates `gsap.to('.card', ...)` which animates *every* card on the page.
+- The 30% faster exit rule came from user testing. Exits that match entrance duration feel sluggish.
 
-*   **`CLAUDE.md`**: The project constitution. "We build fluid, optimistic UIs."
-*   **`.claude/commands/ui-audit.md`**: A custom script that runs visual regression and accessibility audits via specialized subagents.
+**What happens without config:** I ran a week without `.mdc` files as a test. Result: 3 different easing curves across the same feature, arbitrary `mt-[13px]` spacing that drifted with each edit, and a GSAP timeline that used deprecated `TimelineLite` syntax.
 
-## 3. The "Hybrid Supercycle" in Action
+### Claude Code: `CLAUDE.md`
 
-Here is the exact workflow of a 10x Design Engineer in 2026.
+The `CLAUDE.md` file is the project constitution. Mine includes a "What NOT to do" section that grows every time Claude makes a decision I have to undo:
 
-### Phase 1: The Architect (Terminal)
-We don't start by hacking CSS. We start by architecting the data flow that supports the UI.
+```markdown
+# CLAUDE.md (excerpt)
 
-**The Command:**
-```bash
-$ claude "I need a new 'Media Gallery' feature.
-  1. Analyze `schema.prisma` and propose a `Media` model.
-  2. Plan the tRPC routers for optimistic updates.
-  3. Ensure the upload flow handles 50MB+ files.
-  4. Generate a `specs/MEDIA_GALLERY.md`. Do NOT write code."
+## Architecture
+- We build fluid, optimistic UIs.
+- Server components by default. 'use client' only for interactivity.
+- All animation via GSAP with `useGSAP()` hook.
+
+## What NOT to do
+- Do NOT refactor animation code unless explicitly asked.
+- Do NOT add console.log statements for "debugging."
+- Do NOT change easing curves. Ever.
+- Do NOT "improve" accessibility by removing aria-labels you don't understand.
+- Do NOT create new utility functions. Use existing patterns.
 ```
 
-**The Output:**
-Claude acts as the Senior Backend Engineer we don't have to hire. It creates a robust plan that ensures our beautiful UI won't crash the server.
+That last rule came from Claude creating `formatDateRelative()` when `date-fns/formatDistanceToNow` was already imported 3 files away.
 
-### Phase 2: The Painter (Cursor Composer)
-We switch to Cursor. This is our canvas. We open `specs/MEDIA_GALLERY.md`.
+## 3. The Workflow in Practice
 
-**The Action:**
-Highlight the spec and hit `Cmd+I` (Composer).
-> *"Scaffold the UI components based on this spec. Reference `.cursor/rules/design-system.mdc`. Use GSAP for the staggered entry of gallery items. I want the transition to feel 'glassy' and optimistic."*
+The 3-phase pattern I use for any feature that touches both data and UI. The example here is an orchestration workflow—a multi-step process where users configure automated actions. These are the high-iteration, stateful surfaces where design engineering shines.
 
-**The Result:**
-Because we gated the context with `.mdc` files, Cursor generates components that *already* look like our brand. We spend our time tweaking the `stagger` values and `ease` curves, not fixing import paths.
+### Phase 1: Architect (Claude Code)
 
-### Phase 3: The Auditor (Headless Terminal)
-We finished the UI. It looks great. But is it solid? We don't manually check; we delegate.
+Start in the terminal. Read the existing backend contracts, understand the data shape, then generate a spec. Not code.
 
-**The Command:**
 ```bash
-$ claude --print "Run the full test suite.
-  If the new Media Gallery breaks any existing layout tests or accessibility checks:
-  1. Read the error logs.
-  2. Fix the component code.
-  3. Verify the fix.
-  Repeat until green."
+claude "I'm building a workflow step editor for the automation builder.
+  1. Read the existing WorkflowStep type in src/types/workflow.ts
+  2. Read the stepRouter in src/server/routers/steps.ts
+  3. Identify the mutation contracts I need to respect
+  4. Generate specs/WORKFLOW_STEP_EDITOR.md with:
+     - Component hierarchy
+     - State management approach for optimistic updates
+     - Edge cases (validation, error states, concurrent edits)
+  DO NOT write code. Spec only."
 ```
 
-While Claude fixes the regression in the background, we move on to designing the next interaction.
+The "DO NOT write code" instruction is critical. Without it, Claude will scaffold 12 files before you've validated the approach. And reading the existing contracts first means the spec respects what's already there—you're extending the system, not fragmenting it.
 
-## 4. The Subagent Superpower
+**Actual output (truncated):**
+```markdown
+# Workflow Step Editor Specification
 
-The Design Engineer knows they can't be an expert in everything. So we hire **Subagents**--specialized worker entities with isolated context windows.
+## Existing Contracts (from stepRouter)
+- createStep: { workflowId, type, config } → Step
+- updateStep: { stepId, config } → Step (optimistic, revalidates on error)
+- reorderSteps: { workflowId, stepIds[] } → void
 
-*   **The A11y Subagent:** We pipe our component code into a specialized subagent that runs `axe-core` checks. It doesn't care about our "vibes"; it cares about WCAG 2.2 AA.
-*   **The Documentation Subagent:** We use the **Context7 MCP** to fetch the latest GSAP 3.13+ documentation so our AI never hallucinates deprecated `TimelineLite` APIs.
+## Component Hierarchy
+- StepEditor (container, manages local state)
+  - StepTypeSelector (dropdown, triggers config schema change)
+  - StepConfigForm (dynamic form based on step.type)
+  - StepActions (save, delete, duplicate)
 
-## The Conclusion: Think Different
+## State Management
+- Local state for draft changes (useReducer)
+- Optimistic update on save via tRPC useMutation
+- Rollback to server state on 409 Conflict (concurrent edit)
 
+## Edge Cases
+- Empty config: Show placeholder, disable save
+- Type change mid-edit: Confirm discard of existing config
+- Network failure: Toast + retry button, preserve draft
+```
 
+### Phase 2: Painter (Cursor)
 
-The era of the "pixel pusher" is over. The era of the **Architect-Builder** has begun.
+Open the spec in Cursor. Highlight it. `Cmd+I` to open Composer.
 
+> "Scaffold the StepEditor component based on this spec. Use GSAP for the panel transitions when switching step types. Reference design-system.mdc. The transition should feel responsive—user should never wait for animation to complete before interacting."
 
+**Actual output (StepEditor.tsx):**
+```tsx
+'use client'
 
-We aren't just writing code anymore; we are directing a specialized team of autonomous entities. The skill ceiling hasn't lowered; it's raised. The bottleneck is no longer how fast you can type `div className="..."`, but how clearly you can think, how deeply you can empathize with the user, and how precisely you can orchestrate the intelligence at your fingertips.
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+import { useRef, useReducer } from 'react'
+import { api } from '@/lib/trpc'
 
+export function StepEditor({ step, workflowId }: StepEditorProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [draft, dispatch] = useReducer(stepReducer, step)
 
+  const updateStep = api.steps.updateStep.useMutation({
+    onMutate: async (newData) => {
+      // Optimistic update
+      await utils.steps.getStep.cancel()
+      const previous = utils.steps.getStep.getData({ stepId: step.id })
+      utils.steps.getStep.setData({ stepId: step.id }, newData)
+      return { previous }
+    },
+    onError: (err, _, context) => {
+      // Rollback on conflict
+      if (context?.previous) {
+        utils.steps.getStep.setData({ stepId: step.id }, context.previous)
+      }
+    },
+  })
 
-We are no longer limited by the tools. We are limited only by our taste. For the hybrids who were once the misfits: stand up. **This is your time.**
+  useGSAP(() => {
+    const q = gsap.utils.selector(containerRef)
+    gsap.fromTo(
+      q('.config-panel'),
+      { opacity: 0, x: 12 },
+      { opacity: 1, x: 0, duration: 0.25, ease: 'expo.out' }
+    )
+  }, { scope: containerRef, dependencies: [draft.type] })
+
+  return (
+    <div ref={containerRef} className="flex flex-col gap-4">
+      <StepTypeSelector
+        value={draft.type}
+        onChange={(type) => dispatch({ type: 'SET_TYPE', payload: type })}
+      />
+      <div className="config-panel">
+        <StepConfigForm config={draft.config} type={draft.type} />
+      </div>
+      <StepActions
+        onSave={() => updateStep.mutate(draft)}
+        disabled={!draft.config}
+      />
+    </div>
+  )
+}
+```
+
+Because the `.mdc` rules exist, Cursor already used `useGSAP()`, scoped the selector, and defaulted to `expo.out`. The 0.25s duration means the animation never blocks interaction. I spent 20 minutes on the reducer logic instead of 2 hours fixing animation fundamentals.
+
+### Phase 3: Auditor (Claude Code)
+
+Ship the visual work, then let Claude Code verify the integration.
+
+```bash
+claude "Run the test suite for the StepEditor feature.
+  If any layout tests or accessibility checks fail:
+  1. Read the error logs
+  2. Fix the component code
+  3. Verify the fix
+  Repeat until all tests pass."
+```
+
+**Where this broke:** Claude Code "fixed" an accessibility failure by removing an `aria-label` it didn't understand. The axe-core check passed (no label = no violation), but screen reader users lost context entirely.
+
+The fix was adding to `CLAUDE.md`:
+```markdown
+- Do NOT remove aria attributes to fix a11y errors. Ask first.
+```
+
+Every bad autonomous decision becomes a constraint.
+
+## 4. Failure Modes
+
+Every article about AI workflows glosses over the friction. Here's where this one actually breaks.
+
+**Context Window Exhaustion.** Claude Code's 200K tokens sounds massive until you're refactoring across 40 files. Around file 30, it starts "forgetting" constraints from `CLAUDE.md`. I've seen it reintroduce `TimelineLite` syntax it had correctly avoided for the first 20 files. *Mitigation:* Batch refactors at 15-20 files. Fresh context each batch.
+
+**The Refactor Trap.** Ask Claude to fix a bug in `Button.tsx` and it will "notice" that `Card.tsx` has similar patterns that could be "improved." Before you've reviewed the diff, it has touched 8 files. *Mitigation:* Explicit scoping in every prompt. "Do NOT modify any other files." Verify diff before accepting.
+
+**Import Hallucinations.** Cursor pulls from training data, not your `package.json`. I've had it import from `lucide-react` when the project uses `heroicons`. The component renders, the icons are wrong, and you don't notice until production. *Mitigation:* Add explicit package constraints to `.mdc`.
+
+**The Confidence Problem.** This one has no mitigation. Both tools present every output with identical confidence whether it's correct or catastrophically wrong. A subtle race condition and a typo fix get the same tone. You still have to read the code. Every line. The tools accelerate authoring, not review.
+
+## 5. Subagents and Scripts
+
+Subagents are specialized contexts that run within Claude Code—isolated workers for domains where I don't want to be the expert. The key constraint: **report, don't fix**. Claude Code will absolutely "help" by implementing changes if you don't prevent it.
+
+I use Context7 MCP to inject current documentation (GSAP 3.13, not the deprecated ScrollMagic patterns Claude hallucinates from 2023). I run a11y audits against changed files with explicit "Do NOT modify" instructions. The pattern is always the same: specialized context, constrained output, human review before any changes land.
+
+The two scripts I reach for most:
+
+### `spec` — Generate Feature Spec
+
+```bash
+#!/bin/bash
+# spec - Generate a feature specification
+
+FEATURE_NAME=$1
+[ -z "$FEATURE_NAME" ] && echo "Usage: spec <feature-name>" && exit 1
+
+claude "Create a specification for: $FEATURE_NAME
+  Include: data model changes, API routes, component hierarchy,
+  state management, edge cases.
+  Output to specs/${FEATURE_NAME}.md
+  DO NOT write implementation code."
+```
+
+### `variant` — Ship A/B Variants
+
+```bash
+#!/bin/bash
+# variant - Create a feature-flagged variant of a component
+
+COMPONENT=$1
+VARIANT_NAME=$2
+[ -z "$COMPONENT" ] || [ -z "$VARIANT_NAME" ] && \
+  echo "Usage: variant src/components/Button.tsx dark-mode" && exit 1
+
+claude "Create a feature-flagged variant of $COMPONENT.
+  1. Read the existing component
+  2. Create ${COMPONENT%.tsx}.${VARIANT_NAME}.tsx with the variant
+  3. Update original to check flag and render variant conditionally
+  4. Use existing pattern in src/lib/flags.ts
+  Variant is additive—do NOT modify behavior when flag is off."
+```
+
+This lets me ship interaction experiments without risking stable code. Flag check at component level means rollback is instant—no deploy required.
+
+## What I've Learned
+
+Six months into this workflow, a few things have become clear.
+
+**The config is the product.** I spent the first two months crafting elaborate prompts for each task. The constraints drifted. The same mistakes repeated. When I moved the invariants into `CLAUDE.md`, consistency improved immediately. Prompts are ephemeral. Config persists.
+
+**Tools don't replace judgment.** I've watched designers adopt these same tools and still break things—not because the tools failed, but because constraining AI output to existing system primitives requires understanding the system deeply. You can't configure taste. You can't prompt your way to product judgment. The tools amplify whatever's already there.
+
+**Subagents need kill switches.** I once let an a11y subagent "fix issues autonomously" across the codebase. It touched 47 components. 12 of them got worse. Now every subagent prompt ends with "Do NOT modify files" until I've reviewed the report. Autonomy without review is just automated liability.
+
+**The hardest part is knowing when to stop.** These tools make it trivially easy to keep iterating. The animation could be 2% smoother. The code could be marginally cleaner. At some point, you have to ship. The workflow accelerates execution, but taste sets the exit condition.
+
+## What the Tools Don't Teach
+
+I've been bridging design and engineering for most of my career—long before the industry had a name for it. The tools have changed. The underlying skill hasn't. You still need to understand both languages fluently. You still need to know when the code is right and when it just compiles. You still need to ship.
+
+What's different now is that companies are finally looking for this skillset explicitly. The role exists. The title varies—design engineer, design technologist, creative technologist—but the job is the same: own the UX from intent to production. Eliminate the handoff. Move fast without breaking the system.
+
+The configuration layer helps, but it's still reactive—catching problems after the AI generates them. The deeper problem is the fragmentation between design intent and shipped code, the drift that accumulates across handoffs and tooling gaps. I've been working on a [Variable Design Standard](https://variable-design-standard.vercel.app/) to address this at the infrastructure level—spec-driven, enforceable, the kind of thing that makes the config layer less necessary over time.
+
+If you've been doing this work in the gaps between teams, you already know what it takes. The agentic workflow gives you leverage. The standards work gives you foundation.
