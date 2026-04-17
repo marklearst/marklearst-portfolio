@@ -1,7 +1,7 @@
 ---
 title: SemVer for Design Variables
 slug: variable-design-standard-semver
-summary: A lightweight framing for versioning tokens so design and code stay in lockstep.
+summary: A lightweight framing for versioning tokens so design and code stay in lockstep. Part of the Variable Design Standard.
 tags:
   - design-systems
   - tokens
@@ -10,13 +10,15 @@ published_at: 2026-01-12
 pinned: false
 ---
 
+## The problem
+
+A designer renames `color.brand.primary` to `color.brand.main` in Figma. Seems harmless. Three weeks later, 47 components are rendering fallback colors in production because the token sync ran, the build passed, and nobody caught the breaking change.
+
+This happens because design variables change like APIs, but we don't treat them that way. No versioning. No impact signal. No way for engineering to know if a token update is safe to pull or will break half the app.
+
 ## The framing
 
-Design variables change like APIs. If the naming, structure, or type changes, downstream teams need a clear signal about impact. SemVer gives designers and engineers the same shared language for change.
-
-### Contract shape
-
-A contract is just a typed payload with a schema version and a contract version. The version tells teams whether a change is safe, risky, or breaking.
+SemVer gives designers and engineers the same shared language for change. A contract is just a typed payload with a schema version and a contract version. The version tells teams whether a change is safe, risky, or breaking.
 
 ```json
 {
@@ -35,14 +37,84 @@ A contract is just a typed payload with a schema version and a contract version.
 
 ### Release rules
 
-- MAJOR: rename or remove a token, or change its type.
-- MINOR: add new tokens or new variants that do not break existing usage.
-- PATCH: adjust values without touching structure.
+| Change | Version bump | Example |
+|--------|--------------|---------|
+| Rename or remove token | MAJOR | `color.brand.primary` → `color.brand.main` |
+| Change token type | MAJOR | `spacing.md` from `string` to `number` |
+| Add new token | MINOR | New `color.brand.tertiary` |
+| Adjust value only | PATCH | `#4ea1ff` → `#3d9aff` |
 
-### Governance payoff
+### Detecting breaking changes
 
-When tokens are versioned like code, you can audit changes, validate compatibility in CI, and roll back without guesswork. It turns variable drift into a predictable release cycle.
+The version bump isn't manual—it's computed from the diff. Here's the logic:
 
-## Why I use it
+```ts
+type BreakingChange = {
+  token: string
+  reason: 'removed' | 'renamed' | 'type_changed'
+  previous: TokenDefinition
+}
 
-This keeps design, engineering, and product aligned. The spec does not just document the change, it explains the impact in a language every team already understands.
+function detectBreakingChanges(
+  previous: TokenContract,
+  next: TokenContract
+): BreakingChange[] {
+  const breaking: BreakingChange[] = []
+
+  for (const [key, def] of Object.entries(previous.tokens)) {
+    if (!(key in next.tokens)) {
+      breaking.push({ token: key, reason: 'removed', previous: def })
+    } else if (next.tokens[key].type !== def.type) {
+      breaking.push({ token: key, reason: 'type_changed', previous: def })
+    }
+  }
+
+  return breaking
+}
+
+function computeVersionBump(
+  previous: TokenContract,
+  next: TokenContract
+): 'major' | 'minor' | 'patch' {
+  const breaking = detectBreakingChanges(previous, next)
+  if (breaking.length > 0) return 'major'
+
+  const newTokens = Object.keys(next.tokens)
+    .filter(k => !(k in previous.tokens))
+  if (newTokens.length > 0) return 'minor'
+
+  return 'patch'
+}
+```
+
+### CI integration
+
+This runs in the design token publish pipeline. If the computed bump is `major`, the pipeline requires explicit approval before tokens sync to code.
+
+```bash
+#!/bin/bash
+# token-publish.sh
+
+BUMP=$(pnpm vds-cli diff --previous tokens.v1.json --next tokens.v2.json)
+
+if [ "$BUMP" = "major" ]; then
+  echo "⚠️  Breaking change detected. Requires approval."
+  gh pr comment --body "This token update contains breaking changes. \
+    Review required before sync."
+  exit 1
+fi
+
+pnpm vds-cli publish --bump "$BUMP"
+```
+
+## Why this matters
+
+When tokens are versioned like code, you can:
+- Audit changes with a clear diff
+- Validate compatibility in CI before sync
+- Roll back to a known-good version without guesswork
+- Communicate impact in a language every team already understands
+
+Variable drift becomes a predictable release cycle. The spec doesn't just document the change—it enforces the contract.
+
+This is part of the [Variable Design Standard](https://variable-design-standard.vercel.app/), a broader effort to bring infrastructure-level rigor to the design-engineering handoff.
