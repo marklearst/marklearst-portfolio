@@ -9,7 +9,11 @@ interface KineticTextProps {
   style?: React.CSSProperties
 }
 
-export default function KineticText({ text, className = '', style }: KineticTextProps) {
+export default function KineticText({
+  text,
+  className = '',
+  style,
+}: KineticTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null)
 
   const handleMouseEnter = () => {
@@ -18,10 +22,10 @@ export default function KineticText({ text, className = '', style }: KineticText
     const chars = containerRef.current.querySelectorAll('.kinetic-char')
     chars.forEach((char, i) => {
       gsap.to(char, {
-        letterSpacing: '0.05em',
+        x: i * 1.3, // Spread characters apart using transform (GPU-accelerated)
         duration: 0.4,
         ease: 'power2.out',
-        delay: i * 0.02,
+        delay: i * 0.015,
       })
     })
   }
@@ -32,10 +36,10 @@ export default function KineticText({ text, className = '', style }: KineticText
     const chars = containerRef.current.querySelectorAll('.kinetic-char')
     chars.forEach((char, i) => {
       gsap.to(char, {
-        letterSpacing: '0',
+        x: 0,
         duration: 0.3,
         ease: 'power2.inOut',
-        delay: i * 0.01,
+        delay: i * 0.008,
       })
     })
   }
@@ -49,12 +53,19 @@ export default function KineticText({ text, className = '', style }: KineticText
       onMouseLeave={handleMouseLeave}
     >
       {text.split('').map((char, i) => (
+        // Wrapper provides the clip-path mask for reveal animation
+        // pb-[0.15em] prevents descender clipping, pt for ascenders
         <span
           key={i}
-          className='kinetic-char inline-block'
-          style={{ letterSpacing: 0 }}
+          className='inline-block overflow-hidden align-bottom'
+          style={{ paddingBottom: '0.15em', paddingTop: '0.05em' }}
         >
-          {char}
+          <span
+            className='kinetic-char inline-block'
+            style={{ willChange: 'transform' }}
+          >
+            {char}
+          </span>
         </span>
       ))}
     </span>

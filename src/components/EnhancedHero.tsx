@@ -6,12 +6,14 @@ import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
 import Link from 'next/link'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { gsap } from 'gsap'
 
 // Typewriter component for terminal effect
 function Typewriter({
   text,
   delay = 0,
   speed = 50,
+  onStart,
   onComplete,
   className,
   style,
@@ -19,6 +21,7 @@ function Typewriter({
   text: string
   delay?: number
   speed?: number
+  onStart?: () => void
   onComplete?: () => void
   className?: string
   style?: React.CSSProperties
@@ -27,9 +30,12 @@ function Typewriter({
   const [started, setStarted] = useState(false)
 
   useEffect(() => {
-    const startTimeout = setTimeout(() => setStarted(true), delay)
+    const startTimeout = setTimeout(() => {
+      setStarted(true)
+      if (onStart) onStart()
+    }, delay)
     return () => clearTimeout(startTimeout)
-  }, [delay])
+  }, [delay, onStart])
 
   useEffect(() => {
     if (!started) return
@@ -55,6 +61,7 @@ export default function EnhancedHero() {
     useAnalytics()
   const heroRef = useRef<HTMLDivElement | null>(null)
   const nameBoxRef = useRef<HTMLDivElement>(null)
+  const [line1Started, setLine1Started] = useState(false)
   const [line1Done, setLine1Done] = useState(false)
   const [line2Done, setLine2Done] = useState(false)
 
@@ -65,17 +72,6 @@ export default function EnhancedHero() {
       ref={heroRef}
       className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-24 sm:pt-0 overflow-hidden'
     >
-      {/* Monokai gradient line at top */}
-      <div className='absolute top-0 left-0 right-0 h-1'>
-        <div
-          className='w-full h-full animate-gradient-x'
-          style={{
-            background:
-              'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)',
-            backgroundSize: '200% 100%',
-          }}
-        />
-      </div>
       {/* Gradient fade at bottom for smooth transition */}
       <div
         className='absolute bottom-0 left-0 right-0 h-64 pointer-events-none'
@@ -91,14 +87,22 @@ export default function EnhancedHero() {
           className='mb-10 sm:mb-16 font-mono text-sm space-y-2 pt-4 sm:pt-8'
           style={{ color: `${MONOKAI.foreground}60` }}
         >
-          <div className='flex items-center gap-2 pointer-events-none'>
-            <span style={{ color: MONOKAI.green }}>❯</span>
+          <div className='flex items-center gap-2 pointer-events-none flex-nowrap whitespace-nowrap'>
+            <span
+              className={`transition-opacity duration-200 ${
+                line1Started ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{ color: MONOKAI.green }}
+            >
+              ❯
+            </span>
             {!line1Done ? (
               // Typing phase - all muted color
               <Typewriter
                 text='~/portfolio on main ✓'
-                delay={200}
+                delay={0}
                 speed={35}
+                onStart={() => setLine1Started(true)}
                 onComplete={() => setLine1Done(true)}
                 style={{ color: `${MONOKAI.foreground}60` }}
               />
@@ -115,7 +119,7 @@ export default function EnhancedHero() {
             )}
           </div>
           <div
-            className={`flex items-center gap-2 pointer-events-none transition-opacity duration-300 ${
+            className={`flex items-center gap-2 pointer-events-none flex-nowrap whitespace-nowrap transition-opacity duration-300 ${
               line1Done ? 'opacity-100' : 'opacity-0'
             }`}
           >
@@ -151,21 +155,68 @@ export default function EnhancedHero() {
           </h1>
         </div>
 
-        {/* TAGLINE - Full width, semantic color accents */}
+        {/* TAGLINE - Split word animation with semantic color accents */}
         <p
           className='hero-description text-[clamp(20px,2.5vw,32px)] leading-[1.4] mb-6 max-w-5xl opacity-0 font-mono'
           style={{
             color: `${MONOKAI.foreground}dd`,
             fontWeight: 400,
+            perspective: '1000px', // Enable 3D transforms
           }}
         >
-          <span style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}>
-            Senior Design Engineer
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
+          >
+            Senior
           </span>{' '}
-          who builds <span style={{ color: MONOKAI.green }}>accessible</span>{' '}
-          <span style={{ color: MONOKAI.purple }}>design systems</span> and{' '}
-          <span style={{ color: MONOKAI.cyan }}>React</span> component libraries
-          that teams actually want to use.
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
+          >
+            Design
+          </span>{' '}
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
+          >
+            Engineer
+          </span>{' '}
+          <span className='hero-description-word inline-block'>who</span>{' '}
+          <span className='hero-description-word inline-block'>builds</span>{' '}
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.green }}
+          >
+            accessible
+          </span>{' '}
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.purple }}
+          >
+            design
+          </span>{' '}
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.purple }}
+          >
+            systems
+          </span>{' '}
+          <span className='hero-description-word inline-block'>and</span>{' '}
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.cyan }}
+          >
+            React
+          </span>{' '}
+          <span className='hero-description-word inline-block'>component</span>{' '}
+          <span className='hero-description-word inline-block'>libraries</span>{' '}
+          <span className='hero-description-word inline-block'>that</span>{' '}
+          <span className='hero-description-word inline-block'>teams</span>{' '}
+          <span className='hero-description-word inline-block'>actually</span>{' '}
+          <span className='hero-description-word inline-block'>want</span>{' '}
+          <span className='hero-description-word inline-block'>to</span>{' '}
+          <span className='hero-description-word inline-block'>use.</span>
         </p>
 
         {/* Skill badges - minimal, background only, no border, no hover */}
@@ -234,28 +285,36 @@ export default function EnhancedHero() {
           </p>
         </div>
 
-        {/* CTAs - Clean buttons with expanding outline on hover */}
+        {/* CTAs - GSAP-powered ring expansion */}
         <div className='hero-ctas flex flex-wrap items-center gap-4 mb-14 opacity-0'>
-          {/* Primary CTA - Solid with expanding cyan outline */}
+          {/* Primary CTA - Solid with expanding cyan ring */}
           <Link
             href='/work'
             onClick={() => {
               trackHeroCTAClick({ action: 'view_work', location: 'hero' })
             }}
-            className='group relative px-8 py-4 font-mono text-base font-bold rounded-lg transition-all duration-300'
+            className='hero-cta-primary group relative px-8 py-4 font-mono text-base font-bold rounded-lg'
             style={{
               backgroundColor: MONOKAI.foreground,
               color: MONOKAI.background,
-              outline: `0px solid ${MONOKAI.cyan}`,
-              outlineOffset: '0px',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.outline = `3px solid ${MONOKAI.cyan}`
-              e.currentTarget.style.outlineOffset = '3px'
+              gsap.killTweensOf(e.currentTarget)
+              gsap.to(e.currentTarget, {
+                boxShadow: `0 0 0 3px ${MONOKAI.background}, 0 0 0 7px ${MONOKAI.cyan}`,
+                scale: 1.02,
+                duration: 0.4,
+                ease: 'expo.out',
+              })
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.outline = `0px solid ${MONOKAI.cyan}`
-              e.currentTarget.style.outlineOffset = '0px'
+              gsap.killTweensOf(e.currentTarget)
+              gsap.to(e.currentTarget, {
+                boxShadow: `0 0 0 0px ${MONOKAI.background}, 0 0 0 0px ${MONOKAI.cyan}`,
+                scale: 1,
+                duration: 0.3,
+                ease: 'expo.out',
+              })
             }}
           >
             <span className='relative z-10 flex items-center gap-2.5'>
@@ -280,7 +339,7 @@ export default function EnhancedHero() {
             </span>
           </Link>
 
-          {/* GitHub button - Ghost with expanding pink outline */}
+          {/* GitHub button - Ghost with expanding pink ring */}
           <a
             href='https://github.com/marklearst'
             target='_blank'
@@ -292,23 +351,31 @@ export default function EnhancedHero() {
                 location: 'hero',
               })
             }}
-            className='group relative px-8 py-4 font-mono text-base font-semibold rounded-lg transition-all duration-300'
+            className='hero-cta-secondary group relative px-8 py-4 font-mono text-base font-semibold rounded-lg'
             style={{
               backgroundColor: 'transparent',
               border: `2px solid ${MONOKAI.foreground}40`,
               color: MONOKAI.foreground,
-              outline: `0px solid ${MONOKAI.pink}`,
-              outlineOffset: '0px',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = MONOKAI.foreground
-              e.currentTarget.style.outline = `3px solid ${MONOKAI.pink}`
-              e.currentTarget.style.outlineOffset = '3px'
+              gsap.killTweensOf(e.currentTarget)
+              gsap.to(e.currentTarget, {
+                borderColor: MONOKAI.pink,
+                boxShadow: `0 0 0 2px ${MONOKAI.background}, 0 0 0 6px ${MONOKAI.pink}`,
+                scale: 1.02,
+                duration: 0.4,
+                ease: 'expo.out',
+              })
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = `${MONOKAI.foreground}40`
-              e.currentTarget.style.outline = `0px solid ${MONOKAI.pink}`
-              e.currentTarget.style.outlineOffset = '0px'
+              gsap.killTweensOf(e.currentTarget)
+              gsap.to(e.currentTarget, {
+                borderColor: `${MONOKAI.foreground}40`,
+                boxShadow: `0 0 0 0px ${MONOKAI.background}, 0 0 0 0px ${MONOKAI.pink}`,
+                scale: 1,
+                duration: 0.3,
+                ease: 'expo.out',
+              })
             }}
           >
             <span className='flex items-center gap-2.5'>
