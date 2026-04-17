@@ -43,7 +43,7 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <NeuralBackground />
-        
+
         {/* Global animated Monokai gradient line - appears on all pages */}
         <div className='top-0 left-0 right-0 h-1 z-50'>
           <div
