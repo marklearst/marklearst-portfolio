@@ -37,16 +37,16 @@ SemVer gives designers and engineers the same shared language for change. A cont
 
 ### Release rules
 
-| Change | Version bump | Example |
-|--------|--------------|---------|
-| Rename or remove token | MAJOR | `color.brand.primary` → `color.brand.main` |
-| Change token type | MAJOR | `spacing.md` from `string` to `number` |
-| Add new token | MINOR | New `color.brand.tertiary` |
-| Adjust value only | PATCH | `#4ea1ff` → `#3d9aff` |
+| Change                 | Version bump | Example                                    |
+| ---------------------- | ------------ | ------------------------------------------ |
+| Rename or remove token | MAJOR        | `color.brand.primary` → `color.brand.main` |
+| Change token type      | MAJOR        | `spacing.md` from `string` to `number`     |
+| Add new token          | MINOR        | New `color.brand.tertiary`                 |
+| Adjust value only      | PATCH        | `#4ea1ff` → `#3d9aff`                      |
 
 ### Detecting breaking changes
 
-The version bump isn't manual—it's computed from the diff. Here's the logic:
+The version bump isn't manual it's computed from the diff. Here's the logic:
 
 ```ts
 type BreakingChange = {
@@ -57,7 +57,7 @@ type BreakingChange = {
 
 function detectBreakingChanges(
   previous: TokenContract,
-  next: TokenContract
+  next: TokenContract,
 ): BreakingChange[] {
   const breaking: BreakingChange[] = []
 
@@ -74,13 +74,14 @@ function detectBreakingChanges(
 
 function computeVersionBump(
   previous: TokenContract,
-  next: TokenContract
+  next: TokenContract,
 ): 'major' | 'minor' | 'patch' {
   const breaking = detectBreakingChanges(previous, next)
   if (breaking.length > 0) return 'major'
 
-  const newTokens = Object.keys(next.tokens)
-    .filter(k => !(k in previous.tokens))
+  const newTokens = Object.keys(next.tokens).filter(
+    (k) => !(k in previous.tokens),
+  )
   if (newTokens.length > 0) return 'minor'
 
   return 'patch'
@@ -110,11 +111,12 @@ pnpm vds-cli publish --bump "$BUMP"
 ## Why this matters
 
 When tokens are versioned like code, you can:
+
 - Audit changes with a clear diff
 - Validate compatibility in CI before sync
 - Roll back to a known-good version without guesswork
 - Communicate impact in a language every team already understands
 
-Variable drift becomes a predictable release cycle. The spec doesn't just document the change—it enforces the contract.
+Variable drift becomes a predictable release cycle. The spec doesn't just document the change; it enforces the contract.
 
 This is part of the [Variable Design Standard](https://variable-design-standard.vercel.app/), a broader effort to bring infrastructure-level rigor to the design-engineering handoff.
