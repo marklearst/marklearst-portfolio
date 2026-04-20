@@ -6,8 +6,6 @@ import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
 import Link from 'next/link'
 import { useAnalytics } from '@/hooks/useAnalytics'
-import { gsap } from 'gsap'
-
 // Typewriter component for terminal effect
 function Typewriter({
   text,
@@ -285,7 +283,7 @@ export default function EnhancedHero() {
           </p>
         </div>
 
-        {/* CTAs - GSAP-powered ring expansion */}
+        {/* CTAs - CSS-powered ring expansion */}
         <div className='hero-ctas flex flex-wrap items-center gap-4 mb-14 opacity-0'>
           {/* Primary CTA - Solid with expanding cyan ring */}
           <Link
@@ -297,25 +295,9 @@ export default function EnhancedHero() {
             style={{
               backgroundColor: MONOKAI.foreground,
               color: MONOKAI.background,
-            }}
-            onMouseEnter={(e) => {
-              gsap.killTweensOf(e.currentTarget)
-              gsap.to(e.currentTarget, {
-                boxShadow: `0 0 0 3px ${MONOKAI.background}, 0 0 0 7px ${MONOKAI.cyan}`,
-                scale: 1.02,
-                duration: 0.4,
-                ease: 'expo.out',
-              })
-            }}
-            onMouseLeave={(e) => {
-              gsap.killTweensOf(e.currentTarget)
-              gsap.to(e.currentTarget, {
-                boxShadow: `0 0 0 0px ${MONOKAI.background}, 0 0 0 0px ${MONOKAI.cyan}`,
-                scale: 1,
-                duration: 0.3,
-                ease: 'expo.out',
-              })
-            }}
+              '--cta-ring': MONOKAI.cyan,
+              '--cta-bg': MONOKAI.background,
+            } as React.CSSProperties}
           >
             <span className='relative z-10 flex items-center gap-2.5'>
               View Work
@@ -356,27 +338,9 @@ export default function EnhancedHero() {
               backgroundColor: 'transparent',
               border: `2px solid ${MONOKAI.foreground}40`,
               color: MONOKAI.foreground,
-            }}
-            onMouseEnter={(e) => {
-              gsap.killTweensOf(e.currentTarget)
-              gsap.to(e.currentTarget, {
-                borderColor: MONOKAI.pink,
-                boxShadow: `0 0 0 2px ${MONOKAI.background}, 0 0 0 6px ${MONOKAI.pink}`,
-                scale: 1.02,
-                duration: 0.4,
-                ease: 'expo.out',
-              })
-            }}
-            onMouseLeave={(e) => {
-              gsap.killTweensOf(e.currentTarget)
-              gsap.to(e.currentTarget, {
-                borderColor: `${MONOKAI.foreground}40`,
-                boxShadow: `0 0 0 0px ${MONOKAI.background}, 0 0 0 0px ${MONOKAI.pink}`,
-                scale: 1,
-                duration: 0.3,
-                ease: 'expo.out',
-              })
-            }}
+              '--cta-ring': MONOKAI.pink,
+              '--cta-bg': MONOKAI.background,
+            } as React.CSSProperties}
           >
             <span className='flex items-center gap-2.5'>
               <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>
