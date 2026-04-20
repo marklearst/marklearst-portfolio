@@ -160,8 +160,6 @@ export default function PrimaryNav() {
   const navRef = useRef<HTMLElement>(null)
   const indicatorRef = useRef<HTMLDivElement>(null)
   const labelRefs = useRef<Record<string, HTMLSpanElement | null>>({})
-  const codeButtonRef = useRef<HTMLButtonElement>(null)
-  const orbsButtonRef = useRef<HTMLButtonElement>(null)
   const [hoverKey, setHoverKey] = useState<string | null>(null)
   const [workInView, setWorkInView] = useState(false)
 
@@ -169,60 +167,41 @@ export default function PrimaryNav() {
   const [codeDiscovering, setCodeDiscovering] = useState(false)
   const [orbsDiscovering, setOrbsDiscovering] = useState(false)
 
-  // Discovery animation: pulse colors with WAAPI for smooth compositor timing
+  // Discovery animation: pulse colors to hint at toggle functionality
   useEffect(() => {
     // Only run discovery if both toggles are off (default state)
     if (neuralTextVisible || orbsVisible) return
-    if (typeof Element === 'undefined' || !Element.prototype.animate) return
 
-    const pulseIterations = 2
-    const pulseDuration = 1200 // ms per pulse cycle
+    const pulseCount = 3
+    const pulseDuration = 900 // ms per pulse cycle (on + off)
     const codeDelay = 3000 // Start after hero animation completes
     const orbsDelay = 3500 // Stagger orbs after code toggle
 
     const runDiscovery = (
-      element: HTMLButtonElement | null,
+      setDiscovering: (v: boolean) => void,
       delay: number,
-      setDiscovering: (value: boolean) => void,
     ) => {
-      if (!element) return () => {}
+      const timeouts: ReturnType<typeof setTimeout>[] = []
 
-      const animation = element.animate(
-        [{ opacity: 0.55 }, { opacity: 1 }, { opacity: 0.8 }],
-        {
-          duration: pulseDuration,
-          iterations: pulseIterations,
-          delay,
-          easing: 'ease-out',
-        },
-      )
-
-      const startTimeout = window.setTimeout(
-        () => setDiscovering(true),
-        delay,
-      )
-      const endTimeout = window.setTimeout(
-        () => setDiscovering(false),
-        delay + pulseDuration * pulseIterations,
-      )
-
-      return () => {
-        animation.cancel()
-        window.clearTimeout(startTimeout)
-        window.clearTimeout(endTimeout)
+      for (let i = 0; i < pulseCount; i++) {
+        // Turn on
+        timeouts.push(
+          setTimeout(() => setDiscovering(true), delay + i * pulseDuration),
+        )
+        // Turn off (60% through the cycle for asymmetric feel)
+        timeouts.push(
+          setTimeout(
+            () => setDiscovering(false),
+            delay + i * pulseDuration + pulseDuration * 0.6,
+          ),
+        )
       }
+
+      return () => timeouts.forEach(clearTimeout)
     }
 
-    const cleanupCode = runDiscovery(
-      codeButtonRef.current,
-      codeDelay,
-      setCodeDiscovering,
-    )
-    const cleanupOrbs = runDiscovery(
-      orbsButtonRef.current,
-      orbsDelay,
-      setOrbsDiscovering,
-    )
+    const cleanupCode = runDiscovery(setCodeDiscovering, codeDelay)
+    const cleanupOrbs = runDiscovery(setOrbsDiscovering, orbsDelay)
 
     return () => {
       cleanupCode()
@@ -411,7 +390,6 @@ export default function PrimaryNav() {
         aria-hidden='true'
       />
       <button
-        ref={codeButtonRef}
         type='button'
         onClick={handleToggleNeuralText}
         onMouseEnter={() => setHoverKey(null)}
@@ -426,7 +404,6 @@ export default function PrimaryNav() {
         />
       </button>
       <button
-        ref={orbsButtonRef}
         type='button'
         onClick={toggleOrbs}
         onMouseEnter={() => setHoverKey(null)}
