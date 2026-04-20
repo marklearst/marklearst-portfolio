@@ -189,7 +189,7 @@ const TestimonialCard = React.forwardRef<HTMLDivElement, TestimonialCardProps>(
             className='text-[clamp(18px,2.5vw,26px)] mb-8 text-white/90 relative font-light'
             style={{ lineHeight: '1.5' }}
           >
-            <span className='absolute -left-4 -top-2 text-5xl text-white/10 font-serif'>
+            <span className='absolute -left-4 -top-2 text-3xl text-white/30 font-serif'>
               "
             </span>
             {testimonial.quote}

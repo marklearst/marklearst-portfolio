@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
@@ -9,12 +9,44 @@ import { useAnalytics } from '@/hooks/useAnalytics'
 export default function ParticleHeader() {
   const { trackNavigationClick, trackLogoHover } = useAnalytics()
   const pathname = usePathname()
+  const containerRef = useRef<HTMLDivElement>(null)
   const mRef = useRef<HTMLSpanElement>(null)
   const middleRef = useRef<HTMLSpanElement>(null)
   const lRef = useRef<HTMLSpanElement>(null)
   const endRef = useRef<HTMLSpanElement>(null)
   const timelineRef = useRef<gsap.core.Timeline | null>(null)
   const isExpandedRef = useRef(false)
+
+  // Entrance animation - confident scale up
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+
+    if (prefersReducedMotion) {
+      gsap.set(containerRef.current, { opacity: 1, scale: 1, y: 0 })
+      return
+    }
+
+    gsap.fromTo(
+      containerRef.current,
+      {
+        opacity: 0,
+        scale: 0.8,
+        y: -10,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.3,
+        ease: 'back.out(1.4)',
+      },
+    )
+  }, [])
 
   // {m  l} -> {m arkl earst}
   // So we type 'ark' between m and l, then 'earst' after l
@@ -133,7 +165,8 @@ export default function ParticleHeader() {
       aria-label='Mark Learst - Home'
     >
       <div
-        className='flex items-center font-mono font-medium text-lg sm:text-2xl'
+        ref={containerRef}
+        className='flex items-center font-mono font-medium text-lg sm:text-2xl opacity-0'
         style={{
           color: 'rgb(252, 252, 250)',
         }}
