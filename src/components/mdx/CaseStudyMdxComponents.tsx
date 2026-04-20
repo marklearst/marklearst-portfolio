@@ -43,6 +43,27 @@ export const createCaseStudyMdxComponents = (accent: string) => {
     <CaseStudySubheading {...props} color={accent} />
   )
 
+  // Custom paragraph that renders as <p> to avoid div-in-p hydration errors
+  const Paragraph = ({
+    children,
+    className,
+    ...rest
+  }: ComponentPropsWithoutRef<'p'>) => {
+    const classes = className
+      ? `text-lg leading-relaxed ${className}`
+      : 'text-lg leading-relaxed'
+
+    return (
+      <p
+        className={classes}
+        style={{ color: `${MONOKAI.foreground}cc` }}
+        {...rest}
+      >
+        {children}
+      </p>
+    )
+  }
+
   return {
     CaseStudySection,
     CaseStudySubheading: Subheading,
@@ -50,7 +71,11 @@ export const createCaseStudyMdxComponents = (accent: string) => {
     CaseStudyParagraph,
     CaseStudyMutedList,
     CodeBlock,
-    p: CaseStudyParagraph,
+    p: Paragraph,
+    // Passthrough anchor - prevents MDX from double-wrapping links
+    a: ({ children, ...rest }: ComponentPropsWithoutRef<'a'>) => (
+      <a {...rest}>{children}</a>
+    ),
     h3: Subheading,
     ul: (props: ComponentPropsWithoutRef<'ul'>) => (
       <CaseStudyMutedList className='space-y-2' {...props} />
