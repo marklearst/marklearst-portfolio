@@ -8,9 +8,9 @@ import { track } from '@vercel/analytics/react'
 const MAX_EVENT_VALUE_LENGTH = 255
 
 const trimValue = (value: string) =>
-  value.length > MAX_EVENT_VALUE_LENGTH
-    ? value.slice(0, MAX_EVENT_VALUE_LENGTH)
-    : value
+  value.length > MAX_EVENT_VALUE_LENGTH ?
+    value.slice(0, MAX_EVENT_VALUE_LENGTH)
+  : value
 
 /**
  * Track case study clicks from featured work section
@@ -50,7 +50,7 @@ export function trackExternalLinkClick(data: {
  * Track social link clicks from footer
  */
 export function trackSocialLinkClick(data: {
-  platform: 'github' | 'linkedin' | 'email'
+  platform: 'github' | 'linkedin' | 'email' | 'buy-me-a-coffee'
   href: string
 }) {
   track('Social Link Click', {
@@ -163,10 +163,7 @@ export function trackProjectCardImpression(data: {
 /**
  * Track scroll milestones
  */
-export function trackScrollMilestone(data: {
-  percent: number
-  route: string
-}) {
+export function trackScrollMilestone(data: { percent: number; route: string }) {
   track('Scroll Milestone', {
     percent: data.percent,
     route: trimValue(data.route),
@@ -373,6 +370,7 @@ export function trackThemePreference(data: {
 export function getPlatformFromUrl(url: string): string {
   if (url.includes('github.com')) return 'github'
   if (url.includes('linkedin.com')) return 'linkedin'
+  if (url.includes('buymeacoffee.com')) return 'buy-me-a-coffee'
   if (url.includes('npmjs.com')) return 'npm'
   if (url.includes('figma.com')) return 'figma'
   if (url.startsWith('mailto:')) return 'email'
