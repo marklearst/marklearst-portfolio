@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Footer from '@/components/Footer'
 import WorkCatalog from '@/components/WorkCatalog'
-import { MONOKAI } from '@/lib/monokai-colors'
 
 export const metadata: Metadata = {
   title: 'Work - Mark Learst',

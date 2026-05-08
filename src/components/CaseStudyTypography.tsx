@@ -52,7 +52,8 @@ export function CaseStudyMutedList({
   className,
   ...rest
 }: CaseStudyMutedListProps) {
-  const baseClasses = 'ml-6 list-disc [&_strong]:text-white'
+  const baseClasses =
+    'mt-4 ml-6 list-disc space-y-2 [&_strong]:text-white [&_ul]:mt-3 [&_ul]:space-y-2'
   const classes = className ? `${baseClasses} ${className}` : baseClasses
 
   return (
