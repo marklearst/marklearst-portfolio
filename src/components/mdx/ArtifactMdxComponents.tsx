@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from 'react'
 import { isValidElement } from 'react'
+import Image from 'next/image'
 import CodeBlock from '@/components/CodeBlock'
 import { CaseStudyMutedList, CaseStudyParagraph } from '@/components/CaseStudyTypography'
 import { MONOKAI } from '@/lib/monokai-colors'
@@ -71,8 +72,23 @@ const ArtifactLink = ({
 
 const baseArtifactMdxComponents = {
   p: CaseStudyParagraph,
+  img: ({ src, alt, className, title }: ComponentPropsWithoutRef<'img'>) => {
+    if (!src || typeof src !== 'string') return null
+
+    return (
+      <Image
+        src={src}
+        alt={alt ?? ''}
+        title={title}
+        width={1600}
+        height={900}
+        sizes='100vw'
+        className={`mt-6 mb-2 h-auto w-full rounded-[8px] ${className ?? ''}`}
+      />
+    )
+  },
   ul: (props: ComponentPropsWithoutRef<'ul'>) => (
-    <CaseStudyMutedList className='space-y-2' {...props} />
+    <CaseStudyMutedList className='space-y-3' {...props} />
   ),
   h2: ArtifactHeading,
   h3: ArtifactSubheading,
