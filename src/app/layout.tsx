@@ -16,9 +16,11 @@ import AnalyticsManager from '@/components/AnalyticsManager'
 import NavigationHistoryTracker from '@/components/NavigationHistoryTracker'
 
 export const metadata: Metadata = {
-  title: 'Mark Learst - Senior Frontend & Design Engineer',
+  metadataBase: new URL('https://marklearst.com'),
+  title:
+    'Mark Learst | Senior Design Engineer (Design Systems, React, Accessibility, DX + AI Tooling)',
   description:
-    'Senior Frontend & Design Engineer specializing in React design systems and accessibility. Built Aurora at GM serving 4 brands with 60% component reuse. Open-source toolsmith building the stuff designers and developers actually want to use.',
+    'Senior Design Engineer focused on design systems, React + TypeScript, accessibility, and DX + AI tooling. Built Aurora at GM across 4 brands with 60% component reuse. OSS maintainer building tools designers and developers actually want to use.',
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
