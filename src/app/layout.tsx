@@ -18,9 +18,9 @@ import NavigationHistoryTracker from '@/components/NavigationHistoryTracker'
 export const metadata: Metadata = {
   metadataBase: new URL('https://marklearst.com'),
   title:
-    'Mark Learst | Senior Design Engineer (Design Systems, React, Accessibility, DX + AI Tooling)',
+    'Mark Learst | Lead IC Design Engineer (Design Systems, React, UI Arxhitecture, Accessibility, DX + AI Tooling)',
   description:
-    'Senior Design Engineer focused on design systems, React + TypeScript, accessibility, and DX + AI tooling. Built Aurora at GM across 4 brands with 60% component reuse. OSS maintainer building tools designers and developers actually want to use.',
+    'Lead IC Design Engineer focused on design systems, React + TypeScript, UI Architecture, Accessibility, and DX + AI tooling. Built Aurora at GM across 4 brands with 60% component reuse. OSS maintainer building tools designers and developers actually want to use.',
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
