@@ -92,7 +92,7 @@ export default async function Image() {
             marginBottom: '24px',
           }}
         >
-          Senior Design Engineer
+          Lead IC Design Engineer
         </div>
 
         <div
