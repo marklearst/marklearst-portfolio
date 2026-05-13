@@ -61,7 +61,7 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     loading: 'Resolving identity...',
     output: formatOutput('marklearst', true),
     packages: [
-      'Senior Design Engineer',
+      'Lead Design Engineer',
       'Agentic Workflows',
       'Claude Code ♡',
       'OSS Maintainer',

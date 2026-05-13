@@ -9,7 +9,7 @@ import { MONOKAI } from '@/lib/monokai-colors'
 export const metadata: Metadata = {
   title: 'About - Mark Learst',
   description:
-    'Background, skills, and current focus areas for Mark Learst, senior frontend engineer.',
+    'Background, skills, and current focus areas for Mark Learst, lead design engineer.',
 }
 
 const ABOUT_ACCENT = MONOKAI.cyan
@@ -19,7 +19,7 @@ const aboutContent = {
   title: 'About',
   tagline: 'Coder to the core, think like a designer.',
   summary:
-    'Senior Design Engineer who builds accessible design systems and React component libraries that teams actually want to use. I build the glue between Figma and production—tight APIs, automated pipelines, zero drift.',
+    'Lead Design Engineer who builds accessible design systems and React component libraries that teams actually want to use. I build the glue between Figma and production—tight APIs, automated pipelines, zero drift.',
 }
 
 export default function AboutPage() {
