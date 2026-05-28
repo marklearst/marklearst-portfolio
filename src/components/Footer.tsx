@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MONOKAI } from '@/lib/monokai-colors'
 import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
 import AnalyticsOptOutToggle from '@/components/ui/AnalyticsOptOutToggle'
+import AvailabilityBadge from '@/components/ui/AvailabilityBadge'
 import { usePathname } from 'next/navigation'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -246,14 +247,7 @@ export default function Footer() {
               actually want to use, and ship open-source that solves real
               problems.
             </p>
-            <div className='inline-block px-3 py-1.5 bg-white/5 border border-white/10 rounded-full'>
-              <div className='flex items-center gap-2'>
-                <div className='w-2 h-2 rounded-full animate-pulse bg-monokai-pink' />
-                <span className='font-mono text-xs text-white/60'>
-                  Unavailable for remote full-time roles
-                </span>
-              </div>
-            </div>
+            <AvailabilityBadge />
             <div className='mt-4'>
               <div className='inline-block'>
                 <SocialLink link={buyMeACoffeeLink} />
