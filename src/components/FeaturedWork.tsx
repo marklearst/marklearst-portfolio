@@ -1,131 +1,103 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FEATURED_PROJECTS, PROJECTS } from '@/data/projects'
-import ProjectCard from '@/components/FeaturedWorkCard'
-import { MONOKAI } from '@/lib/monokai-colors'
-import { useSectionViewTracking } from '@/hooks/useAnalytics'
+import { useRef } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { PROJECTS } from '@/data/projects'
+import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
+import styles from './Showcase.module.css'
 
-gsap.registerPlugin(ScrollTrigger)
+const SHOWCASES = [
+  {
+    slug: 'primitree',
+    label: 'Design token architecture',
+    title: 'primitree',
+    summary: 'Token architecture rules, Figma-export diffs that preserve identity, and DTCG, CSS, Tailwind, and TypeScript output from one pipeline.',
+    note: 'Creator & maintainer · TypeScript / CLI',
+    image: '/images/primitree-playground-tokens.jpg',
+    alt: 'Primitree Playground displaying token collections and configuration.',
+    caption: 'Primitree Playground · token configuration',
+    linkLabel: 'See how the rules become a build',
+  },
+  {
+    slug: 'a11y-companion',
+    label: 'Accessibility in the design file',
+    title: 'a11y companion',
+    summary: 'Canvas-native accessibility review for Figma and FigJam. Checklist progress, contrast evidence, and audit findings stay with the file in a refreshable Canvas Record.',
+    note: 'Creator & maintainer · 400+ users on Figma Community',
+    image: '/images/a11y-audit-browser-demo.jpg',
+    alt: 'a11y Companion browser demonstration showing token contrast audit results alongside the Canvas Record.',
+    caption: 'Product-site browser demo · token audit and Canvas Record',
+    linkLabel: 'See what makes a review go stale',
+  },
+]
 
 export default function FeaturedWork() {
-  const sectionRef = useRef<HTMLElement | null>(null)
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-  const [activeCard, setActiveCard] = useState<number | null>(null)
-
-  useSectionViewTracking({
-    ref: sectionRef as React.RefObject<HTMLElement>,
-    section: 'featured_work',
-    data: { location: 'home' },
-  })
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title reveal with split animation
-      gsap.from('.section-title', {
-        scrollTrigger: {
-          trigger: '.section-title',
-          start: 'top 95%',
-        },
-        opacity: 0,
-        y: 60,
-        duration: 1.4,
-        ease: 'expo.out',
-      })
-
-      // Subtitle reveal
-      gsap.from('.section-subtitle', {
-        scrollTrigger: {
-          trigger: '.section-subtitle',
-          start: 'top 95%',
-        },
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 0.3,
-        ease: 'expo.out',
-      })
-
-      // Cards orchestration
-      cardsRef.current.forEach((card, index) => {
-        if (card) {
-          // Initial reveal
-          gsap.from(card, {
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 99%',
-            },
-            opacity: 0,
-            y: 100,
-            rotateX: -15,
-            duration: 1.2,
-            delay: index * 0.2,
-            ease: 'expo.out',
-          })
-        }
-      })
-    }, sectionRef as React.RefObject<HTMLElement>)
-
-    return () => ctx.revert()
-  }, [])
+  const sectionRef = useRef<HTMLElement>(null)
+  const { trackCaseStudyClick } = useAnalytics()
+  useSectionViewTracking({ ref: sectionRef, section: 'featured_work', data: { location: 'home' } })
+  const trackProject = (slug: string) => {
+    const project = PROJECTS.find((item) => item.slug === slug)
+    if (!project) return
+    trackCaseStudyClick({ project: slug, category: project.category, route: project.route, source: 'featured_work' })
+  }
 
   return (
-    <section
-      id='work'
-      ref={sectionRef}
-      className='pt-32 pb-32 px-6 relative overflow-hidden'
-      style={{ backgroundColor: MONOKAI.background }}
-    >
-      {/* Monokai gradient line at top */}
-      <div className='absolute top-0 left-0 right-0 h-1'>
-        <div
-          className='w-full h-full animate-gradient-x'
-          style={{
-            background:
-              'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)',
-            backgroundSize: '200% 100%',
-          }}
-        />
-      </div>
-      {/* Atmospheric gradients */}
-      <div className='absolute inset-0'>
-        <div className='absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-[100px]' />
-        <div className='absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px]' />
-      </div>
-
-      <div className='max-w-7xl mx-auto relative z-10'>
-        {/* Section Header */}
-        <div className='mb-20'>
-          <div className='flex items-baseline gap-4 mb-4'>
-            <h2 className='section-title text-[clamp(48px,8vw,84px)] font-mono lowercase leading-none'>
-              featured work
-            </h2>
-          </div>
-          <div className='section-subtitle flex items-center gap-3 font-mono text-sm text-white/30'>
-            <span>{'//  '}</span>
-            <span>Latest projects & case studies</span>
-          </div>
+    <section id='work' ref={sectionRef} className={styles.work} aria-labelledby='selected-work-heading'>
+      <div className={styles.container}>
+        <div className={styles.sectionHeading}>
+          <h2 id='selected-work-heading'>selected work</h2>
+          <Link href='/work'>All projects <span aria-hidden='true'>↗</span></Link>
         </div>
-
-        {/* Cards Grid - Consistent spacing with equal height rows */}
-        <div className='grid lg:grid-cols-3 gap-6 auto-rows-fr'>
-          {(FEATURED_PROJECTS.length ? FEATURED_PROJECTS : PROJECTS)
-            .slice(0, 6)
-            .map((project, index) => (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-                index={index}
-                isActive={activeCard === index}
-                onHover={() => setActiveCard(index)}
-                onLeave={() => setActiveCard(null)}
-                ref={(el) => {
-                  cardsRef.current[index] = el
-                }}
-              />
-            ))}
+        {SHOWCASES.map((project, index) => (
+          <article key={project.slug} className={`${styles.project} ${index % 2 ? styles.projectReversed : ''}`}>
+            <div className={styles.projectContent}>
+              <p className={styles.projectIndex}><span>0{index + 1}</span><span>{project.label}</span></p>
+              <h3>{project.title}</h3>
+              <p className={styles.projectSummary}>{project.summary}</p>
+              <p className={styles.projectNote}>{project.note}</p>
+              <Link className={styles.caseLink} href={`/work/${project.slug}`} onClick={() => trackProject(project.slug)}>{project.linkLabel} <span aria-hidden='true'>↗</span></Link>
+            </div>
+            <figure className={styles.figure}>
+              <Link className={styles.imageLink} href={`/work/${project.slug}`} aria-label={`Explore ${project.title}`} onClick={() => trackProject(project.slug)}>
+                <Image src={project.image} alt={project.alt} width={1280} height={720} sizes='(max-width: 760px) calc(100vw - 48px), (max-width: 1360px) 55vw, 740px' />
+              </Link>
+              <figcaption className={styles.caption}>{project.caption}<span aria-hidden='true'>↗</span></figcaption>
+            </figure>
+          </article>
+        ))}
+        <article className={styles.enterprise}>
+          <div className={styles.projectContent}>
+            <p className={styles.projectIndex}><span>03</span><span>Design systems at General Motors</span></p>
+            <h3>one system.<br />four brands.</h3>
+            <p className={styles.projectSummary}>At GM, I architected Aurora for Chevrolet, Buick, GMC, and Cadillac, with 60% component reuse and a WCAG 2.1 AA accessibility target.</p>
+            <Link href='/work/aurora-gm' className={styles.caseLink} onClick={() => trackProject('aurora-gm')}>Inside Aurora <span aria-hidden='true'>↗</span></Link>
+          </div>
+          <figure className={styles.figure}>
+            <div className={styles.systemDiagram} role='img' aria-label='Conceptual Aurora architecture: Chevrolet, Buick, GMC, and Cadillac use brand-specific token themes above a shared React component layer.'>
+              <div className={styles.diagramLabel}>Aurora / system structure</div>
+              <div className={styles.brands}><span>Chevrolet</span><span>Buick</span><span>GMC</span><span>Cadillac</span></div>
+              <div className={styles.branches} />
+              <div className={styles.sharedLayer}>Brand-specific token themes</div>
+              <div className={styles.sharedLayer}>Shared React components</div>
+            </div>
+            <figcaption className={styles.diagramCaption}>Conceptual architecture diagram. The original internal interface is not shown.</figcaption>
+          </figure>
+        </article>
+        <div className={styles.practice}>
+          <div>
+            <h3>the workflow behind the work</h3>
+            <p>When work repeats, I turn it into an agent workflow with tests and human review before anything ships.</p>
+            <Link href='/artifacts/agentic-workflows' className={styles.caseLink}>Read the workflow <span aria-hidden='true'>↗</span></Link>
+          </div>
+          <ol className={styles.workflow} aria-label='Agent workflow stages'><li>Scope the task</li><li>Build & inspect</li><li>Run the checks</li><li>Human review</li></ol>
+        </div>
+        <div className={styles.moreWork}>
+          <span>More to explore</span>
+          <Link href='/work/figmavars-hooks'>FigmaVars Hooks <span aria-hidden='true'>↗</span></Link>
+          <Link href='/work/skydio'>Skydio <span aria-hidden='true'>↗</span></Link>
+          <Link href='/work/variable-design-standard'>Variable Design Standard <span aria-hidden='true'>↗</span></Link>
+          <Link href='/work/diabetic-utils'>Diabetic Utils <span aria-hidden='true'>↗</span></Link>
         </div>
       </div>
     </section>

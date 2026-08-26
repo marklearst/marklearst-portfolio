@@ -1,7 +1,7 @@
 ---
 title: 'Agentic Workflows for Design Engineers'
 slug: agentic-workflows
-summary: Configuration patterns, failure modes, and the scripts I use to orchestrate Claude Code across complex UIs. A practitioner playbook from the hybrid trenches.
+summary: Configuration patterns, failure modes, and the scripts I use to orchestrate Claude Code across complex UIs.
 tags:
   - tooling
   - ai
@@ -13,13 +13,11 @@ published_at: 2026-01-28
 pinned: false
 ---
 
-## Why This Workflow Exists
+## How I Divide the Work
 
-I've spent most of my career bridging the gap between design and engineering. Not as a generalist who knows a little of everything, but as someone who went deep on both sides, component architecture and motion design, backend contracts and interaction patterns. For a long time, that felt like an uncomfortable middle ground. Too technical for design teams. Too visual for engineering teams.
+I use Claude Code for orchestration and Cursor for visual iteration where sub-100ms feedback matters. Claude Code runs in a terminal and works in any editor or iTerm. On one feature, this combination brought the work down to 12 hours against my initial estimate of 40 hours.
 
-The industry is finally catching up. Companies building complex, stateful UIs, orchestration workflows, agentic surfaces, anything where the interaction _is_ the product, are realizing they need people who can own UX from intent to production. Design in code. Ship directly. Eliminate the handoff.
-
-This is the workflow I've developed for that kind of work. It uses Claude Code as the orchestration layer (terminal-based, works in any editor or iTerm) and Cursor for visual iteration where sub-100ms feedback matters. The combination took a feature I'd estimated at 40 hours down to 12. I'm including the parts that still break, because every article about AI workflows glosses over the friction, and friction is where the actual knowledge lives.
+I've spent most of my career working across design and engineering, going deep into component architecture and motion design, backend contracts and interaction patterns. For a long time, that felt like an uncomfortable middle ground: too technical for design teams and too visual for engineering teams. I developed this workflow for work that needs both. The configuration, scripts, and failure modes below describe how I use it and what still breaks.
 
 ## 1. The Stack: Loop and Arc
 
@@ -29,7 +27,7 @@ The mental model that finally clicked: **Loop for visual iteration, Arc for auto
 
 - **The Arc** = autonomous reasoning across files and time. Claude Code runs in a terminal, editor-agnostic. I use it for multi-file refactors, reading backend contracts, and anything where I'd otherwise lose 30 minutes to context-switching. It handles the structural work while I focus on the surface.
 
-This isn't about which tool is "better." It's about matching the tool to the cognitive mode. Some days I'm in Cursor for 8 hours because the work is entirely visual. Other days I'm orchestrating 5 Claude Code agents in parallel because I'm refactoring a design system. The mental model helps me choose.
+I choose the tool to match the kind of work in front of me. Some days I'm in Cursor for 8 hours because the work is entirely visual. Other days I'm orchestrating 5 Claude Code agents in parallel because I'm refactoring a design system. The mental model helps me choose.
 
 **Where this breaks:** Don't use Claude Code for visual polish. It will "improve" your animation by refactoring it into something "cleaner" that looks objectively worse. I learned this after it replaced a hand-tuned `expo.out` curve with `power2.inOut` because the GSAP docs mentioned it more frequently. The code was more "correct." The interaction felt dead.
 

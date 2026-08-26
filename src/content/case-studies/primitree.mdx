@@ -3,7 +3,7 @@ slug: primitree
 title: Primitree
 category: DEVELOPER TOOLS
 categoryColor: cyan
-description: "DTCG token pipeline that turns design system architecture into a checkable contract. Six packages covering a CLI, token graph, emitters for CSS, Tailwind and TypeScript, React hooks, and an MCP server."
+description: "A design token pipeline that checks architecture rules and generates CSS, Tailwind, and TypeScript."
 role: "Creator & Maintainer"
 timeline: "2025 - Present"
 technologies:
@@ -34,8 +34,14 @@ impact:
 gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
 ---
 
-<CaseStudySection title="Overview">
+<CaseStudySection title="Make token architecture enforceable">
   <div className="space-y-6">
+    <CaseStudyParagraph>
+      Token rules need to survive changes to the system: which layers hold raw
+      values, which must use references, who owns each token, and which aliases
+      a change affects. I created <strong>Primitree</strong> to put those rules
+      in configuration that a build can check.
+    </CaseStudyParagraph>
     <figure className="mb-12">
       <a href="https://primitree.com/playground" className="block rounded-[8px]">
         <Image
@@ -55,17 +61,9 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
       </figcaption>
     </figure>
     <CaseStudyParagraph>
-      I created and maintain <strong>Primitree</strong>, a DTCG token pipeline
-      that checks token architecture and generates code from design tokens.
-      Its six packages cover the CLI, token graph, emitters, React hooks, and
-      an MCP server. Version 1.0.0-next.1 is published as a prerelease. The
-      documentation, npm package, and source are linked above.
-    </CaseStudyParagraph>
-    <CaseStudyParagraph>
-      The problem is keeping token rules enforceable as a system changes:
-      which layers hold raw values, which must use references, who owns each
-      token, and which aliases a change affects. Primitree puts those rules
-      in configuration that a build can check.
+      I maintain its six packages: the CLI, token graph, emitters, React hooks,
+      and an MCP server. Version 1.0.0-next.1 is published as a prerelease.
+      The documentation, npm package, and source are linked above.
     </CaseStudyParagraph>
     <CaseStudyParagraph>
       Primitree grew out of <strong>@figma-vars/hooks</strong>, which solved
@@ -76,7 +74,7 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Implementation Decisions">
+<CaseStudySection title="Reject the token that breaks the rule">
   <div className="space-y-6">
     <CaseStudySubheading className="mt-0">Architecture as Configuration</CaseStudySubheading>
     <CaseStudyMutedText>
@@ -164,7 +162,7 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Technical Implementation">
+<CaseStudySection title="Protect the source and generated output">
   <div className="space-y-6">
     <CaseStudySubheading className="mt-0">Standards Output, Documented Extensions</CaseStudySubheading>
     <CaseStudyMutedText>

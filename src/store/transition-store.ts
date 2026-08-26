@@ -1,102 +1,48 @@
 import { create } from 'zustand'
 import { trackTerminalTransition } from '@/lib/analytics'
 
-type TransitionPhase = 'idle' | 'animating' | 'navigating'
-
 interface TransitionState {
   isTransitioning: boolean
-  phase: TransitionPhase
   targetRoute: string | null
   targetHref: string | null
-  onNavigate: (() => void) | null
   transitionKey: number
-  startTransition: (
-    route: string,
-    onNavigate: () => void,
-    href?: string,
-  ) => void
+  startTransition: (route: string, onNavigate: () => void, href?: string) => void
   completeTransition: (key?: number) => void
-  triggerNavigation: (key?: number) => void
 }
 
 export const useTransitionStore = create<TransitionState>((set, get) => ({
   isTransitioning: false,
-  phase: 'idle',
   targetRoute: null,
   targetHref: null,
-  onNavigate: null,
   transitionKey: 0,
 
-  startTransition: (route: string, onNavigate: () => void, href?: string) => {
-    set((state) => {
-      const nextKey = state.transitionKey + 1
-      if (process.env.NODE_ENV === 'development') {
-        console.log('[transition]', {
-          phase: 'start',
-          key: nextKey,
-          route,
-        })
-      }
-      trackTerminalTransition({
-        phase: 'start',
-        route,
-        transitionKey: nextKey,
-      })
-      return {
-        isTransitioning: true,
-        phase: 'animating',
-        targetRoute: route,
-        targetHref: href ?? route,
-        onNavigate,
-        transitionKey: nextKey,
-      }
+  startTransition: (route, onNavigate, href) => {
+    const transitionKey = get().transitionKey + 1
+    set({
+      isTransitioning: true,
+      targetRoute: route,
+      targetHref: href ?? route,
+      transitionKey,
     })
-  },
+    trackTerminalTransition({ phase: 'start', route, transitionKey })
+    trackTerminalTransition({ phase: 'navigate', route, transitionKey })
 
-  triggerNavigation: (key) => {
-    const { onNavigate, transitionKey, phase, targetRoute } = get()
-    if (key && key !== transitionKey) return
-    if (!onNavigate || phase === 'navigating') return
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[transition]', {
-        phase: 'navigate',
-        key: transitionKey,
-      })
+    // Navigation starts synchronously; presentation never controls when a route opens.
+    try {
+      onNavigate()
+    } catch (error) {
+      get().completeTransition(transitionKey)
+      throw error
     }
-    if (targetRoute) {
-      trackTerminalTransition({
-        phase: 'navigate',
-        route: targetRoute,
-        transitionKey,
-      })
-    }
-    set({ phase: 'navigating' })
-    onNavigate()
   },
 
   completeTransition: (key) => {
     const { transitionKey, isTransitioning, targetRoute } = get()
-    if (!isTransitioning) return
-    if (key && key !== transitionKey) return
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[transition]', {
-        phase: 'complete',
-        key: transitionKey,
-      })
-    }
+    if (!isTransitioning || (key !== undefined && key !== transitionKey)) return
+
     if (targetRoute) {
-      trackTerminalTransition({
-        phase: 'complete',
-        route: targetRoute,
-        transitionKey,
-      })
+      trackTerminalTransition({ phase: 'complete', route: targetRoute, transitionKey })
     }
-    set({
-      isTransitioning: false,
-      phase: 'idle',
-      targetRoute: null,
-      targetHref: null,
-      onNavigate: null,
-    })
+    set({ isTransitioning: false, targetRoute: null, targetHref: null })
   },
 }))

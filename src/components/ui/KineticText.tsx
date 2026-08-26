@@ -1,72 +1,46 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, type CSSProperties } from 'react'
 import { gsap } from 'gsap'
 
 interface KineticTextProps {
   text: string
   className?: string
-  style?: React.CSSProperties
+  style?: CSSProperties
 }
 
-export default function KineticText({
-  text,
-  className = '',
-  style,
-}: KineticTextProps) {
+export default function KineticText({ text, className = '', style }: KineticTextProps) {
   const containerRef = useRef<HTMLSpanElement>(null)
-
-  const handleMouseEnter = () => {
-    if (!containerRef.current) return
-
-    const chars = containerRef.current.querySelectorAll('.kinetic-char')
-    chars.forEach((char, i) => {
-      gsap.to(char, {
-        x: i * 1.3, // Spread characters apart using transform (GPU-accelerated)
-        duration: 0.4,
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    const media = gsap.matchMedia()
+    media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+      const chars = container.querySelectorAll('.kinetic-char')
+      const move = (expanded: boolean) => gsap.to(chars, {
+        y: (index: number) => expanded ? Math.sin(index * 0.65) * -5 : 0,
+        duration: expanded ? 0.35 : 0.25,
         ease: 'power2.out',
-        delay: i * 0.015,
+        overwrite: 'auto',
       })
+      const enter = () => { move(true) }
+      const leave = () => { move(false) }
+      container.addEventListener('pointerenter', enter)
+      container.addEventListener('pointerleave', leave)
+      return () => {
+        container.removeEventListener('pointerenter', enter)
+        container.removeEventListener('pointerleave', leave)
+        gsap.killTweensOf(chars)
+        gsap.set(chars, { clearProps: 'transform' })
+      }
     })
-  }
-
-  const handleMouseLeave = () => {
-    if (!containerRef.current) return
-
-    const chars = containerRef.current.querySelectorAll('.kinetic-char')
-    chars.forEach((char, i) => {
-      gsap.to(char, {
-        x: 0,
-        duration: 0.3,
-        ease: 'power2.inOut',
-        delay: i * 0.008,
-      })
-    })
-  }
+    return () => media.revert()
+  }, [])
 
   return (
-    <span
-      ref={containerRef}
-      className={className}
-      style={style}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {text.split('').map((char, i) => (
-        // Wrapper provides the clip-path mask for reveal animation
-        // pb-[0.15em] prevents descender clipping, pt for ascenders
-        <span
-          key={i}
-          className='inline-block overflow-hidden align-bottom'
-          style={{ paddingBottom: '0.15em', paddingTop: '0.05em' }}
-        >
-          <span
-            className='kinetic-char inline-block'
-            style={{ willChange: 'transform' }}
-          >
-            {char}
-          </span>
-        </span>
+    <span ref={containerRef} className={className} style={style}>
+      {text.split('').map((char, index) => (
+        <span key={index} className='kinetic-char inline-block'>{char === ' ' ? '\u00a0' : char}</span>
       ))}
     </span>
   )

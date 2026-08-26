@@ -1,18 +1,21 @@
 'use client'
 
-import { isValidElement, useEffect, useMemo, useRef, ReactNode } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import {
+  isValidElement,
+  useEffect,
+  useMemo,
+  useRef,
+  type CSSProperties,
+  type ReactNode,
+} from 'react'
 import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
 import { getCategoryColor, getCategoryIcon } from '@/lib/project-categories'
-import { MONOKAI } from '@/lib/monokai-colors'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
 import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
 import { CaseStudySection as CaseStudySectionMarker } from '@/components/CaseStudySection'
-
-gsap.registerPlugin(ScrollTrigger)
+import styles from './CaseStudyLayout.module.css'
 
 interface CaseStudySectionData {
   title: string
@@ -61,17 +64,11 @@ export default function CaseStudyLayout({
   } = useAnalytics()
   const pathname = usePathname()
   const projectSlug = pathname.split('/').pop() || 'unknown'
-  const pageRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLElement | null>(null)
   const categoryTone = getCategoryColor(categoryColor)
-  const categoryRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const descriptionRef = useRef<HTMLParagraphElement>(null)
-  const metaRefs = useRef<Array<HTMLDivElement | null>>([])
-  const linksRef = useRef<HTMLDivElement>(null)
   const linkRefs = useRef<Array<HTMLAnchorElement | null>>([])
   const impactRefs = useRef<Array<HTMLDivElement | null>>([])
-  const sectionRefs = useRef<Array<HTMLDivElement | null>>([])
+  const sectionRefs = useRef<Array<HTMLElement | null>>([])
   const impactSectionRef = useRef<HTMLElement | null>(null)
   const trackedLinkImpressionsRef = useRef<Set<number>>(new Set())
   const trackedImpactViewsRef = useRef<Set<number>>(new Set())
@@ -250,7 +247,7 @@ export default function CaseStudyLayout({
           })
         })
       },
-      { threshold: 0.55 },
+      { threshold: 0, rootMargin: '-15% 0px -35% 0px' },
     )
 
     sectionRefs.current.forEach((node) => {
@@ -268,432 +265,214 @@ export default function CaseStudyLayout({
   ])
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Hero animations
-      const tl = gsap.timeline({ delay: 0.2 })
-      const categoryEl = categoryRef.current
-      const titleEl = titleRef.current
-      const descriptionEl = descriptionRef.current
-      const metaEls = [...metaRefs.current, linksRef.current].filter(
-        (item): item is HTMLDivElement => Boolean(item),
-      )
-      const contentSections = [
-        impactSectionRef.current,
-        ...sectionRefs.current,
-      ].filter((item): item is HTMLElement => Boolean(item))
-
-      if (!categoryEl || !titleEl || !descriptionEl) {
-        return
-      }
-
-      tl.fromTo(
-        categoryEl,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
-      )
-
-      tl.fromTo(
-        titleEl,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
-        '-=0.4',
-      )
-
-      tl.fromTo(
-        descriptionEl,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
-        '-=0.4',
-      )
-
-      if (metaEls.length > 0) {
-        tl.fromTo(
-          metaEls,
-          { opacity: 0, y: 15 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'power2.out',
-          },
-          '-=0.3',
-        )
-      }
-
-      // Section reveals
-      contentSections.forEach((section) => {
-        gsap.set(section, { y: 100 })
-        gsap.to(section, {
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 90%',
-            once: true,
-          },
-          autoAlpha: 1,
-          y: 0,
-          duration: 1,
-          ease: 'power3.out',
+    const seen = new Set<number>()
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const index = sectionRefs.current.findIndex(
+            (node) => node === entry.target,
+          )
+          if (index === -1 || seen.has(index)) return
+          seen.add(index)
+          trackCaseStudySectionView({
+            project: projectSlug,
+            section: resolvedSections[index]?.title ?? `section_${index + 1}`,
+            index,
+          })
+          observer.unobserve(entry.target)
         })
-      })
-
-      sectionRefs.current.forEach((section, index) => {
-        if (!section) return
-        const sectionTitle =
-          resolvedSections[index]?.title ?? `section_${index + 1}`
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top 92%',
-          once: true,
-          onEnter: () => {
-            trackCaseStudySectionView({
-              project: projectSlug,
-              section: sectionTitle,
-              index,
-            })
-          },
-        })
-      })
-    }, pageRef)
-
-    return () => ctx.revert()
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    )
+    sectionRefs.current.forEach((section) => {
+      if (section) observer.observe(section)
+    })
+    return () => observer.disconnect()
   }, [projectSlug, resolvedSections, trackCaseStudySectionView])
+
+  const sectionId = (index: number) => `case-study-section-${index + 1}`
+  const renderSection = (section: CaseStudySectionData, index: number) => (
+    <section
+      key={sectionId(index)}
+      id={sectionId(index)}
+      aria-labelledby={`${sectionId(index)}-heading`}
+      ref={(node) => {
+        sectionRefs.current[index] = node
+      }}
+      className={styles.section}
+    >
+      <div className={styles.sectionHeading}>
+        <span className={styles.sectionNumber} aria-hidden='true'>
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <h2 id={`${sectionId(index)}-heading`}>{section.title}</h2>
+      </div>
+      <div className={`prose prose-invert max-w-none ${styles.content}`}>
+        {section.content}
+      </div>
+    </section>
+  )
 
   return (
     <div
-      ref={pageRef}
-      className='min-h-screen'
+      className={styles.page}
+      style={{ '--case-accent': categoryTone } as CSSProperties}
     >
-      {/* Hero Section */}
-      <section
-        ref={heroRef}
-        className='relative pt-40 pb-20 px-6 overflow-hidden'
-      >
-        {/* Background gradient */}
-        <div className='absolute inset-0 opacity-20'>
+      <main id='main-content'>
+        <section ref={heroRef} className={styles.hero} aria-labelledby='case-study-title'>
           <div
-            className={`absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] bg-linear-to-br ${gradient}`}
+            aria-hidden='true'
+            className={`absolute inset-0 pointer-events-none bg-linear-to-br ${gradient}`}
           />
-        </div>
-
-        <div className='max-w-5xl mx-auto relative z-10'>
-          {/* Back button */}
-          <Link
-            href='/work'
-            onClick={() => {
-              trackNavigationClick({
-                action: 'back_to_work',
-                from: pathname,
-                to: '/work',
-                location: 'top',
-              })
-            }}
-            className='inline-flex items-center gap-2 mb-12 font-mono text-sm transition-colors duration-300 group'
-            style={{ color: `${MONOKAI.foreground}80` }}
-          >
-            <svg
-              className='w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M10 19l-7-7m0 0l7-7m-7 7h18'
-              />
-            </svg>
-            Back to work
-          </Link>
-
-          {/* Category */}
-          <div
-            ref={categoryRef}
-            className='flex items-center gap-3 mb-6 opacity-0'
-          >
-            <div style={{ color: categoryTone }}>
-              {getCategoryIcon(category)}
-            </div>
-            <span
-              className='text-xs font-mono uppercase tracking-wider'
-              style={{ color: categoryTone }}
-            >
-              {category}
-            </span>
-          </div>
-
-          {/* Title */}
-          <h1
-            ref={titleRef}
-            className='text-[clamp(48px,8vw,96px)] font-mono font-bold! lowercase leading-[0.9] mb-8 opacity-0'
-            style={{ color: MONOKAI.foreground }}
-          >
-            {title}
-          </h1>
-
-          {/* Description */}
-          <p
-            ref={descriptionRef}
-            className='text-[clamp(20px,2.5vw,28px)] leading-relaxed mb-16 max-w-3xl opacity-0'
-            style={{ color: `${MONOKAI.foreground}cc` }}
-          >
-            {description}
-          </p>
-
-          {/* Meta Grid */}
-          <div className='grid md:grid-cols-3 gap-8 mb-12'>
-            <div
-              ref={(node) => {
-                metaRefs.current[0] = node
+          <div className={`${styles.container} relative`}>
+            <Link
+              href='/work'
+              className={styles.backLink}
+              onClick={() => {
+                trackNavigationClick({
+                  action: 'back_to_work',
+                  from: pathname,
+                  to: '/work',
+                  location: 'top',
+                })
               }}
-              className='opacity-0'
             >
-              <div
-                className='text-xs font-mono uppercase tracking-wider mb-2'
-                style={{ color: `${MONOKAI.foreground}50` }}
-              >
-                Role
-              </div>
-              <div
-                className='text-base font-mono'
-                style={{ color: `${MONOKAI.foreground}cc` }}
-              >
-                {role}
-              </div>
+              <span aria-hidden='true'>←</span> All work
+            </Link>
+
+            <div className={styles.category}>
+              <span className={styles.headingAccent} aria-hidden='true' />
+              <span aria-hidden='true'>{getCategoryIcon(category)}</span>
+              <span>{category}</span>
             </div>
+            <h1 id='case-study-title' className={styles.title}>{title}</h1>
+            <p className={styles.description}>{description}</p>
 
-            <div
-              ref={(node) => {
-                metaRefs.current[1] = node
-              }}
-              className='opacity-0'
-            >
-              <div
-                className='text-xs font-mono uppercase tracking-wider mb-2'
-                style={{ color: `${MONOKAI.foreground}50` }}
-              >
-                Timeline
+            <dl className={styles.meta}>
+              <div>
+                <dt>Role</dt>
+                <dd>{role}</dd>
               </div>
-              <div
-                className='text-base font-mono'
-                style={{ color: `${MONOKAI.foreground}cc` }}
-              >
-                {timeline}
+              <div>
+                <dt>Timeline</dt>
+                <dd>{timeline}</dd>
               </div>
-            </div>
+              <div>
+                <dt>Built with</dt>
+                <dd className={styles.technologies}>
+                  {technologies.map((tech) => <span key={tech}>{tech}</span>)}
+                </dd>
+              </div>
+            </dl>
 
-            <div
-              ref={(node) => {
-                metaRefs.current[2] = node
-              }}
-              className='opacity-0'
-            >
-              <div
-                className='text-xs font-mono uppercase tracking-wider mb-2'
-                style={{ color: `${MONOKAI.foreground}50` }}
-              >
-                Technologies
-              </div>
-              <div className='flex flex-wrap gap-2'>
-                {technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className='px-2 py-1 text-xs font-mono rounded'
-                    style={{
-                      backgroundColor: `${categoryTone}20`,
-                      color: categoryTone,
-                    }}
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Links */}
-          {links.length > 0 && (
-            <div ref={linksRef} className='flex flex-wrap gap-4 opacity-0'>
-              {links.map((link, index) => {
-                const isDisabled = !link.href || link.href === ''
-
-                return (
-                  <a
-                    key={link.label}
-                    ref={(node) => {
-                      linkRefs.current[index] = node
-                    }}
-                    href={isDisabled ? undefined : link.href}
-                    target={isDisabled ? undefined : '_blank'}
-                    rel={isDisabled ? undefined : 'noopener noreferrer'}
-                    className='inline-flex items-center gap-2 px-4 py-2 font-mono text-sm rounded-lg transition-all duration-300'
-                    style={{
-                      backgroundColor: `${categoryTone}20`,
-                      color: categoryTone,
-                      border: `1px solid ${categoryTone}40`,
-                      opacity: isDisabled ? 0.5 : 1,
-                      cursor: isDisabled ? 'not-allowed' : 'pointer',
-                      transform: isDisabled ? 'none' : undefined,
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isDisabled) {
-                        e.currentTarget.style.transform = 'scale(1.05)'
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isDisabled) {
-                        e.currentTarget.style.transform = 'scale(1)'
-                      }
-                    }}
-                    onClick={(e) => {
-                      if (isDisabled) {
-                        e.preventDefault()
-                      } else {
+            {links.length > 0 && (
+              <div className={styles.links}>
+                {links.map((link, index) => {
+                  if (!link.href) {
+                    return (
+                      <span key={link.label} className={styles.disabledLink}>
+                        {link.icon}{link.label}
+                      </span>
+                    )
+                  }
+                  return (
+                    <a
+                      key={link.label}
+                      ref={(node) => {
+                        linkRefs.current[index] = node
+                      }}
+                      href={link.href}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className={styles.projectLink}
+                      onClick={() => {
                         trackCaseStudyLinkClick({
                           label: link.label,
                           href: link.href,
                           project: projectSlug,
                           linkType: getLinkTypeFromUrl(link.href),
                         })
-                      }
-                    }}
-                  >
-                    {link.icon}
-                    {link.label}
-                  </a>
-                )
-              })}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Impact Section */}
-      {impact && impact.length > 0 && (
-        <section ref={impactSectionRef} className='py-6 px-6 opacity-0'>
-          {/* Subtle divider line matching content width */}
-          <div className='max-w-5xl mx-auto mb-6'>
-            <div
-              className='h-px w-full'
-              style={{ backgroundColor: `${MONOKAI.foreground}15` }}
-            />
-          </div>
-          <div className='max-w-5xl mx-auto'>
-            <h2
-              className='text-sm font-mono uppercase tracking-wider mb-4'
-              style={{ color: `${MONOKAI.foreground}50` }}
-            >
-              Impact
-            </h2>
-            <div className='grid md:grid-cols-3 gap-6'>
-              {impact.map((item, index) => (
-                <div
-                  key={index}
-                  ref={(node) => {
-                    impactRefs.current[index] = node
-                  }}
-                >
-                  {/* was text-[clamp(32px,5vw,48px)] */}
-                  <div
-                    className='text-[clamp(28px,4vw,42px)] font-mono font-bold mb-3'
-                    style={{ color: categoryTone }}
-                  >
-                    {item.metric}
-                  </div>
-                  <p
-                    className='text-sm leading-relaxed'
-                    style={{ color: `${MONOKAI.foreground}80` }}
-                  >
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Bottom divider line matching content width */}
-          <div className='max-w-5xl mx-auto mt-6'>
-            <div
-              className='h-px w-full'
-              style={{ backgroundColor: `${MONOKAI.foreground}15` }}
-            />
+                      }}
+                    >
+                      {link.icon}
+                      {link.label}
+                      <span className={styles.externalArrow} aria-hidden='true'>↗</span>
+                    </a>
+                  )
+                })}
+              </div>
+            )}
           </div>
         </section>
-      )}
 
-      {/* Content Sections */}
-      <section className='py-8 px-6'>
-        <div className='max-w-5xl mx-auto space-y-10'>
-          {resolvedSections.map((section, index) => (
-            <div
-              key={index}
-              ref={(node) => {
-                sectionRefs.current[index] = node
-              }}
-              className='opacity-0'
-            >
-              <h2
-                className='text-[clamp(28px,4vw,42px)] font-mono lowercase mb-8'
-                style={{ color: MONOKAI.foreground }}
+        <div className={styles.body}>
+          <div className={styles.container}>
+            {resolvedSections[0] && renderSection(resolvedSections[0], 0)}
+
+            {impact && impact.length > 0 && (
+              <section
+                ref={impactSectionRef}
+                className={styles.impact}
+                aria-labelledby='case-study-facts'
               >
-                {section.title}
-              </h2>
-              <div
-                className='prose prose-invert max-w-none'
-                style={{ color: `${MONOKAI.foreground}cc` }}
+                <h2 id='case-study-facts' className={styles.eyebrow}>At a glance</h2>
+                <div className={styles.impactGrid}>
+                  {impact.map((item, index) => (
+                    <div
+                      key={`${item.metric}-${index}`}
+                      ref={(node) => {
+                        impactRefs.current[index] = node
+                      }}
+                    >
+                      <p className={styles.metric}>{item.metric}</p>
+                      <p className={styles.metricDescription}>{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {resolvedSections.length > 2 && (
+              <details className={styles.contents}>
+                <summary>In this case study <span aria-hidden='true'>↓</span></summary>
+                <nav aria-label={`${title} case study contents`}>
+                  <ol>
+                    {resolvedSections.map((section, index) => (
+                      <li key={sectionId(index)}>
+                        <a href={`#${sectionId(index)}`}>
+                          <span aria-hidden='true'>{String(index + 1).padStart(2, '0')}</span>
+                          {section.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </nav>
+              </details>
+            )}
+
+            {resolvedSections.slice(1).map((section, index) => renderSection(section, index + 1))}
+
+            <nav className={styles.endNavigation} aria-label='More projects'>
+              <Link
+                href='/work'
+                className={styles.projectLink}
+                onClick={() => {
+                  trackNavigationClick({
+                    action: 'back_to_work',
+                    from: pathname,
+                    to: '/work',
+                    location: 'bottom',
+                  })
+                }}
               >
-                {section.content}
-              </div>
-            </div>
-          ))}
+                <span aria-hidden='true'>←</span> View all work
+              </Link>
+              <a href='#case-study-title' className={styles.backLink}>Back to top ↑</a>
+            </nav>
+          </div>
         </div>
-      </section>
-
-      {/* Navigation Footer */}
-      <section className='py-16 px-6'>
-        {/* Subtle divider line matching content width */}
-        <div className='max-w-5xl mx-auto mb-16'>
-          <div
-            className='h-px w-full'
-            style={{ backgroundColor: `${MONOKAI.foreground}10` }}
-          />
-        </div>
-        <div className='max-w-5xl mx-auto flex justify-center'>
-          <Link
-            href='/work'
-            onClick={() => {
-              trackNavigationClick({
-                action: 'back_to_work',
-                from: pathname,
-                to: '/work',
-                location: 'bottom',
-              })
-            }}
-            className='inline-flex items-center gap-2 px-6 py-3 font-mono text-sm rounded-lg transition-all duration-300 hover:scale-105'
-            style={{
-              backgroundColor: `${MONOKAI.foreground}10`,
-              color: MONOKAI.foreground,
-            }}
-          >
-            <svg
-              className='w-4 h-4'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M10 19l-7-7m0 0l7-7m-7 7h18'
-              />
-            </svg>
-            View all work
-          </Link>
-        </div>
-      </section>
-
-      {/* Footer */}
+      </main>
       <Footer />
     </div>
   )

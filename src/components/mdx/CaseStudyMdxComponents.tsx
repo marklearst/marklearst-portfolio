@@ -3,6 +3,7 @@ import type { MDXComponents } from 'mdx/types'
 import { isValidElement } from 'react'
 import Image from 'next/image'
 import CodeBlock from '@/components/CodeBlock'
+import GlucoseDemo from '@/components/glucose/GlucoseDemo'
 import { CaseStudySection } from '@/components/CaseStudySection'
 import {
   CaseStudyMutedList,
@@ -69,6 +70,7 @@ export const createCaseStudyMdxComponents = (accent: string): MDXComponents => {
     CaseStudyParagraph,
     CaseStudyMutedList,
     CodeBlock,
+    GlucoseDemo,
     Image,
     p: Paragraph,
     // Passthrough anchor - prevents MDX from double-wrapping links

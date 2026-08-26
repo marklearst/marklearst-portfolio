@@ -4,6 +4,7 @@
   "private": true,
   "packageManager": "pnpm@11.24.0",
   "engines": {
+    "node": ">=24",
     "pnpm": ">=11"
   },
   "scripts": {
@@ -16,6 +17,8 @@
   },
   "dependencies": {
     "@figma-vars/hooks": "^4.0.0",
+    "@glucoseiq/core": "1.0.0-next.0",
+    "@glucoseiq/testing": "1.0.0-next.0",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.1.1",
