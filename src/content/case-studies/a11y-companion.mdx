@@ -3,51 +3,58 @@ slug: a11y-companion
 title: a11y Companion
 category: ACCESSIBILITY
 categoryColor: green
-description: "Figma widget bringing The A11Y Project Checklist into design workflows. 200+ active users across design teams with WCAG 2.2 tooltips, progress tracking, bulk actions, and MD/HTML/JSON export capabilities."
+description: "Canvas-native accessibility review workflow for Figma and FigJam. v3.0.0 pairs The A11Y Project Checklist with live contrast inspection, three on-canvas audits, native Dev Mode annotations, evidence-bound sign-off, and a canonical Canvas Record."
 role: "Creator & Maintainer"
 timeline: "2023 - Present"
 technologies:
   - Figma Widget API
   - TypeScript
   - WCAG 2.2
-  - React
-  - Figma Design
+  - TanStack Start
+  - Design Tokens
   - Accessibility
 links:
   - label: Figma Community
     href: https://www.figma.com/community/widget/1509302611418259130/a11y-companion
     icon: figma
+  - label: Product Site
+    href: https://marklearst.me/a11y-companion-widget/
+    icon: external
   - label: GitHub
     href: https://github.com/marklearst/a11y-companion-widget
     icon: github
 impact:
-  - metric: "200+"
-    description: "Active users across design teams at companies of all sizes"
-  - metric: "WCAG 2.2"
-    description: "Complete checklist coverage with tooltips explaining each criterion"
-  - metric: "Open Source"
-    description: "Published on Figma Community and GitHub for the a11y community"
+  - metric: "400+"
+    description: "Active users on Figma Community across design teams at companies of all sizes"
+  - metric: "20 locales"
+    description: "Checklist and interface translated through a term-protected pipeline"
+  - metric: "v3.0.0"
+    description: "Audit platform, native annotations, and evidence-bound sign-off"
 gradient: from-green-500/20 via-emerald-500/10 to-transparent
 ---
 
 <CaseStudySection title="The Problem">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      Designers working on accessible interfaces faced a fundamental workflow
-      challenge: accessibility checklists lived outside their design tools. This
-      created:
+      The first version of a11y Companion solved a workflow problem: The A11Y
+      Project Checklist lived on a website, and designers needed it inside the
+      file they were working in. That version worked, and teams adopted it.
+      Using it surfaced a harder problem.
+    </CaseStudyParagraph>
+    <CaseStudyParagraph>
+      A checked box is a claim, not a measurement. Nothing in the widget knew
+      whether the file actually met the criterion beside the checkmark.
     </CaseStudyParagraph>
     <CaseStudyMutedList className="space-y-3">
-      <li>Context switching between Figma and external WCAG documentation</li>
-      <li>No way to track accessibility progress directly in design files</li>
-      <li>Accessibility often forgotten until developer handoff or QA</li>
-      <li>Teams reinventing accessibility checklists for each project</li>
-      <li>Designers unsure which WCAG criteria applied to their designs</li>
+      <li>Teams could complete a checklist against a file that failed contrast</li>
+      <li>Findings lived in the widget and never reached the canvas or Dev Mode</li>
+      <li>A completed review left no durable record once the file moved on</li>
+      <li>Approvals had no way to expire when the design changed underneath them</li>
+      <li>Nothing exported in a form a developer or auditor could act on</li>
     </CaseStudyMutedList>
     <CaseStudyParagraph>
-      The A11Y Project had a comprehensive accessibility checklist, but it was a
-      website--designers needed this information embedded in their design
-      workflow, not a browser tab away.
+      Version 3.0.0 keeps the checklist and gives every item a way to be
+      measured, annotated, signed, and recorded.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
@@ -55,133 +62,155 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
 <CaseStudySection title="The Solution">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      <strong>a11y Companion</strong> is a Figma widget that embeds The A11Y
-      Project Checklist directly into design files, making accessibility a
-      first-class citizen in the design process.
+      <strong>a11y Companion 3.0.0</strong> turns the widget from a checklist
+      into a review workflow that produces evidence.
     </CaseStudyParagraph>
 
-    <CaseStudySubheading>Interactive Checklist</CaseStudySubheading>
+    <CaseStudySubheading className="mt-0">On-Canvas Audits</CaseStudySubheading>
     <CaseStudyMutedText>
-      Built a widget interface that presents the full A11Y Project Checklist
-      with:
+      Three audits run directly against the selected canvas scope, sharing a
+      capped 25-finding slot with failures sorted ahead of warnings. Counts stay
+      truthful past the cap rather than reporting only what fits.
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Check/uncheck functionality to track completed items</li>
-      <li>Progress indicator showing completion percentage</li>
-      <li>Category organization (Content, Design, Development, etc.)</li>
-      <li>WCAG 2.2 tooltips explaining each criterion on hover</li>
-      <li>Persistent state saved with the Figma file</li>
+      <li>Targets: fails below 24px per WCAG 2.5.8, warns below 44px, with a 2000-node traversal budget</li>
+      <li>Text: per-segment font size, line height, justification, line length, and all-caps checks</li>
+      <li>Tokens: local variable collections across modes, alias chains resolved to depth 10, alpha-composited ratios</li>
+      <li>Per-finding Jump to select and zoom the offending layer</li>
+      <li>Severity glyphs that never rely on color alone</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Search & Filtering</CaseStudySubheading>
+    <CaseStudySubheading>Contrast Inspection That Refuses False Confidence</CaseStudySubheading>
     <CaseStudyMutedText>
-      Designed search functionality allowing designers to quickly find relevant
-      accessibility criteria:
+      Watch mode re-checks the selected layer on every selection change through a
+      keep-alive bridge. Ownership is shared state with last-writer-wins takeover,
+      so the team can see who is driving.
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Real-time search across all checklist items</li>
-      <li>Filter by category (Content, Design, Development, QA)</li>
-      <li>Filter by completion status (completed, incomplete, all)</li>
-      <li>Keyboard shortcuts for power users</li>
+      <li>Thresholds evaluated at full precision, so a borderline pair cannot round into a pass</li>
+      <li>A failing pair keeps an honest specimen while a separate line states the verdict</li>
+      <li>Color vision preview for protanopia, deuteranopia, and tritanopia, labeled as simulation</li>
+      <li>WCAG contrast stays the normative result; the preview never issues a second grade</li>
+      <li>Explicit notices for pattern, shader, and video fills instead of a silent failure</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Bulk Actions</CaseStudySubheading>
+    <CaseStudySubheading>Native Annotations and Canvas Record</CaseStudySubheading>
     <CaseStudyMutedText>
-      Added productivity features for managing checklists at scale:
+      Findings leave the widget and become artifacts the rest of the team already
+      knows how to read.
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Mark all items complete/incomplete in one action</li>
-      <li>Reset checklist to start fresh on new projects</li>
-      <li>Bulk select items by category</li>
+      <li>Audit findings promote to Figma Dev Mode annotations, individually or in bulk</li>
+      <li>Read-modify-write preserves existing annotations and stays idempotent on re-run</li>
+      <li>Annotations link the relevant WCAG Understanding page and cite the properties that failed</li>
+      <li>Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame</li>
+      <li>Re-running Record refreshes the same widget-owned frame instead of creating duplicates</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Export Capabilities</CaseStudySubheading>
+    <CaseStudySubheading>Sign-Off Bound to Evidence</CaseStudySubheading>
     <CaseStudyMutedText>
-      Built export functionality for sharing progress with teams:
+      A section can be signed by a named reviewer, and the signature fingerprints
+      what was actually reviewed: item ids, completion state, and checklist
+      revision. When items change underneath a signed section, the stamp turns
+      amber and the section reads as needing re-review.
     </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Markdown export for documentation</li>
-      <li>HTML export for standalone pages</li>
-      <li>JSON export for programmatic use</li>
-      <li>Copy to clipboard for quick sharing</li>
-    </CaseStudyMutedList>
 
-    <CaseStudySubheading>Dark Mode Support</CaseStudySubheading>
+    <CaseStudySubheading>Portable Reports</CaseStudySubheading>
     <CaseStudyMutedText>
-      Implemented theme detection that matches Figma's interface mode, ensuring
-      the widget is comfortable to use in any environment.
+      Export as Markdown, CSV, or JSON. Reports carry run owner and time, scope,
+      full counts, grouped evidence, and an explicit disclosure when rows are
+      representative rather than complete.
     </CaseStudyMutedText>
   </div>
 </CaseStudySection>
 
 <CaseStudySection title="Technical Implementation">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">Figma Widget API</CaseStudySubheading>
+    <CaseStudySubheading className="mt-0">Working Against the Widget Runtime</CaseStudySubheading>
     <CaseStudyMutedText>
-      Built using Figma's Widget API with React-like components:
+      Most of the hard bugs in v3 came from the runtime behaving differently than
+      the API surface suggests:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>State management using Figma's widget storage API</li>
-      <li>Custom UI components matching Figma's design system</li>
-      <li>Event handling for checkbox toggles and search input</li>
-      <li>Performance optimized for rendering 100+ checklist items</li>
+      <li>Empty spacer AutoLayouts default to 100px tall, silently inflating every badge and chip row until each spacer pinned <code>height=0</code></li>
+      <li>Module memory is cleared between interactions, so a two-click confirm never reached its second click; pending state moved to <code>figma.clientStorage</code></li>
+      <li>Watch ownership needed the durable <code>sessionId</code> rather than in-memory identity to survive the same reset</li>
+      <li>Export and clipboard access run through a hidden iframe bridge, since the widget sandbox has neither</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>WCAG 2.2 Integration</CaseStudySubheading>
+    <CaseStudySubheading>Tuning the Token Audit on Real Files</CaseStudySubheading>
     <CaseStudyMutedText>
-      Mapped each checklist item to specific WCAG 2.2 success criteria:
+      Early token pairing matched on names containing "text" and "bg". Testing
+      against Vercel's Geist file showed why that fails: ramp-named systems use
+      <code>gray/100</code> through <code>gray/1000</code>, and the audit was
+      checking roughly twelve pairs. It now infers role from the trailing numeric
+      step, reading high steps as ink and pairing them against low steps and
+      explicit surfaces in the same family, with the pair cap raised to 800.
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>Enforced Design System</CaseStudySubheading>
+    <CaseStudyMutedText>
+      The widget's own design system is checked by scripts rather than
+      convention, and the checks run in lint:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Tooltips explaining the "why" behind each item</li>
-      <li>Links to official WCAG documentation</li>
-      <li>Conformance level indicators (A, AA, AAA)</li>
-      <li>Context about which roles should address each item</li>
+      <li>Variable architecture and design-system conformance checks</li>
+      <li>Automated AA contrast verification across the token set with shade-step suggestions</li>
+      <li>Theme baseline snapshots that fail on unreviewed drift</li>
+      <li>Bundle size budgets, kept under ceiling by minifying syntax while preserving identifiers</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Community Publishing</CaseStudySubheading>
-    <CaseStudyMutedText>Published to Figma Community with:</CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Detailed README with usage instructions</li>
-      <li>Screenshots demonstrating key features</li>
-      <li>Version history and changelog</li>
-      <li>Open-source license on GitHub for contributions</li>
-    </CaseStudyMutedList>
+    <CaseStudySubheading>Translation Pipeline</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Twenty locales are generated through a pipeline that shields WCAG codes and
+      inline markup from machine translation. Missing keys fall back to English
+      per key, so a newly shipped command renders in English rather than as a
+      blank menu item while its translations are reviewed.
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>Product Site Parity</CaseStudySubheading>
+    <CaseStudyMutedText>
+      The product site is statically prerendered and gated by a Chrome-based
+      check that exercises audit interactions and control geometry at 390, 768,
+      1000, and 1440px. The site's inspector demo is held to the production
+      widget's exact specimen size, card inset, and vision grid.
+    </CaseStudyMutedText>
   </div>
 </CaseStudySection>
 
 <CaseStudySection title="Impact & Adoption">
   <div className="space-y-6">
-    <CaseStudyParagraph>a11y Companion has changed how design teams approach accessibility:</CaseStudyParagraph>
+    <CaseStudyParagraph>
+      The widget has 400+ users across teams from startups to Fortune 500
+      enterprises, and v3 changes what those teams can prove:
+    </CaseStudyParagraph>
     <CaseStudyMutedList className="space-y-4">
       <li>
-        <strong>200+ active users</strong> across companies ranging from startups
-        to Fortune 500 enterprises
+        <strong>Accessibility work becomes measurable</strong> rather than
+        self-reported, because audits run against the file instead of a checkbox
       </li>
       <li>
-        <strong>Accessibility shifts left</strong> by embedding WCAG criteria
-        directly in design workflows
+        <strong>Findings reach engineering</strong> through native Dev Mode
+        annotations that carry the WCAG reference and the failing property
       </li>
       <li>
-        <strong>Progress tracking</strong> gives teams visibility into
-        accessibility coverage before development
+        <strong>Reviews survive the file</strong> as a Canvas Record and as
+        Markdown, CSV, or JSON exports
       </li>
       <li>
-        <strong>WCAG 2.2 education</strong> through contextual tooltips that
-        explain each criterion
+        <strong>Approvals expire honestly</strong> when the design changes under
+        a signed section
       </li>
       <li>
-        <strong>Export capabilities</strong> enable handoff documentation for
-        developers and QA teams
-      </li>
-      <li>
-        <strong>Open-source contribution</strong> to the accessibility
-        community, making a11y easier to adopt
+        <strong>Twenty locales</strong> put the checklist in front of teams that
+        do not work in English
       </li>
     </CaseStudyMutedList>
     <CaseStudyParagraph className="mt-8">
-      The widget is actively maintained on Figma Community and GitHub, serving
-      as a foundational tool for teams committed to building accessible digital
-      experiences.
+      The widget passes its own checklist. Checkboxes meet WCAG 1.4.11 non-text
+      contrast, severity is never carried by color alone, and WCAG references
+      render correctly in both themes. Holding the tool to the standard it
+      measures caught defects in the tool itself.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
