@@ -7,6 +7,7 @@ import TerminalNavigationContent from '@/content/artifacts/terminal-navigation.m
 import VariableDesignStandardSemverContent from '@/content/artifacts/variable-design-standard-semver.mdx'
 import AgenticWorkflowsContent from '@/content/artifacts/agentic-workflows-claude-cursor.mdx'
 import A11yCompanionV2ContrastHonestyContent from '@/content/artifacts/a11y-companion-v2-contrast-honesty.mdx'
+import A11yCompanionV3EvidenceContent from '@/content/artifacts/a11y-companion-v3-evidence.mdx'
 
 export type ArtifactFrontmatter = {
   title: string
@@ -38,6 +39,10 @@ const ARTIFACT_ENTRIES: Array<{
   {
     fileName: 'a11y-companion-v2-contrast-honesty.mdx',
     Content: A11yCompanionV2ContrastHonestyContent,
+  },
+  {
+    fileName: 'a11y-companion-v3-evidence.mdx',
+    Content: A11yCompanionV3EvidenceContent,
   },
   {
     fileName: 'agentic-workflows-claude-cursor.mdx',
