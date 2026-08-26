@@ -303,9 +303,6 @@ export default function CaseStudyLayout({
       className={styles.section}
     >
       <div className={styles.sectionHeading}>
-        <span className={styles.sectionNumber} aria-hidden='true'>
-          {String(index + 1).padStart(2, '0')}
-        </span>
         <h2 id={`${sectionId(index)}-heading`}>{section.title}</h2>
       </div>
       <div className={`prose prose-invert max-w-none ${styles.content}`}>
@@ -441,7 +438,6 @@ export default function CaseStudyLayout({
                     {resolvedSections.map((section, index) => (
                       <li key={sectionId(index)}>
                         <a href={`#${sectionId(index)}`}>
-                          <span aria-hidden='true'>{String(index + 1).padStart(2, '0')}</span>
                           {section.title}
                         </a>
                       </li>

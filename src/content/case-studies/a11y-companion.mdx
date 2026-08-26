@@ -63,8 +63,7 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       I created and maintain <strong>a11y Companion</strong>, an accessibility
       review widget for Figma and FigJam. Version 3.0.0 brings The A11Y Project
       Checklist together with canvas audits, contrast inspection, reviewer
-      sign-off, and handoff records. The widget, product site, and source are
-      linked above.
+      sign-off, and handoff records.
     </CaseStudyParagraph>
     <CaseStudyParagraph>
       Version 3.0.0 also adds the canvas checks and native Dev Mode annotations
@@ -76,12 +75,32 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
 
 <CaseStudySection title="Make each finding inspectable">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">Show What an Audit Checked</CaseStudySubheading>
     <CaseStudyMutedText>
       Three audits run directly against the selected canvas scope, sharing a
       capped 25-finding slot with failures sorted ahead of warnings. Counts
       include findings beyond the display cap.
     </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      A section can be signed by a named reviewer. The signature fingerprints
+      item ids, completion state, and checklist revision. When those items
+      change, the stamp turns amber and the section reads as needing re-review.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      Native Dev Mode annotations put findings on the affected layers. Canvas
+      Record gathers review progress and evidence in a Figma frame.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      Markdown, CSV, and JSON exports carry run owner and time, scope, full
+      counts, grouped evidence, and an explicit disclosure when rows are
+      representative rather than complete.
+    </CaseStudyMutedText>
+
+    <CaseStudyDetails summary="Audit thresholds, contrast behavior, and handoff records">
+    <CaseStudySubheading className="mt-0">Audit scope and contrast</CaseStudySubheading>
+
     <CaseStudyMutedList className="space-y-2">
       <li>Targets: fails below 24px per WCAG 2.5.8, warns below 44px, with a 2000-node traversal budget</li>
       <li>Text: per-segment font size, line height, justification, line length, and all-caps checks</li>
@@ -103,18 +122,8 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       <li>Explicit notices for pattern, shader, and video fills instead of a silent failure</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Bind Sign-Off to the Reviewed Checklist State</CaseStudySubheading>
-    <CaseStudyMutedText>
-      A section can be signed by a named reviewer. The signature fingerprints
-      item ids, completion state, and checklist revision. When those items
-      change, the stamp turns amber and the section reads as needing re-review.
-    </CaseStudyMutedText>
+    <CaseStudySubheading>Handoff records</CaseStudySubheading>
 
-    <CaseStudySubheading>Carry Findings into Handoff</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Native Dev Mode annotations put findings on the affected layers. Canvas
-      Record gathers review progress and evidence in a Figma frame:
-    </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Audit findings promote to Figma Dev Mode annotations, individually or in bulk</li>
       <li>Read-modify-write preserves existing annotations and stays idempotent on re-run</li>
@@ -122,18 +131,28 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       <li>Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame</li>
       <li>Re-running Record refreshes the same widget-owned frame instead of creating duplicates</li>
     </CaseStudyMutedList>
-
-    <CaseStudyMutedText>
-      Markdown, CSV, and JSON exports carry run owner and time, scope, full
-      counts, grouped evidence, and an explicit disclosure when rows are
-      representative rather than complete.
-    </CaseStudyMutedText>
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Keep state consistent across interactions">
+<CaseStudySection title="Fix the assumptions behind the audit">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">Preserve State Across Widget Interactions</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Early token pairing matched on names containing "text" and "bg". Testing
+      against Vercel's Geist file exposed a limit: ramp-named systems use
+      <code>gray/100</code> through <code>gray/1000</code>, and the audit was
+      checking roughly twelve pairs. It now infers role from the trailing numeric
+      step, reading high steps as ink and pairing them against low steps and
+      explicit surfaces in the same family, with the pair cap raised to 800.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      Scripts in lint check the widget's token architecture, AA contrast, theme
+      drift, and bundle size.
+    </CaseStudyMutedText>
+
+    <CaseStudyDetails summary="Widget state, design checks, and translation">
+    <CaseStudySubheading className="mt-0">Widget state</CaseStudySubheading>
     <CaseStudyMutedText>
       The widget runtime clears module memory between interactions. Confirmation
       and Watch state therefore need storage that survives those resets:
@@ -145,21 +164,8 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       <li>Empty spacer AutoLayouts default to 100px tall; explicit <code>height=0</code> keeps them from inflating badge and chip rows</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Pair Tokens in Ramp-Named Systems</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Early token pairing matched on names containing "text" and "bg". Testing
-      against Vercel's Geist file exposed a limit: ramp-named systems use
-      <code>gray/100</code> through <code>gray/1000</code>, and the audit was
-      checking roughly twelve pairs. It now infers role from the trailing numeric
-      step, reading high steps as ink and pairing them against low steps and
-      explicit surfaces in the same family, with the pair cap raised to 800.
-    </CaseStudyMutedText>
+    <CaseStudySubheading>Design system checks</CaseStudySubheading>
 
-    <CaseStudySubheading>Check the Widget's Own Design System</CaseStudySubheading>
-    <CaseStudyMutedText>
-      The widget's own design system is checked by scripts rather than
-      convention, and the checks run in lint:
-    </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Variable architecture and design-system conformance checks</li>
       <li>Automated AA contrast verification across the token set with shade-step suggestions</li>
@@ -171,7 +177,7 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       alongside color, and WCAG references render in both themes.
     </CaseStudyMutedText>
 
-    <CaseStudySubheading>Translation Pipeline</CaseStudySubheading>
+    <CaseStudySubheading>Translation</CaseStudySubheading>
     <CaseStudyMutedText>
       Twenty locales are generated through a pipeline that shields WCAG codes and
       inline markup from machine translation. Missing keys fall back to English
@@ -179,17 +185,18 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       blank menu item while its translations are reviewed.
     </CaseStudyMutedText>
 
-    <CaseStudySubheading>Product Site Parity</CaseStudySubheading>
+    <CaseStudySubheading>Product site parity</CaseStudySubheading>
     <CaseStudyMutedText>
       The product site is statically prerendered and gated by a Chrome-based
       check that exercises audit interactions and control geometry at 390, 768,
       1000, and 1440px. The site's inspector demo is held to the production
       widget's exact specimen size, card inset, and vision grid.
     </CaseStudyMutedText>
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Status & Review Evidence">
+<CaseStudySection title="Adoption and review evidence">
   <div className="space-y-6">
     <CaseStudyParagraph>
       The widget has 400+ users on Figma Community and supports twenty locales.
