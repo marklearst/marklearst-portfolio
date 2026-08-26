@@ -35,8 +35,9 @@ const formatOutput = (output: string, withCheck?: boolean) =>
 const PROJECT_ROUTE_COMMANDS = PROJECTS.reduce<Record<string, TerminalCommand>>(
   (acc, project) => {
     const terminal = project.terminal
-    const output = terminal.output
-      ? formatOutput(terminal.output, terminal.outputWithCheck)
+    const output =
+      terminal.output ?
+        formatOutput(terminal.output, terminal.outputWithCheck)
       : undefined
 
     acc[project.route] = {
@@ -61,7 +62,7 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     loading: 'Resolving identity...',
     output: formatOutput('marklearst', true),
     packages: [
-      'Lead Design Engineer',
+      'Principal Design Engineer',
       'Agentic Workflows',
       'Claude Code ♡',
       'OSS Maintainer',
