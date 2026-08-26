@@ -47,7 +47,7 @@
   margin: 0;
   color: #fcfcfa;
   font: 700 clamp(40px, 6.5vw, 76px) / 1.08 var(--font-mono);
-  letter-spacing: -0.055em;
+  letter-spacing: -0.04em;
   overflow-wrap: anywhere;
   scroll-margin-top: 160px;
 }
@@ -135,6 +135,7 @@
 }
 
 .body {
+  background: #101010;
   padding-bottom: 32px;
 }
 
@@ -150,16 +151,10 @@
   margin-bottom: 24px;
 }
 
-.sectionNumber {
-  color: var(--case-accent);
-  font: 12px / 1 var(--font-mono);
-  font-variant-numeric: tabular-nums;
-}
-
 .sectionHeading h2 {
   margin: 0;
   color: #fcfcfa;
-  font: 500 clamp(24px, 3.6vw, 36px) / 1.2 var(--font-mono);
+  font: 500 clamp(24px, 3vw, 32px) / 1.25 var(--font-mono);
   letter-spacing: -0.035em;
   text-wrap: balance;
 }
@@ -168,6 +163,7 @@
   width: 100%;
   font-size: 17px;
   line-height: 1.7;
+  text-wrap: pretty;
 }
 
 .impact {
@@ -186,7 +182,7 @@
 .metric {
   margin: 0 0 6px;
   color: var(--case-accent);
-  font: 500 clamp(22px, 3vw, 32px) / 1.2 var(--font-mono);
+  font: 500 clamp(20px, 2.5vw, 26px) / 1.25 var(--font-mono);
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
@@ -239,11 +235,6 @@
   color: #fcfcfacc;
   font-size: 14px;
   text-decoration: none;
-}
-
-.contents a > span {
-  color: var(--case-accent);
-  font: 11px / 1 var(--font-mono);
 }
 
 .endNavigation {
