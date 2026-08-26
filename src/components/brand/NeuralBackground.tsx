@@ -25,7 +25,8 @@ export default function NeuralBackground() {
   useEffect(() => {
     if (!isClient) return
 
-    const ctx = gsap.context(() => {
+    const media = gsap.matchMedia()
+    media.add('(prefers-reduced-motion: no-preference)', () => {
       // Background keywords - FLOATING IN NEURAL SPACE
       const keywordElements = gsap.utils.toArray<HTMLElement>('.bg-keyword')
 
@@ -67,12 +68,13 @@ export default function NeuralBackground() {
       })
     }, containerRef)
 
-    return () => ctx.revert()
+    return () => media.revert()
   }, [isClient])
 
   return (
     <div
       ref={containerRef}
+      aria-hidden='true'
       className='fixed inset-0 z-0 overflow-hidden pointer-events-none'
       style={{ backgroundColor: '#ffffff10' }}
     >
@@ -83,7 +85,7 @@ export default function NeuralBackground() {
 
         {/* Background code keywords - DENSE with Monokai colors */}
         <div
-          className='absolute inset-0 overflow-hidden transition-opacity duration-500'
+          className='absolute inset-0 overflow-hidden transition-opacity duration-500 motion-reduce:transition-none'
           style={{ opacity: neuralTextVisible ? 1 : 0 }}
         >
           {HERO_KEYWORDS.map((kw, i) => (

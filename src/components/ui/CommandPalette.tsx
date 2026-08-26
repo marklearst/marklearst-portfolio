@@ -1,7 +1,7 @@
 'use client'
 
 import { Command } from 'cmdk'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { PROJECTS } from '@/data/projects'
 import { useTransitionStore } from '@/store/transition-store'
@@ -22,8 +22,13 @@ const baseItems: CommandItem[] = [
 
 export default function CommandPalette() {
   const [open, setOpen] = useState(false)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const invokerRef = useRef<HTMLElement | null>(null)
+  const labelId = useId()
+  const descriptionId = useId()
   const router = useRouter()
-  const { startTransition, isTransitioning } = useTransitionStore()
+  const startTransition = useTransitionStore((state) => state.startTransition)
 
   const items = useMemo<CommandItem[]>(() => {
     const workItems = PROJECTS.map((project) => ({
@@ -36,72 +41,89 @@ export default function CommandPalette() {
     return [...baseItems, ...workItems]
   }, [])
 
+  const closePalette = useCallback(() => {
+    dialogRef.current?.close()
+    setOpen(false)
+    const invoker = invokerRef.current
+    invokerRef.current = null
+    if (invoker?.isConnected) invoker.focus({ preventScroll: true })
+  }, [])
+
+  useEffect(() => {
+    if (open && !dialogRef.current?.open) {
+      dialogRef.current?.showModal()
+      inputRef.current?.focus({ preventScroll: true })
+    }
+  }, [open])
+
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k' && !event.isComposing && !event.repeat) {
         event.preventDefault()
-        setOpen((prev) => !prev)
-      }
-      if (event.key === 'Escape') {
-        setOpen(false)
+        if (dialogRef.current?.open) {
+          closePalette()
+        } else {
+          invokerRef.current = document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null
+          setOpen(true)
+        }
       }
     }
 
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [])
+    // Reserve the global toggle before cmdk's optional Ctrl+K navigation binding.
+    window.addEventListener('keydown', onKeyDown, true)
+    return () => window.removeEventListener('keydown', onKeyDown, true)
+  }, [closePalette])
 
   const handleSelect = (href: string) => {
-    setOpen(false)
-
-    if (isTransitioning) return
+    // Restore the invoking control before routing so a closing palette cannot
+    // steal focus back after the destination page has received focus.
+    closePalette()
 
     const url = new URL(href, window.location.origin)
     const targetPath = url.pathname === '' ? '/' : url.pathname
-    const hash = url.hash.replace('#', '')
 
     startTransition(
       targetPath,
       () => {
         router.push(href)
-        setTimeout(() => {
-          if (hash) {
-            const element = document.getElementById(hash)
-            if (element) {
-              element.scrollIntoView({ behavior: 'instant' })
-              return
-            }
-          }
-          window.scrollTo({ top: 0, behavior: 'instant' })
-        }, 100)
       },
       href,
     )
   }
 
-  if (!open) return null
-
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-start justify-center bg-black/70 backdrop-blur-sm'
+    <dialog
+      ref={dialogRef}
+      aria-labelledby={labelId}
+      aria-describedby={descriptionId}
+      className='fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none border-0 bg-transparent p-4 open:flex open:items-start open:justify-center backdrop:bg-black/70 backdrop:backdrop-blur-sm'
+      onCancel={(event) => {
+        event.preventDefault()
+        closePalette()
+      }}
       onClick={(event) => {
         if (event.target === event.currentTarget) {
-          setOpen(false)
+          closePalette()
         }
       }}
     >
-      <Command
-        className='mt-24 w-full max-w-xl rounded-2xl border border-white/10 bg-[#1d1a1c]/95 shadow-2xl'
+      {open && <Command
+        label='Search portfolio pages'
+        className='mt-20 flex max-h-[calc(100dvh-8rem)] w-full max-w-xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#1d1a1c]/95 shadow-2xl'
         style={{ color: MONOKAI.foreground }}
       >
+        <h2 id={labelId} className='sr-only'>Navigate the portfolio</h2>
         <div className='border-b border-white/10 px-4 py-3'>
           <Command.Input
+            ref={inputRef}
             placeholder='Jump to...'
-            className='w-full bg-transparent font-mono text-sm outline-none placeholder:text-white/40'
+            className='min-h-8 w-full bg-transparent font-mono text-base outline-none placeholder:text-white/40'
             autoFocus
           />
         </div>
-        <Command.List className='max-h-[420px] overflow-y-auto px-2 py-2'>
+        <Command.List className='min-h-0 max-h-[420px] overflow-y-auto overscroll-contain px-2 py-2'>
           <Command.Empty className='px-3 py-6 text-center text-sm text-white/50 font-mono'>
             No results.
           </Command.Empty>
@@ -118,7 +140,7 @@ export default function CommandPalette() {
                     key={item.id}
                     value={`${item.label} ${item.href}`}
                     onSelect={() => handleSelect(item.href)}
-                    className='flex items-center justify-between gap-4 rounded-lg px-3 py-2 text-sm font-mono text-white/70 data-[selected=true]:bg-white/10 data-[selected=true]:text-white'
+                    className='flex min-h-11 items-center justify-between gap-4 rounded-lg px-3 py-2 text-sm font-mono text-white/70 data-[selected=true]:bg-white/10 data-[selected=true]:text-white'
                   >
                     <span>{item.label}</span>
                     <span className='text-[10px] uppercase tracking-wider text-white/40'>
@@ -129,10 +151,10 @@ export default function CommandPalette() {
             </Command.Group>
           ))}
         </Command.List>
-        <div className='border-t border-white/10 px-4 py-3 text-[10px] font-mono uppercase tracking-wider text-white/40'>
+        <div id={descriptionId} className='shrink-0 border-t border-white/10 px-4 py-3 text-[10px] font-mono uppercase tracking-wider text-white/40'>
           Press Esc to close
         </div>
-      </Command>
-    </div>
+      </Command>}
+    </dialog>
   )
 }

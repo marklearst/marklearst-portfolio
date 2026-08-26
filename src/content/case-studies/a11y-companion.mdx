@@ -3,7 +3,7 @@ slug: a11y-companion
 title: a11y Companion
 category: ACCESSIBILITY
 categoryColor: green
-description: "Canvas-native accessibility review workflow for Figma and FigJam. v3.0.0 pairs The A11Y Project Checklist with live contrast inspection, three on-canvas audits, native Dev Mode annotations, evidence-bound sign-off, and a canonical Canvas Record."
+description: "Accessibility review inside Figma and FigJam, with canvas audits, Dev Mode handoff, and sign-off that tracks the reviewed checklist state."
 role: "Creator & Maintainer"
 timeline: "2023 - Present"
 technologies:
@@ -33,8 +33,14 @@ impact:
 gradient: from-green-500/20 via-emerald-500/10 to-transparent
 ---
 
-<CaseStudySection title="Overview">
+<CaseStudySection title="Keep sign-off tied to what was reviewed">
   <div className="space-y-6">
+    <CaseStudyParagraph>
+      The first version let teams complete an accessibility checklist in the
+      design file. When those checklist items changed, a signed section could
+      not flag that it needed another review. In v3.0.0, sign-off records the
+      reviewed state and turns stale when the items change.
+    </CaseStudyParagraph>
     <figure className="mb-12">
       <a href="https://marklearst.me/a11y-companion-widget/" className="block rounded-[8px]">
         <Image
@@ -61,15 +67,14 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       linked above.
     </CaseStudyParagraph>
     <CaseStudyParagraph>
-      The first version brought the checklist into the design file. It let
-      teams record completion, but could not check the file, pass findings to
-      Dev Mode, or mark a signed section for re-review when checklist items
-      changed. Version 3.0.0 adds those review and handoff steps.
+      Version 3.0.0 also adds the canvas checks and native Dev Mode annotations
+      that the first version lacked. Findings stay attached to the affected
+      layers, and Canvas Record brings the review evidence into one Figma frame.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Product Decisions">
+<CaseStudySection title="Make each finding inspectable">
   <div className="space-y-6">
     <CaseStudySubheading className="mt-0">Show What an Audit Checked</CaseStudySubheading>
     <CaseStudyMutedText>
@@ -126,7 +131,7 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Technical Implementation">
+<CaseStudySection title="Keep state consistent across interactions">
   <div className="space-y-6">
     <CaseStudySubheading className="mt-0">Preserve State Across Widget Interactions</CaseStudySubheading>
     <CaseStudyMutedText>

@@ -11,6 +11,12 @@ importers:
       '@figma-vars/hooks':
         specifier: ^4.0.0
         version: 4.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(swr@2.3.8(react@19.2.3))
+      '@glucoseiq/core':
+        specifier: 1.0.0-next.0
+        version: 1.0.0-next.0
+      '@glucoseiq/testing':
+        specifier: 1.0.0-next.0
+        version: 1.0.0-next.0
       '@mdx-js/loader':
         specifier: ^3.1.1
         version: 3.1.1(supports-color@7.2.0)
@@ -250,6 +256,14 @@ packages:
       react: ^19.2.3
       react-dom: ^19.2.3
       swr: ^2.3.7
+
+  '@glucoseiq/core@1.0.0-next.0':
+    resolution: {integrity: sha512-NyZPLt7BemeRcjT9PMkcL4F9cSrlCVDJpCCqiE2kUN8jRS+vMWM08RwZ5PY/K7VlTBGGvKlYVfcguwhHcQF2Lw==}
+    engines: {node: '>=24'}
+
+  '@glucoseiq/testing@1.0.0-next.0':
+    resolution: {integrity: sha512-80y8DzmA7iGNP4WpaOgs+qh6oC2suBBRx+cqVSk7YSQ53EESb43Q1NX9XMmnvygwUsibacIX3f+HaRr+lwHfLg==}
+    engines: {node: '>=24'}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3449,6 +3463,12 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       swr: 2.3.8(react@19.2.3)
+
+  '@glucoseiq/core@1.0.0-next.0': {}
+
+  '@glucoseiq/testing@1.0.0-next.0':
+    dependencies:
+      '@glucoseiq/core': 1.0.0-next.0
 
   '@humanfs/core@0.19.1': {}
 

@@ -48,12 +48,14 @@ export default function CursorOrbs() {
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const updateEnabled = () => {
       if (typeof window === 'undefined') return
       const isLargeScreen = window.matchMedia('(min-width: 1024px)').matches
       const isFinePointer = window.matchMedia('(pointer: fine)').matches
       const isHoverCapable = window.matchMedia('(hover: hover)').matches
-      const nextEnabled = isLargeScreen && isFinePointer && isHoverCapable
+      const nextEnabled =
+        !motionPreference.matches && isLargeScreen && isFinePointer && isHoverCapable
       setIsEnabled(nextEnabled)
       if (!nextEnabled) {
         setHasInteracted(false)
@@ -63,8 +65,10 @@ export default function CursorOrbs() {
     updateEnabled()
 
     window.addEventListener('resize', updateEnabled)
+    motionPreference.addEventListener('change', updateEnabled)
     return () => {
       window.removeEventListener('resize', updateEnabled)
+      motionPreference.removeEventListener('change', updateEnabled)
     }
   }, [])
 
