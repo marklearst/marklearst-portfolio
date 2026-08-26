@@ -31,29 +31,27 @@ impact:
 gradient: from-cyan-500/20 via-teal-500/10 to-transparent
 ---
 
-<CaseStudySection title="The Problem">
+<CaseStudySection title="Bring Figma Variables into React">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      Design systems teams using Figma Variables faced a critical workflow
-      challenge: there was no official way to programmatically access Figma's
-      design variables from React applications. This created:
+      Design systems teams were copying design tokens from Figma to code while
+      variable versions drifted between tools. I built FigmaVars Hooks to bring
+      Figma Variables into React development.
     </CaseStudyParagraph>
+
+    <CaseStudyDetails summary="Token synchronization problems">
     <CaseStudyMutedList className="space-y-3">
       <li>Manual copy-paste workflows to sync design tokens from Figma to code</li>
       <li>Version drift between Figma variables and application code</li>
       <li>No way to validate variables at runtime in React apps</li>
       <li>Inability to dynamically load Figma variables in Storybook or dev tools</li>
-      <li>Fragmented token export solutions that didn't leverage official APIs</li>
+      <li>Fragmented token export solutions that did not use official APIs</li>
     </CaseStudyMutedList>
-    <CaseStudyParagraph>
-      When Figma released their Variables REST API in 2024, I saw an opportunity
-      to build the missing piece: a React hooks library that made Figma Variables
-      a first-class citizen in React development.
-    </CaseStudyParagraph>
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="The Solution">
+<CaseStudySection title="Keep credentials out of the browser">
   <div className="space-y-6">
     <CaseStudyParagraph>
       <strong>FigmaVars Hooks</strong> is a React 19 hooks library that provides
@@ -61,12 +59,26 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       for exporting variables into CI/CD pipelines.
     </CaseStudyParagraph>
 
-    <CaseStudySubheading className="mt-0">Quick Start (hooks + provider)</CaseStudySubheading>
     <CaseStudyMutedText>
       The browser consumes approved design-token data exported as JSON in the
       Figma Variables API response format. Authentication stays in the server
-      or build/export process; credentials are never passed to the browser:
+      or build/export process; credentials are never passed to the browser.
     </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      Teams without Enterprise can still ship by exporting JSON once and using
+      <code>fallbackFile</code> for static or local environments. This keeps
+      Storybook and design system dashboards in sync without live API calls.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      The library ships type guards and error helpers so apps can validate data
+      and respond to API failures without guessing.
+    </CaseStudyMutedText>
+
+    <CaseStudyDetails summary="Hooks, CLI, Storybook, and validation examples">
+    <CaseStudySubheading className="mt-0">Hooks and provider</CaseStudySubheading>
+
     <CodeBlock
       language="tsx"
       analyticsLabel="figma_vars_hooks_quick_start"
@@ -97,7 +109,7 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       ].join('\n')}
     />
 
-    <CaseStudySubheading>React Hooks API</CaseStudySubheading>
+    <CaseStudySubheading>Hooks API</CaseStudySubheading>
     <CaseStudyMutedText>
       Built custom React hooks that fetch and cache Figma variables at runtime:
     </CaseStudyMutedText>
@@ -110,7 +122,7 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       <li>SWR configuration for revalidation, retry, and cache control</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>CLI Export Tool</CaseStudySubheading>
+    <CaseStudySubheading>CLI export</CaseStudySubheading>
     <CaseStudyMutedText>
       Created <code>figma-vars-export</code> CLI for exporting Figma variables as
       JSON in CI/CD pipelines:
@@ -133,7 +145,7 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       ].join('\n')}
     />
 
-    <CaseStudySubheading>Storybook Integration</CaseStudySubheading>
+    <CaseStudySubheading>Storybook integration</CaseStudySubheading>
     <CaseStudyMutedText>
       Wrap stories once to use the approved JSON export across your component
       docs. Refresh the export when approved variables change:
@@ -166,12 +178,8 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       ].join('\n')}
     />
 
-    <CaseStudySubheading>Offline Fallback</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Teams without Enterprise can still ship by exporting JSON once and using
-      <code>fallbackFile</code> for static or local environments. This keeps
-      Storybook and design system dashboards in sync without live API calls.
-    </CaseStudyMutedText>
+    <CaseStudySubheading>Offline fallback</CaseStudySubheading>
+
     <CodeBlock
       language="tsx"
       analyticsLabel="figma_vars_hooks_fallback"
@@ -188,11 +196,8 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       ].join('\n')}
     />
 
-    <CaseStudySubheading>Runtime Guards + Error Utilities</CaseStudySubheading>
-    <CaseStudyMutedText>
-      The library ships type guards and error helpers so apps can validate data
-      and respond to API failures without guessing.
-    </CaseStudyMutedText>
+    <CaseStudySubheading>Runtime guards and errors</CaseStudySubheading>
+
     <CaseStudyMutedList className="space-y-2">
       <li><code>isLocalVariablesResponse()</code> - Validate local responses</li>
       <li><code>isPublishedVariablesResponse()</code> - Validate published data</li>
@@ -200,9 +205,9 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       <li><code>redactToken()</code> for safe logging and support flows</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>100% Test Coverage</CaseStudySubheading>
+    <CaseStudySubheading>100% test coverage</CaseStudySubheading>
     <CaseStudyMutedText>
-      Built comprehensive test suite with Vitest covering:
+      The Vitest suite covers:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>All hook behaviors and edge cases</li>
@@ -210,14 +215,21 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       <li>Runtime validation for all data structures</li>
       <li>CLI command execution and file output</li>
     </CaseStudyMutedList>
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Technical Architecture">
+<CaseStudySection title="Use the same data contract outside React">
   <div className="space-y-6">
+    <CaseStudyMutedText>
+      A core build ships for non-React use cases (server scripts, TanStack Query,
+      or custom fetchers) while preserving the same data contracts.
+    </CaseStudyMutedText>
+
+    <CaseStudyDetails summary="React integration, security, and supported workflows">
     <CaseStudySubheading className="mt-0">React 19 Features</CaseStudySubheading>
     <CaseStudyMutedText>
-      Leveraged React 19's new capabilities:
+      The React 19 integration uses:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Server Components for initial data fetching when used in Next.js</li>
@@ -225,14 +237,8 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       <li>Built-in caching strategies with React's cache function</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Typed Core Entrypoint</CaseStudySubheading>
-    <CaseStudyMutedText>
-      A core build ships for non-React use cases (server scripts, TanStack Query,
-      or custom fetchers) while preserving the same data contracts.
-    </CaseStudyMutedText>
-
     <CaseStudySubheading>Developer Experience</CaseStudySubheading>
-    <CaseStudyMutedText>Optimized for DX:</CaseStudyMutedText>
+    <CaseStudyMutedText>The package includes:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Clear error messages with suggestions for common issues</li>
       <li>Comprehensive TypeScript types exported from package</li>
@@ -252,22 +258,19 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Use Cases</CaseStudySubheading>
-    <CaseStudyMutedText>Enables powerful workflows:</CaseStudyMutedText>
+    <CaseStudyMutedText>Supported workflows include:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Live Storybook integration showing actual Figma variables</li>
       <li>Design token validation tools that check Figma against codebase</li>
       <li>Admin panels for managing design tokens across teams</li>
       <li>CI/CD pipelines that auto-sync Figma changes to code repos</li>
     </CaseStudyMutedList>
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Impact & Adoption">
+<CaseStudySection title="Package capabilities and status">
   <div className="space-y-6">
-    <CaseStudyParagraph>
-      FigmaVars Hooks bridges the gap between Figma Variables and React
-      development while keeping design systems predictable at scale:
-    </CaseStudyParagraph>
     <CaseStudyMutedList className="space-y-4">
       <li>
         <strong>Eliminates manual token sync</strong> by providing programmatic
@@ -281,10 +284,7 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
         <strong>100% test coverage</strong> provides confidence for teams adopting
         the library in production
       </li>
-      <li>
-        <strong>Open-source contribution</strong> to the design systems community,
-        filling a critical gap in the Figma Variables ecosystem
-      </li>
+      <li>Open-source library for the design systems community</li>
       <li>
         <strong>CLI tool enables CI/CD</strong> workflows that auto-sync design
         tokens on every Figma change
@@ -295,8 +295,8 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       </li>
     </CaseStudyMutedList>
     <CaseStudyParagraph className="mt-8">
-      The library is published on npm, actively maintained, and is the backbone
-      for teams building production token pipelines, Storybook dashboards, and
+      The library is published on npm and actively maintained. Its use cases
+      include production token pipelines, Storybook dashboards, and
       Figma-to-code workflows.
     </CaseStudyParagraph>
   </div>

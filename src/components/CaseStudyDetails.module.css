@@ -1,0 +1,31 @@
+.details {
+  border-block: 1px solid #fcfcfa26;
+  margin-block: 24px;
+}
+
+.details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 56px;
+  padding-block: 14px;
+  color: #dedddd;
+  font: 500 16px / 1.5 var(--token-font-body);
+  cursor: pointer;
+  list-style: none;
+}
+
+.details summary::-webkit-details-marker { display: none; }
+.details summary span { flex-shrink: 0; transition: transform 180ms ease-out; }
+.details[open] summary span { transform: rotate(90deg); }
+.details summary:focus-visible { outline: 2px solid #fcfcfa; outline-offset: 4px; }
+.content { padding: 8px 0 24px; }
+.content > :first-child { margin-top: 0; }
+.content > :last-child { margin-bottom: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .details summary:hover { color: #fcfcfa; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .details summary span { transition: none; }
+}

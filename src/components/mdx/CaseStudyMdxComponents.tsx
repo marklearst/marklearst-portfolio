@@ -4,6 +4,7 @@ import { isValidElement } from 'react'
 import Image from 'next/image'
 import CodeBlock from '@/components/CodeBlock'
 import GlucoseDemo from '@/components/glucose/GlucoseDemo'
+import CaseStudyDetails from '@/components/CaseStudyDetails'
 import { CaseStudySection } from '@/components/CaseStudySection'
 import {
   CaseStudyMutedList,
@@ -65,6 +66,7 @@ export const createCaseStudyMdxComponents = (accent: string): MDXComponents => {
 
   return {
     CaseStudySection,
+    CaseStudyDetails,
     CaseStudySubheading: Subheading,
     CaseStudyMutedText,
     CaseStudyParagraph,

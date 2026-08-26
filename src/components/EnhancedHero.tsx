@@ -43,16 +43,14 @@ export default function EnhancedHero() {
           <div className={`${styles.livePreview} hero-preview`}>
             <div className={styles.previewHeading}>
               <span>GlucoseIQ</span>
-              <span>Interactive example</span>
+              <span>My library, running here</span>
             </div>
             <GlucoseDemo compact />
-            <Link href='/work/glucoseiq' className={styles.previewLink}>Explore the data and design decisions <span aria-hidden='true'>↗</span></Link>
+            <div className={styles.previewLinks}>
+              <Link href='/work/glucoseiq' className={styles.previewLink}>GlucoseIQ case study <span aria-hidden='true'>↗</span></Link>
+              <a href='https://github.com/marklearst/marklearst-portfolio/blob/99ed8e2ec1b5c8f1665d893410a39efaee391778/src/lib/glucose-demo.ts' target='_blank' rel='noopener noreferrer' className={styles.previewLink}>View source <span aria-hidden='true'>↗</span></a>
+            </div>
           </div>
-        </div>
-        <div className={styles.credentials}>
-          <Link href='/work/aurora-gm'><strong>4 brands</strong><span>One shared system at GM</span></Link>
-          <Link href='/work/a11y-companion'><strong>400+ users</strong><span>a11y Companion on Figma</span></Link>
-          <Link href='/work/primitree'><strong>Tokens → production</strong><span>Building Primitree</span></Link>
         </div>
       </div>
     </section>

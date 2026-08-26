@@ -1,0 +1,42 @@
+.footer {
+  position: relative;
+  padding: 48px 40px 24px;
+  border-top: 1px solid #ffffff1a;
+  background: #101010;
+  color: #fcfcfa;
+}
+
+.container { width: min(100%, 1280px); margin-inline: auto; }
+.main { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 40px; padding-bottom: 28px; }
+.name { margin: 0 0 8px; font: 500 25px/1.2 var(--font-mono); letter-spacing: -.03em; }
+.availability { margin: 0; color: #a9a3ad; font-size: 14px; line-height: 1.6; }
+.availability a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; color: #fcfcfa; }
+.availability a span { transition: transform 180ms cubic-bezier(.22, 1, .36, 1); }
+.socialLinks { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.socialLink { display: inline-flex; min-height: 44px; align-items: center; gap: 9px; color: #d0cbd2; font-size: 14px; }
+.icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 18px; height: 18px; }
+.bottom { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; padding-top: 16px; border-top: 1px solid #ffffff12; }
+.copyright { color: #a9a3ad; font: 11px/1.6 var(--font-mono); }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; }
+.controls > a { display: inline-flex; align-items: center; min-height: 44px; color: #a9a3ad; font-size: 12px; }
+.controls button { min-height: 44px; color: #a9a3ad; }
+.controls button::before { display: none; }
+.footer a:focus-visible, .footer button:focus-visible { outline: 2px solid #78dce8; outline-offset: 4px; border-radius: 4px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .socialLink:hover, .controls > a:hover { color: #fcfcfa; text-decoration: underline; text-underline-offset: 4px; }
+  .availability a:hover span { transform: translate(2px, -2px); }
+}
+
+@media (max-width: 640px) {
+  .footer { padding: 36px 24px 20px; }
+  .main { align-items: flex-start; gap: 12px; padding-bottom: 20px; }
+  .socialLinks { width: 100%; gap: 24px; }
+  .bottom { align-items: flex-start; gap: 12px; }
+  .controls { width: 100%; gap: 8px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer a, .footer button, .availability a span { transition: none; }
+  .availability a:hover span { transform: none; }
+}
