@@ -1,0 +1,107 @@
+---
+title: "a11y Companion v3.0.0: A Checkmark Isn't Evidence"
+slug: a11y-companion-v3
+summary: v2 argued that a contrast tool should refuse to claim what it cannot evaluate. v3 makes the same argument about checklists, and gives every checked box a way to be proven.
+tags:
+  - a11y
+  - accessibility
+  - wcag
+  - figma
+  - figjam
+  - open-source
+published_at: 2026-08-26
+pinned: true
+---
+
+**♿️ a11y Companion v3.0.0 is live.**
+
+The checklist is still the checklist. What changed is that the widget can now tell you whether the file actually earned the checkmarks.
+
+Source checklist: [The A11Y Project](https://www.a11yproject.com/checklist/). Standards target: [W3C WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/).
+
+![a11y Companion v3.0.0 release preview](/images/a11y-companion-v3.jpg)
+
+## The gap I kept running into
+
+v2 was about a contrast tool refusing to claim what it cannot evaluate. Shipping it exposed the next problem, one floor down.
+
+**A checked box is a claim, not a measurement.**
+
+Nothing in the widget knew whether the file met the criterion sitting next to the checkmark. A team could complete an entire checklist against a file that failed contrast, and the widget would show a full green ring. The checklist was honest about what it asked. It had no way to be honest about the answer.
+
+So v3 asks a different question. Not "did someone check this box," but "what would it take to prove it."
+
+## Three things a claim needs to become evidence
+
+### It has to reach the people who act on it
+
+Findings that live inside a widget are findings nobody fixes. v3 promotes audit results to Figma's own Dev Mode annotations, with the WCAG Understanding page linked and the failing property named: width, height, fill, font size, line height.
+
+It reads and rewrites the annotation array rather than replacing it, so annotations you wrote by hand survive, and running the same audit twice does not produce two copies.
+
+![Audit findings promoted to native Dev Mode annotations](/images/a11y-companion-v3-annotations.jpg)
+
+### It has to expire
+
+A sign-off that outlives the design it approved is worse than no sign-off, because it looks like diligence.
+
+When you sign a section in v3, the signature records what it actually reviewed: item ids, completion state, and the checklist revision. Change items underneath a signed section and the stamp turns amber. The approval does not quietly stay valid.
+
+![Section sign-off with reviewer stamp and stale-state warning](/images/a11y-companion-v3-signoffs.jpg)
+
+### It has to leave the file
+
+A review that only exists in one Figma document stops being useful the moment anyone needs it elsewhere.
+
+v3 compiles a Canvas Record, one Figma frame holding progress, sign-offs, audit summaries, contrast evidence, and priority findings. Re-running it refreshes the same frame instead of littering the page with copies. The same review exports as Markdown, CSV, or JSON.
+
+![Report export as Markdown, CSV, and JSON](/images/a11y-companion-v3-reports.jpg)
+
+## What's new in v3.0.0
+
+- Three on-canvas audits: Targets, Text, and Tokens, run from under the progress ring
+- Live contrast watching that re-checks the selection as it changes, with shared ownership so the team sees who is driving
+- Color vision preview for protanopia, deuteranopia, and tritanopia
+- WCAG level filters, including a "New in 2.2" filter for the nine criteria WCAG 2.2 added
+- Native Dev Mode annotations, individually or in bulk
+- Canvas Record, exportable as SVG or PDF
+- Evidence-bound section sign-off
+- Report export as Markdown, CSV, or JSON
+- Twenty locales, up from thirteen
+
+## Where it still says no
+
+The honesty argument only holds if the tool applies it to itself. Three places v3 refuses to overstate:
+
+- Audits share a capped slot. Past the cap, the **counts stay truthful** rather than reporting only what fits on screen, and the Canvas Record will not call itself ready on capped evidence.
+- Reports **disclose when their rows are representative** rather than complete. A grouped root cause is labeled as one.
+- The color vision preview is a **simulation, not a second grade**. WCAG contrast stays the normative result. Three more pass/fail badges would feel more thorough and mean less.
+
+Contrast thresholds are also evaluated at full precision, so a pair sitting just under the line cannot round its way into a pass.
+
+## I ran it on itself
+
+v3 had to pass its own checklist. That caught real problems: checkboxes that failed WCAG 1.4.11 non-text contrast, severity conveyed by color alone, and WCAG references that rendered wrong in dark mode.
+
+Testing the token audit against Vercel's Geist file caught another one. My pairing logic looked for names containing "text" and "bg", which found roughly twelve pairs in a system named `gray/100` through `gray/1000`. It now infers role from the trailing numeric step instead.
+
+Being wrong in a way you can measure is the whole point.
+
+## Why I keep tightening this
+
+***Accessibility is personal for me.*** I have been the eyes and ears for my legally blind and deaf brother for decades. I have watched him burn time on sites that do not care.
+
+Compliance language never helped him. Working designs did. That is why v3 went after evidence instead of more checkboxes.
+
+## Links
+
+- Figma Community:
+  - https://www.figma.com/community/widget/1509302611418259130
+- Product site:
+  - https://marklearst.me/a11y-companion-widget/
+- GitHub repository:
+  - https://github.com/marklearst/a11y-companion-widget
+- v3.0.0 changelog:
+  - https://github.com/marklearst/a11y-companion-widget/blob/main/CHANGELOG.md
+- WCAG 2.2 specification:
+  - https://www.w3.org/TR/WCAG22/
