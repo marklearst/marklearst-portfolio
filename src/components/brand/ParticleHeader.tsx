@@ -171,7 +171,7 @@ export default function ParticleHeader() {
           color: 'rgb(252, 252, 250)',
         }}
       >
-        <span className='opacity-50 mr-[2px]'>{`{`}</span>
+        <span className='opacity-50 mr-0.5'>{`{`}</span>
         <span ref={mRef}>m</span>
         <span ref={middleRef}></span>
         <span ref={lRef}>l</span>
