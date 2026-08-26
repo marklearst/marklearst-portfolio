@@ -124,6 +124,7 @@ interface NodePosition {
 
 export default function NeuralNetwork() {
   const [profile, setProfile] = useState<'micro' | 'low' | 'full' | null>(null)
+  const [reducedMotion, setReducedMotion] = useState(true)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const orbsRef = useRef<Orb[]>([])
@@ -205,8 +206,10 @@ export default function NeuralNetwork() {
   }, [])
 
   useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const updateProfile = () => {
       if (typeof window === 'undefined') return
+      setReducedMotion(motionPreference.matches)
       const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches
       const width = window.innerWidth
 
@@ -225,8 +228,10 @@ export default function NeuralNetwork() {
 
     updateProfile()
     window.addEventListener('resize', updateProfile)
+    motionPreference.addEventListener('change', updateProfile)
     return () => {
       window.removeEventListener('resize', updateProfile)
+      motionPreference.removeEventListener('change', updateProfile)
     }
   }, [])
 
@@ -258,6 +263,8 @@ export default function NeuralNetwork() {
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
         ctxRef.current = ctx
       }
+      updateNodePositions()
+      updateSVGElements()
     }
 
     updateDimensions()
@@ -300,7 +307,7 @@ export default function NeuralNetwork() {
       dotsRef.current.push(circle)
     })
 
-    let animationId: number
+    let animationId: number | undefined
 
     const spawnOrb = () => {
       if (orbsRef.current.length >= settings.maxOrbs) return
@@ -393,18 +400,23 @@ export default function NeuralNetwork() {
       animationId = requestAnimationFrame(render)
     }
 
-    // Start with more orbs for immediate activity
-    for (let i = 0; i < settings.initialOrbs; i++) {
-      spawnOrb()
-      if (orbsRef.current.length > 0) {
-        orbsRef.current[orbsRef.current.length - 1].progress = Math.random()
+    // Keep the network visible without scheduling a frame loop in reduced motion.
+    updateNodePositions()
+    updateSVGElements()
+
+    if (!reducedMotion) {
+      for (let i = 0; i < settings.initialOrbs; i++) {
+        spawnOrb()
+        if (orbsRef.current.length > 0) {
+          orbsRef.current[orbsRef.current.length - 1].progress = Math.random()
+        }
       }
+
+      animationId = requestAnimationFrame(render)
     }
 
-    animationId = requestAnimationFrame(render)
-
     return () => {
-      cancelAnimationFrame(animationId)
+      if (animationId !== undefined) cancelAnimationFrame(animationId)
       window.removeEventListener('resize', updateDimensions)
       // Clean up SVG elements
       linesRef.current.forEach((line) => line.remove())
@@ -414,7 +426,7 @@ export default function NeuralNetwork() {
       orbsRef.current = []
       keywordNodesRef.current = []
     }
-  }, [profile, updateNodePositions, updateSVGElements])
+  }, [profile, reducedMotion, updateNodePositions, updateSVGElements])
 
   if (profile === null) {
     return null
