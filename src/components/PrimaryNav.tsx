@@ -171,7 +171,7 @@ export default function PrimaryNav() {
   // Discovery animation: pulse colors to hint at toggle functionality
   useEffect(() => {
     // Only run discovery if both toggles are off (default state)
-    if (neuralTextVisible || orbsVisible) return
+    if (neuralTextVisible || orbsVisible || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const pulseCount = 3
     const pulseDuration = 900 // ms per pulse cycle (on + off)
@@ -393,6 +393,7 @@ export default function PrimaryNav() {
       <button
         type='button'
         onClick={handleToggleNeuralText}
+        aria-pressed={neuralTextVisible}
         className='flex min-h-11 min-w-11 shrink-0 items-center justify-center'
         onMouseEnter={() => setHoverKey(null)}
         aria-label={
@@ -408,6 +409,7 @@ export default function PrimaryNav() {
       <button
         type='button'
         onClick={toggleOrbs}
+        aria-pressed={orbsVisible}
         onMouseEnter={() => setHoverKey(null)}
         className='flex min-h-11 min-w-11 shrink-0 items-center justify-center p-2'
         style={{ color: MONOKAI.foreground }}

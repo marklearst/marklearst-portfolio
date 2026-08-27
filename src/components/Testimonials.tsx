@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 import { useSectionViewTracking } from '@/hooks/useAnalytics'
+import styles from './Testimonials.module.css'
 
 interface Testimonial {
   quote: string
@@ -49,41 +50,41 @@ export default function Testimonials() {
     <section
       ref={sectionRef}
       aria-labelledby='testimonials-heading'
-      className='relative px-6 py-20 sm:py-28'
+      className={styles.section}
     >
-      <div className='mx-auto max-w-5xl'>
+      <div className={styles.container}>
         <h2
           id='testimonials-heading'
-          className='mb-10 font-mono text-[clamp(2rem,5vw,3.5rem)] leading-tight lowercase sm:mb-14'
+          className={styles.heading}
         >
           what colleagues say
         </h2>
 
-        <div className='grid gap-10 lg:grid-cols-3 lg:gap-8'>
+        <div className={styles.quotes}>
           {testimonials.map((testimonial) => (
             <figure
               key={testimonial.author}
-              className='flex flex-col border-t border-white/20 pt-6'
+              className={styles.quote}
             >
-              <blockquote className='mb-8 grow font-body text-lg leading-relaxed text-white/85'>
+              <blockquote className={styles.words}>
                 <p>“{testimonial.quote}”</p>
               </blockquote>
 
-              <figcaption className='flex items-start gap-3'>
+              <figcaption className={styles.author}>
                 {testimonial.image && (
                   <Image
                     src={testimonial.image}
                     alt=''
                     width={44}
                     height={44}
-                    className='shrink-0 rounded-full border border-white/15 object-cover grayscale'
+                    className={styles.portrait}
                   />
                 )}
                 <div>
-                  <p className='mb-1 font-mono text-sm font-semibold text-white'>
+                  <p className={styles.name}>
                     {testimonial.author}
                   </p>
-                  <p className='font-body text-sm leading-relaxed text-white/65'>
+                  <p className={styles.role}>
                     {testimonial.role}
                     {testimonial.company && <span> · {testimonial.company}</span>}
                   </p>

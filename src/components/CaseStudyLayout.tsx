@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from 'react'
 import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
-import { getCategoryColor, getCategoryIcon } from '@/lib/project-categories'
+import { getCategoryColor } from '@/lib/project-categories'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
@@ -48,7 +48,6 @@ export default function CaseStudyLayout({
   links = [],
   sections,
   impact,
-  gradient,
   children,
 }: CaseStudyLayoutProps) {
   const {
@@ -318,10 +317,6 @@ export default function CaseStudyLayout({
     >
       <main id='main-content'>
         <section ref={heroRef} className={styles.hero} aria-labelledby='case-study-title'>
-          <div
-            aria-hidden='true'
-            className={`absolute inset-0 pointer-events-none bg-linear-to-br ${gradient}`}
-          />
           <div className={`${styles.container} relative`}>
             <Link
               href='/work'
@@ -339,8 +334,6 @@ export default function CaseStudyLayout({
             </Link>
 
             <div className={styles.category}>
-              <span className={styles.headingAccent} aria-hidden='true' />
-              <span aria-hidden='true'>{getCategoryIcon(category)}</span>
               <span>{category}</span>
             </div>
             <h1 id='case-study-title' className={styles.title}>{title}</h1>
@@ -405,7 +398,20 @@ export default function CaseStudyLayout({
 
         <div className={styles.body}>
           <div className={styles.container}>
-            {resolvedSections[0] && renderSection(resolvedSections[0], 0)}
+            {resolvedSections.length > 2 && (
+              <nav className={styles.contents} aria-label={`${title} case study contents`}>
+                <p>In this case study</p>
+                <ol>
+                  {resolvedSections.map((section, index) => (
+                    <li key={sectionId(index)}>
+                      <a href={`#${sectionId(index)}`}>{section.title}</a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
+
+            {resolvedSections.map((section, index) => renderSection(section, index))}
 
             {impact && impact.length > 0 && (
               <section
@@ -413,7 +419,7 @@ export default function CaseStudyLayout({
                 className={styles.impact}
                 aria-labelledby='case-study-facts'
               >
-                <h2 id='case-study-facts' className={styles.eyebrow}>At a glance</h2>
+                <h2 id='case-study-facts' className={styles.factsTitle}>Project notes</h2>
                 <div className={styles.impactGrid}>
                   {impact.map((item, index) => (
                     <div
@@ -429,25 +435,6 @@ export default function CaseStudyLayout({
                 </div>
               </section>
             )}
-
-            {resolvedSections.length > 2 && (
-              <details className={styles.contents}>
-                <summary>In this case study <span aria-hidden='true'>↓</span></summary>
-                <nav aria-label={`${title} case study contents`}>
-                  <ol>
-                    {resolvedSections.map((section, index) => (
-                      <li key={sectionId(index)}>
-                        <a href={`#${sectionId(index)}`}>
-                          {section.title}
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                </nav>
-              </details>
-            )}
-
-            {resolvedSections.slice(1).map((section, index) => renderSection(section, index + 1))}
 
             <nav className={styles.endNavigation} aria-label='More projects'>
               <Link

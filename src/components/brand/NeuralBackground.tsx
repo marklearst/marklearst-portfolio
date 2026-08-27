@@ -23,7 +23,7 @@ export default function NeuralBackground() {
   )
 
   useEffect(() => {
-    if (!isClient) return
+    if (!isClient || !neuralTextVisible) return
 
     const media = gsap.matchMedia()
     media.add('(prefers-reduced-motion: no-preference)', () => {
@@ -69,14 +69,15 @@ export default function NeuralBackground() {
     }, containerRef)
 
     return () => media.revert()
-  }, [isClient])
+  }, [isClient, neuralTextVisible])
+
+  if (!isClient || !neuralTextVisible) return null
 
   return (
     <div
       ref={containerRef}
       aria-hidden='true'
-      className='fixed inset-0 z-0 overflow-hidden pointer-events-none'
-      style={{ backgroundColor: '#ffffff10' }}
+      className='fixed inset-0 z-10 overflow-hidden pointer-events-none'
     >
       {/* Neural background wrapper - fades in */}
       <div className='neural-bg absolute inset-0' style={{ opacity: 1 }}>
