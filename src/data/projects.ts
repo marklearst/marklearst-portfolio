@@ -144,7 +144,6 @@ export const PROJECTS: ProjectMeta[] = [
     timeline: '2024 - Present',
     publishedAt: '2024-12-01',
     pinned: true,
-    featured: true,
     technologies: [
       'React 19',
       'TypeScript',
@@ -312,7 +311,6 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Creator & Maintainer',
     timeline: '2023 - Present',
     publishedAt: '2023-10-01',
-    featured: true,
     technologies: [
       'TypeScript',
       'Vitest',
