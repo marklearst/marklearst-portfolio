@@ -34,18 +34,7 @@ impact:
 gradient: from-pink-500/20 via-rose-500/10 to-transparent
 ---
 
-<CaseStudySection title="Show when the data is incomplete">
-  <div className="space-y-6">
-    <CaseStudyParagraph>
-      A week of patchy readings can produce a Time in Range number without
-      enough coverage for a clinical summary. GlucoseIQ gives validity and data
-      sufficiency separate fields, so an application can show that distinction.
-    </CaseStudyParagraph>
-    <GlucoseDemo />
-  </div>
-</CaseStudySection>
-
-<CaseStudySection title="Separate calculations from the interface">
+<CaseStudySection title="Glucose metrics without a chart dependency">
   <div className="space-y-6">
     <CaseStudyParagraph>
       Continuous glucose monitors produce a reading every five minutes. Turning
@@ -58,17 +47,13 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
       GlucoseIQ builds on <strong>Diabetic Utils</strong> with five packages,
       a size budget, and total coverage on the core.
     </CaseStudyParagraph>
+
     <CaseStudyParagraph>
       <strong>GlucoseIQ</strong> is a headless analytics core with optional
       packages layered on top. The core computes and returns data. Nothing in it
       renders to a screen or reaches for the network.
     </CaseStudyParagraph>
-    <CaseStudyParagraph>
-      I am not a clinician. The library needs to make its limits visible,
-      especially when the readings do not support a broader summary.
-    </CaseStudyParagraph>
 
-    <CaseStudyDetails summary="The repeated work behind the library">
     <CaseStudyMutedList className="space-y-3">
       <li>Time in Range, AGP percentile bands, and variability metrics rewritten per project</li>
       <li>Unit handling that silently mixes mg/dL and mmol/L in the same calculation</li>
@@ -76,24 +61,121 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
       <li>Vendor exports from Dexcom, Libre, and Nightscout each parsed by hand</li>
       <li>No way to test the pipeline without real patient data</li>
     </CaseStudyMutedList>
-    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Make data limits part of the API">
+<CaseStudySection title="Usable readings can still be incomplete">
   <div className="space-y-6">
+    <CaseStudyParagraph>
+      A week of patchy readings can produce a Time in Range number without
+      enough coverage for a clinical summary. GlucoseIQ gives validity and data
+      sufficiency separate fields, so an application can show that distinction.
+    </CaseStudyParagraph>
+
+    <GlucoseDemo />
+
     <CaseStudyMutedText>
-      Report blocks are nullable, so a caller must acknowledge that a percentage
-      may not exist. Data adequacy is a separate check: a week of patchy readings
-      can produce a Time in Range number that should not be presented as a
-      clinical summary.
+      Report blocks are nullable, so a caller must acknowledge that a
+      percentage may not exist. Callers check for usable readings, then
+      sufficient coverage. Data adequacy gets its own field instead of being
+      folded into <code>valid</code>.
     </CaseStudyMutedText>
 
-    <CaseStudyDetails summary="API example, metrics, and integration options">
-    <CaseStudySubheading className="mt-0">Validity and sufficiency</CaseStudySubheading>
+    <CaseStudyParagraph>
+      I am not a clinician. The library needs to make its limits visible,
+      especially when the readings do not support a broader summary.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="The host owns the presentation">
+  <div className="space-y-6">
     <CaseStudyMutedText>
-      Callers check for usable readings, then sufficient coverage:
+      Renderers return SVG strings for AGP charts, Time in Range bars, and trend
+      tiles. The host decides how to embed, sanitize, or deliver that string, so
+      the same call works in a React app, a server-rendered report, or a PDF
+      pipeline.
     </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      Vendor formats normalize into one reading shape, and results can leave in
+      formats other health systems already read:
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedList className="space-y-2">
+      <li>Connectors for Dexcom, Libre, and Nightscout, with declared capabilities per source</li>
+      <li>FHIR and Open mHealth output for systems that speak those standards</li>
+      <li>Mixed-unit-aware APIs normalize declared mg/dL and mmol/L before calculating</li>
+      <li>CSV parsing with an explicit contract rather than best-effort guessing</li>
+    </CaseStudyMutedList>
+
+    <CaseStudyMutedText>
+      A dedicated package ships fixed-seed synthetic CGM data and scenario
+      fixtures, so tests, demos, and documentation run on realistic glucose
+      traces without touching anyone's real readings.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      The docs site is built with Fumadocs, and its code samples are type-checked
+      and executed in CI. A snippet that stops compiling fails the build, so the
+      examples cannot drift away from the API they describe.
+    </CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Release checks and remaining API work">
+  <div className="space-y-6">
+    <CaseStudyMutedText>
+      The core has no runtime or peer dependencies. Release checks enforce both
+      constraints.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedList className="space-y-2">
+      <li>Vitest thresholds at 100% for lines, functions, branches, and statements</li>
+      <li>A gzip budget on the reachable core ESM, failing the build when it is exceeded</li>
+      <li>Packed-package consumer tests, so what publishes is what gets tested</li>
+      <li>Release gated on build, lint, type checking, coverage, size, consumer tests, and the docs build</li>
+    </CaseStudyMutedList>
+
+    <CaseStudyParagraph>
+      GlucoseIQ is for informational, educational, and software development use.
+      It is not medical advice and is not a medical device. This scope is stated
+      in the README, the docs, and this case study because the library computes
+      clinical-looking numbers.
+    </CaseStudyParagraph>
+
+    <CaseStudyMutedText>
+      Project-defined API results are labeled:
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedList className="space-y-4">
+      <li>
+        <strong><code>glucoseIQScore</code> is non-diagnostic</strong>, a
+        project-defined score derived from GRI rather than a published measure
+      </li>
+      <li>
+        <strong><code>buildAGPProfile</code> returns AGP-style bands</strong>,
+        a percentile series rather than a standardized complete AGP report
+      </li>
+      <li>
+        <strong><code>valid</code> is not <code>sufficient</code></strong>,
+        which is why data adequacy gets its own field instead of being folded
+        into a boolean
+      </li>
+      <li>
+        <strong>Embedding policy stays with the host</strong>, because a library
+        returning an SVG string cannot know where it is about to be placed
+      </li>
+    </CaseStudyMutedList>
+
+    <CaseStudyParagraph className="mt-8">
+      Packages publish under the <code>1.0.0-next</code> tag. The analytics are
+      settled and covered; what remains before 1.0 is the public API surface. The
+      prerelease tag reflects that remaining work.
+    </CaseStudyParagraph>
+
+    <CaseStudyDetails summary="API example, package reference, and input contracts">
+    <CaseStudySubheading>Validity and sufficiency</CaseStudySubheading>
 
     <CodeBlock
       language="typescript"
@@ -126,10 +208,12 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
     />
 
     <CaseStudySubheading>Metric modules</CaseStudySubheading>
+
     <CaseStudyMutedText>
       Seventeen metric modules, each named for the published measure it
       implements rather than an invented abstraction:
     </CaseStudyMutedText>
+
     <CaseStudyMutedList className="space-y-2">
       <li>AGP percentile profiles, Time in Range, and time-above and time-below episodes</li>
       <li>Variability: MAGE, CONGA, MODD, ADRR, J-Index, M-value, GVI and PGS</li>
@@ -137,51 +221,8 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
       <li>Meal response, curve shape, and active sensor percentage</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Connectors and interoperability</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Vendor formats normalize into one reading shape, and results can leave in
-      formats other health systems already read:
-    </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Connectors for Dexcom, Libre, and Nightscout, with declared capabilities per source</li>
-      <li>FHIR and Open mHealth output for systems that speak those standards</li>
-      <li>Mixed-unit-aware APIs normalize declared mg/dL and mmol/L before calculating</li>
-      <li>CSV parsing with an explicit contract rather than best-effort guessing</li>
-    </CaseStudyMutedList>
+    <CaseStudySubheading>Five packages</CaseStudySubheading>
 
-    <CaseStudySubheading>SVG rendering</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Renderers return SVG strings for AGP charts, Time in Range bars, and trend
-      tiles. The host decides how to embed, sanitize, or deliver that string, so
-      the same call works in a React app, a server-rendered report, or a PDF
-      pipeline.
-    </CaseStudyMutedText>
-
-    <CaseStudySubheading>Synthetic test data</CaseStudySubheading>
-    <CaseStudyMutedText>
-      A dedicated package ships fixed-seed synthetic CGM data and scenario
-      fixtures, so tests, demos, and documentation run on realistic glucose
-      traces without touching anyone's real readings.
-    </CaseStudyMutedText>
-    </CaseStudyDetails>
-  </div>
-</CaseStudySection>
-
-<CaseStudySection title="Package boundaries and release checks">
-  <div className="space-y-6">
-    <CaseStudyMutedText>
-      The core has no runtime or peer dependencies. Release checks enforce both
-      constraints.
-    </CaseStudyMutedText>
-
-    <CaseStudyMutedText>
-      The docs site is built with Fumadocs, and its code samples are type-checked
-      and executed in CI. A snippet that stops compiling fails the build, so the
-      examples cannot drift away from the API they describe.
-    </CaseStudyMutedText>
-
-    <CaseStudyDetails summary="Package responsibilities, release gates, and input contracts">
-    <CaseStudySubheading className="mt-0">Five packages</CaseStudySubheading>
     <CaseStudyMutedList className="space-y-2">
       <li><code>@glucoseiq/core</code> for analytics, connectors, interop, and SVG renderers</li>
       <li><code>@glucoseiq/react</code> for hooks and headless components, React 18 and 19</li>
@@ -190,19 +231,12 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
       <li><code>@glucoseiq/cli</code> for analyzing mapped CSV without writing any application code</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Release checks</CaseStudySubheading>
-
-    <CaseStudyMutedList className="space-y-2">
-      <li>Vitest thresholds at 100% for lines, functions, branches, and statements</li>
-      <li>A gzip budget on the reachable core ESM, failing the build when it is exceeded</li>
-      <li>Packed-package consumer tests, so what publishes is what gets tested</li>
-      <li>Release gated on build, lint, type checking, coverage, size, consumer tests, and the docs build</li>
-    </CaseStudyMutedList>
-
     <CaseStudySubheading>Input contracts</CaseStudySubheading>
+
     <CaseStudyMutedText>
       The CSV parser has an explicit contract for unfamiliar exports:
     </CaseStudyMutedText>
+
     <CaseStudyMutedList className="space-y-2">
       <li>A custom delimiter must be exactly one UTF-16 code unit; double quote, NUL, carriage return, and line feed are rejected</li>
       <li>Blank or BOM-only input returns an empty result, and so does a valid header-only file</li>
@@ -210,43 +244,5 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
       <li>Renderer dimensions must be finite positive numbers, and text values are escaped</li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
-  </div>
-</CaseStudySection>
-
-<CaseStudySection title="Scope and release status">
-  <div className="space-y-6">
-    <CaseStudyParagraph>
-      GlucoseIQ is for informational, educational, and software development use.
-      It is not medical advice and is not a medical device. This scope is stated
-      in the README, the docs, and this case study because the library computes
-      clinical-looking numbers.
-    </CaseStudyParagraph>
-    <CaseStudyMutedText>
-      Project-defined API results are labeled:
-    </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-4">
-      <li>
-        <strong><code>glucoseIQScore</code> is non-diagnostic</strong>, a
-        project-defined score derived from GRI rather than a published measure
-      </li>
-      <li>
-        <strong><code>buildAGPProfile</code> returns AGP-style bands</strong>,
-        a percentile series rather than a standardized complete AGP report
-      </li>
-      <li>
-        <strong><code>valid</code> is not <code>sufficient</code></strong>,
-        which is why data adequacy gets its own field instead of being folded
-        into a boolean
-      </li>
-      <li>
-        <strong>Embedding policy stays with the host</strong>, because a library
-        returning an SVG string cannot know where it is about to be placed
-      </li>
-    </CaseStudyMutedList>
-    <CaseStudyParagraph className="mt-8">
-      Packages publish under the <code>1.0.0-next</code> tag. The analytics are
-      settled and covered; what remains before 1.0 is the public API surface. The
-      prerelease tag reflects that remaining work.
-    </CaseStudyParagraph>
   </div>
 </CaseStudySection>

@@ -16,26 +16,41 @@ export default function KineticText({ text, className = '', style }: KineticText
     if (!container) return
     const media = gsap.matchMedia()
     media.add('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
-      const chars = container.querySelectorAll('.kinetic-char')
-      const move = (expanded: boolean) => gsap.to(chars, {
-        y: (index: number) => expanded ? Math.sin(index * 0.65) * -5 : 0,
-        duration: expanded ? 0.35 : 0.25,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      })
-      const enter = () => { move(true) }
-      const leave = () => { move(false) }
+      const chars = Array.from(container.querySelectorAll<HTMLElement>('.kinetic-char'))
+      const setters = chars.map((char) => ({
+        y: gsap.quickTo(char, 'y', { duration: 0.25, ease: 'power3.out' }),
+        rotation: gsap.quickTo(char, 'rotation', { duration: 0.25, ease: 'power3.out' }),
+      }))
+      let centers: number[] = []
+      const enter = () => {
+        centers = chars.map((char) => {
+          const rect = char.getBoundingClientRect()
+          return rect.left + rect.width / 2
+        })
+      }
+      const move = (event: PointerEvent) => {
+        if (event.pointerType !== 'mouse') return
+        centers.forEach((center, index) => {
+          const distance = (event.clientX - center) / 110
+          const influence = Math.exp(-distance * distance)
+          setters[index].y(-8 * influence)
+          setters[index].rotation(3 * distance * influence)
+        })
+      }
+      const leave = () => setters.forEach(({ y, rotation }) => { y(0); rotation(0) })
       container.addEventListener('pointerenter', enter)
+      container.addEventListener('pointermove', move)
       container.addEventListener('pointerleave', leave)
       return () => {
         container.removeEventListener('pointerenter', enter)
+        container.removeEventListener('pointermove', move)
         container.removeEventListener('pointerleave', leave)
-        gsap.killTweensOf(chars)
+        setters.forEach(({ y, rotation }) => { y.tween.kill(); rotation.tween.kill() })
         gsap.set(chars, { clearProps: 'transform' })
       }
     })
     return () => media.revert()
-  }, [])
+  }, [text])
 
   return (
     <span ref={containerRef} className={className} style={style}>

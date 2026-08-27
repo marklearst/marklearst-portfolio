@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import GlucoseDemo from '@/components/glucose/GlucoseDemo'
 import KineticText from '@/components/ui/KineticText'
+import PortfolioTerminalButton from '@/components/ui/PortfolioTerminalButton'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import styles from './Showcase.module.css'
@@ -18,7 +19,7 @@ export default function EnhancedHero() {
     <section ref={heroRef} className={styles.hero} aria-labelledby='hero-name'>
       <div className={styles.container}>
         <div className={styles.terminal}>
-          <span><span className={styles.prompt}>❯</span> ~/portfolio</span>
+          <PortfolioTerminalButton />
           <span className={styles.terminalAside}>design / engineering</span>
         </div>
         <div ref={nameBoxRef} className={styles.nameBox}>
