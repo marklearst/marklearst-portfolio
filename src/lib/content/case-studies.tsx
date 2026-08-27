@@ -14,6 +14,7 @@ import AuroraGMContent from '@/content/case-studies/aurora-gm.mdx'
 import DiabeticUtilsContent from '@/content/case-studies/diabetic-utils.mdx'
 import FigmaVarsHooksContent from '@/content/case-studies/figmavars-hooks.mdx'
 import HailstormContent from '@/content/case-studies/hailstorm.mdx'
+import GlucoseIQContent from '@/content/case-studies/glucoseiq.mdx'
 import PrimitreeContent from '@/content/case-studies/primitree.mdx'
 import SkydioContent from '@/content/case-studies/skydio.mdx'
 import VariableDesignStandardContent from '@/content/case-studies/variable-design-standard.mdx'
@@ -85,6 +86,10 @@ const CASE_STUDY_ENTRIES: Record<
   primitree: {
     Content: PrimitreeContent,
     fileName: 'primitree.mdx',
+  },
+  glucoseiq: {
+    Content: GlucoseIQContent,
+    fileName: 'glucoseiq.mdx',
   },
   'variable-design-standard': {
     Content: VariableDesignStandardContent,
