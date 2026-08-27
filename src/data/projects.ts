@@ -174,6 +174,48 @@ export const PROJECTS: ProjectMeta[] = [
     },
   },
   {
+    slug: 'primitree',
+    route: '/work/primitree',
+    title: 'Primitree',
+    cardTitle: 'Primitree',
+    category: 'DEVELOPER TOOLS',
+    categoryColor: 'cyan',
+    summary:
+      'DTCG token pipeline that turns design system architecture into a checkable contract. Layer rules, identity-preserving diffs, and emitters for CSS, Tailwind, and TypeScript.',
+    description:
+      'DTCG token pipeline that turns design system architecture into a checkable contract. Six packages covering a CLI, token graph, emitters for CSS, Tailwind and TypeScript, React hooks, and an MCP server.',
+    role: 'Creator & Maintainer',
+    timeline: '2025 - Present',
+    publishedAt: '2026-08-25',
+    featured: true,
+    technologies: [
+      'TypeScript',
+      'DTCG 2025.10',
+      'Node.js 24',
+      'Turborepo',
+      'Figma Variables API',
+      'MCP',
+      'React 19',
+    ],
+    tags: ['Design Tokens', 'TypeScript', 'CLI'],
+    commitHash: 'd0c5999',
+    cardGradient: 'from-cyan-500/10 via-emerald-500/5 to-transparent',
+    caseStudyGradient: 'from-cyan-500/20 via-emerald-500/10 to-transparent',
+    terminal: {
+      command: 'cd /work/primitree',
+      loading: 'Loading token pipeline...',
+      packages: [
+        'primitree@1.0.0-next.1',
+        '@primitree/core@1.0.0-next.1',
+        '@primitree/dtcg@1.0.0-next.1',
+        '@primitree/mcp@1.0.0-next.1',
+      ],
+      output: 'Ready',
+      outputWithCheck: true,
+      durationKey: 'workRouteWithPackages',
+    },
+  },
+  {
     slug: 'a11y-companion',
     route: '/work/a11y-companion',
     title: 'a11y Companion',
@@ -329,7 +371,12 @@ export const PROJECTS: ProjectMeta[] = [
   },
 ]
 
-export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured)
+const publishedTimestamp = (project: ProjectMeta) =>
+  project.publishedAt ? new Date(project.publishedAt).getTime() : 0
+
+export const FEATURED_PROJECTS = PROJECTS.filter(
+  (project) => project.featured,
+).sort((a, b) => publishedTimestamp(b) - publishedTimestamp(a))
 
 export const PROJECTS_BY_ROUTE = PROJECTS.reduce<Record<string, ProjectMeta>>(
   (acc, project) => {
