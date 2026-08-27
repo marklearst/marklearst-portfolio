@@ -74,16 +74,14 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
   const content = stripFrontmatter(Content({ components: mdxComponents }))
 
   return (
-    <main
-      className='min-h-screen relative overflow-hidden'
-    >
+    <main className='min-h-screen relative overflow-hidden'>
       <div className='absolute inset-0 pointer-events-none'>
         <div
-          className='absolute top-1/4 left-1/3 w-[520px] h-[520px] rounded-full blur-[140px] opacity-20'
+          className='absolute top-1/4 left-1/3 w-130 h-130 rounded-full blur-[140px] opacity-20'
           style={{ backgroundColor: MONOKAI.cyan }}
         />
         <div
-          className='absolute bottom-1/3 right-1/4 w-[520px] h-[520px] rounded-full blur-[160px] opacity-15'
+          className='absolute bottom-1/3 right-1/4 w-130 h-130 rounded-full blur-[160px] opacity-15'
           style={{ backgroundColor: MONOKAI.purple }}
         />
       </div>
