@@ -42,6 +42,8 @@ export interface ProjectMeta {
   publishedAt?: string
   pinned?: boolean
   featured?: boolean
+  /** Published under an open source license with a public repository. */
+  openSource?: boolean
   technologies: string[]
   tags: string[]
   commitHash: string
@@ -144,7 +146,7 @@ export const PROJECTS: ProjectMeta[] = [
     timeline: '2024 - Present',
     publishedAt: '2024-12-01',
     pinned: true,
-    featured: true,
+    openSource: true,
     technologies: [
       'React 19',
       'TypeScript',
@@ -188,6 +190,7 @@ export const PROJECTS: ProjectMeta[] = [
     timeline: '2025 - Present',
     publishedAt: '2026-08-25',
     featured: true,
+    openSource: true,
     technologies: [
       'TypeScript',
       'DTCG 2025.10',
@@ -216,6 +219,49 @@ export const PROJECTS: ProjectMeta[] = [
     },
   },
   {
+    slug: 'glucoseiq',
+    route: '/work/glucoseiq',
+    title: 'GlucoseIQ',
+    cardTitle: 'GlucoseIQ',
+    category: 'HEALTH TECH',
+    categoryColor: 'pink',
+    summary:
+      'Headless TypeScript library for CGM and glucose data. 17 clinical metrics, device connectors, FHIR interop, and SVG rendering over a zero-dependency core.',
+    description:
+      'Headless TypeScript library for CGM and glucose data. Five packages covering 17 clinical metrics, device connectors, FHIR and Open mHealth interop, SVG rendering, React bindings, and seeded test fixtures.',
+    role: 'Creator & Maintainer',
+    timeline: '2025 - Present',
+    publishedAt: '2026-07-28',
+    featured: true,
+    openSource: true,
+    technologies: [
+      'TypeScript',
+      'Node.js 24',
+      'React 19',
+      'Turborepo',
+      'SVG',
+      'FHIR',
+      'Changesets',
+    ],
+    tags: ['TypeScript', 'Health Tech', 'npm'],
+    commitHash: 'acc209c',
+    cardGradient: 'from-pink-500/10 via-rose-500/5 to-transparent',
+    caseStudyGradient: 'from-pink-500/20 via-rose-500/10 to-transparent',
+    terminal: {
+      command: 'cd /work/glucoseiq',
+      loading: 'Loading analytics core...',
+      packages: [
+        '@glucoseiq/core@1.0.0-next.0',
+        '@glucoseiq/react@1.0.0-next.0',
+        '@glucoseiq/tokens@1.0.0-next.0',
+        '@glucoseiq/cli@1.0.0-next.0',
+      ],
+      output: 'Ready',
+      outputWithCheck: true,
+      durationKey: 'workRouteWithPackages',
+    },
+  },
+  {
     slug: 'a11y-companion',
     route: '/work/a11y-companion',
     title: 'a11y Companion',
@@ -230,6 +276,7 @@ export const PROJECTS: ProjectMeta[] = [
     timeline: '2023 - Present',
     publishedAt: '2026-07-12',
     featured: true,
+    openSource: true,
     technologies: [
       'Figma Widget API',
       'TypeScript',
@@ -270,7 +317,7 @@ export const PROJECTS: ProjectMeta[] = [
     role: 'Creator & Maintainer',
     timeline: '2023 - Present',
     publishedAt: '2023-10-01',
-    featured: true,
+    openSource: true,
     technologies: [
       'TypeScript',
       'Vitest',
@@ -307,6 +354,7 @@ export const PROJECTS: ProjectMeta[] = [
     timeline: '2024 - Present',
     publishedAt: '2024-10-01',
     featured: true,
+    openSource: true,
     technologies: [
       'JSON Schema',
       'DTCG Spec',
