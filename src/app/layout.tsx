@@ -60,12 +60,12 @@ export default function RootLayout({
         {/* Scroll progress indicator - below the gradient line */}
         <ScrollProgress />
 
-        {/* Header with ML logo - staggered entrance */}
+        {/* Navigation is available immediately on every route. */}
         <header className='site-header fixed top-0 inset-x-0 z-40 isolate flex flex-wrap items-center justify-between gap-2 px-4 pt-4 pb-3 sm:flex-nowrap sm:gap-4 sm:px-8 sm:pt-8'>
-          <div className='pointer-events-auto flex min-h-11 items-center opacity-0 animate-[fadeIn_0.5s_ease-out_0.8s_forwards]'>
+          <div className='pointer-events-auto flex min-h-11 items-center'>
             <ParticleHeader />
           </div>
-          <div className='pointer-events-auto w-full opacity-0 animate-[fadeIn_0.5s_ease-out_1s_forwards] sm:w-auto'>
+          <div className='pointer-events-auto w-full sm:w-auto'>
             <PrimaryNav />
           </div>
         </header>

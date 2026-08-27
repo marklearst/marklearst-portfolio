@@ -112,7 +112,24 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
       </li>
     </CaseStudyMutedList>
 
-    <CaseStudyDetails summary="JSON contract, tool adapters, and governance checks">
+    <CaseStudySubheading>Tool adapters</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Tool exports are inputs, not the contract. Adapters normalize Figma,
+      Tokens Studio, and other formats into VDS:
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>Governance checks</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Variable names are treated like an API. Changes are reviewed before merge:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Naming rules validated in CI (dot-separated paths, no hyphens)</li>
+      <li>References validated for resolution and cycles</li>
+      <li>Breaking changes require MAJOR version bump</li>
+      <li>Deprecation strategy with migration paths</li>
+    </CaseStudyMutedList>
+
+    <CaseStudyDetails summary="JSON contract and adapter examples">
     <CaseStudySubheading>JSON-as-API Architecture</CaseStudySubheading>
 
 <CodeBlock
@@ -137,11 +154,7 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 }`}
 />
 
-    <CaseStudySubheading>Tool adapters</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Tool exports are inputs, not the contract. Adapters normalize Figma,
-      Tokens Studio, and other formats into VDS:
-    </CaseStudyMutedText>
+    <CaseStudySubheading>Adapter examples</CaseStudySubheading>
 
 <CodeBlock
   language='json'
@@ -181,16 +194,7 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 }`}
 />
 
-    <CaseStudySubheading>Governance checks</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Variable names are treated like an API. Changes are reviewed before merge:
-    </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Naming rules validated in CI (dot-separated paths, no hyphens)</li>
-      <li>References validated for resolution and cycles</li>
-      <li>Breaking changes require MAJOR version bump</li>
-      <li>Deprecation strategy with migration paths</li>
-    </CaseStudyMutedList>
+
     </CaseStudyDetails>
   </div>
 </CaseStudySection>

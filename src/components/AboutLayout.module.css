@@ -55,6 +55,13 @@
   text-wrap: pretty;
 }
 
+.content :global(.about-intro) > p a,
+.content :global(.about-detail-body) a {
+  color: #78dce8;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .content :global(.about-intro) > :global(.about-availability) {
   color: #fcfcfab3;
   font-size: 15px;
@@ -152,6 +159,61 @@
   margin-top: 40px;
 }
 
+.content :global(.about-projects) {
+  margin-top: 40px;
+}
+
+.content :global(.about-projects) h2 {
+  margin: 0 0 12px;
+  color: #fcfcfa;
+  font: 500 20px / 1.4 var(--font-body);
+}
+
+.content :global(.about-projects) > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+}
+
+.content :global(.about-projects) a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: #fcfcfacc;
+  font: 14px / 1.5 var(--font-mono);
+  text-decoration: none;
+}
+
+.content :global(.about-projects) a span {
+  color: #78dce8;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.content :global(.about-skills) {
+  margin: 0;
+  padding-block: 8px 24px;
+}
+
+.content :global(.about-skills) > div {
+  display: grid;
+  grid-template-columns: 184px minmax(0, 1fr);
+  gap: 12px 28px;
+  padding-block: 14px;
+}
+
+.content :global(.about-skills) dt {
+  color: #fcfcfa;
+  font: 500 15px / 1.6 var(--font-body);
+}
+
+.content :global(.about-skills) dd {
+  margin: 0;
+  color: #fcfcfab3;
+  font: 15px / 1.6 var(--font-body);
+  text-wrap: pretty;
+}
+
 .content :global(.about-disclosure) {
   border-top: 1px solid #fcfcfa29;
 }
@@ -201,6 +263,9 @@
 }
 
 .contactAction:focus-visible,
+.content :global(.about-intro) > p a:focus-visible,
+.content :global(.about-detail-body) a:focus-visible,
+.content :global(.about-projects) a:focus-visible,
 .content :global(.about-contact-links) > a:focus-visible,
 .content :global(.about-disclosure) > summary:focus-visible {
   outline: 2px solid #fcfcfa;
@@ -219,21 +284,28 @@
   }
 
   .content :global(.about-contact-links) > a:hover,
+  .content :global(.about-projects) a:hover,
   .content :global(.about-disclosure) > summary:hover {
     color: #fcfcfa;
+  }
+
+  .content :global(.about-projects) a:hover span {
+    transform: translate(2px, -2px);
   }
 }
 
 @media (max-width: 680px) {
   .hero { padding-top: 152px; }
-  .content :global(.timeline-content) { display: flex; gap: 8px; }
+  .content :global(.timeline-content) { display: flex; flex-direction: column; gap: 8px; }
   .content :global(.timeline-entry) { padding-block: 20px; }
   .content :global(.about-detail-grid) { grid-template-columns: 1fr; }
+  .content :global(.about-skills) > div { grid-template-columns: 1fr; gap: 4px; }
   .content :global(.about-contact-links) { flex-direction: column; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .contactAction,
+  .content :global(.about-projects) a span,
   .content :global(.about-contact-links) > a {
     transition: none;
   }

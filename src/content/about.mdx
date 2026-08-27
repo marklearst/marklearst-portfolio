@@ -1,5 +1,5 @@
 <div className='about-intro'>
-  <p>I'm building Primitree, a token pipeline that grew out of FigmaVars Hooks and my token governance work on Variable Design Standard. I use Claude Code for architecture and validation, and Cursor for implementation, with automated validation and human review.</p>
+  <p>I'm building <a href='/work/primitree'>Primitree</a>, a token pipeline that grew out of <a href='/work/figmavars-hooks'>FigmaVars Hooks</a> and my token governance work on <a href='/work/variable-design-standard'>Variable Design Standard</a>. I use Claude Code for architecture and automated validation, Cursor for implementation, and human review before shipping.</p>
   <p className='about-availability'>Open to Principal Design Engineer, Design Systems, DX Tooling and AI Agentic Workflow roles. Remote only. Also available for product consulting and open source collaboration.</p>
   <div className='about-contact-actions'>
     <ContactCard
@@ -38,7 +38,7 @@
         <div className='timeline-content'>
           <span className='timeline-year'>Feb 2026 - Aug 2026</span>
           <span className='timeline-role'>ZoomInfo · Senior Design Engineer</span>
-          <span className='timeline-description'>Component-library architecture, design-token governance, and AI-assisted workflows with automated validation and human review</span>
+          <span className='timeline-description'>Component-library architecture, design-token governance, and AI-assisted workflows</span>
         </div>
       </div>
       <div className='timeline-entry'>
@@ -54,7 +54,7 @@
         <div className='timeline-content'>
           <span className='timeline-year'>2024–Present</span>
           <span className='timeline-role'>Self-Employed · Design Systems, Product Consulting</span>
-          <span className='timeline-description'>Shipped production design systems, accessibility tooling, agentic workflows with automated validation and human review</span>
+          <span className='timeline-description'>Shipped production design systems, accessibility tooling, and agentic workflows</span>
         </div>
       </div>
       <div className='timeline-entry'>
@@ -85,59 +85,44 @@
   </div>
 </CaseStudySection>
 
+<nav className='about-projects' aria-label='Explore current work'>
+  <h2>Current work</h2>
+  <div>
+    <a href='/work/primitree'>Primitree <span aria-hidden='true'>↗</span></a>
+    <a href='/work/figmavars-hooks'>FigmaVars Hooks <span aria-hidden='true'>↗</span></a>
+    <a href='/work/a11y-companion'>a11y Companion <span aria-hidden='true'>↗</span></a>
+  </div>
+</nav>
+
 <div className='about-supporting'>
   <details className='about-disclosure'>
     <summary>Skills & tools</summary>
-    <div className='about-detail-grid'>
+    <dl className='about-skills'>
       <div>
-        <CaseStudySubheading className='mt-0'>Design Systems</CaseStudySubheading>
-        <CaseStudyMutedList className='space-y-2'>
-          <li>Storybook, MDX, Component Libraries</li>
-          <li>Documentation Architecture, Versioning</li>
-          <li>Governance, Release Notes, Migration Strategy</li>
-        </CaseStudyMutedList>
+        <dt>Design systems</dt>
+        <dd>Storybook, MDX, component libraries. Documentation architecture, versioning, governance, release notes, and migration strategy.</dd>
       </div>
       <div>
-        <CaseStudySubheading className='mt-0'>Tokens & Theming</CaseStudySubheading>
-        <CaseStudyMutedList className='space-y-2'>
-          <li>Design Tokens, Figma Variables, Tailwind</li>
-          <li>Style Dictionary, Semantic Theming</li>
-          <li>Token Pipelines, DTCG Compliance</li>
-        </CaseStudyMutedList>
+        <dt>Tokens & theming</dt>
+        <dd>Figma Variables, Tailwind, Style Dictionary. Design tokens, semantic theming, token pipelines, and DTCG compliance. Design-to-code pipelines from Figma Variables to production.</dd>
       </div>
       <div>
-        <CaseStudySubheading className='mt-0'>Frontend</CaseStudySubheading>
-        <CaseStudyMutedList className='space-y-2'>
-          <li>React 19, TypeScript, Next.js</li>
-          <li>Component APIs, Composition Patterns</li>
-          <li>Slot Patterns, Headless Patterns</li>
-        </CaseStudyMutedList>
+        <dt>Frontend</dt>
+        <dd>React 19, TypeScript, Next.js. Component APIs, composition, slot patterns, and headless patterns.</dd>
       </div>
       <div>
-        <CaseStudySubheading className='mt-0'>AI Workflows</CaseStudySubheading>
-        <CaseStudyMutedList className='space-y-2'>
-          <li>Claude Code, Cursor, Agentic Development</li>
-          <li>Subagent Orchestration, MCP Servers</li>
-          <li>CLAUDE.md Guardrails, AI-Assisted Codegen</li>
-        </CaseStudyMutedList>
+        <dt>AI workflows</dt>
+        <dd>Claude Code, Cursor, MCP servers. Agentic development, subagent orchestration, CLAUDE.md guardrails, and AI-assisted codegen. Shipping portfolio, component libraries, and OSS with 60%+ faster iteration.</dd>
       </div>
       <div>
-        <CaseStudySubheading className='mt-0'>Quality & Testing</CaseStudySubheading>
-        <CaseStudyMutedList className='space-y-2'>
-          <li>Playwright, React Testing Library</li>
-          <li>Vitest, Jest, Visual Regression</li>
-          <li>CI Validation Gates, Component Testing</li>
-        </CaseStudyMutedList>
+        <dt>Quality & testing</dt>
+        <dd>Playwright, React Testing Library, Vitest, Jest. Visual regression, CI validation gates, and component testing.</dd>
       </div>
       <div>
-        <CaseStudySubheading className='mt-0'>Accessibility</CaseStudySubheading>
-        <CaseStudyMutedList className='space-y-2'>
-          <li>WCAG 2.2 AA, Semantic HTML</li>
-          <li>ARIA Patterns, Axe, Keyboard Support</li>
-          <li>VoiceOver, Screen Reader Testing</li>
-        </CaseStudyMutedList>
+        <dt>Accessibility</dt>
+        <dd>WCAG 2.2 AA, semantic HTML, ARIA patterns, Axe. Keyboard support, VoiceOver, and screen reader testing.</dd>
       </div>
-    </div>
+    </dl>
   </details>
   <details className='about-disclosure'>
     <summary>Open source & credentials</summary>
@@ -146,27 +131,27 @@
         <CaseStudySubheading>Open Source</CaseStudySubheading>
         <CaseStudyMutedList className='space-y-2'>
           <li>
-            <span className='text-white'>a11y Companion</span>: Figma widget · 400+
+            <a href='/work/a11y-companion'>a11y Companion</a>: Figma widget · 400+
             users · accessibility reviews · live contrast inspection · Canvas Record
           </li>
           <li>
-            <span className='text-white'>Primitree</span>: Token governance · DTCG
+            <a href='/work/primitree'>Primitree</a>: Token governance · DTCG
             2025.10 · CSS · Tailwind · TypeScript builds · Variable Design Standard
           </li>
           <li>
-            <span className='text-white'>FigmaVars Hooks</span>: React 19 hooks ·
+            <a href='/work/figmavars-hooks'>FigmaVars Hooks</a>: React 19 hooks ·
             Figma Variables API · 100% coverage
           </li>
           <li>
-            <span className='text-white'>Diabetic Utils</span>: TypeScript ·
+            <a href='/work/diabetic-utils'>Diabetic Utils</a>: TypeScript ·
             glucose/A1C analytics
           </li>
           <li>
-            <span className='text-white'>Variable Design Standard</span>: Token
+            <a href='/work/variable-design-standard'>Variable Design Standard</a>: Token
             governance spec · DTCG-compliant
           </li>
           <li>
-            <span className='text-white'>GlucoseIQ</span>: headless TypeScript
+            <a href='/work/glucoseiq'>GlucoseIQ</a>: headless TypeScript
             library · 17 clinical metrics · FHIR interop · zero-dependency core
           </li>
         </CaseStudyMutedList>
@@ -217,16 +202,6 @@
           <li>Systems that hold up long after launch</li>
         </CaseStudyMutedList>
       </div>
-    </div>
-  </details>
-  <details className='about-disclosure'>
-    <summary>Current work</summary>
-    <div className='about-detail-body'>
-      <CaseStudyMutedList className='space-y-2'>
-        <li>Maintaining Primitree, FigmaVars Hooks, and a11y Companion (400+ users)</li>
-        <li>Shipping portfolio, component libraries, and OSS with 60%+ faster iteration</li>
-        <li>Design-to-code pipelines from Figma Variables to production</li>
-      </CaseStudyMutedList>
     </div>
   </details>
 </div>

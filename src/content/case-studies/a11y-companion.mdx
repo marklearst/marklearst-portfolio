@@ -33,14 +33,39 @@ impact:
 gradient: from-green-500/20 via-emerald-500/10 to-transparent
 ---
 
-<CaseStudySection title="Keep sign-off tied to what was reviewed">
+<CaseStudySection title="When sign-off stops matching the design">
   <div className="space-y-6">
+    <CaseStudyParagraph>
+      I created and maintain <strong>a11y Companion</strong>, an accessibility
+      review widget for Figma and FigJam. Version 3.0.0 brings The A11Y Project
+      Checklist together with canvas audits, contrast inspection, reviewer
+      sign-off, and handoff records.
+    </CaseStudyParagraph>
+
     <CaseStudyParagraph>
       The first version let teams complete an accessibility checklist in the
       design file. When those checklist items changed, a signed section could
       not flag that it needed another review. In v3.0.0, sign-off records the
       reviewed state and turns stale when the items change.
     </CaseStudyParagraph>
+
+    <CaseStudyMutedText>
+      A section can be signed by a named reviewer. The signature fingerprints
+      item ids, completion state, and checklist revision. When those items
+      change, the stamp turns amber and the section reads as needing re-review.
+    </CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Follow a finding back to the layer">
+  <div className="space-y-6">
+    <CaseStudyMutedText>
+      Version 3.0.0 adds the canvas checks and native Dev Mode annotations
+      that the first version lacked. Three audits run against the selected
+      canvas scope, sharing a capped 25-finding slot with failures sorted ahead
+      of warnings. Counts include findings beyond the display cap.
+    </CaseStudyMutedText>
+
     <figure className="mb-12">
       <a href="https://marklearst.me/a11y-companion-widget/" className="block rounded-[8px]">
         <Image
@@ -59,47 +84,6 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
         </a>
       </figcaption>
     </figure>
-    <CaseStudyParagraph>
-      I created and maintain <strong>a11y Companion</strong>, an accessibility
-      review widget for Figma and FigJam. Version 3.0.0 brings The A11Y Project
-      Checklist together with canvas audits, contrast inspection, reviewer
-      sign-off, and handoff records.
-    </CaseStudyParagraph>
-    <CaseStudyParagraph>
-      Version 3.0.0 also adds the canvas checks and native Dev Mode annotations
-      that the first version lacked. Findings stay attached to the affected
-      layers, and Canvas Record brings the review evidence into one Figma frame.
-    </CaseStudyParagraph>
-  </div>
-</CaseStudySection>
-
-<CaseStudySection title="Make each finding inspectable">
-  <div className="space-y-6">
-    <CaseStudyMutedText>
-      Three audits run directly against the selected canvas scope, sharing a
-      capped 25-finding slot with failures sorted ahead of warnings. Counts
-      include findings beyond the display cap.
-    </CaseStudyMutedText>
-
-    <CaseStudyMutedText>
-      A section can be signed by a named reviewer. The signature fingerprints
-      item ids, completion state, and checklist revision. When those items
-      change, the stamp turns amber and the section reads as needing re-review.
-    </CaseStudyMutedText>
-
-    <CaseStudyMutedText>
-      Native Dev Mode annotations put findings on the affected layers. Canvas
-      Record gathers review progress and evidence in a Figma frame.
-    </CaseStudyMutedText>
-
-    <CaseStudyMutedText>
-      Markdown, CSV, and JSON exports carry run owner and time, scope, full
-      counts, grouped evidence, and an explicit disclosure when rows are
-      representative rather than complete.
-    </CaseStudyMutedText>
-
-    <CaseStudyDetails summary="Audit thresholds, contrast behavior, and handoff records">
-    <CaseStudySubheading className="mt-0">Audit scope and contrast</CaseStudySubheading>
 
     <CaseStudyMutedList className="space-y-2">
       <li>Targets: fails below 24px per WCAG 2.5.8, warns below 44px, with a 2000-node traversal budget</li>
@@ -114,6 +98,7 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       keep-alive bridge responds to selection changes, and shared ownership
       with last-writer-wins takeover shows the team who is driving.
     </CaseStudyMutedText>
+
     <CaseStudyMutedList className="space-y-2">
       <li>Thresholds evaluated at full precision before rounding for display</li>
       <li>A failing pair keeps the measured colors in the specimen while a separate line states the verdict</li>
@@ -121,21 +106,10 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       <li>WCAG contrast stays the normative result; the preview never issues a second grade</li>
       <li>Explicit notices for pattern, shader, and video fills instead of a silent failure</li>
     </CaseStudyMutedList>
-
-    <CaseStudySubheading>Handoff records</CaseStudySubheading>
-
-    <CaseStudyMutedList className="space-y-2">
-      <li>Audit findings promote to Figma Dev Mode annotations, individually or in bulk</li>
-      <li>Read-modify-write preserves existing annotations and stays idempotent on re-run</li>
-      <li>Annotations link the relevant WCAG Understanding page and cite the properties that failed</li>
-      <li>Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame</li>
-      <li>Re-running Record refreshes the same widget-owned frame instead of creating duplicates</li>
-    </CaseStudyMutedList>
-    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Fix the assumptions behind the audit">
+<CaseStudySection title="What the Geist file exposed">
   <div className="space-y-6">
     <CaseStudyMutedText>
       Early token pairing matched on names containing "text" and "bg". Testing
@@ -146,25 +120,57 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       explicit surfaces in the same family, with the pair cap raised to 800.
     </CaseStudyMutedText>
 
-    <CaseStudyMutedText>
-      Scripts in lint check the widget's token architecture, AA contrast, theme
-      drift, and bundle size.
-    </CaseStudyMutedText>
+    <CaseStudySubheading>State has to survive the widget runtime</CaseStudySubheading>
 
-    <CaseStudyDetails summary="Widget state, design checks, and translation">
-    <CaseStudySubheading className="mt-0">Widget state</CaseStudySubheading>
     <CaseStudyMutedText>
       The widget runtime clears module memory between interactions. Confirmation
       and Watch state therefore need storage that survives those resets:
     </CaseStudyMutedText>
+
     <CaseStudyMutedList className="space-y-2">
       <li>Pending confirmation state uses <code>figma.clientStorage</code></li>
       <li>Watch ownership uses the durable <code>sessionId</code></li>
       <li>Export and clipboard access run through a hidden iframe bridge, since the widget sandbox has neither</li>
       <li>Empty spacer AutoLayouts default to 100px tall; explicit <code>height=0</code> keeps them from inflating badge and chip rows</li>
     </CaseStudyMutedList>
+  </div>
+</CaseStudySection>
 
+<CaseStudySection title="A review record the team can hand off">
+  <div className="space-y-6">
+    <CaseStudyMutedText>
+      Native Dev Mode annotations keep findings attached to the affected
+      layers. Canvas Record gathers review progress and evidence in one Figma
+      frame. Both need to remain useful when the review runs again.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedList className="space-y-2">
+      <li>Audit findings promote to Figma Dev Mode annotations, individually or in bulk</li>
+      <li>Read-modify-write preserves existing annotations and stays idempotent on re-run</li>
+      <li>Annotations link the relevant WCAG Understanding page and cite the properties that failed</li>
+      <li>Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame</li>
+      <li>Re-running Record refreshes the same widget-owned frame instead of creating duplicates</li>
+    </CaseStudyMutedList>
+
+    <CaseStudyMutedText>
+      Markdown, CSV, and JSON exports carry run owner and time, scope, full
+      counts, grouped evidence, and an explicit disclosure when rows are
+      representative rather than complete.
+    </CaseStudyMutedText>
+
+    <CaseStudyParagraph>
+      The widget has 400+ users on Figma Community and supports twenty locales.
+      The v3 workflow can be reviewed through its audit findings, Dev Mode
+      annotations, Canvas Record, and Markdown, CSV, or JSON exports.
+    </CaseStudyParagraph>
+
+    <CaseStudyDetails summary="Design-system checks, translation, and demo parity">
     <CaseStudySubheading>Design system checks</CaseStudySubheading>
+
+    <CaseStudyMutedText>
+      Scripts in lint check the widget's token architecture, AA contrast, theme
+      drift, and bundle size.
+    </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
       <li>Variable architecture and design-system conformance checks</li>
@@ -172,12 +178,14 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       <li>Theme baseline snapshots that fail on unreviewed drift</li>
       <li>Bundle size budgets, kept under ceiling by minifying syntax while preserving identifiers</li>
     </CaseStudyMutedList>
+
     <CaseStudyMutedText>
       Checkboxes meet WCAG 1.4.11 non-text contrast, severity uses glyphs
       alongside color, and WCAG references render in both themes.
     </CaseStudyMutedText>
 
     <CaseStudySubheading>Translation</CaseStudySubheading>
+
     <CaseStudyMutedText>
       Twenty locales are generated through a pipeline that shields WCAG codes and
       inline markup from machine translation. Missing keys fall back to English
@@ -186,6 +194,7 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudySubheading>Product site parity</CaseStudySubheading>
+
     <CaseStudyMutedText>
       The product site is statically prerendered and gated by a Chrome-based
       check that exercises audit interactions and control geometry at 390, 768,
@@ -193,15 +202,5 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       widget's exact specimen size, card inset, and vision grid.
     </CaseStudyMutedText>
     </CaseStudyDetails>
-  </div>
-</CaseStudySection>
-
-<CaseStudySection title="Adoption and review evidence">
-  <div className="space-y-6">
-    <CaseStudyParagraph>
-      The widget has 400+ users on Figma Community and supports twenty locales.
-      The v3 workflow can be reviewed through its audit findings, Dev Mode
-      annotations, Canvas Record, and Markdown, CSV, or JSON exports.
-    </CaseStudyParagraph>
   </div>
 </CaseStudySection>

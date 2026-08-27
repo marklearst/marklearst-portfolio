@@ -104,6 +104,19 @@
 .chart svg text { fill: var(--demo-muted); font-size: 10px; font-family: var(--token-font-mono); }
 .chart svg .chartAnnotation { fill: #cad4d8; font-size: 12px; font-family: var(--token-font-body); }
 .chart figcaption { margin: 10px 0 0; color: var(--demo-muted); font-size: 12px; line-height: 1.65; }
+.inspection { margin-top: 12px; }
+.inspectionHeading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; min-height: 20px; }
+.inspectionHeading label { color: var(--demo-muted); font-size: 11px; line-height: 1.5; }
+.inspectionValue { display: flex; align-items: baseline; gap: 12px; color: #dce6e9; font-family: var(--token-font-mono); font-size: 11px; line-height: 1.5; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.inspectionValue span:first-child { min-width: 9ch; color: var(--demo-muted); }
+.inspectionValue span:last-child { min-width: 11ch; text-align: right; }
+.inspection input { display: block; width: 100%; min-height: 44px; margin: 0; padding: 0; appearance: none; background: transparent; accent-color: #78dce8; cursor: pointer; }
+.inspection input::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: #565e62; }
+.inspection input::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; margin-top: -5px; border: 0; border-radius: 50%; background: #78dce8; box-shadow: 0 0 0 3px #131719; }
+.inspection input::-moz-range-track { height: 4px; border-radius: 2px; background: #565e62; }
+.inspection input::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: #78dce8; box-shadow: 0 0 0 3px #131719; }
+.inspection input:focus-visible { outline: 2px solid #78dce8; outline-offset: 2px; border-radius: 3px; }
+.inspection input:disabled { cursor: default; opacity: 0.4; }
 .distribution { padding: 20px 26px; }
 .distributionTitle { margin-bottom: 9px; }
 .distributionTitle span:last-child { font-size: 10px; font-family: var(--token-font-mono); }
@@ -146,6 +159,7 @@
 .compact .metrics dd { font-size: 30px; }
 .compact .primaryMetric dd { font-size: 38px; }
 .compact .chart { padding: 8px 20px 0; }
+.compact .inspection { margin-top: 8px; }
 .compact .distribution { padding: 10px 20px 14px; }
 .compact .distributionTitle { display: none; }
 .compact .status { min-height: 58px; padding: 10px 20px; }
@@ -155,6 +169,7 @@
 @keyframes report-change { from { opacity: 0.55; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (hover: hover) and (pointer: fine) {
+  .inspectableChart { cursor: crosshair; }
   .controls button:hover { background: #ffffff0a; color: #f3f5f4; }
   .controls button[aria-pressed='true']:hover { background: #78dce820; color: #a1ebf3; }
   .report summary:hover { color: #f3f5f4; }
@@ -176,6 +191,7 @@
   .chartLabel span:last-child { font-size: 8px; }
   .chart svg text { font-size: 17px; }
   .chart svg .chartAnnotation { font-size: 19px; }
+  .inspectionHeading label, .inspectionValue { font-size: 10px; }
   .distribution, .compact .distribution { padding: 16px 14px; }
   .rangeLegend > div { flex-direction: column; gap: 4px; }
   .rangeLegend dt, .rangeLegend dd { font-size: 9px; }

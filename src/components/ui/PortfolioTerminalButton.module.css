@@ -1,0 +1,15 @@
+.button { display: inline-flex; min-height: 44px; align-items: center; gap: 12px; padding: 0; background: transparent; color: #b7b3ba; border: 0; font: 12px/1.5 var(--font-mono); cursor: pointer; }
+.prompt { color: #a9dc75; display: inline-block; transition: transform 160ms cubic-bezier(.22,1,.36,1); }
+.hint { margin-left: 10px; color: #a7a2aa; font: 11px/1.5 var(--font-body); }
+.hint > span { display: inline-block; margin-left: 6px; }
+.button:focus-visible { outline: 2px solid #78dce8; outline-offset: 5px; border-radius: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { color: #fcfcfa; }
+  .button:hover .prompt { transform: translateX(3px); }
+  .button:hover .hint { color: #fcfcfa; text-decoration: underline; text-underline-offset: 4px; }
+}
+.button:active .prompt { transform: translateX(5px); }
+@media (prefers-reduced-motion: reduce) {
+  .prompt { transition: none; }
+  .button:hover .prompt, .button:active .prompt { transform: none; }
+}

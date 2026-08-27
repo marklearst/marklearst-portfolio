@@ -9,44 +9,12 @@ import { useAnalytics } from '@/hooks/useAnalytics'
 export default function ParticleHeader() {
   const { trackNavigationClick, trackLogoHover } = useAnalytics()
   const pathname = usePathname()
-  const containerRef = useRef<HTMLDivElement>(null)
-  const mRef = useRef<HTMLSpanElement>(null)
   const middleRef = useRef<HTMLSpanElement>(null)
-  const lRef = useRef<HTMLSpanElement>(null)
   const endRef = useRef<HTMLSpanElement>(null)
   const timelineRef = useRef<gsap.core.Timeline | null>(null)
   const isExpandedRef = useRef(false)
 
-  // Entrance animation - confident scale up
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches
-
-    if (prefersReducedMotion) {
-      gsap.set(containerRef.current, { opacity: 1, scale: 1, y: 0 })
-      return
-    }
-
-    gsap.fromTo(
-      containerRef.current,
-      {
-        opacity: 0,
-        scale: 0.8,
-        y: -10,
-      },
-      {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.3,
-        ease: 'back.out(1.4)',
-      },
-    )
-  }, [])
+  useEffect(() => () => { timelineRef.current?.kill() }, [])
 
   // {m  l} -> {m arkl earst}
   // So we type 'ark' between m and l, then 'earst' after l
@@ -58,6 +26,12 @@ export default function ParticleHeader() {
 
     isExpandedRef.current = true
     trackLogoHover({ action: 'expand' })
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (middleRef.current) middleRef.current.textContent = 'ark'
+      if (endRef.current) endRef.current.textContent = 'earst'
+      return
+    }
 
     const middleText = 'ark'
     const endText = 'earst'
@@ -106,6 +80,12 @@ export default function ParticleHeader() {
 
     isExpandedRef.current = false
     trackLogoHover({ action: 'collapse' })
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (middleRef.current) middleRef.current.textContent = ''
+      if (endRef.current) endRef.current.textContent = ''
+      return
+    }
 
     let endLength = endRef.current?.textContent?.length || 0
     let middleLength = middleRef.current?.textContent?.length || 0
@@ -159,22 +139,22 @@ export default function ParticleHeader() {
           })
         }
       }}
-      className='block'
+      className='inline-flex min-h-11 min-w-[11ch] items-center font-mono text-lg sm:text-2xl'
       onMouseEnter={typeOut}
       onMouseLeave={typeBack}
       aria-label='Mark Learst - Home'
     >
       <div
-        ref={containerRef}
-        className='flex items-center font-mono font-medium text-lg sm:text-2xl opacity-0'
+        aria-hidden='true'
+        className='flex items-center font-medium'
         style={{
           color: 'rgb(252, 252, 250)',
         }}
       >
         <span className='opacity-50 mr-0.5'>{`{`}</span>
-        <span ref={mRef}>m</span>
+        <span>m</span>
         <span ref={middleRef}></span>
-        <span ref={lRef}>l</span>
+        <span>l</span>
         <span ref={endRef}></span>
         <span className='opacity-50'>{`}`}</span>
       </div>

@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import { PROJECTS } from '@/data/projects'
 import { useTransitionStore } from '@/store/transition-store'
 import { MONOKAI } from '@/lib/monokai-colors'
+import { OPEN_PORTFOLIO_TERMINAL } from './PortfolioTerminalButton'
+import styles from './CommandPalette.module.css'
 
 type CommandItem = {
   id: string
@@ -47,6 +49,16 @@ export default function CommandPalette() {
     const invoker = invokerRef.current
     invokerRef.current = null
     if (invoker?.isConnected) invoker.focus({ preventScroll: true })
+  }, [])
+
+  useEffect(() => {
+    const onOpen = (event: Event) => {
+      const invoker = (event as CustomEvent<{ invoker?: HTMLElement }>).detail?.invoker
+      invokerRef.current = invoker instanceof HTMLElement ? invoker : null
+      setOpen(true)
+    }
+    window.addEventListener(OPEN_PORTFOLIO_TERMINAL, onOpen)
+    return () => window.removeEventListener(OPEN_PORTFOLIO_TERMINAL, onOpen)
   }, [])
 
   useEffect(() => {
@@ -98,7 +110,7 @@ export default function CommandPalette() {
       ref={dialogRef}
       aria-labelledby={labelId}
       aria-describedby={descriptionId}
-      className='fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none border-0 bg-transparent p-4 open:flex open:items-start open:justify-center backdrop:bg-black/70 backdrop:backdrop-blur-sm'
+      className={styles.dialog}
       onCancel={(event) => {
         event.preventDefault()
         closePalette()
@@ -111,27 +123,31 @@ export default function CommandPalette() {
     >
       {open && <Command
         label='Search portfolio pages'
-        className='mt-20 flex max-h-[calc(100dvh-8rem)] w-full max-w-xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#1d1a1c]/95 shadow-2xl'
+        className={styles.panel}
         style={{ color: MONOKAI.foreground }}
       >
-        <h2 id={labelId} className='sr-only'>Navigate the portfolio</h2>
-        <div className='border-b border-white/10 px-4 py-3'>
+        <div className={styles.titlebar}>
+          <h2 id={labelId}>~/portfolio</h2>
+          <button type='button' onClick={closePalette} aria-label='Close portfolio terminal'>Esc <span aria-hidden='true'>×</span></button>
+        </div>
+        <div className={styles.inputRow}>
+          <span aria-hidden='true'>❯</span>
           <Command.Input
             ref={inputRef}
-            placeholder='Jump to...'
-            className='min-h-8 w-full bg-transparent font-mono text-base outline-none placeholder:text-white/40'
+            placeholder='Find a project or page…'
+            className={styles.input}
             autoFocus
           />
         </div>
-        <Command.List className='min-h-0 max-h-[420px] overflow-y-auto overscroll-contain px-2 py-2'>
-          <Command.Empty className='px-3 py-6 text-center text-sm text-white/50 font-mono'>
-            No results.
+        <Command.List className={styles.list}>
+          <Command.Empty className={styles.empty}>
+            No matches. Try a project name.
           </Command.Empty>
           {['Navigation', 'Case Studies'].map((group) => (
             <Command.Group
               key={group}
               heading={group}
-              className='px-2 py-2 text-xs font-mono uppercase tracking-wider text-white/40'
+              className={styles.group}
             >
               {items
                 .filter((item) => item.group === group)
@@ -140,10 +156,10 @@ export default function CommandPalette() {
                     key={item.id}
                     value={`${item.label} ${item.href}`}
                     onSelect={() => handleSelect(item.href)}
-                    className='flex min-h-11 items-center justify-between gap-4 rounded-lg px-3 py-2 text-sm font-mono text-white/70 data-[selected=true]:bg-white/10 data-[selected=true]:text-white'
+                    className={styles.item}
                   >
                     <span>{item.label}</span>
-                    <span className='text-[10px] uppercase tracking-wider text-white/40'>
+                    <span className={styles.path}>
                       {item.href}
                     </span>
                   </Command.Item>
@@ -151,8 +167,8 @@ export default function CommandPalette() {
             </Command.Group>
           ))}
         </Command.List>
-        <div id={descriptionId} className='shrink-0 border-t border-white/10 px-4 py-3 text-[10px] font-mono uppercase tracking-wider text-white/40'>
-          Press Esc to close
+        <div id={descriptionId} className={styles.help}>
+          <span>↑ ↓ to choose · Enter to open</span><span>Ctrl / ⌘ K</span>
         </div>
       </Command>}
     </dialog>
