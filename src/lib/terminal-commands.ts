@@ -87,15 +87,6 @@ export const ROUTE_COMMANDS: Record<string, TerminalCommand> = {
     color: MONOKAI.purple,
   },
   ...PROJECT_ROUTE_COMMANDS,
-  '/work/glucoseiq': {
-    route: '/work/glucoseiq',
-    command: formatCommand('cd /work/glucoseiq'),
-    loading: 'Loading health tech project...',
-    packages: ['@apple/healthkit@2.0.0', 'core-ml@1.5.0', 'swift-bridge@0.8.2'],
-    output: formatOutput('Ready', true),
-    duration: DURATION.workRouteWithPackages,
-    color: MONOKAI.pink,
-  },
   '/artifacts/terminal-navigation': {
     route: '/artifacts/terminal-navigation',
     command: formatCommand('cat /artifacts/terminal-navigation'),
@@ -130,7 +121,6 @@ const ROUTE_COLORS: Record<string, string> = {
     acc[project.route] = CATEGORY_COLORS[project.categoryColor]
     return acc
   }, {}),
-  '/work/glucoseiq': MONOKAI.pink,
 }
 
 /**

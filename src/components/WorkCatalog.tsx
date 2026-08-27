@@ -19,6 +19,8 @@ type WorkFilter = {
 }
 
 const OPEN_SOURCE_SLUGS = new Set([
+  'primitree',
+  'glucoseiq',
   'figmavars-hooks',
   'a11y-companion',
   'diabetic-utils',
