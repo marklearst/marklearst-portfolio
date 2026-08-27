@@ -18,15 +18,6 @@ type WorkFilter = {
   matches: (project: ProjectMeta) => boolean
 }
 
-const OPEN_SOURCE_SLUGS = new Set([
-  'primitree',
-  'glucoseiq',
-  'figmavars-hooks',
-  'a11y-companion',
-  'diabetic-utils',
-  'variable-design-standard',
-])
-
 const WORK_FILTERS: WorkFilter[] = [
   {
     id: 'design-systems',
@@ -55,7 +46,7 @@ const WORK_FILTERS: WorkFilter[] = [
     id: 'open-source',
     label: 'Open Source',
     color: MONOKAI.orange,
-    matches: (project) => OPEN_SOURCE_SLUGS.has(project.slug),
+    matches: (project) => project.openSource === true,
   },
   {
     id: 'developer-tools',
