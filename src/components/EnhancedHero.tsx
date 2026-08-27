@@ -94,27 +94,28 @@ export default function EnhancedHero() {
             >
               ❯
             </span>
-            {!line1Done ? (
-              // Typing phase - all muted color
-              <Typewriter
-                text='~/portfolio on main ✓'
-                delay={0}
-                speed={35}
-                onStart={() => setLine1Started(true)}
-                onComplete={() => setLine1Done(true)}
-                style={{ color: `${MONOKAI.foreground}60` }}
-              />
-            ) : (
-              // Complete - colorized segments, no animation
-              <>
-                <span style={{ color: `${MONOKAI.foreground}70` }}>
-                  ~/portfolio
-                </span>
-                <span style={{ color: MONOKAI.purple }}>on</span>
-                <span style={{ color: MONOKAI.cyan }}>main</span>
-                <span style={{ color: MONOKAI.yellow }}>✓</span>
-              </>
-            )}
+            {
+              !line1Done ?
+                // Typing phase - all muted color
+                <Typewriter
+                  text='~/portfolio on main ✓'
+                  delay={0}
+                  speed={35}
+                  onStart={() => setLine1Started(true)}
+                  onComplete={() => setLine1Done(true)}
+                  style={{ color: `${MONOKAI.foreground}60` }}
+                />
+                // Complete - colorized segments, no animation
+              : <>
+                  <span style={{ color: `${MONOKAI.foreground}70` }}>
+                    ~/portfolio
+                  </span>
+                  <span style={{ color: MONOKAI.purple }}>on</span>
+                  <span style={{ color: MONOKAI.cyan }}>main</span>
+                  <span style={{ color: MONOKAI.yellow }}>✓</span>
+                </>
+
+            }
           </div>
           <div
             className={`flex items-center gap-2 pointer-events-none flex-nowrap whitespace-nowrap transition-opacity duration-300 ${
@@ -166,7 +167,7 @@ export default function EnhancedHero() {
             className='hero-description-word inline-block'
             style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
           >
-            Lead
+            Principal
           </span>{' '}
           <span
             className='hero-description-word inline-block'
@@ -214,7 +215,15 @@ export default function EnhancedHero() {
           <span className='hero-description-word inline-block'>actually</span>{' '}
           <span className='hero-description-word inline-block'>want</span>{' '}
           <span className='hero-description-word inline-block'>to</span>{' '}
-          <span className='hero-description-word inline-block'>use.</span>
+          <span className='hero-description-word inline-block'>use.</span>{' '}
+          <span className='hero-description-word inline-block'>I</span>{' '}
+          <span className='hero-description-word inline-block'>build</span>{' '}
+          <span
+            className='hero-description-word inline-block'
+            style={{ color: MONOKAI.pink }}
+          >
+            open source.
+          </span>
         </p>
 
         {/* Skill badges - minimal, background only, no border, no hover */}
@@ -254,7 +263,7 @@ export default function EnhancedHero() {
             compliance. I ship{' '}
             <span style={{ color: MONOKAI.pink }}>open-source</span> with real
             adoption:{' '}
-            <span style={{ color: MONOKAI.green }}>a11y Companion</span> (200+
+            <span style={{ color: MONOKAI.green }}>a11y Companion</span> (400+
             users), <span style={{ color: MONOKAI.cyan }}>FigmaVars Hooks</span>
             , <span style={{ color: MONOKAI.pink }}>Diabetic Utils</span>.
           </p>
@@ -292,12 +301,14 @@ export default function EnhancedHero() {
               trackHeroCTAClick({ action: 'view_work', location: 'hero' })
             }}
             className='hero-cta-primary group relative px-8 py-4 font-mono text-base font-bold rounded-lg'
-            style={{
-              backgroundColor: MONOKAI.foreground,
-              color: MONOKAI.background,
-              '--cta-ring': MONOKAI.cyan,
-              '--cta-bg': MONOKAI.background,
-            } as React.CSSProperties}
+            style={
+              {
+                backgroundColor: MONOKAI.foreground,
+                color: MONOKAI.background,
+                '--cta-ring': MONOKAI.cyan,
+                '--cta-bg': MONOKAI.background,
+              } as React.CSSProperties
+            }
           >
             <span className='relative z-10 flex items-center gap-2.5'>
               View Work
@@ -334,13 +345,15 @@ export default function EnhancedHero() {
               })
             }}
             className='hero-cta-secondary group relative px-8 py-4 font-mono text-base font-semibold rounded-lg'
-            style={{
-              backgroundColor: 'transparent',
-              border: `2px solid ${MONOKAI.foreground}40`,
-              color: MONOKAI.foreground,
-              '--cta-ring': MONOKAI.pink,
-              '--cta-bg': MONOKAI.background,
-            } as React.CSSProperties}
+            style={
+              {
+                backgroundColor: 'transparent',
+                border: `2px solid ${MONOKAI.foreground}40`,
+                color: MONOKAI.foreground,
+                '--cta-ring': MONOKAI.pink,
+                '--cta-bg': MONOKAI.background,
+              } as React.CSSProperties
+            }
           >
             <span className='flex items-center gap-2.5'>
               <svg className='w-5 h-5' fill='currentColor' viewBox='0 0 24 24'>

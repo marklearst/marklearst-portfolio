@@ -231,8 +231,8 @@ export default function Footer() {
       </div>
       {/* Background elements */}
       <div className='absolute inset-0'>
-        <div className='absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-teal-500/5 rounded-full blur-[100px]' />
-        <div className='absolute top-0 right-1/3 w-[300px] h-[300px] bg-purple-500/5 rounded-full blur-[80px]' />
+        <div className='absolute bottom-0 left-1/4 w-100 h-100 bg-teal-500/5 rounded-full blur-[100px]' />
+        <div className='absolute top-0 right-1/3 w-75 h-75 bg-purple-500/5 rounded-full blur-[80px]' />
       </div>
 
       <div className='max-w-7xl mx-auto relative z-10'>
