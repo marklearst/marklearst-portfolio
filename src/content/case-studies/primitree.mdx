@@ -1,0 +1,255 @@
+---
+slug: primitree
+title: Primitree
+category: DEVELOPER TOOLS
+categoryColor: cyan
+description: "DTCG token pipeline that turns design system architecture into a checkable contract. Six packages covering a CLI, token graph, emitters for CSS, Tailwind and TypeScript, React hooks, and an MCP server."
+role: "Creator & Maintainer"
+timeline: "2025 - Present"
+technologies:
+  - TypeScript
+  - DTCG 2025.10
+  - Node.js 24
+  - Turborepo
+  - Figma Variables API
+  - MCP
+  - React 19
+links:
+  - label: Documentation
+    href: https://primitree.com
+    icon: external
+  - label: npm
+    href: https://www.npmjs.com/package/primitree
+    icon: npm
+  - label: GitHub
+    href: https://github.com/marklearst/primitree
+    icon: github
+impact:
+  - metric: "6 packages"
+    description: "CLI, token graph, DTCG emitters, React hooks, and an MCP server"
+  - metric: "DTCG 2025.10"
+    description: "Standards-compliant output with a documented boolean extension"
+  - metric: "1.0.0-next"
+    description: "Published to npm as a release candidate, approaching 1.0"
+gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
+---
+
+<CaseStudySection title="The Problem">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Every design system of any size has rules about its tokens. Base tokens
+      hold raw values. Semantic tokens reference base tokens and never hold a
+      hex code of their own. Component tokens point at semantic tokens. These
+      rules are what keep a token system from collapsing into a flat list of
+      names.
+    </CaseStudyParagraph>
+    <CaseStudyParagraph>
+      Almost nowhere are those rules enforced. They live in a wiki page, a
+      Figma cover frame, or one person's head.
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-3">
+      <li>A semantic token quietly gains a literal value and nothing objects</li>
+      <li>A rename in Figma reaches code as a deletion plus an addition, losing the history</li>
+      <li>Generated token files get hand-edited, then overwritten by the next build</li>
+      <li>Nobody can answer which components break if a base token changes</li>
+      <li>Ownership of a token is a Slack thread rather than a property of the token</li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph>
+      Primitree grew out of <strong>@figma-vars/hooks</strong>, which solved
+      reading Figma Variables into React. The hooks package is now one of six,
+      because the harder problem turned out to be everything around the read:
+      what the tokens are allowed to be, and what happens when they change.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="The Solution">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      <strong>Primitree</strong> makes token architecture a declared contract
+      that a build can check, rather than a convention people are asked to
+      remember.
+    </CaseStudyParagraph>
+
+    <CaseStudySubheading className="mt-0">Architecture as Configuration</CaseStudySubheading>
+    <CaseStudyMutedText>
+      A source declares its layers. Each layer names the roots it owns, whether
+      it holds literals or references, and which layers it is allowed to point
+      at:
+    </CaseStudyMutedText>
+
+    <CodeBlock
+      language="typescript"
+      analyticsLabel="primitree_layer_config"
+      code={[
+        "export default defineConfig({",
+        "  schemaVersion: 1,",
+        "  sources: {",
+        "    brand: {",
+        "      type: 'dtcg',",
+        "      file: './tokens.json',",
+        "      architecture: {",
+        "        layers: [",
+        "          // holds raw values",
+        "          { id: 'base', roots: ['color'], values: 'literal' },",
+        "          // must point at base, never hold a value",
+        "          {",
+        "            id: 'meaning',",
+        "            roots: ['semantic'],",
+        "            values: 'reference',",
+        "            references: ['base'],",
+        "          },",
+        "        ],",
+        "      },",
+        "      ownership: { default: ['design-systems'] },",
+        "      outputs: {",
+        "        directory: './generated',",
+        "        formats: ['dtcg', 'css', 'typescript', 'tailwind'],",
+        "      },",
+        "    },",
+        "  },",
+        "})",
+      ].join('\n')}
+    />
+
+    <CaseStudyMutedText>
+      A semantic token holding a hex value is now a build failure with a token
+      path attached, not a code review someone has to catch.
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>Diffs That Preserve Identity</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Token diffs match on stable Figma IDs rather than names, so a rename stays
+      a rename instead of appearing as an unrelated deletion and addition:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Renames, moves, removals, and type changes are classified as breaking</li>
+      <li><code>--fail-on-breaking</code> exits with code 2 so CI can gate on it</li>
+      <li>Reports name the affected aliases, not just the changed token</li>
+      <li>Output as Markdown for review, or JSON for tooling</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Generated Files That Defend Themselves</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Every build writes a manifest beside its output. The next build reads it
+      and refuses to overwrite a listed file whose hash changed, or to touch any
+      path the manifest does not list. Hand edits to generated files surface as
+      an error instead of vanishing.
+    </CaseStudyMutedText>
+    <CaseStudyMutedText>
+      Running with <code>--check</code> reports missing, changed, and unexpected
+      files without writing anything, and exits 1 on any difference. That is the
+      CI shape: prove the committed tokens match what the source produces.
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>One Source, Four Outputs</CaseStudySubheading>
+    <CaseStudyMutedList className="space-y-2">
+      <li>DTCG 2025.10 token files plus a resolver document for contexts</li>
+      <li>CSS custom properties, with contexts as selector axes</li>
+      <li>Tailwind theme output</li>
+      <li>Typed TypeScript token exports</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Tokens an Agent Can Query</CaseStudySubheading>
+    <CaseStudyMutedText>
+      An MCP server exposes the token graph to any MCP client with{' '}
+      <code>list_collections</code>, <code>get_token</code>,{' '}
+      <code>resolve_context</code>, <code>search_tokens</code>, and{' '}
+      <code>diff_tokens</code>, so an assistant can answer questions about the
+      design system from the tokens themselves rather than from guesswork.
+    </CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Technical Implementation">
+  <div className="space-y-6">
+    <CaseStudySubheading className="mt-0">Standards Output, Documented Extensions</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Output follows DTCG 2025.10. Where Figma carries information the
+      specification has no home for, it goes into a namespaced extension rather
+      than a private convention:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Aliases stay token references instead of being flattened to values</li>
+      <li>Figma modes map to Resolver contexts</li>
+      <li>Figma IDs, scopes, and code syntax live under <code>$extensions['com.primitree']</code></li>
+      <li>Booleans use a documented extension, since DTCG has no boolean type</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Writes Treated as Transactions</CaseStudySubheading>
+    <CaseStudyMutedText>
+      A token build rewrites a directory of files, which is exactly the kind of
+      operation that goes wrong halfway through. The writer is built to fail
+      safely:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Output staged before it replaces anything installed</li>
+      <li>An interrupted run leaves its backup and cleanup sidecars in place, reports every retained path, and stops rather than writing over them</li>
+      <li>The output directory must sit under the config directory and cannot contain the source file</li>
+      <li>File identity is recorded before a read and compared after, so a path swapped mid-read is rejected instead of trusted</li>
+      <li>The output directory and its ancestors are rechecked during a scan, which stops if one changes underneath</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Bounded Inputs</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Every input has a stated ceiling instead of an implicit one: file sizes,
+      token file counts, directory entries, nesting depth, path lengths in UTF-8
+      bytes, and path component counts after symlink resolution. Symbolic links
+      and special files are rejected outright. A parser that reads whatever it
+      is handed is a parser waiting to be handed something hostile.
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>Monorepo Shape</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Six published packages over a shared core, built with Turborepo on Node 24
+      and pnpm 11:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li><code>primitree</code> for the unscoped CLI entry point</li>
+      <li><code>@primitree/core</code> for normalization, the token graph, diffing, and API access</li>
+      <li><code>@primitree/dtcg</code> for conversion and the CSS, Tailwind, and TypeScript emitters</li>
+      <li><code>@primitree/cli</code> for check, build, inspect, diff, and scaffolding</li>
+      <li><code>@primitree/hooks</code> for reading built tokens in React, or the live API with SWR</li>
+      <li><code>@primitree/mcp</code> for serving the graph to MCP clients</li>
+    </CaseStudyMutedList>
+    <CaseStudyMutedText>
+      A Figma plugin exports local variables for teams without Enterprise API
+      access, so the pipeline does not require a plan tier to start using.
+    </CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Status & Direction">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Primitree is published to npm as <code>1.0.0-next</code> and is a release
+      candidate rather than a finished 1.0. What is settled:
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-4">
+      <li>
+        <strong>Architecture rules are checkable</strong>, so layer and
+        ownership violations fail a build instead of surviving review
+      </li>
+      <li>
+        <strong>Token identity survives renames</strong>, which makes a diff
+        report something a reviewer can trust
+      </li>
+      <li>
+        <strong>Generated output is guarded</strong> by a manifest, so builds
+        cannot silently erase hand edits
+      </li>
+      <li>
+        <strong>One source produces four formats</strong>, removing the usual
+        pile of bespoke conversion scripts
+      </li>
+      <li>
+        <strong>The graph is queryable over MCP</strong>, so coding agents can
+        read the real design system
+      </li>
+    </CaseStudyMutedList>
+    <CaseStudyParagraph className="mt-8">
+      The work left before 1.0 is API stability rather than capability. Publishing
+      under a prerelease tag keeps that promise honest while the surface settles.
+    </CaseStudyParagraph>
+  </div>
+</CaseStudySection>
