@@ -80,24 +80,38 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
       language="typescript"
       analyticsLabel="glucoseiq_analyze"
       code={[
-        "const report = analyzeGlucose(readings, { timeZone: 'America/Detroit' })",
+        "function summarize(readings: GlucoseReading[]) {",
+        "  const report = analyzeGlucose(readings, { timeZone: 'America/Detroit' })",
         "",
-        "// `valid` means at least one usable reading was found.",
-        "// It does NOT mean the data met the duration and coverage",
-        "// thresholds, which live separately in `dataSufficiency`.",
-        "if (!report.valid || report.timeInRange === null) {",
-        "  throw new Error('No valid glucose readings were available')",
+        "  // `valid` only means at least one usable reading survived filtering.",
+        "  if (!report.valid || report.timeInRange === null) {",
+        "    return { status: 'no-data' } as const",
+        "  }",
+        "",
+        "  // Whether that data is adequate is a separate question,",
+        "  // and it gets a separate field rather than folding into `valid`.",
+        "  const { meetsCGMStandard, daysOfData, activePercent } =",
+        "    report.dataSufficiency",
+        "",
+        "  if (!meetsCGMStandard) {",
+        "    return { status: 'insufficient', daysOfData, activePercent } as const",
+        "  }",
+        "",
+        "  return {",
+        "    status: 'ok',",
+        "    timeInRange: report.timeInRange.inRange.percentage,",
+        "    gmi: report.gmi,",
+        "  } as const",
         "}",
-        "",
-        "report.dataSufficiency  // the honest answer",
-        "report.timeInRange.inRange.percentage",
-        "report.gmi",
       ].join('\n')}
     />
 
     <CaseStudyMutedText>
-      Report blocks are nullable and have to be checked. A caller cannot read a
-      percentage without first acknowledging it may not exist.
+      Two separate gates, because they answer different questions. Report blocks
+      are nullable, so a caller cannot read a percentage without acknowledging it
+      may not exist. Adequacy is then its own check: a week of patchy data can
+      produce a perfectly real Time in Range number that should not be presented
+      as a clinical summary.
     </CaseStudyMutedText>
 
     <CaseStudySubheading>Metrics From the Literature</CaseStudySubheading>
