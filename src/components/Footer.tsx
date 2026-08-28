@@ -4,7 +4,6 @@ import { GithubIcon, LinkedinIcon, MailIcon, ArrowUpRightIcon } from '@/componen
 
 import React, { useRef } from 'react'
 import Link from 'next/link'
-import { MONOKAI } from '@/lib/monokai-colors'
 import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
 import AnalyticsOptOutToggle from '@/components/ui/AnalyticsOptOutToggle'
 import { usePathname } from 'next/navigation'
@@ -14,7 +13,6 @@ import styles from './Footer.module.css'
 interface SocialLinkData {
   name: string
   href: string
-  color: string
   icon: React.ReactNode
 }
 
@@ -42,7 +40,6 @@ function SocialLink({ link }: { link: SocialLinkData }) {
       <span
         className={styles.icon}
         aria-hidden='true'
-        style={{ color: link.color }}
       >
         {link.icon}
       </span>
@@ -69,7 +66,6 @@ export default function Footer() {
     {
       name: 'GitHub',
       href: 'https://github.com/marklearst',
-      color: MONOKAI.cyan,
       icon: (
         <GithubIcon size={20} />
       ),
@@ -77,7 +73,6 @@ export default function Footer() {
     {
       name: 'LinkedIn',
       href: 'https://linkedin.com/in/marklearst',
-      color: MONOKAI.purple,
       icon: (
         <LinkedinIcon size={20} />
       ),
@@ -85,7 +80,6 @@ export default function Footer() {
     {
       name: 'Email',
       href: 'mailto:github@marklearst.com',
-      color: MONOKAI.pink,
       icon: (
         <MailIcon size={20} />
       ),

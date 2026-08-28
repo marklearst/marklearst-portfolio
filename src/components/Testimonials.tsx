@@ -57,7 +57,7 @@ export default function Testimonials() {
           id='testimonials-heading'
           className={styles.heading}
         >
-          what colleagues say
+          What colleagues say
         </h2>
 
         <div className={styles.quotes}>

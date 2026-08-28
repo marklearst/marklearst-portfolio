@@ -1,14 +1,32 @@
 {
   "component": {
     "terminal": {
-      "background": { "$type": "color", "$value": "{color.monokai.background}" },
-      "foreground": { "$type": "color", "$value": "{color.monokai.foreground}" },
-      "accent": { "$type": "color", "$value": "{color.monokai.cyan}" },
-      "success": { "$type": "color", "$value": "{color.monokai.green}" },
-      "error": { "$type": "color", "$value": "{color.monokai.pink}" }
+      "background": {
+        "$type": "color",
+        "$value": "{color.surface}"
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{color.ink.primary}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.accent.primary}"
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{color.accent.success}"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{color.accent.danger}"
+      }
     },
     "card": {
-      "border": { "$type": "color", "$value": "{color.border.subtle}" },
+      "border": {
+        "$type": "color",
+        "$value": "{color.border.subtle}"
+      },
       "shadow": {
         "$type": "shadow",
         "$value": {

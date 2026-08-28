@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { usePathname } from 'next/navigation'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { CheckIcon, CopyIcon } from '@/components/ui/Icon'
+import styles from './CodeBlock.module.css'
 import { MONOKAI } from '@/lib/monokai-colors'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
@@ -14,8 +16,8 @@ interface CodeBlockProps {
   analyticsLabel?: string
 }
 
-// Custom Monokai Pro theme matching our brand colors
-const monokaiProTheme: Record<string, CSSProperties> = {
+// Restrained syntax colors follow the portfolio token source.
+const codeTheme: Record<string, CSSProperties> = {
   'code[class*="language-"]': {
     color: MONOKAI.foreground,
     background: 'transparent',
@@ -26,7 +28,7 @@ const monokaiProTheme: Record<string, CSSProperties> = {
     wordBreak: 'normal',
     wordWrap: 'normal',
     lineHeight: '1.6',
-    fontSize: '14px',
+    fontSize: '16px',
     tabSize: 4,
     hyphens: 'none',
   },
@@ -40,7 +42,7 @@ const monokaiProTheme: Record<string, CSSProperties> = {
     wordBreak: 'normal',
     wordWrap: 'normal',
     lineHeight: '1.6',
-    fontSize: '14px',
+    fontSize: '16px',
     tabSize: 4,
     hyphens: 'none',
     padding: '0',
@@ -48,17 +50,17 @@ const monokaiProTheme: Record<string, CSSProperties> = {
     overflow: 'auto',
   },
   comment: {
-    color: '#727072',
+    color: MONOKAI.purple,
     fontStyle: 'italic',
   },
   prolog: {
-    color: '#727072',
+    color: MONOKAI.purple,
   },
   doctype: {
-    color: '#727072',
+    color: MONOKAI.purple,
   },
   cdata: {
-    color: '#727072',
+    color: MONOKAI.purple,
   },
   punctuation: {
     color: `${MONOKAI.foreground}b3`,
@@ -164,6 +166,24 @@ export default function CodeBlock({
   const pathname = usePathname()
   const blockRef = useRef<HTMLDivElement>(null)
   const hasTrackedRef = useRef(false)
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle')
+  const resetCopyRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => () => {
+    if (resetCopyRef.current) clearTimeout(resetCopyRef.current)
+  }, [])
+
+  const copyCode = async () => {
+    if (resetCopyRef.current) clearTimeout(resetCopyRef.current)
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopyState('copied')
+      resetCopyRef.current = setTimeout(() => setCopyState('idle'), 1800)
+    } catch {
+      setCopyState('failed')
+    }
+  }
+
 
   useEffect(() => {
     if (!blockRef.current || hasTrackedRef.current) return
@@ -199,31 +219,29 @@ export default function CodeBlock({
   }, [analyticsLabel, language, pathname, trackCodeBlockView])
 
   return (
-    <div ref={blockRef} className='relative group mt-4 mb-6'>
-      {/* Hover depth */}
-      <div className='absolute -inset-1 bg-linear-to-r from-black/50 via-black/30 to-black/50 rounded-2xl blur-[28px] opacity-0 group-hover:opacity-100 transition-opacity duration-700' />
-
-      {/* Code container */}
-      <div className='relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden transition-all duration-500 group-hover:-translate-y-0.5 group-hover:shadow-[0_28px_80px_rgba(0,0,0,0.45)]'>
-        {/* Header bar */}
-        <div className='flex items-center gap-2 h-9 px-5 border-b border-white/10 bg-white/4'>
-          <div className='w-2.5 h-2.5 rounded-full bg-red-500/30' />
-          <div className='w-2.5 h-2.5 rounded-full bg-yellow-500/30' />
-          <div className='w-2.5 h-2.5 rounded-full bg-green-500/30' />
-        </div>
-
-        {/* Code block */}
-        <div className='p-5 pt-4 overflow-x-auto'>
+    <div ref={blockRef} className={styles.block}>
+      <div className={styles.header}>
+        <span>{language}</span>
+        <button type='button' onClick={copyCode} aria-label='Copy code'>
+          {copyState === 'copied' ? <CheckIcon /> : <CopyIcon />}
+          <span>{copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy code'}</span>
+        </button>
+      </div>
+      <span className={styles.status} role='status'>
+        {copyState === 'copied' ? 'Code copied.' : copyState === 'failed' ? 'Copy unavailable. Select the code below.' : ''}
+      </span>
+      <div className={styles.source} tabIndex={0} role='region' aria-label={language + ' code'}>
           <SyntaxHighlighter
             language={language}
-            style={monokaiProTheme}
+            style={codeTheme}
             showLineNumbers={showLineNumbers}
             customStyle={{
               background: 'transparent',
               padding: 0,
               margin: 0,
-              fontSize: '14px',
+              fontSize: '16px',
               borderRadius: 0,
+              overflow: 'visible',
             }}
             codeTagProps={{
               style: {
@@ -237,7 +255,6 @@ export default function CodeBlock({
           >
             {code}
           </SyntaxHighlighter>
-        </div>
       </div>
     </div>
   )

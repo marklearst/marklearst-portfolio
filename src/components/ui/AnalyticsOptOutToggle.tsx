@@ -22,7 +22,7 @@ export default function AnalyticsOptOutToggle() {
       title={hint}
       /* before: extends the 22px row to a 46px hit area vertically only —
          growing sideways would collide with the adjacent privacy link. */
-      className='relative inline-flex touch-manipulation items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-white/50 transition-colors before:absolute before:inset-x-0 before:-inset-y-3 hover:border-white/30 hover:text-white/80'
+      className='relative inline-flex touch-manipulation items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-body text-sm text-white/50 transition-colors before:absolute before:inset-x-0 before:-inset-y-3 hover:border-white/30 hover:text-white/80'
     >
       <StatusIcon
         size={12}

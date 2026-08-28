@@ -4,9 +4,7 @@ import {
   TbActivityHeartbeat,
   TbArrowDown,
   TbArrowLeft,
-  TbArrowRight,
   TbArrowUp,
-  TbArrowUpRight,
   TbBrandFigma,
   TbBrandGithub,
   TbBrandLinkedin,
@@ -20,7 +18,6 @@ import {
   TbCode,
   TbComponents,
   TbCopy,
-  TbExternalLink,
   TbFileText,
   TbHeartRateMonitor,
   TbMail,
@@ -47,8 +44,12 @@ function icon(Component: IconType) {
   }
 }
 
-export const ArrowUpRightIcon = /* @__PURE__ */ icon(TbArrowUpRight)
-export const ArrowRightIcon = /* @__PURE__ */ icon(TbArrowRight)
+export function ArrowUpRightIcon({ size = 16, style, ...props }: IconProps) {
+  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={1.75} strokeLinecap='round' strokeLinejoin='round' data-action-icon='external' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path className='icon-arrow' d='M6 18 18 6M7 6h11v11' /></svg>
+}
+export function ArrowRightIcon({ size = 16, style, ...props }: IconProps) {
+  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={1.75} strokeLinecap='round' strokeLinejoin='round' data-action-icon='forward' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path className='icon-arrow' d='M4 12h15m-6-6 6 6-6 6' /></svg>
+}
 export const ArrowLeftIcon = /* @__PURE__ */ icon(TbArrowLeft)
 export const ArrowDownIcon = /* @__PURE__ */ icon(TbArrowDown)
 export const ArrowUpIcon = /* @__PURE__ */ icon(TbArrowUp)
@@ -68,7 +69,9 @@ export const AccessibilityIcon = /* @__PURE__ */ icon(TbAccessible)
 export const PlayIcon = /* @__PURE__ */ icon(TbPlayerPlay)
 export const ResetIcon = /* @__PURE__ */ icon(TbRotateClockwise)
 export const MaximizeIcon = /* @__PURE__ */ icon(TbMaximize)
-export const ExternalLinkIcon = /* @__PURE__ */ icon(TbExternalLink)
+export function ExternalLinkIcon({ size = 16, style, ...props }: IconProps) {
+  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={1.75} strokeLinecap='round' strokeLinejoin='round' data-action-icon='external' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path d='M10 5H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4' /><path className='icon-arrow' d='M12 12 20 4m-6 0h6v6' /></svg>
+}
 export const ActivityIcon = /* @__PURE__ */ icon(TbActivityHeartbeat)
 export const HealthIcon = /* @__PURE__ */ icon(TbHeartRateMonitor)
 export const FileTextIcon = /* @__PURE__ */ icon(TbFileText)

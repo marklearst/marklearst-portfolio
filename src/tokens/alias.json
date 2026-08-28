@@ -4,14 +4,33 @@
       "$type": "color",
       "$value": {
         "dark": "{color.base.black}",
-        "light": { "r": 248, "g": 248, "b": 242 }
+        "light": {
+          "r": 245,
+          "g": 243,
+          "b": 239
+        }
       }
     },
     "surface": {
       "$type": "color",
       "$value": {
         "dark": "{color.base.smoke}",
-        "light": { "r": 255, "g": 255, "b": 255 }
+        "light": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      }
+    },
+    "surface-raised": {
+      "$type": "color",
+      "$value": {
+        "dark": "{color.base.raised}",
+        "light": {
+          "r": 233,
+          "g": 230,
+          "b": 223
+        }
       }
     },
     "ink": {
@@ -19,36 +38,119 @@
         "$type": "color",
         "$value": {
           "dark": "{color.base.white}",
-          "light": "{color.base.black}"
+          "light": {
+            "r": 23,
+            "g": 22,
+            "b": 21
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": {
+          "dark": "{color.base.gray}",
+          "light": {
+            "r": 76,
+            "g": 72,
+            "b": 66
+          }
         }
       },
       "muted": {
         "$type": "color",
         "$value": {
-          "dark": { "r": 255, "g": 255, "b": 255, "alpha": 0.6 },
-          "light": { "r": 11, "g": 11, "b": 14, "alpha": 0.6 }
+          "dark": "{color.base.muted}",
+          "light": {
+            "r": 98,
+            "g": 92,
+            "b": 83
+          }
         }
       }
     },
     "accent": {
-      "primary": { "$type": "color", "$value": "{color.monokai.cyan}" },
-      "secondary": { "$type": "color", "$value": "{color.monokai.purple}" },
-      "success": { "$type": "color", "$value": "{color.monokai.green}" },
-      "danger": { "$type": "color", "$value": "{color.monokai.pink}" }
+      "primary": {
+        "$type": "color",
+        "$value": {
+          "dark": "{color.base.orange}",
+          "light": {
+            "r": 148,
+            "g": 71,
+            "b": 15
+          }
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": {
+          "dark": "{color.base.gray}",
+          "light": {
+            "r": 76,
+            "g": 72,
+            "b": 66
+          }
+        }
+      },
+      "success": {
+        "$type": "color",
+        "$value": {
+          "dark": "{color.status.success}",
+          "light": {
+            "r": 61,
+            "g": 107,
+            "b": 57
+          }
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": {
+          "dark": "{color.status.danger}",
+          "light": {
+            "r": 161,
+            "g": 60,
+            "b": 51
+          }
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": {
+          "dark": "{color.status.warning}",
+          "light": {
+            "r": 118,
+            "g": 81,
+            "b": 15
+          }
+        }
+      }
     },
     "border": {
       "subtle": {
         "$type": "color",
         "$value": {
-          "dark": { "r": 255, "g": 255, "b": 255, "alpha": 0.08 },
-          "light": { "r": 11, "g": 11, "b": 14, "alpha": 0.08 }
+          "dark": "{color.base.border}",
+          "light": {
+            "r": 208,
+            "g": 203,
+            "b": 194
+          }
         }
       }
     }
   },
   "font": {
-    "body": { "$type": "fontFamily", "$value": "{font.sans}" },
-    "display": { "$type": "fontFamily", "$value": "{font.mono}" },
-    "ui": { "$type": "fontFamily", "$value": "{font.sans}" }
+    "body": {
+      "$type": "fontFamily",
+      "$value": "{font.sans}"
+    },
+    "display": {
+      "$type": "fontFamily",
+      "$value": "{font.sans}"
+    },
+    "ui": {
+      "$type": "fontFamily",
+      "$value": "{font.sans}"
+    }
   }
 }
