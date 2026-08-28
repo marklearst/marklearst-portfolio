@@ -38,6 +38,13 @@ body {
 
 html {
   scroll-padding-top: 6rem;
+  scrollbar-gutter: stable;
+}
+
+html:has(dialog[open]),
+html:has(dialog[open]) body {
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .skip-link {
