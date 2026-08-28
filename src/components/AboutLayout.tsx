@@ -14,7 +14,7 @@ export default function AboutLayout({
   children: ReactNode
 }) {
   return (
-    <main className={styles.page}>
+    <main id='main-content' className={styles.page}>
       <header className={`${styles.container} ${styles.hero}`}>
         {tagline && <p className={styles.tagline}>{tagline}</p>}
         <h1 className={styles.title}>{title}</h1>

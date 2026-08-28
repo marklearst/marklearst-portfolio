@@ -34,6 +34,23 @@ impact:
 gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
 ---
 
+<CaseStudySection title="When a semantic token holds a literal color">
+  <div className="space-y-6">
+    <CaseStudyMutedText>
+      A source declares its layers. Each layer names the roots it owns, whether
+      it holds literals or references, and which layers it is allowed to point
+      at.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedText>
+      When a semantic layer requires references, a token holding a literal color
+      produces a build failure that identifies the token path.
+    </CaseStudyMutedText>
+
+    <PrimitreeGuardrailDemo />
+  </div>
+</CaseStudySection>
+
 <CaseStudySection title="From Figma Variables to build rules">
   <div className="space-y-6">
     <CaseStudyParagraph>
@@ -66,21 +83,8 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="When a semantic token holds a literal color">
+<CaseStudySection title="Configuration and change checks">
   <div className="space-y-6">
-    <CaseStudyMutedText>
-      A source declares its layers. Each layer names the roots it owns, whether
-      it holds literals or references, and which layers it is allowed to point
-      at.
-    </CaseStudyMutedText>
-
-    <CaseStudyMutedText>
-      When a semantic layer requires references, a token holding a literal color
-      produces a build failure that identifies the token path.
-    </CaseStudyMutedText>
-
-    <PrimitreeGuardrailDemo />
-
     <CaseStudyDetails summary="Configuration for four output formats">
     <CodeBlock
       language="typescript"

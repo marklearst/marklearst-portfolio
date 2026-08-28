@@ -1,47 +1,39 @@
-/**
- * Monokai Pro Color System
- * Based on 10 years of coding theme preference
- * https://monokai.pro/
- */
+import baseTokens from '@/tokens/base.json'
+
+// Compatibility values for inline styles and server-rendered share images.
+// New UI styles consume the generated semantic CSS variables directly.
+const hex = ({ r, g, b }: { r: number; g: number; b: number }) =>
+  '#' + [r, g, b].map((channel) => channel.toString(16).padStart(2, '0')).join('')
+const base = baseTokens.color.base
+const ink = hex(base.white.$value)
+const secondary = hex(base.gray.$value)
+const muted = hex(base.muted.$value)
+const orange = hex(base.orange.$value)
+const success = hex(baseTokens.color.status.success.$value)
+const danger = hex(baseTokens.color.status.danger.$value)
 
 export const MONOKAI = {
-  // Primary syntax colors
-  pink: '#ff6188',
-  orange: '#fb9866',
-  yellow: '#ffd866',
-  green: '#a9dc75',
-  cyan: '#78dce8',
-  purple: '#ab9df2',
-
-  // Background colors
-  background: '#231f22',
-  backgroundAlt: '#2e2a2e',
-
-  // Foreground
-  foreground: 'rgb(252, 252, 250)',
-
-  // Semantic mappings for terminal
+  pink: orange,
+  orange,
+  yellow: secondary,
+  green: secondary,
+  cyan: ink,
+  purple: muted,
+  background: hex(base.black.$value),
+  backgroundAlt: hex(base.smoke.$value),
+  foreground: ink,
   terminal: {
-    prompt: '#a9dc75', // Green for ❯
-    command: '#78dce8', // Cyan for commands
-    path: '#ffd866', // Yellow for file paths
-    keyword: '#ff6188', // Pink for git/pnpm/cd
-    success: '#a9dc75', // Green for ✓
-    number: '#ab9df2', // Purple for numbers/versions
-    string: '#ffd866', // Yellow for strings
-    comment: '#727072', // Gray for comments
-    error: '#ff6188', // Pink for errors
+    prompt: secondary,
+    command: ink,
+    path: secondary,
+    keyword: orange,
+    success,
+    number: muted,
+    string: secondary,
+    comment: muted,
+    error: danger,
   },
-
-  // Particle system distribution
-  particles: [
-    '#ff6188', // Pink - React/UI
-    '#fb9866', // Orange - HTML
-    '#ffd866', // Yellow - JavaScript
-    '#a9dc75', // Green - Functions
-    '#78dce8', // Cyan - TypeScript
-    '#ab9df2', // Purple - Keywords
-  ],
+  particles: [ink, secondary, muted, orange],
 } as const
 
 export type MonokaiColor = (typeof MONOKAI.particles)[number]

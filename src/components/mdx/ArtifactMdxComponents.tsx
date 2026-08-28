@@ -2,8 +2,9 @@ import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from 'react'
 import { isValidElement } from 'react'
 import Image from 'next/image'
 import CodeBlock from '@/components/CodeBlock'
-import { CaseStudyMutedList, CaseStudyParagraph } from '@/components/CaseStudyTypography'
+import { CaseStudyMutedList } from '@/components/CaseStudyTypography'
 import { MONOKAI } from '@/lib/monokai-colors'
+import styles from '@/components/CaseStudyLayout.module.css'
 
 const extractCodeString = (value: ReactNode) => {
   if (typeof value === 'string') return value
@@ -38,24 +39,17 @@ const ArtifactHeading = ({
   ...rest
 }: ComponentPropsWithoutRef<'h2'>) => (
   <h2
-    className={`text-[clamp(24px,3vw,36px)] font-mono lowercase mt-10 mb-4 ${className ?? ''}`}
-    style={{ color: MONOKAI.foreground }}
+    className={className}
     {...rest}
   />
 )
 
-type ArtifactSubheadingProps = ComponentPropsWithoutRef<'h3'> & {
-  accent?: string
-}
-
 const ArtifactSubheading = ({
   className,
-  accent,
   ...rest
-}: ArtifactSubheadingProps) => (
+}: ComponentPropsWithoutRef<'h3'>) => (
   <h3
-    className={`text-xl font-mono lowercase mt-8 mb-3 ${className ?? ''}`}
-    style={{ color: accent ?? `${MONOKAI.foreground}cc` }}
+    className={className}
     {...rest}
   />
 )
@@ -65,13 +59,15 @@ const ArtifactLink = ({
   ...rest
 }: ComponentPropsWithoutRef<'a'>) => (
   <a
-    className={`text-white/80 hover:text-white transition-colors ${className ?? ''}`}
+    className={className}
     {...rest}
   />
 )
 
 const baseArtifactMdxComponents = {
-  p: CaseStudyParagraph,
+  p: ({ className, ...rest }: ComponentPropsWithoutRef<'p'>) => (
+    <p className={`${styles.paragraph} ${className ?? ''}`} {...rest} />
+  ),
   img: ({ src, alt, className, title }: ComponentPropsWithoutRef<'img'>) => {
     if (!src || typeof src !== 'string') return null
 
@@ -97,14 +93,9 @@ const baseArtifactMdxComponents = {
 } as Record<string, ComponentType<unknown>>
 
 export const createArtifactMdxComponents = (accent: string) => {
-  const Subheading = (props: ComponentPropsWithoutRef<'h3'>) => (
-    <ArtifactSubheading {...props} accent={accent} />
-  )
-
-  return {
-    ...baseArtifactMdxComponents,
-    h3: Subheading,
-  } as Record<string, ComponentType<unknown>>
+  // Existing callers pass a category accent; narrative headings use shared ink.
+  void accent
+  return baseArtifactMdxComponents
 }
 
 export const artifactMdxComponents = createArtifactMdxComponents(MONOKAI.cyan)

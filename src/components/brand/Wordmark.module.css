@@ -1,0 +1,14 @@
+.link { display: inline-flex; align-items: center; min-height: 44px; font: 500 20px/1 var(--font-mono); color: var(--color-ink-primary); text-decoration: none; }
+.wordmark { display: inline-flex; align-items: baseline; }
+.brace { color: var(--color-ink-muted); transition: color 180ms ease; }
+.middle, .end { display: inline-block; max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width 280ms cubic-bezier(.22, 1, .36, 1); }
+@media (min-width: 480px) {
+  .link:focus-visible .middle { max-width: 3ch; }
+  .link:focus-visible .end { max-width: 5ch; }
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 480px) {
+  .link:hover .middle { max-width: 3ch; }
+  .link:hover .end { max-width: 5ch; }
+  .link:hover .brace { color: var(--color-accent-primary); }
+}
+@media (prefers-reduced-motion: reduce) { .middle, .end, .brace { transition: none; } }

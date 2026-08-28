@@ -4,7 +4,6 @@ import './globals.css'
 import ParticleHeader from '@/components/brand/ParticleHeader'
 import PrimaryNav from '@/components/PrimaryNav'
 import PageTransition from '@/components/transitions/PageTransition'
-import ScrollProgress from '@/components/ui/ScrollProgress'
 import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
 import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
 import AnalyticsManager from '@/components/AnalyticsManager'
@@ -39,7 +38,6 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <a className='skip-link' href='#page-content'>Skip to content</a>
-        <ScrollProgress />
 
         <header className='site-header'>
           <div className='site-header-inner'>

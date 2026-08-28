@@ -1,16 +1,20 @@
-.section { position: relative; padding: 72px 40px 88px; background: #101010; }
+.section { position: relative; padding: 48px 40px 88px; background: var(--color-canvas); color: var(--color-ink-primary); }
 .container { width: min(100%, 1280px); margin-inline: auto; }
-.heading { margin: 0 0 36px; font: 500 clamp(28px, 3.4vw, 44px)/1.2 var(--font-mono); letter-spacing: -.04em; text-wrap: balance; }
+.heading { margin: 0 0 36px; font: 600 var(--text-heading)/1.2 var(--font-body); letter-spacing: -.025em; text-wrap: balance; }
 .quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 36px; row-gap: 28px; }
-.quote { display: grid; grid-row: span 2; grid-template-rows: subgrid; margin: 0; border-top: 1px solid #ffffff24; padding-top: 24px; }
-.words { margin: 0; color: #d7d4d8; font: 17px/1.7 var(--font-body); text-wrap: pretty; }
+.quote { display: grid; grid-row: span 2; grid-template-rows: subgrid; margin: 0; border-top: 1px solid var(--color-border-subtle); padding-top: 24px; }
+.words { margin: 0; color: var(--color-ink-secondary); font: 400 var(--text-body)/1.5 var(--font-body); text-wrap: pretty; }
 .words p { margin: 0; }
 .author { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: start; gap: 14px; }
-.portrait { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; filter: grayscale(1); border: 1px solid #ffffff24; }
-.name { margin: 0 0 5px; color: #fcfcfa; font: 500 13px/1.5 var(--font-mono); }
-.role { margin: 0; color: #aaa5ad; font: 14px/1.55 var(--font-body); }
+.portrait { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; filter: grayscale(1); border: 1px solid var(--color-border-subtle); }
+.name { margin: 0 0 6px; color: var(--color-ink-primary); font: 500 var(--text-ui)/1.5 var(--font-body); }
+.role { margin: 0; color: var(--color-ink-muted); font: 400 var(--text-caption)/1.5 var(--font-body); }
+@supports not (grid-template-rows: subgrid) {
+  .quote { display: flex; flex-direction: column; gap: 28px; }
+  .author { margin-top: auto; }
+}
 @media (max-width: 850px) {
-  .section { padding: 48px 24px; }
+  .section { padding: 40px 24px 64px; }
   .quotes { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
   .quote { grid-row: auto; grid-template-rows: auto auto; row-gap: 20px; }
   .heading { margin-bottom: 28px; }
