@@ -18,7 +18,7 @@
 
 .details summary::-webkit-details-marker { display: none; }
 .details summary span { flex-shrink: 0; transition: transform 180ms ease-out; }
-.details[open] summary span { transform: rotate(90deg); }
+.details[open] summary span { transform: rotate(180deg); }
 .details summary:focus-visible { outline: 2px solid #fcfcfa; outline-offset: 4px; }
 .content { padding: 8px 0 24px; }
 .content > :first-child { margin-top: 0; }

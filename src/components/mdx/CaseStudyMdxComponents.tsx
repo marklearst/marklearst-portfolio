@@ -4,6 +4,10 @@ import { isValidElement } from 'react'
 import Image from 'next/image'
 import CodeBlock from '@/components/CodeBlock'
 import GlucoseDemo from '@/components/glucose/GlucoseDemo'
+import EvidenceGallery from '@/components/evidence/EvidenceGallery'
+import { A11yScenarioDemo } from '@/components/evidence/A11yScenarioDemo'
+import { PrimitreeGuardrailDemo } from '@/components/evidence/PrimitreeGuardrailDemo'
+import AuroraArchitecture from '@/components/evidence/AuroraArchitecture'
 import CaseStudyDetails from '@/components/CaseStudyDetails'
 import { CaseStudySection } from '@/components/CaseStudySection'
 import {
@@ -73,6 +77,10 @@ export const createCaseStudyMdxComponents = (accent: string): MDXComponents => {
     CaseStudyMutedList,
     CodeBlock,
     GlucoseDemo,
+    EvidenceGallery,
+    A11yScenarioDemo,
+    PrimitreeGuardrailDemo,
+    AuroraArchitecture,
     Image,
     p: Paragraph,
     // Passthrough anchor - prevents MDX from double-wrapping links

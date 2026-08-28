@@ -1,7 +1,7 @@
 ---
-title: Terminal Navigation Transitions
+title: Replacing Terminal Navigation with Page Transitions
 slug: terminal-navigation
-summary: Building terminal-style route transitions in Next 16 without losing scroll or analytics fidelity.
+summary: Moving route motion into React ViewTransition while keeping normal links, a stable header, and reduced-motion support.
 tags:
   - motion
   - frontend
@@ -11,189 +11,72 @@ published_at: 2026-01-10
 pinned: false
 ---
 
-> **Historical experiment.** This article documents an earlier terminal-overlay implementation. Current portfolio navigation uses native links and Next.js routing. A small status indicator can appear while a route loads; it never delays navigation.
+**Updated September 15, 2026**
 
-## Why a terminal
+I originally built a terminal overlay for this portfolio because the command-line metaphor felt familiar. Clicking a link started an entrance animation, typed a command, and waited 450ms before calling the router. Even when the next page was ready, the visitor had to wait for the performance. The overlay also needed its own state, timers, and recovery logic.
 
-The terminal metaphor is the closest thing to my everyday state, it signals that this site is a system, not just a gallery. I wanted navigation to feel like issuing a command, not clicking a link and watching a flash.
+I replaced it with a transition on the page content. Links start navigation normally; motion follows the route change.
 
-The goal: buy a beat so the motion reads, the command feels intentional, and the transition doesn't eat scroll position or analytics fidelity.
+## Let the router navigate
 
-## Motion language
+The current site uses React 19.3 and Next.js 16.3.5. Navigation uses ordinary Next.js `Link` components, including the header links. Their click handlers record analytics without intercepting navigation or scheduling a later `router.push`.
 
-| Phase        | Duration | Easing       | Purpose                                       |
-| ------------ | -------- | ------------ | --------------------------------------------- |
-| Overlay in   | 150ms    | `expo.out`   | Fast entry, immediate response to click       |
-| Command type | 300ms    | linear       | Typewriter effect, builds anticipation        |
-| Hold         | 100ms    | —            | Let the eye settle before content swap        |
-| Overlay out  | 400ms    | `expo.inOut` | Slower exit, content arrival feels deliberate |
-
-The asymmetry is intentional. Fast in, slow out. The user should never feel like they're waiting, but the content arrival should feel earned.
-
-## Implementation
-
-### The transition store
-
-State machine that coordinates the overlay, the navigation, and the cleanup.
-
-```ts
-import { create } from 'zustand'
-
-type TransitionState = 'idle' | 'entering' | 'holding' | 'exiting'
-
-interface TransitionStore {
-  state: TransitionState
-  targetHref: string | null
-  command: string | null
-  startTransition: (href: string, navigate: () => void, command: string) => void
-  completeTransition: () => void
-}
-
-export const useTransitionStore = create<TransitionStore>((set, get) => ({
-  state: 'idle',
-  targetHref: null,
-  command: null,
-
-  startTransition: (href, navigate, command) => {
-    if (get().state !== 'idle') return
-    if (href === window.location.pathname) return // same route, skip
-
-    set({ state: 'entering', targetHref: href, command })
-
-    // Phase 1: Overlay enters (150ms)
-    setTimeout(() => {
-      set({ state: 'holding' })
-      // Phase 2: Navigate at peak
-      navigate()
-      // Phase 3: Hold then exit (100ms hold + 400ms exit)
-      setTimeout(() => set({ state: 'exiting' }), 100)
-      setTimeout(() => get().completeTransition(), 500)
-    }, 450) // 150ms enter + 300ms type
-  },
-
-  completeTransition: () => {
-    set({ state: 'idle', targetHref: null, command: null })
-  },
-}))
-```
-
-### The hook
-
-Clean API for components. Returns a function that triggers the transition.
-
-```ts
-import { useRouter } from 'next/navigation'
-import { useTransitionStore } from '@/store/transition-store'
-
-export const useTerminalLink = () => {
-  const router = useRouter()
-  const startTransition = useTransitionStore((s) => s.startTransition)
-
-  return (href: string, command?: string) => {
-    const displayCommand = command || `cd ${href}`
-    startTransition(href, () => router.push(href), displayCommand)
-  }
-}
-```
-
-### The overlay component
-
-GSAP handles the motion. The typewriter effect is a simple interval that reveals characters.
+A small component wraps the page content in React's `ViewTransition`. The pathname is its key, so a route change replaces the boundary. React coordinates the outgoing and incoming views with the DOM update.
 
 ```tsx
 'use client'
 
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { useRef, useState, useEffect } from 'react'
-import { useTransitionStore } from '@/store/transition-store'
+import { ViewTransition } from 'react'
+import { usePathname } from 'next/navigation'
 
-export function TransitionOverlay() {
-  const { state, command } = useTransitionStore()
-  const overlayRef = useRef<HTMLDivElement>(null)
-  const [displayedCommand, setDisplayedCommand] = useState('')
-
-  // Typewriter effect
-  useEffect(() => {
-    if (state !== 'entering' || !command) return
-    setDisplayedCommand('')
-
-    let i = 0
-    const interval = setInterval(() => {
-      if (i < command.length) {
-        setDisplayedCommand(command.slice(0, i + 1))
-        i++
-      } else {
-        clearInterval(interval)
-      }
-    }, 300 / command.length) // Distribute across 300ms
-
-    return () => clearInterval(interval)
-  }, [state, command])
-
-  useGSAP(
-    () => {
-      if (!overlayRef.current) return
-
-      if (state === 'entering') {
-        gsap.fromTo(
-          overlayRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.15, ease: 'expo.out' },
-        )
-      } else if (state === 'exiting') {
-        gsap.to(overlayRef.current, {
-          opacity: 0,
-          duration: 0.4,
-          ease: 'expo.inOut',
-        })
-      }
-    },
-    { dependencies: [state] },
-  )
-
-  if (state === 'idle') return null
+export default function PageTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname()
 
   return (
-    <div
-      ref={overlayRef}
-      className='fixed inset-0 z-50 bg-black/95 flex items-center justify-center'
-    >
-      <div className='font-mono text-white/80 text-sm'>
-        <span className='text-green-400'>→</span> {displayedCommand}
-        <span className='animate-pulse'>_</span>
-      </div>
-    </div>
+    <ViewTransition key={pathname} enter='page-enter' exit='page-exit' default='none'>
+      <div id='page-content' className='page-transition-surface' tabIndex={-1}>{children}</div>
+    </ViewTransition>
   )
 }
 ```
 
-## Guardrails
+The header sits outside this boundary. Its logo and navigation stay in place while the content changes below them. The page surface also provides the target for the visible-on-focus “Skip to content” link.
 
-Three edge cases that will break this if you don't handle them:
+## Keep motion inside the page
 
-1. **Same route click.** Check `href === window.location.pathname` before starting. Otherwise you get an overlay that goes nowhere.
+The outgoing content moves up slightly as it fades; the new content enters from below. CSS defines a 160ms exit and a 320ms entrance. These are animation durations, not waits inserted before navigation.
 
-2. **Stalled transition.** If navigation fails or takes too long, force complete after 2 seconds. Otherwise the user is stuck in overlay purgatory.
+The root snapshot has no animation, and the transition layer does not receive pointer events. Reduced-motion preferences remove the animation duration and delay.
 
-3. **Hash links.** In-page anchors should be instant. Check for `href.startsWith('#')` and skip the transition entirely.
-
-```ts
-// In startTransition
-if (href === window.location.pathname) return
-if (href.startsWith('#')) {
-  navigate()
-  return
+```css
+::view-transition { pointer-events: none; }
+::view-transition-old(root) { display: none; }
+::view-transition-new(root) { animation: none; }
+::view-transition-old(.page-exit) {
+  animation: page-leave 160ms cubic-bezier(0.4, 0, 1, 1) both;
 }
-
-// Failsafe timeout
-setTimeout(() => {
-  if (get().state !== 'idle') get().completeTransition()
-}, 2000)
+::view-transition-new(.page-enter) {
+  animation: page-arrive 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes page-leave {
+  to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes page-arrive {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
 ```
 
-## Next iteration
+## Preserve ordinary navigation
 
-- **Preload.** Start fetching the next route during the overlay animation. The hold phase is dead time that could be doing work.
-- **Custom commands.** Let sections register their own transition copy. `/work` could show `ls ./projects`, `/about` could show `cat ./readme.md`.
-- **Reduced motion.** Respect `prefers-reduced-motion`. Skip the overlay, instant navigation.
+The key uses the pathname, so an in-page anchor does not replace the page surface. Normal links retain modified-click and new-tab behavior, and Next.js continues to manage routing and history. There is no overlay state machine to complete before another link can work.
+
+The useful checks are practical: follow a case-study link, return with Back, jump to a section, navigate with the keyboard, and repeat with reduced motion enabled. Each should remain usable with the transition removed. I have not measured a performance improvement; the concrete change is the removal of the old navigation delay.

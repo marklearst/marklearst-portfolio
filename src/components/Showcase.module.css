@@ -1,8 +1,5 @@
 .container { width: min(100%, 1280px); margin-inline: auto; }
 .hero { position: relative; padding: 128px 40px 32px; background: rgb(16 16 16 / 0.9); color: #fcfcfa; overflow: clip; }
-.terminal { display: flex; justify-content: space-between; gap: 16px; color: #a7a5a6; font: 12px/1.5 var(--font-mono); }
-.prompt { color: #a9dc75; margin-right: 12px; }
-.terminalAside { color: #858385; }
 .nameBox { margin: 16px 0 28px; }
 .name { font-size: clamp(48px, 9vw, 96px); font-weight: 600; line-height: 1.08; letter-spacing: -0.04em; white-space: nowrap; }
 .heroGrid { display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr); gap: clamp(40px, 5vw, 80px); align-items: start; }
@@ -14,7 +11,7 @@
 .primaryLink, .textLink { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 20px; font-size: 14px; font-weight: 550; }
 .primaryLink { padding: 12px 20px; border-radius: 7px; background: #fcfcfa; color: #171717; transition: transform 180ms ease, background-color 180ms ease; }
 .textLink { color: #dbdadd; padding: 10px 0; }
-.primaryLink span, .textLink span, .previewLink span, .caseLink span { transition: transform 200ms cubic-bezier(.22, 1, .36, 1); }
+.primaryLink svg, .textLink svg, .previewLink svg, .caseLink svg { transition: transform 180ms cubic-bezier(.22, 1, .36, 1); }
 .available { margin-top: 24px; color: #939095; font-size: 12px; line-height: 1.6; }
 .available a { display: inline-flex; align-items: center; min-height: 44px; gap: 5px; margin-left: 5px; color: #e0dde2; }
 .livePreview { min-width: 0; }
@@ -59,7 +56,9 @@
 @media (hover: hover) and (pointer: fine) {
   .primaryLink:hover { background: #deddd9; transform: translateY(-2px); }
   .textLink:hover, .previewLink:hover, .caseLink:hover, .moreWork a:hover { color: #78dce8; }
-  .caseLink:hover span, .previewLink:hover span { transform: translate(2px, -2px); }
+  .caseLink:hover svg { transform: translateX(2px); }
+  .previewLink:hover svg, .textLink:hover svg { transform: translate(2px, -2px); }
+  .primaryLink:hover svg { transform: translateY(2px); }
   .imageLink:hover img { transform: scale(1.025); }
 }
 .primaryLink:active { transform: scale(.98); }
@@ -71,8 +70,7 @@
   .brands { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 760px) {
-  .hero { padding: 152px 24px 24px; }
-  .terminalAside { display: none; }
+  .hero { padding: 112px 24px 24px; }
   .nameBox { margin: 22px 0 26px; }
   .name { font-size: clamp(44px, 10.7vw, 80px); letter-spacing: -.04em; }
   .heroGrid, .project, .projectReversed, .enterprise, .practice { grid-template-columns: minmax(0, 1fr); }

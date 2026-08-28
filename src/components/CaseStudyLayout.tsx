@@ -1,5 +1,7 @@
 'use client'
 
+import { ArrowLeftIcon, ArrowUpIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
+
 import {
   isValidElement,
   useEffect,
@@ -330,7 +332,7 @@ export default function CaseStudyLayout({
                 })
               }}
             >
-              <span aria-hidden='true'>←</span> All work
+              <ArrowLeftIcon /> All work
             </Link>
 
             <div className={styles.category}>
@@ -387,7 +389,7 @@ export default function CaseStudyLayout({
                     >
                       {link.icon}
                       {link.label}
-                      <span className={styles.externalArrow} aria-hidden='true'>↗</span>
+                      <ArrowUpRightIcon className={styles.externalArrow} />
                     </a>
                   )
                 })}
@@ -449,9 +451,9 @@ export default function CaseStudyLayout({
                   })
                 }}
               >
-                <span aria-hidden='true'>←</span> View all work
+                <ArrowLeftIcon /> View all work
               </Link>
-              <a href='#case-study-title' className={styles.backLink}>Back to top ↑</a>
+              <a href='#case-study-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
             </nav>
           </div>
         </div>

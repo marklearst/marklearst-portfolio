@@ -1,0 +1,26 @@
+.gallery { margin: 28px 0; min-width: 0; }
+.choices { display: flex; flex-wrap: wrap; gap: 4px 22px; margin-bottom: 12px; }
+.choices button { min-height: 44px; border: 0; border-bottom: 2px solid transparent; padding: 8px 0; background: none; color: #aaa; font: 500 14px/1.5 var(--font-body); cursor: pointer; }
+.choices button[aria-pressed='true'] { border-color: #78dce8; color: #fcfcfa; }
+.stage { --evidence-padding: clamp(8px, 2vw, 24px); position: relative; display: block; width: 100%; aspect-ratio: 16 / 10; padding: 0; border: 1px solid #fcfcfa24; border-radius: 10px; background: #191919; cursor: zoom-in; overflow: hidden; }
+.stage img { position: absolute; inset: var(--evidence-padding); display: block; width: calc(100% - var(--evidence-padding) * 2); height: calc(100% - var(--evidence-padding) * 2); object-fit: contain; border-radius: 3px; transition: transform 260ms cubic-bezier(.22,1,.36,1); }
+.enlarge { position: absolute; display: inline-flex; align-items: center; gap: 8px; bottom: 16px; right: 16px; min-height: 36px; padding: 8px 12px; background: #101010ed; border: 1px solid #ffffff2e; border-radius: 6px; color: #fcfcfa; font: 12px/1.5 var(--font-body); }
+.caption { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; margin-top: 12px; color: #aeaeab; font: 13px/1.6 var(--font-body); }
+.caption > span { flex: 1 1 280px; }
+.caption a, .viewerContext a { display: inline-flex; align-items: center; min-height: 44px; gap: 6px; color: #ddd; text-underline-offset: 4px; }
+.dialog { position: fixed; inset: 0; max-width: none; max-height: none; width: 100%; height: 100%; padding: 20px; border: 0; background: #101010f7; color: #fcfcfa; }
+.dialog::backdrop { background: #101010ee; }
+.viewer { display: flex; flex-direction: column; justify-content: center; gap: 16px; width: min(100%, 1600px); height: 100%; margin: auto; }
+.viewerHeader { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+.viewerHeader h2 { margin: 0; text-transform: none; font: 500 18px/1.4 var(--font-body); }
+.viewer button { display: inline-grid; place-items: center; flex-shrink: 0; min-width: 44px; min-height: 44px; padding: 10px; border: 1px solid #ffffff2e; border-radius: 6px; background: #202020; color: #fcfcfa; cursor: pointer; }
+.viewer > img { min-height: 0; flex: 1; width: 100%; height: auto; object-fit: contain; }
+.viewerFooter { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.viewerFooter p { margin: 0; color: #c3c3c0; font: 14px/1.5 var(--font-body); }
+.viewerContext { min-width: 0; font: 13px/1.5 var(--font-body); }
+.controls { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.controls span { color: #b4b4b0; font: 12px/1.5 var(--font-mono); font-variant-numeric: tabular-nums; }
+.gallery button:focus-visible, .gallery a:focus-visible { outline: 2px solid #78dce8; outline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) { .stage:hover img { transform: scale(1.008); } .choices button:hover { color: #fff; } }
+@media (max-width: 640px) { .dialog { padding: 16px; } .viewerFooter { align-items: flex-start; flex-direction: column; } .controls { align-self: flex-end; } }
+@media (prefers-reduced-motion: reduce) { .stage img { transition: none; } .stage:hover img { transform: none; } }

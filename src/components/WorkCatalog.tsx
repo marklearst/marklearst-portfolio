@@ -1,5 +1,7 @@
 'use client'
 
+import { ArrowRightIcon } from '@/components/ui/Icon'
+
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -57,7 +59,7 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
         <span>{project.openSource ? 'Open source' : project.category.toLowerCase()}</span>
       </div>
       <div className={styles.projectBody}>
-        <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>{project.cardTitle}<span aria-hidden='true'>↗</span></Link></h2>
+        <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>{project.cardTitle}<span aria-hidden='true'><ArrowRightIcon size={20} /></span></Link></h2>
         <p className={styles.summary}>{project.summary}</p>
         <p className={styles.role}>{project.role}</p>
         <ul className={styles.technologies} aria-label={`${project.cardTitle} technologies`}>

@@ -1,13 +1,13 @@
 'use client'
 
-import { CheckCircle, XCircle } from '@phosphor-icons/react'
+import { CircleCheckIcon, CircleXIcon } from '@/components/ui/Icon'
 import { MONOKAI } from '@/lib/monokai-colors'
 import { useAnalyticsOptOut } from '@/hooks/useAnalytics'
 
 export default function AnalyticsOptOutToggle() {
   const { isOptedOut, toggleOptOut } = useAnalyticsOptOut()
   const statusLabel = isOptedOut ? 'analytics off' : 'analytics on'
-  const StatusIcon = isOptedOut ? XCircle : CheckCircle
+  const StatusIcon = isOptedOut ? CircleXIcon : CircleCheckIcon
   const statusColor = isOptedOut ? MONOKAI.terminal.error : MONOKAI.green
   const hint = 'Anonymous, no cookies. Toggle any time.'
 
@@ -26,7 +26,6 @@ export default function AnalyticsOptOutToggle() {
     >
       <StatusIcon
         size={12}
-        weight='bold'
         color={statusColor}
         className='shrink-0'
         aria-hidden

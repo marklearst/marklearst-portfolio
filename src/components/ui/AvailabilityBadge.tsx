@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { ArrowRight, CaretRight } from '@phosphor-icons/react'
+import { ArrowRightIcon, ChevronRightIcon } from '@/components/ui/Icon'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MONOKAI } from '@/lib/monokai-colors'
@@ -147,7 +147,7 @@ export default function AvailabilityBadge() {
         style={{ color: MONOKAI.terminal.prompt }}
         aria-hidden
       >
-        <CaretRight size={11} weight='bold' />
+        <ChevronRightIcon size={11} />
       </span>
 
       {/* Status text — fades in after morph */}
@@ -177,7 +177,7 @@ export default function AvailabilityBadge() {
         aria-label='Send role inquiry email'
       >
         {CTA_TEXT}
-        <ArrowRight size={12} weight='bold' className='shrink-0' aria-hidden />
+        <ArrowRightIcon size={12} className='shrink-0' aria-hidden />
       </a>
     </div>
   )
