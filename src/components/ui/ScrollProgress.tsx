@@ -61,10 +61,10 @@ export default function ScrollProgress() {
 
   return (
     <div
-      className='fixed top-0 left-0 right-0 h-1 z-60'
+      aria-hidden='true'
+      className='fixed top-0 left-0 right-0 h-[2px] z-50'
       style={{
-        background: `linear-gradient(90deg, ${MONOKAI.cyan}, ${MONOKAI.purple}, ${MONOKAI.pink})`,
-        boxShadow: `0 0 10px ${MONOKAI.cyan}60`,
+        background: MONOKAI.cyan,
         transform: `scaleX(${progress / 100})`,
         transformOrigin: 'left',
         willChange: 'transform',

@@ -1,0 +1,8 @@
+.nav { position: relative; display: flex; align-items: center; gap: clamp(8px, 2vw, 24px); }
+.link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 8px 4px; color: #b5b5b3; font: 500 14px/1.4 var(--font-body); text-decoration: none; transition: color 140ms ease; }
+.link[aria-current='page'] { color: #fcfcfa; }
+.link:focus-visible { outline: 2px solid #78dce8; outline-offset: 2px; border-radius: 3px; }
+.marker { position: absolute; left: 0; bottom: 4px; width: 1px; height: 2px; background: #fcfcfa; opacity: 0; transform-origin: left; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 140ms ease; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .link:hover { color: #fcfcfa; } }
+@media (max-width: 420px) { .link { font-size: 13px; } .nav { gap: 8px; } }
+@media (prefers-reduced-motion: reduce) { .marker, .link { transition: none; } }

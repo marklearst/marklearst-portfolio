@@ -45,33 +45,28 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
 
     <CaseStudyParagraph>
       Primitree grew out of <strong>@figma-vars/hooks</strong>, which solved
-      reading Figma Variables into React. I now maintain six packages covering
-      the CLI, token graph, emitters, React hooks, and an MCP server. The pipeline
-      checks architecture rules, reports changes, and generates output.
+      reading Figma Variables into React. The pipeline now checks architecture
+      rules, reports changes, and generates output across six packages.
     </CaseStudyParagraph>
 
-    <figure className="mb-12">
-      <a href="https://primitree.com/playground" className="block rounded-[8px]">
-        <Image
-          src="/images/primitree-playground-tokens.jpg"
-          alt="Primitree Playground showing the sample's token colors, light and dark context controls, and a summary of 12 tokens and 12 generated files."
-          width={1280}
-          height={720}
-          sizes="(max-width: 1072px) calc(100vw - 48px), 1024px"
-          className="h-auto w-full rounded-[8px]"
-        />
-      </a>
-      <figcaption className="mt-3 text-sm leading-relaxed text-white/60">
-        {'Primitree Playground resolving the built-in variables sample in the browser. '}
-        <a href="https://primitree.com/playground" className="underline underline-offset-4">
-          {'Try the sample.'}
-        </a>
-      </figcaption>
-    </figure>
+    <EvidenceGallery
+      label="Primitree Playground"
+      items={[
+        {
+          src: '/images/primitree-playground-tokens.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Resolved tokens',
+          alt: "Primitree Playground showing sample token colors, light and dark context controls, and a summary of 12 tokens and 12 generated files.",
+          caption: 'The built-in variables sample resolves in the browser. Switch contexts to inspect the tokens and generated output.',
+          sourceUrl: 'https://primitree.com/playground',
+        },
+      ]}
+    />
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="When a semantic token holds a hex value">
+<CaseStudySection title="When a semantic token holds a literal color">
   <div className="space-y-6">
     <CaseStudyMutedText>
       A source declares its layers. Each layer names the roots it owns, whether
@@ -80,10 +75,13 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedText>
-      When a semantic layer requires references, a token holding a hex value
+      When a semantic layer requires references, a token holding a literal color
       produces a build failure that identifies the token path.
     </CaseStudyMutedText>
 
+    <PrimitreeGuardrailDemo />
+
+    <CaseStudyDetails summary="Configuration for four output formats">
     <CodeBlock
       language="typescript"
       analyticsLabel="primitree_layer_config"
@@ -117,6 +115,7 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
         "})",
       ].join('\n')}
     />
+    </CaseStudyDetails>
 
     <CaseStudyMutedText>
       Figma-export diffs match on stable Figma IDs rather than names, so a

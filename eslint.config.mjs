@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     'out/**',
     'build/**',
     'next-env.d.ts',
+    // Saved research and third-party examples are not application source.
+    'docs/**',
+    '.firecrawl/**',
   ]),
   {
     rules: {

@@ -20,6 +20,8 @@ export default function ParticleHeader() {
   // So we type 'ark' between m and l, then 'earst' after l
 
   const typeOut = useCallback(() => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 480px)').matches) return
+
     if (timelineRef.current) {
       timelineRef.current.kill()
     }
@@ -139,7 +141,7 @@ export default function ParticleHeader() {
           })
         }
       }}
-      className='inline-flex min-h-11 min-w-[11ch] items-center font-mono text-lg sm:text-2xl'
+      className='inline-flex min-h-11 items-center font-mono text-lg sm:text-2xl'
       onMouseEnter={typeOut}
       onMouseLeave={typeBack}
       aria-label='Mark Learst - Home'
@@ -153,9 +155,9 @@ export default function ParticleHeader() {
       >
         <span className='opacity-50 mr-0.5'>{`{`}</span>
         <span>m</span>
-        <span ref={middleRef}></span>
+        <span ref={middleRef} className='brand-expansion'></span>
         <span>l</span>
-        <span ref={endRef}></span>
+        <span ref={endRef} className='brand-expansion'></span>
         <span className='opacity-50'>{`}`}</span>
       </div>
     </Link>

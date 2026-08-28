@@ -4,6 +4,32 @@
 @import './tokens.light.css';
 @import './monolisa.css';
 
+/* Route motion is coordinated with React's DOM commit, never a navigation timer. */
+::view-transition { pointer-events: none; }
+::view-transition-old(root) { display: none; }
+::view-transition-new(root) { animation: none; }
+::view-transition-old(.page-exit) {
+  animation: page-leave 160ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(.page-enter) {
+  animation: page-arrive 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes page-leave {
+  to { opacity: 0; transform: translateY(-8px); }
+}
+@keyframes page-arrive {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
 /* Base styles */
 body {
   @apply bg-black text-white/80 font-body;
@@ -11,13 +37,41 @@ body {
 }
 
 html {
-  scroll-padding-top: 10rem;
+  scroll-padding-top: 6rem;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 60;
+  top: 12px;
+  left: 24px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  background: #fcfcfa;
+  color: #101010;
+  transform: translateY(calc(-100% - 24px));
+}
+.skip-link:focus { transform: translateY(0); }
+.page-transition-surface:focus { outline: none; }
+
 .site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
   background: #101010d4;
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+  border-bottom: 1px solid #fcfcfa12;
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(calc(100% - 48px), 1280px);
+  min-height: 76px;
+  margin-inline: auto;
 }
 
 .site-header a[aria-label='Mark Learst - Home'] {
@@ -25,6 +79,15 @@ html {
   align-items: center;
   min-width: 44px;
   min-height: 44px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 480px) {
+  .site-header a[aria-label='Mark Learst - Home'] { min-width: 12ch; }
+}
+
+@media (max-width: 479px) {
+  .site-header .brand-expansion { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -38,9 +101,8 @@ html {
 }
 
 @media (min-width: 640px) {
-  html {
-    scroll-padding-top: 8rem;
-  }
+  .site-header-inner { min-height: 88px; }
+  html { scroll-padding-top: 7rem; }
 }
 
 /* MonoLisa for headings - refined monospaced aesthetic */

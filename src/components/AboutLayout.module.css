@@ -290,7 +290,7 @@
   }
 
   .content :global(.about-projects) a:hover span {
-    transform: translate(2px, -2px);
+    transform: translateX(2px);
   }
 }
 

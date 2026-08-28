@@ -1,5 +1,7 @@
 'use client'
 
+import { ActivityIcon, ChevronDownIcon } from '@/components/ui/Icon'
+
 import { useId, useMemo, useState, type PointerEvent } from 'react'
 import {
   getGlucoseDemoScenario,
@@ -182,9 +184,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
     >
       <div className={styles.heading}>
         <div className={styles.headingLabel}>
-          <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="none">
-            <path d="M2 12h5l3-7 4 14 3-7h5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <ActivityIcon size={20} />
           <span>{compact ? 'Glucose report' : 'GlucoseIQ / sample report'}</span>
         </div>
         <span className={styles.synthetic}>Synthetic data</span>
@@ -252,7 +252,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
 
       {!compact && (
         <details className={styles.report}>
-          <summary>Inspect the computed report <span aria-hidden="true">↗</span></summary>
+          <summary>Inspect the computed report <span aria-hidden="true"><ChevronDownIcon /></span></summary>
           <div className={styles.reportBody}>
             <p>Output from <code>analyzeGlucose()</code> using a fixed seed and a 14-day UTC window. No patient data. Non-finite numbers appear as null in JSON. The optional percentile profile is disabled for this example.</p>
             <pre tabIndex={0} aria-label="Computed GlucoseIQ report in JSON"><code>{JSON.stringify(report, null, 2)}</code></pre>
