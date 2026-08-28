@@ -75,7 +75,7 @@
 @media (hover: hover) and (pointer: fine) {
   .filters button:hover { color: #fcfcfa; }
   .projectBody h2 a:hover { color: #78dce8; }
-  .projectBody h2 a:hover span { color: #78dce8; transform: translate(2px, -2px); }
+  .projectBody h2 a:hover span { color: #78dce8; transform: translateX(2px); }
 }
 @media (max-width: 1000px) {
   .project { grid-template-columns: 132px minmax(0, 1fr); gap: 18px 24px; }

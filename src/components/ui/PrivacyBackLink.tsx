@@ -1,5 +1,7 @@
 'use client'
 
+import { ArrowLeftIcon } from '@/components/ui/Icon'
+
 import { useMemo } from 'react'
 import Link from 'next/link'
 import { useLastRoute } from '@/hooks/useNavigationHistory'
@@ -57,19 +59,7 @@ export default function PrivacyBackLink() {
       className='inline-flex items-center gap-2 mb-12 font-mono text-sm transition-colors duration-300 group'
       style={{ color: `${MONOKAI.foreground}80` }}
     >
-      <svg
-        className='w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300'
-        fill='none'
-        viewBox='0 0 24 24'
-        stroke='currentColor'
-        strokeWidth={2}
-      >
-        <path
-          strokeLinecap='round'
-          strokeLinejoin='round'
-          d='M10 19l-7-7m0 0l7-7m-7 7h18'
-        />
-      </svg>
+      <ArrowLeftIcon className='w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-200 motion-reduce:transform-none motion-reduce:transition-none' />
       Back to {label}
     </Link>
   )

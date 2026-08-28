@@ -1,3 +1,4 @@
+import { ArrowUpRightIcon } from '@/components/ui/Icon'
 import styles from '../AboutLayout.module.css'
 
 interface ContactCardProps {
@@ -21,7 +22,7 @@ export default function ContactCard({
       aria-label={`${title}: ${cta}. ${description}`}
     >
       <span>{title}</span>
-      <span aria-hidden='true'>↗</span>
+      <span aria-hidden='true'><ArrowUpRightIcon size={20} /></span>
     </a>
   )
 }

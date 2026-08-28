@@ -46,7 +46,7 @@
 .page a:focus-visible { outline: 2px solid #fcfcfa; outline-offset: 5px; border-radius: 2px; }
 @media (hover: hover) and (pointer: fine) {
   .entryBody h2 a:hover, .outline a:hover, .backLink:hover, .articleEnd a:hover { color: #78dce8; }
-  .entryBody h2 a:hover span { transform: translate(2px, -2px); }
+  .entryBody h2 a:hover span { transform: translateX(2px); }
 }
 @media (max-width: 680px) {
   .index { padding-bottom: 64px; }

@@ -1,3 +1,4 @@
+import { ArrowLeftIcon, ArrowRightIcon } from '@/components/ui/Icon'
 import type { Metadata } from 'next'
 import { Children, cloneElement, isValidElement, type ReactNode } from 'react'
 import Link from 'next/link'
@@ -65,7 +66,7 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
   return (
     <main className={styles.page}>
       <article className={`${styles.container} ${styles.article}`}>
-        <Link href='/artifacts' className={styles.backLink}><span aria-hidden='true'>←</span> ../artifacts</Link>
+        <Link href='/artifacts' className={styles.backLink}><span aria-hidden='true'><ArrowLeftIcon /></span> ../artifacts</Link>
         <header>
           <div className={styles.articleMeta}><time dateTime={artifact.publishedAt.toISOString()}>{formatDate(artifact.publishedAt)}</time><span>{artifact.readingTime.minutes} min read</span></div>
           <h1 className={styles.title}>{artifact.title}</h1>
@@ -78,7 +79,7 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
         </nav>}
         <div className={styles.content}>{content}</div>
         <footer className={styles.articleEnd}>
-          {relatedProject && <><p>Related work</p><Link href={relatedProject.href}>{relatedProject.title} <span aria-hidden='true'>&nbsp;↗</span></Link></>}
+          {relatedProject && <><p>Related work</p><Link href={relatedProject.href}>{relatedProject.title} <span aria-hidden='true'><ArrowRightIcon /></span></Link></>}
           <div className={styles.share}><Link href='/artifacts'>All artifacts</Link>{shareLinks.map((link) => <a key={link.label} href={link.href} target='_blank' rel='noopener noreferrer'>{link.label}</a>)}</div>
         </footer>
       </article>

@@ -1,5 +1,7 @@
 'use client'
 
+import { ArrowRightIcon } from '@/components/ui/Icon'
+
 import React, { useEffect, useRef } from 'react'
 import type { ProjectMeta } from '@/data/projects'
 import { getCategoryColor, getCategoryIcon } from '@/lib/project-categories'
@@ -204,19 +206,7 @@ const ProjectCard = React.forwardRef<HTMLDivElement, ProjectCardProps>(
                 className='inline-flex items-center gap-2.5 text-white/80 hover:text-white font-medium transition-all duration-300 group/link'
               >
                 <span className='font-mono text-sm'>Read case study</span>
-                <svg
-                  className='w-4 h-4 transform group-hover/link:translate-x-1.5 transition-transform duration-300'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                  strokeWidth={2.5}
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M13 7l5 5m0 0l-5 5m5-5H6'
-                  />
-                </svg>
+                <ArrowRightIcon className='w-4 h-4 transform group-hover/link:translate-x-1 transition-transform duration-200 motion-reduce:transform-none motion-reduce:transition-none' />
               </a>
             </div>
           </div>

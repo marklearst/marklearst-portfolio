@@ -76,6 +76,25 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       and respond to API failures without guessing.
     </CaseStudyMutedText>
 
+    <CaseStudySubheading>Offline fallback</CaseStudySubheading>
+
+    <CodeBlock
+      language="tsx"
+      analyticsLabel="figma_vars_hooks_fallback"
+      code={[
+        "import exportedVariables from './figma-variables.json'",
+        "",
+        "<FigmaVarsProvider",
+        "  token={null}",
+        "  fileKey={null}",
+        "  fallbackFile={exportedVariables}",
+        ">",
+        "  <App />",
+        "</FigmaVarsProvider>",
+      ].join('\n')}
+    />
+
+
     <CaseStudyDetails summary="Hooks, CLI, Storybook, and validation examples">
     <CaseStudySubheading className="mt-0">Hooks and provider</CaseStudySubheading>
 
@@ -178,24 +197,6 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       ].join('\n')}
     />
 
-    <CaseStudySubheading>Offline fallback</CaseStudySubheading>
-
-    <CodeBlock
-      language="tsx"
-      analyticsLabel="figma_vars_hooks_fallback"
-      code={[
-        "import exportedVariables from './figma-variables.json'",
-        "",
-        "<FigmaVarsProvider",
-        "  token={null}",
-        "  fileKey={null}",
-        "  fallbackFile={exportedVariables}",
-        ">",
-        "  <App />",
-        "</FigmaVarsProvider>",
-      ].join('\n')}
-    />
-
     <CaseStudySubheading>Runtime guards and errors</CaseStudySubheading>
 
     <CaseStudyMutedList className="space-y-2">
@@ -271,33 +272,15 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
 
 <CaseStudySection title="Package capabilities and status">
   <div className="space-y-6">
-    <CaseStudyMutedList className="space-y-4">
-      <li>
-        <strong>Eliminates manual token sync</strong> by providing programmatic
-        access to Figma Variables directly from React
-      </li>
-      <li>
-        <strong>Type-safe runtime validation</strong> ensures variables
-        are valid before use in applications
-      </li>
-      <li>
-        <strong>100% test coverage</strong> provides confidence for teams adopting
-        the library in production
-      </li>
-      <li>Open-source library for the design systems community</li>
-      <li>
-        <strong>CLI tool enables CI/CD</strong> workflows that auto-sync design
-        tokens on every Figma change
-      </li>
-      <li>
-        <strong>Enterprise and offline paths</strong> cover both live API usage
-        and static exports for non-Enterprise teams
-      </li>
-    </CaseStudyMutedList>
-    <CaseStudyParagraph className="mt-8">
+    <CaseStudyParagraph>
       The library is published on npm and actively maintained. Its use cases
       include production token pipelines, Storybook dashboards, and
       Figma-to-code workflows.
     </CaseStudyParagraph>
+    <CaseStudyMutedText>
+      This work became the starting point for <a href="/work/primitree">Primitree</a>,
+      which adds architecture rules, token graphs, generated output, and change
+      reports around the variable data.
+    </CaseStudyMutedText>
   </div>
 </CaseStudySection>

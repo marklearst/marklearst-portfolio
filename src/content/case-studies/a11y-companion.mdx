@@ -44,16 +44,13 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
 
     <CaseStudyParagraph>
       The first version let teams complete an accessibility checklist in the
-      design file. When those checklist items changed, a signed section could
-      not flag that it needed another review. In v3.0.0, sign-off records the
-      reviewed state and turns stale when the items change.
+      design file, but a signed section could not flag that changed items
+      needed another review. In v3.0.0, a named reviewer's signature records
+      item ids, completion state, and checklist revision. A change to that
+      evidence turns the stamp amber and marks the section for re-review.
     </CaseStudyParagraph>
 
-    <CaseStudyMutedText>
-      A section can be signed by a named reviewer. The signature fingerprints
-      item ids, completion state, and checklist revision. When those items
-      change, the stamp turns amber and the section reads as needing re-review.
-    </CaseStudyMutedText>
+    <A11yScenarioDemo />
   </div>
 </CaseStudySection>
 
@@ -66,24 +63,20 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       of warnings. Counts include findings beyond the display cap.
     </CaseStudyMutedText>
 
-    <figure className="mb-12">
-      <a href="https://marklearst.me/a11y-companion-widget/" className="block rounded-[8px]">
-        <Image
-          src="/images/a11y-audit-browser-demo.jpg"
-          alt="a11y Companion browser demo showing token contrast totals, representative-example counts, and affected uses beside Canvas Record."
-          width={1280}
-          height={720}
-          sizes="(max-width: 1072px) calc(100vw - 48px), 1024px"
-          className="h-auto w-full rounded-[8px]"
-        />
-      </a>
-      <figcaption className="mt-3 text-sm leading-relaxed text-white/60">
-        {"Token audit and Canvas Record in the product site's browser demo. "}
-        <a href="https://marklearst.me/a11y-companion-widget/" className="underline underline-offset-4">
-          {'Explore the demo.'}
-        </a>
-      </figcaption>
-    </figure>
+    <EvidenceGallery
+      label="a11y Companion product views"
+      items={[
+        {
+          src: '/images/a11y-audit-browser-demo.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Audit and Canvas Record',
+          alt: 'a11y Companion browser demo showing token contrast totals, representative-example counts, and affected uses beside Canvas Record.',
+          caption: 'Token audit and Canvas Record in the product site’s browser demo. Full counts remain visible when the list shows representative findings.',
+          sourceUrl: 'https://marklearst.me/a11y-companion-widget/',
+        },
+      ]}
+    />
 
     <CaseStudyMutedList className="space-y-2">
       <li>Targets: fails below 24px per WCAG 2.5.8, warns below 44px, with a 2000-node traversal budget</li>
@@ -123,12 +116,11 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     <CaseStudySubheading>State has to survive the widget runtime</CaseStudySubheading>
 
     <CaseStudyMutedText>
-      The widget runtime clears module memory between interactions. Confirmation
-      and Watch state therefore need storage that survives those resets:
+      The widget runtime clears module memory between interactions. Watch
+      ownership therefore needs state that survives those resets:
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Pending confirmation state uses <code>figma.clientStorage</code></li>
       <li>Watch ownership uses the durable <code>sessionId</code></li>
       <li>Export and clipboard access run through a hidden iframe bridge, since the widget sandbox has neither</li>
       <li>Empty spacer AutoLayouts default to 100px tall; explicit <code>height=0</code> keeps them from inflating badge and chip rows</li>
