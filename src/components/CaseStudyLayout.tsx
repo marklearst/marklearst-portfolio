@@ -7,11 +7,9 @@ import {
   useEffect,
   useMemo,
   useRef,
-  type CSSProperties,
   type ReactNode,
 } from 'react'
 import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
-import { getCategoryColor } from '@/lib/project-categories'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Footer from './Footer'
@@ -42,7 +40,6 @@ interface CaseStudyLayoutProps {
 export default function CaseStudyLayout({
   title,
   category,
-  categoryColor,
   description,
   role,
   timeline,
@@ -66,7 +63,6 @@ export default function CaseStudyLayout({
   const pathname = usePathname()
   const projectSlug = pathname.split('/').pop() || 'unknown'
   const heroRef = useRef<HTMLElement | null>(null)
-  const categoryTone = getCategoryColor(categoryColor)
   const linkRefs = useRef<Array<HTMLAnchorElement | null>>([])
   const impactRefs = useRef<Array<HTMLDivElement | null>>([])
   const sectionRefs = useRef<Array<HTMLElement | null>>([])
@@ -306,17 +302,14 @@ export default function CaseStudyLayout({
       <div className={styles.sectionHeading}>
         <h2 id={`${sectionId(index)}-heading`}>{section.title}</h2>
       </div>
-      <div className={`prose prose-invert max-w-none ${styles.content}`}>
+      <div className={styles.content}>
         {section.content}
       </div>
     </section>
   )
 
   return (
-    <div
-      className={styles.page}
-      style={{ '--case-accent': categoryTone } as CSSProperties}
-    >
+    <div className={styles.page}>
       <main id='main-content'>
         <section ref={heroRef} className={styles.hero} aria-labelledby='case-study-title'>
           <div className={`${styles.container} relative`}>
@@ -340,23 +333,6 @@ export default function CaseStudyLayout({
             </div>
             <h1 id='case-study-title' className={styles.title}>{title}</h1>
             <p className={styles.description}>{description}</p>
-
-            <dl className={styles.meta}>
-              <div>
-                <dt>Role</dt>
-                <dd>{role}</dd>
-              </div>
-              <div>
-                <dt>Timeline</dt>
-                <dd>{timeline}</dd>
-              </div>
-              <div>
-                <dt>Built with</dt>
-                <dd className={styles.technologies}>
-                  {technologies.map((tech) => <span key={tech}>{tech}</span>)}
-                </dd>
-              </div>
-            </dl>
 
             {links.length > 0 && (
               <div className={styles.links}>
@@ -400,20 +376,41 @@ export default function CaseStudyLayout({
 
         <div className={styles.body}>
           <div className={styles.container}>
+            {resolvedSections[0] && renderSection(resolvedSections[0], 0)}
+
+            <dl className={styles.meta}>
+              <div>
+                <dt>My role</dt>
+                <dd>{role}</dd>
+              </div>
+              <div>
+                <dt>Timeline</dt>
+                <dd>{timeline}</dd>
+              </div>
+              <div>
+                <dt>Built with</dt>
+                <dd className={styles.technologies}>
+                  {technologies.map((tech) => <span key={tech}>{tech}</span>)}
+                </dd>
+              </div>
+            </dl>
+
             {resolvedSections.length > 2 && (
-              <nav className={styles.contents} aria-label={`${title} case study contents`}>
-                <p>In this case study</p>
-                <ol>
-                  {resolvedSections.map((section, index) => (
-                    <li key={sectionId(index)}>
-                      <a href={`#${sectionId(index)}`}>{section.title}</a>
-                    </li>
-                  ))}
-                </ol>
-              </nav>
+              <details className={styles.contents}>
+                <summary>In this case study</summary>
+                <nav aria-label={`${title} case study contents`}>
+                  <ol>
+                    {resolvedSections.map((section, index) => (
+                      <li key={sectionId(index)}>
+                        <a href={`#${sectionId(index)}`}>{section.title}</a>
+                      </li>
+                    ))}
+                  </ol>
+                </nav>
+              </details>
             )}
 
-            {resolvedSections.map((section, index) => renderSection(section, index))}
+            {resolvedSections.slice(1).map((section, index) => renderSection(section, index + 1))}
 
             {impact && impact.length > 0 && (
               <section

@@ -14,19 +14,20 @@ const layers = PRIMITREE_DEMO.config.sources.brand.architecture.layers
 
 interface PrimitreeGuardrailDemoProps {
   className?: string
+  compact?: boolean
 }
 
-export function PrimitreeGuardrailDemo({ className = '' }: PrimitreeGuardrailDemoProps) {
+export function PrimitreeGuardrailDemo({ className = '', compact = false }: PrimitreeGuardrailDemoProps) {
   const id = useId()
   const [selectedId, setSelectedId] = useState<ScenarioId>('literal')
   const selected = PRIMITREE_DEMO.scenarios.find((scenario) => scenario.id === selectedId)!
   const failed = selected.build.exitCode !== 0
 
   return (
-    <section className={`${styles.demo} ${className}`} aria-label="Primitree architecture rule example">
+    <section className={`${styles.demo} ${compact ? styles.compact : ''} ${className}`} aria-label="Primitree architecture rule example">
       <header className={styles.header}>
         <span className={styles.product}>Primitree</span>
-        <span className={styles.mode}>Recorded CLI runs</span>
+        <span className={styles.mode}>{compact ? `CLI ${PRIMITREE_DEMO.provenance.version} · recorded` : 'Recorded CLI runs'}</span>
       </header>
 
       <div className={styles.rule}>
@@ -57,12 +58,28 @@ export function PrimitreeGuardrailDemo({ className = '' }: PrimitreeGuardrailDem
           const blocked = scenario.build.exitCode !== 0
           const finding = scenario.checkReport.findings[0]
           const cssExcerpt = getPrimitreeCssExcerpt(scenario.css)
+          const visibleCss = compact
+            ? cssExcerpt?.split('\n').find((line) => line.trim().startsWith('--semantic-action:'))?.trim() ?? cssExcerpt
+            : cssExcerpt
+          const tokenValue = scenario.tokens.semantic.action.$value
           return (
             <div className={styles.panel} key={scenario.id} data-active={active} data-blocked={blocked} inert={!active} aria-hidden={!active}>
               <div className={styles.source}>
                 <div className={styles.sourceTitle}><span>Source token</span><span>tokens.json</span></div>
                 <code className={styles.tokenPath}>semantic.action</code>
-                <pre className={styles.tokenCode} tabIndex={0} aria-label="Semantic action token input"><code>{JSON.stringify(scenario.tokens.semantic.action, null, 2)}</code></pre>
+                {compact ? (
+                  <dl className={styles.tokenValue}>
+                    <div>
+                      <dt>Value preview</dt>
+                      <dd className={styles.valuePreview}>
+                        {typeof tokenValue !== 'string' && <span className={styles.valueSwatch} aria-hidden="true" style={{ backgroundColor: tokenValue.hex }} />}
+                        <code>{typeof tokenValue === 'string' ? tokenValue : tokenValue.hex}</code>
+                      </dd>
+                    </div>
+                  </dl>
+                ) : (
+                  <pre className={styles.tokenCode} tabIndex={0} aria-label="Semantic action token input"><code>{JSON.stringify(scenario.tokens.semantic.action, null, 2)}</code></pre>
+                )}
                 <div className={styles.baseToken}>
                   <span aria-hidden="true" style={{ backgroundColor: sourceColor }} />
                   <code>color.cyan</code>
@@ -71,10 +88,11 @@ export function PrimitreeGuardrailDemo({ className = '' }: PrimitreeGuardrailDem
               </div>
 
               <div className={styles.result}>
-                <div className={styles.command}><code>primitree build</code><span>exit {scenario.build.exitCode}</span></div>
+                {!compact && <div className={styles.command}><code>primitree build</code><span>exit {scenario.build.exitCode}</span></div>}
                 <div className={styles.resultHeading}>
                   {blocked ? <CircleXIcon size={20} /> : <CircleCheckIcon size={20} />}
                   <span>{blocked ? 'Build stopped' : 'Build passed'}</span>
+                  {compact && <span className={styles.exitCode}>exit {scenario.build.exitCode}</span>}
                 </div>
                 {blocked && finding ? (
                   <>
@@ -83,13 +101,13 @@ export function PrimitreeGuardrailDemo({ className = '' }: PrimitreeGuardrailDem
                       <code>{finding.path.join('.')}</code>
                       <p>{finding.message}</p>
                     </div>
-                    <p className={styles.consequence}>No generated files were written.</p>
+                    {!compact && <p className={styles.consequence}>No generated files were written.</p>}
                   </>
                 ) : (
                   <>
-                    <div className={styles.outputTitle}>generated/css/tokens.css</div>
-                    <pre className={styles.cssOutput} tabIndex={0} aria-label="Generated CSS excerpt"><code>{cssExcerpt}</code></pre>
-                    <p className={styles.consequence}>The emitted CSS keeps the semantic reference.</p>
+                    <div className={styles.outputTitle}>{compact ? 'Generated CSS excerpt' : 'generated/css/tokens.css'}</div>
+                    <pre className={styles.cssOutput} tabIndex={0} aria-label="Generated CSS excerpt"><code>{visibleCss}</code></pre>
+                    {!compact && <p className={styles.consequence}>The emitted CSS keeps the semantic reference.</p>}
                   </>
                 )}
               </div>
@@ -99,7 +117,7 @@ export function PrimitreeGuardrailDemo({ className = '' }: PrimitreeGuardrailDem
       </div>
 
       <details className={styles.inspect}>
-        <summary>Inspect configuration and full output<ChevronDownIcon size={16} /></summary>
+        <summary>{compact ? 'Inspect source and full output' : 'Inspect configuration and full output'}<ChevronDownIcon size={16} /></summary>
         <div className={styles.inspectBody}>
           <p>The two runs use the same configuration. Only <code>semantic.action.$value</code> changes.</p>
           <div className={styles.inspectFile}>
@@ -126,8 +144,8 @@ export function PrimitreeGuardrailDemo({ className = '' }: PrimitreeGuardrailDem
         {labels[selectedId]}: {failed ? 'Build stopped. PT1003: semantic.action must use a reference. No generated files were written.' : 'Build passed. Generated CSS preserves the reference to color.cyan.'}
       </p>
       <footer className={styles.footer}>
-        <p>Output recorded from the real CLI. The browser switches between those two results.</p>
-        <span>Primitree {PRIMITREE_DEMO.provenance.version}</span>
+        <p>{compact ? 'Two recorded CLI runs; the browser only switches results.' : 'Output recorded from the real CLI. The browser switches between those two results.'}</p>
+        {!compact && <span>Primitree {PRIMITREE_DEMO.provenance.version}</span>}
       </footer>
     </section>
   )

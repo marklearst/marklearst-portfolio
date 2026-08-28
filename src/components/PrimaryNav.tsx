@@ -49,6 +49,8 @@ export default function PrimaryNav() {
           className={styles.link}
           aria-current={active === href ? 'page' : undefined}
           onPointerEnter={(event) => { if (event.pointerType === 'mouse') setHovered(href) }}
+          onFocus={() => setHovered(href)}
+          onBlur={() => setHovered(null)}
           onClick={() => trackNavigationClick({ action: `nav_${label.toLowerCase()}`, from: pathname, to: href, location: 'header' })}
         >
           <span ref={(node) => { labels.current[href] = node }}>{label}</span>

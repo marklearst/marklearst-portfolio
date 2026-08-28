@@ -1,8 +1,8 @@
-.nav { position: relative; display: flex; align-items: center; gap: clamp(8px, 2vw, 24px); }
-.link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 8px 4px; color: #b5b5b3; font: 500 14px/1.4 var(--font-body); text-decoration: none; transition: color 140ms ease; }
-.link[aria-current='page'] { color: #fcfcfa; }
-.link:focus-visible { outline: 2px solid #78dce8; outline-offset: 2px; border-radius: 3px; }
-.marker { position: absolute; left: 0; bottom: 4px; width: 1px; height: 2px; background: #fcfcfa; opacity: 0; transform-origin: left; transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), opacity 140ms ease; pointer-events: none; }
-@media (hover: hover) and (pointer: fine) { .link:hover { color: #fcfcfa; } }
-@media (max-width: 420px) { .link { font-size: 13px; } .nav { gap: 8px; } }
+.nav { position: relative; display: flex; align-items: center; gap: clamp(12px, 3vw, 32px); }
+.link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 8px 2px; color: var(--color-ink-muted); font: 500 var(--text-ui)/1.4 var(--font-body); text-decoration: none; transition: color 140ms ease; }
+.link[aria-current='page'] { color: var(--color-ink-primary); }
+.link:focus-visible { outline: 2px solid var(--color-ink-primary); outline-offset: 3px; border-radius: 2px; }
+.marker { position: absolute; left: 0; bottom: 2px; width: 1px; height: 2px; background: var(--color-accent-primary); opacity: 0; transform-origin: left; transition: transform 220ms cubic-bezier(.22, 1, .36, 1), opacity 140ms ease; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .link:hover { color: var(--color-ink-primary); } }
+@media (max-width: 420px) { .link { font-size: 14px; } .nav { gap: 12px; } }
 @media (prefers-reduced-motion: reduce) { .marker, .link { transition: none; } }

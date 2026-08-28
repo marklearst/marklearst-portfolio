@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import Link from 'next/link'
-import GlucoseDemo from '@/components/glucose/GlucoseDemo'
+import PrimitreeGuardrailDemo from '@/components/evidence/PrimitreeGuardrailDemo'
 import KineticText from '@/components/ui/KineticText'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { useAnalytics } from '@/hooks/useAnalytics'
@@ -26,7 +26,7 @@ export default function EnhancedHero() {
         <div className={styles.heroGrid}>
           <div className={styles.introduction}>
             <p className={styles.lead}>Design engineer and UI architect who sets system direction in code.</p>
-            <p className={styles.support}>I build <span className={styles.green}>design systems</span> from the tokens up, and the governance that keeps <span className={styles.cyan}>Figma and production React</span> aligned. When work repeats, I turn it into an <span className={styles.purple}>agent workflow</span> with tests and human review before anything ships.</p>
+            <p className={styles.support}>I build design systems from the tokens up, and the governance that keeps Figma and production React aligned. When work repeats, I turn it into an agent workflow with tests and human review before anything ships.</p>
             <div className={styles.actions}>
               <a className={styles.primaryLink} href='#work' onClick={() => trackHeroCTAClick({ action: 'view_work', location: 'hero' })}>
                 Explore the work <ArrowDownIcon />
@@ -39,13 +39,12 @@ export default function EnhancedHero() {
           </div>
           <div className={`${styles.livePreview} hero-preview`}>
             <div className={styles.previewHeading}>
-              <span>GlucoseIQ</span>
-              <span>My library, running here</span>
+              <span>Design system rules, in code</span>
             </div>
-            <GlucoseDemo compact />
+            <PrimitreeGuardrailDemo compact />
             <div className={styles.previewLinks}>
-              <Link href='/work/glucoseiq' className={styles.previewLink}>GlucoseIQ case study <ArrowRightIcon /></Link>
-              <a href='https://github.com/marklearst/marklearst-portfolio/blob/99ed8e2ec1b5c8f1665d893410a39efaee391778/src/lib/glucose-demo.ts' target='_blank' rel='noopener noreferrer' className={styles.previewLink}>View source <ArrowUpRightIcon /></a>
+              <Link href='/work/primitree' className={styles.previewLink}>Primitree case study <ArrowRightIcon /></Link>
+              <a href='https://primitree.com/docs' target='_blank' rel='noopener noreferrer' className={styles.previewLink}>Documentation <ArrowUpRightIcon /></a>
             </div>
           </div>
         </div>

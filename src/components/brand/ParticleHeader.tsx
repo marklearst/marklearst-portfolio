@@ -1,165 +1,32 @@
 'use client'
 
-import { useRef, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { gsap } from 'gsap'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import styles from './Wordmark.module.css'
 
 export default function ParticleHeader() {
-  const { trackNavigationClick, trackLogoHover } = useAnalytics()
   const pathname = usePathname()
-  const middleRef = useRef<HTMLSpanElement>(null)
-  const endRef = useRef<HTMLSpanElement>(null)
-  const timelineRef = useRef<gsap.core.Timeline | null>(null)
-  const isExpandedRef = useRef(false)
-
-  useEffect(() => () => { timelineRef.current?.kill() }, [])
-
-  // {m  l} -> {m arkl earst}
-  // So we type 'ark' between m and l, then 'earst' after l
-
-  const typeOut = useCallback(() => {
-    if (!window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 480px)').matches) return
-
-    if (timelineRef.current) {
-      timelineRef.current.kill()
-    }
-
-    isExpandedRef.current = true
-    trackLogoHover({ action: 'expand' })
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      if (middleRef.current) middleRef.current.textContent = 'ark'
-      if (endRef.current) endRef.current.textContent = 'earst'
-      return
-    }
-
-    const middleText = 'ark'
-    const endText = 'earst'
-    let middleIndex = 0
-    let endIndex = 0
-
-    const tl = gsap.timeline()
-    timelineRef.current = tl
-
-    // Type middle part (ark) between m and l
-    const typeMiddle = () => {
-      if (middleIndex < middleText.length && isExpandedRef.current) {
-        middleIndex++
-        if (middleRef.current) {
-          middleRef.current.textContent = middleText.slice(0, middleIndex)
-        }
-        if (middleIndex < middleText.length) {
-          tl.to({}, { duration: 0.07, onComplete: typeMiddle })
-        } else {
-          // Start typing end part
-          tl.to({}, { duration: 0.07, onComplete: typeEnd })
-        }
-      }
-    }
-
-    // Type end part (earst) after l
-    const typeEnd = () => {
-      if (endIndex < endText.length && isExpandedRef.current) {
-        endIndex++
-        if (endRef.current) {
-          endRef.current.textContent = endText.slice(0, endIndex)
-        }
-        if (endIndex < endText.length) {
-          tl.to({}, { duration: 0.07, onComplete: typeEnd })
-        }
-      }
-    }
-
-    typeMiddle()
-  }, [trackLogoHover])
-
-  const typeBack = useCallback(() => {
-    if (timelineRef.current) {
-      timelineRef.current.kill()
-    }
-
-    isExpandedRef.current = false
-    trackLogoHover({ action: 'collapse' })
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      if (middleRef.current) middleRef.current.textContent = ''
-      if (endRef.current) endRef.current.textContent = ''
-      return
-    }
-
-    let endLength = endRef.current?.textContent?.length || 0
-    let middleLength = middleRef.current?.textContent?.length || 0
-
-    const tl = gsap.timeline()
-    timelineRef.current = tl
-
-    // Delete end part first (earst)
-    const deleteEnd = () => {
-      if (endLength > 0 && !isExpandedRef.current) {
-        endLength--
-        if (endRef.current) {
-          endRef.current.textContent = 'earst'.slice(0, endLength)
-        }
-        if (endLength > 0) {
-          tl.to({}, { duration: 0.04, onComplete: deleteEnd })
-        } else {
-          // Then delete middle part
-          tl.to({}, { duration: 0.04, onComplete: deleteMiddle })
-        }
-      } else if (endLength === 0) {
-        deleteMiddle()
-      }
-    }
-
-    // Delete middle part (ark)
-    const deleteMiddle = () => {
-      if (middleLength > 0 && !isExpandedRef.current) {
-        middleLength--
-        if (middleRef.current) {
-          middleRef.current.textContent = 'ark'.slice(0, middleLength)
-        }
-        if (middleLength > 0) {
-          tl.to({}, { duration: 0.04, onComplete: deleteMiddle })
-        }
-      }
-    }
-
-    deleteEnd()
-  }, [trackLogoHover])
+  const { trackNavigationClick, trackLogoHover } = useAnalytics()
 
   return (
     <Link
       href='/'
-      onClick={() => {
-        if (pathname !== '/') {
-          trackNavigationClick({
-            action: 'logo_click',
-            from: pathname,
-            to: '/',
-          })
-        }
-      }}
-      className='inline-flex min-h-11 items-center font-mono text-lg sm:text-2xl'
-      onMouseEnter={typeOut}
-      onMouseLeave={typeBack}
+      className={styles.link}
       aria-label='Mark Learst - Home'
+      onClick={() => {
+        if (pathname !== '/') trackNavigationClick({ action: 'logo_click', from: pathname, to: '/' })
+      }}
+      onPointerEnter={(event) => {
+        if (event.pointerType === 'mouse') trackLogoHover({ action: 'expand' })
+      }}
     >
-      <div
-        aria-hidden='true'
-        className='flex items-center font-medium'
-        style={{
-          color: 'rgb(252, 252, 250)',
-        }}
-      >
-        <span className='opacity-50 mr-0.5'>{`{`}</span>
-        <span>m</span>
-        <span ref={middleRef} className='brand-expansion'></span>
-        <span>l</span>
-        <span ref={endRef} className='brand-expansion'></span>
-        <span className='opacity-50'>{`}`}</span>
-      </div>
+      <span aria-hidden='true' className={styles.wordmark}>
+        <span className={styles.brace}>{'{'}</span>
+        <span>m</span><span className={styles.middle + ' brand-expansion'}>ark</span>
+        <span>l</span><span className={styles.end + ' brand-expansion'}>earst</span>
+        <span className={styles.brace}>{'}'}</span>
+      </span>
     </Link>
   )
 }

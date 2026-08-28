@@ -17,6 +17,7 @@ import {
   CaseStudySubheading,
 } from '@/components/CaseStudyTypography'
 import { MONOKAI } from '@/lib/monokai-colors'
+import styles from '@/components/CaseStudyLayout.module.css'
 
 const extractCodeString = (value: ReactNode) => {
   if (typeof value === 'string') return value
@@ -47,8 +48,10 @@ const Pre = ({ children, ...rest }: ComponentPropsWithoutRef<'pre'>) => {
 }
 
 export const createCaseStudyMdxComponents = (accent: string): MDXComponents => {
+  // Retain the factory contract while all narrative headings share one ink color.
+  void accent
   const Subheading = (props: ComponentPropsWithoutRef<'h3'>) => (
-    <CaseStudySubheading {...props} color={accent} />
+    <CaseStudySubheading {...props} />
   )
 
   // Custom paragraph that renders as <p> to avoid div-in-p hydration errors
@@ -58,8 +61,8 @@ export const createCaseStudyMdxComponents = (accent: string): MDXComponents => {
     ...rest
   }: ComponentPropsWithoutRef<'p'>) => {
     const classes = className
-      ? `text-lg leading-relaxed ${className}`
-      : 'text-lg leading-relaxed'
+      ? `${styles.paragraph} ${className}`
+      : styles.paragraph
 
     return (
       <p className={classes} {...rest}>

@@ -1,14 +1,107 @@
 {
   "light": {
     "color": {
-      "canvas": { "$type": "color", "$value": { "r": 248, "g": 248, "b": 242 } },
-      "surface": { "$type": "color", "$value": { "r": 255, "g": 255, "b": 255 } },
+      "canvas": {
+        "$type": "color",
+        "$value": {
+          "r": 245,
+          "g": 243,
+          "b": 239
+        }
+      },
+      "surface": {
+        "$type": "color",
+        "$value": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "surface-raised": {
+        "$type": "color",
+        "$value": {
+          "r": 233,
+          "g": 230,
+          "b": 223
+        }
+      },
       "ink": {
-        "primary": { "$type": "color", "$value": { "r": 11, "g": 11, "b": 14 } },
-        "muted": { "$type": "color", "$value": { "r": 11, "g": 11, "b": 14, "alpha": 0.6 } }
+        "primary": {
+          "$type": "color",
+          "$value": {
+            "r": 23,
+            "g": 22,
+            "b": 21
+          }
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": {
+            "r": 76,
+            "g": 72,
+            "b": 66
+          }
+        },
+        "muted": {
+          "$type": "color",
+          "$value": {
+            "r": 98,
+            "g": 92,
+            "b": 83
+          }
+        }
+      },
+      "accent": {
+        "primary": {
+          "$type": "color",
+          "$value": {
+            "r": 148,
+            "g": 71,
+            "b": 15
+          }
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": {
+            "r": 76,
+            "g": 72,
+            "b": 66
+          }
+        },
+        "success": {
+          "$type": "color",
+          "$value": {
+            "r": 61,
+            "g": 107,
+            "b": 57
+          }
+        },
+        "danger": {
+          "$type": "color",
+          "$value": {
+            "r": 161,
+            "g": 60,
+            "b": 51
+          }
+        },
+        "warning": {
+          "$type": "color",
+          "$value": {
+            "r": 118,
+            "g": 81,
+            "b": 15
+          }
+        }
       },
       "border": {
-        "subtle": { "$type": "color", "$value": { "r": 11, "g": 11, "b": 14, "alpha": 0.08 } }
+        "subtle": {
+          "$type": "color",
+          "$value": {
+            "r": 208,
+            "g": 203,
+            "b": 194
+          }
+        }
       }
     }
   }

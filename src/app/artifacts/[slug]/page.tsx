@@ -43,7 +43,7 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
     { label: 'Share on X', href: `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}` },
     { label: 'Share on LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}` },
   ]
-  const mdxComponents = createArtifactMdxComponents('#fcfcfa')
+  const mdxComponents = createArtifactMdxComponents('var(--color-ink-primary)')
   const headings: { id: string; label: string }[] = []
   const prepareContent = (node: ReactNode): ReactNode => Children.map(node, (child) => {
     if (!isValidElement<{ id?: string; children?: ReactNode }>(child)) return child
@@ -73,10 +73,10 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
           <p className={styles.summary}>{artifact.summary}</p>
           <ul className={styles.tags} aria-label='Topics'>{artifact.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
         </header>
-        {headings.length > 1 && <nav className={styles.outline} aria-label='In this article'>
-          <p>In this article</p>
+        {headings.length > 1 && <details className={styles.outline}>
+          <summary>In this article</summary><nav aria-label='In this article'>
           <ol>{headings.map((heading) => <li key={heading.id}><a href={`#${heading.id}`}>{heading.label}</a></li>)}</ol>
-        </nav>}
+        </nav></details>}
         <div className={styles.content}>{content}</div>
         <footer className={styles.articleEnd}>
           {relatedProject && <><p>Related work</p><Link href={relatedProject.href}>{relatedProject.title} <span aria-hidden='true'><ArrowRightIcon /></span></Link></>}

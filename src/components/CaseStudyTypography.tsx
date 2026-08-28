@@ -1,7 +1,5 @@
 import type { ComponentPropsWithoutRef } from 'react'
-import { MONOKAI } from '@/lib/monokai-colors'
-
-const SUBHEADING_CLASS = 'text-2xl font-mono mt-8 mb-4'
+import styles from './CaseStudyLayout.module.css'
 
 interface CaseStudySubheadingProps
   extends ComponentPropsWithoutRef<'h3'> {
@@ -18,15 +16,15 @@ export function CaseStudySubheading({
   children,
   color,
   className,
+  style,
   ...rest
 }: CaseStudySubheadingProps) {
   const classes = className
-    ? `${SUBHEADING_CLASS} ${className}`
-    : SUBHEADING_CLASS
-  const accent = color ?? MONOKAI.foreground
+    ? `${styles.subheading} ${className}`
+    : styles.subheading
 
   return (
-    <h3 className={classes} style={{ color: accent }} {...rest}>
+    <h3 className={classes} style={{ ...style, ...(color ? { color } : {}) }} {...rest}>
       {children}
     </h3>
   )
@@ -37,7 +35,7 @@ export function CaseStudyMutedText({
   className,
   ...rest
 }: CaseStudyMutedTextProps) {
-  const classes = className ? `leading-relaxed ${className}` : 'leading-relaxed'
+  const classes = className ? `${styles.mutedText} ${className}` : styles.mutedText
 
   return (
     <div className={classes} {...rest}>
@@ -51,9 +49,7 @@ export function CaseStudyMutedList({
   className,
   ...rest
 }: CaseStudyMutedListProps) {
-  const baseClasses =
-    'mt-4 ml-6 list-disc space-y-2 [&_strong]:text-white [&_ul]:mt-3 [&_ul]:space-y-2'
-  const classes = className ? `${baseClasses} ${className}` : baseClasses
+  const classes = className ? `${styles.list} ${className}` : styles.list
 
   return (
     <ul className={classes} {...rest}>
@@ -68,8 +64,8 @@ export function CaseStudyParagraph({
   ...rest
 }: CaseStudyParagraphProps) {
   const classes = className
-    ? `text-lg leading-relaxed ${className}`
-    : 'text-lg leading-relaxed'
+    ? `${styles.paragraph} ${className}`
+    : styles.paragraph
 
   return (
     <div className={classes} {...rest}>
