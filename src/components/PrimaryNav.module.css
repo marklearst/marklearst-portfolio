@@ -1,8 +1,50 @@
-.nav { position: relative; display: flex; align-items: center; gap: clamp(12px, 3vw, 32px); }
-.link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 8px 2px; color: var(--color-ink-muted); font: 500 var(--text-ui)/1.4 var(--font-body); text-decoration: none; transition: color 140ms ease; }
-.link[aria-current='page'] { color: var(--color-ink-primary); }
-.link:focus-visible { outline: 2px solid var(--color-ink-primary); outline-offset: 3px; border-radius: 2px; }
-.marker { position: absolute; left: 0; bottom: 2px; width: 1px; height: 2px; background: var(--color-accent-primary); opacity: 0; transform-origin: left; transition: transform 220ms cubic-bezier(.22, 1, .36, 1), opacity 140ms ease; pointer-events: none; }
-@media (hover: hover) and (pointer: fine) { .link:hover { color: var(--color-ink-primary); } }
-@media (max-width: 420px) { .link { font-size: 14px; } .nav { gap: 12px; } }
-@media (prefers-reduced-motion: reduce) { .marker, .link { transition: none; } }
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--color-surface);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 2px 6px rgb(0 0 0 / 16%);
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 17px;
+  border-radius: 10px;
+  color: var(--color-ink-muted);
+  font: 550 var(--text-ui)/1.4 var(--font-body);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+.indicator {
+  width: 5px;
+  height: 5px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transform: scale(.5);
+  transition: opacity 160ms ease, transform 200ms cubic-bezier(.22, 1, .36, 1);
+}
+.link[aria-current='page'] {
+  background: var(--color-surface-raised);
+  color: var(--color-ink-primary);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 1px 3px rgb(0 0 0 / 20%);
+}
+.link[aria-current='page'] .indicator { color: var(--color-accent-primary); opacity: 1; transform: scale(1); }
+.link:focus-visible { outline: 2px solid var(--color-accent-primary); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  .link:hover { color: var(--color-ink-primary); background: var(--color-surface-raised); }
+  .link:hover .indicator { color: var(--color-accent-primary); opacity: 1; transform: scale(1); }
+}
+@media (max-width: 479px) {
+  .nav { border-radius: 12px; padding: 3px; }
+  .link { gap: 6px; padding-inline: 10px; font-size: 14px; border-radius: 9px; }
+  .indicator { width: 4px; height: 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .link, .indicator { transition: none; } }
