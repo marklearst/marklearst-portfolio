@@ -6,7 +6,7 @@ import PrimitreeGuardrailDemo from '@/components/evidence/PrimitreeGuardrailDemo
 import KineticText from '@/components/ui/KineticText'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { useAnalytics } from '@/hooks/useAnalytics'
-import { ArrowDownIcon, ArrowRightIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
+import { ArrowDownIcon, ArrowRightIcon, ArrowUpRightIcon, GithubIcon } from '@/components/ui/Icon'
 import styles from './Showcase.module.css'
 
 export default function EnhancedHero() {
@@ -18,26 +18,26 @@ export default function EnhancedHero() {
   return (
     <section ref={heroRef} className={styles.hero} aria-labelledby='hero-name'>
       <div className={styles.container}>
-        <div ref={nameBoxRef} className={styles.nameBox}>
-          <h1 id='hero-name' className={styles.name} aria-label='Mark Learst'>
-            <span aria-hidden='true'><KineticText text='marklearst' /></span>
-          </h1>
-        </div>
         <div className={styles.heroGrid}>
           <div className={styles.introduction}>
-            <p className={styles.lead}>Design engineer and UI architect who sets system direction in code.</p>
+            <div ref={nameBoxRef} className={styles.nameBox}>
+              <h1 id='hero-name' className={styles.name} aria-label='Mark Learst'>
+                <span aria-hidden='true'><KineticText text='marklearst' /></span>
+              </h1>
+            </div>
+            <p className={styles.lead}>Design engineer and UI architect who sets <span>system direction in code.</span></p>
             <p className={styles.support}>I build design systems from the tokens up, and the governance that keeps Figma and production React aligned. When work repeats, I turn it into an agent workflow with tests and human review before anything ships.</p>
             <div className={styles.actions}>
               <a className={styles.primaryLink} href='#work' onClick={() => trackHeroCTAClick({ action: 'view_work', location: 'hero' })}>
                 Explore the work <ArrowDownIcon />
               </a>
               <a className={styles.textLink} href='https://github.com/marklearst' target='_blank' rel='noopener noreferrer' onClick={() => trackExternalLinkClick({ platform: getPlatformFromUrl('https://github.com/marklearst'), href: 'https://github.com/marklearst', location: 'hero' })}>
-                GitHub <ArrowUpRightIcon />
+                <GithubIcon size={20} className={styles.brandIcon} /> GitHub <ArrowUpRightIcon />
               </a>
             </div>
             <p className={styles.available}>Open to design engineering roles. <a href='mailto:jobs@marklearst.com'>Let’s talk <ArrowUpRightIcon /></a></p>
           </div>
-          <div className={`${styles.livePreview} hero-preview`}>
+          <div className={`${styles.livePreview} ${styles.heroPreview} hero-preview`}>
             <div className={styles.previewHeading}>
               <span>Design system rules, in code</span>
             </div>

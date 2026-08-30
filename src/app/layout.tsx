@@ -36,6 +36,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
+      <head>
+        <link rel='preload' href='/fonts/dm-sans/dm-sans-latin-normal.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+      </head>
       <body>
         <a className='skip-link' href='#page-content'>Skip to content</a>
 

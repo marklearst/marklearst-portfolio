@@ -29,7 +29,7 @@ import {
 
 export type IconProps = IconBaseProps
 
-function icon(Component: IconType) {
+function icon(Component: IconType, brand = false) {
   return function Icon({ size = 16, style, ...props }: IconProps) {
     return (
       <Component
@@ -37,6 +37,7 @@ function icon(Component: IconType) {
         focusable='false'
         size={size}
         strokeWidth={1.75}
+        data-brand-icon={brand || undefined}
         {...props}
         style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}
       />
@@ -59,10 +60,10 @@ export const CloseIcon = /* @__PURE__ */ icon(TbX)
 export const CheckIcon = /* @__PURE__ */ icon(TbCheck)
 export const CopyIcon = /* @__PURE__ */ icon(TbCopy)
 export const CodeIcon = /* @__PURE__ */ icon(TbCode)
-export const GithubIcon = /* @__PURE__ */ icon(TbBrandGithub)
-export const FigmaIcon = /* @__PURE__ */ icon(TbBrandFigma)
-export const NpmIcon = /* @__PURE__ */ icon(TbBrandNpm)
-export const LinkedinIcon = /* @__PURE__ */ icon(TbBrandLinkedin)
+export const GithubIcon = /* @__PURE__ */ icon(TbBrandGithub, true)
+export const FigmaIcon = /* @__PURE__ */ icon(TbBrandFigma, true)
+export const NpmIcon = /* @__PURE__ */ icon(TbBrandNpm, true)
+export const LinkedinIcon = /* @__PURE__ */ icon(TbBrandLinkedin, true)
 export const MailIcon = /* @__PURE__ */ icon(TbMail)
 export const ComponentIcon = /* @__PURE__ */ icon(TbComponents)
 export const AccessibilityIcon = /* @__PURE__ */ icon(TbAccessible)
