@@ -69,7 +69,8 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
         <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>{project.cardTitle}<span aria-hidden='true'><ArrowRightIcon size={20} /></span></Link></h2>
         {preview && <figure className={styles.preview}>
           <Link className={styles.previewLink} href={project.route} aria-label={`${project.cardTitle} case study preview`} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>
-            <Image src={preview.src} alt={preview.alt} width={1280} height={720} sizes='(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px' />
+            <span className={styles.previewViewport}><Image src={preview.src} alt={preview.alt} width={1280} height={720} sizes='(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px' /></span>
+            <span className={styles.previewAction} aria-hidden='true'><ArrowRightIcon size={18} /></span>
           </Link>
           <figcaption>{preview.caption}</figcaption>
         </figure>}

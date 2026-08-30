@@ -3,44 +3,44 @@
  */
 
 :root[data-theme='light'] {
-  --token-color-base-black: 23 22 21;
-  --token-color-base-white: 243 240 235;
-  --token-color-base-smoke: 32 31 29;
-  --token-color-base-raised: 42 40 37;
-  --token-color-base-gray: 203 197 189;
-  --token-color-base-muted: 165 158 148;
-  --token-color-base-border: 60 57 52;
-  --token-color-base-orange: 230 161 94;
-  --token-color-monokai-pink: 203 197 189;
-  --token-color-monokai-orange: 203 197 189;
-  --token-color-monokai-yellow: 243 240 235;
-  --token-color-monokai-green: 203 197 189;
-  --token-color-monokai-cyan: 243 240 235;
-  --token-color-monokai-purple: 203 197 189;
-  --token-color-monokai-background: 32 31 29;
-  --token-color-monokai-background-alt: 42 40 37;
-  --token-color-monokai-foreground: 243 240 235;
-  --token-color-status-success: 147 185 144;
-  --token-color-status-danger: 232 155 147;
-  --token-color-status-warning: 223 189 127;
-  --token-color-canvas: 245 243 239;
+  --token-color-base-black: 11 11 10;
+  --token-color-base-white: 242 242 239;
+  --token-color-base-smoke: 21 21 20;
+  --token-color-base-raised: 30 30 28;
+  --token-color-base-gray: 199 199 194;
+  --token-color-base-muted: 161 161 155;
+  --token-color-base-border: 52 52 49;
+  --token-color-base-orange: 255 88 0; /** Primary orange observed on https://devouringdetails.com/ on September 15, 2026. The light-mode text accent has a separate darker value for contrast. */
+  --token-color-monokai-pink: 199 199 194;
+  --token-color-monokai-orange: 199 199 194;
+  --token-color-monokai-yellow: 242 242 239;
+  --token-color-monokai-green: 199 199 194;
+  --token-color-monokai-cyan: 242 242 239;
+  --token-color-monokai-purple: 199 199 194;
+  --token-color-monokai-background: 21 21 20;
+  --token-color-monokai-background-alt: 30 30 28;
+  --token-color-monokai-foreground: 242 242 239;
+  --token-color-status-success: 146 187 138;
+  --token-color-status-danger: 238 138 128;
+  --token-color-status-warning: 229 189 100;
+  --token-color-canvas: 247 247 243;
   --token-color-surface: 255 255 255;
-  --token-color-surface-raised: 233 230 223;
-  --token-color-ink-primary: 23 22 21;
-  --token-color-ink-secondary: 76 72 66;
-  --token-color-ink-muted: 98 92 83;
-  --token-color-accent-primary: 148 71 15;
-  --token-color-accent-secondary: 76 72 66;
-  --token-color-accent-success: 61 107 57;
-  --token-color-accent-danger: 161 60 51;
-  --token-color-accent-warning: 118 81 15;
-  --token-color-border-subtle: 208 203 194;
-  --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace; /** Existing MonoLisa fallback until licensed Cartograph CF webfonts are supplied. */
-  --token-font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif; /** System sans fallback until licensed Wotfard webfonts are supplied. */
+  --token-color-surface-raised: 236 236 230;
+  --token-color-ink-primary: 17 17 16;
+  --token-color-ink-secondary: 71 71 67;
+  --token-color-ink-muted: 98 98 91;
+  --token-color-accent-primary: 185 68 9;
+  --token-color-accent-secondary: 71 71 67;
+  --token-color-accent-success: 60 108 52;
+  --token-color-accent-danger: 173 57 49;
+  --token-color-accent-warning: 118 81 9;
+  --token-color-border-subtle: 209 209 200;
+  --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace; /** Existing MonoLisa for code and technical detail; unchanged font files. */
+  --token-font-sans: 'DM Sans', Arial, sans-serif; /** Self-hosted DM Sans variable roman and italic, licensed under SIL OFL 1.1. Sources and license are in public/fonts/dm-sans. */
   --token-font-serif: ui-serif, Georgia, serif;
-  --token-font-body: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --token-font-display: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --token-font-ui: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --token-font-body: 'DM Sans', Arial, sans-serif;
+  --token-font-display: 'DM Sans', Arial, sans-serif;
+  --token-font-ui: 'DM Sans', Arial, sans-serif;
   --token-space-xs: 4px;
   --token-space-sm: 8px;
   --token-space-md: 16px;
@@ -59,10 +59,10 @@
   --token-text-ui: 1rem;
   --token-text-caption: 0.875rem;
   --token-leading-display: 1.05;
-  --token-leading-title: 1.12;
-  --token-leading-heading: 1.2;
+  --token-leading-title: 1.15;
+  --token-leading-heading: 1.25;
   --token-leading-subheading: 1.35;
-  --token-leading-body: 1.65;
+  --token-leading-body: 1.5;
   --token-leading-lead: 1.5;
   --token-leading-ui: 1.5;
   --token-leading-caption: 1.5;
@@ -72,10 +72,10 @@
   --token-tracking-heading: -0.02em;
   --token-tracking-body: 0em;
   --token-component-terminal-background: 255 255 255;
-  --token-component-terminal-foreground: 23 22 21;
-  --token-component-terminal-accent: 148 71 15;
-  --token-component-terminal-success: 61 107 57;
-  --token-component-terminal-error: 161 60 51;
-  --token-component-card-border: 208 203 194;
+  --token-component-terminal-foreground: 17 17 16;
+  --token-component-terminal-accent: 185 68 9;
+  --token-component-terminal-success: 60 108 52;
+  --token-component-terminal-error: 173 57 49;
+  --token-component-card-border: 209 209 200;
   --token-component-card-shadow: 0px 30px 80px 0px rgba(0, 0, 0, 0.45);
 }

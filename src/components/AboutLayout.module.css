@@ -118,7 +118,6 @@
 .content :global(.timeline-entry) {
   display: block;
   padding-block: 20px;
-  border-top: 1px solid var(--color-border-subtle, #3b3530);
 }
 
 .content :global(.timeline-dot) {
@@ -212,12 +211,12 @@
 }
 
 .content :global(.about-disclosure) {
-  border-top: 1px solid var(--color-border-subtle, #3b3530);
+  margin-block: 8px;
+  padding-inline: 20px;
+  border-radius: 10px;
+  background: var(--color-surface);
 }
 
-.content :global(.about-disclosure):last-child {
-  border-bottom: 1px solid var(--color-border-subtle, #3b3530);
-}
 
 .content :global(.about-disclosure) > summary {
   min-height: 56px;
