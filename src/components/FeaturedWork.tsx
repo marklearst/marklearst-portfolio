@@ -60,22 +60,27 @@ export default function FeaturedWork() {
           <h2 id='selected-work-heading'>Selected work</h2>
           <Link href='/work'>All projects <span aria-hidden='true'><ArrowRightIcon /></span></Link>
         </div>
-        {SHOWCASES.map((project) => (
-          <article key={project.slug} className={styles.project}>
+        <div className={styles.projectGrid}>
+        {SHOWCASES.map((project, index) => (
+          <article key={project.slug} className={`${styles.project} ${index === 0 ? styles.projectFeatured : ''}`}>
+            <h3 className={styles.projectTitle}>{project.title}</h3>
+            <figure className={styles.figure}>
+              <Link className={styles.imageLink} href={`/work/${project.slug}`} aria-label={`Explore ${project.title}`} onClick={() => trackProject(project.slug)}>
+                <span className={styles.imageViewport}>
+                  <Image src={project.image} alt={project.alt} width={1280} height={720} sizes={index === 0 ? '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 60vw, 770px' : '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 45vw, 600px'} />
+                </span>
+                <span className={styles.imageAction} aria-hidden='true'><ArrowRightIcon size={20} /></span>
+              </Link>
+              <figcaption className={styles.caption}>{project.caption}</figcaption>
+            </figure>
             <div className={styles.projectContent}>
-              <h3>{project.title}</h3>
               <p className={styles.projectSummary}>{project.summary}</p>
               <p className={styles.projectNote}>{project.note}</p>
               <Link className={styles.caseLink} href={`/work/${project.slug}`} onClick={() => trackProject(project.slug)}>{project.linkLabel} <span aria-hidden='true'><ArrowRightIcon /></span></Link>
             </div>
-            <figure className={styles.figure}>
-              <Link className={styles.imageLink} href={`/work/${project.slug}`} aria-label={`Explore ${project.title}`} onClick={() => trackProject(project.slug)}>
-                <Image src={project.image} alt={project.alt} width={1280} height={720} sizes='(max-width: 760px) calc(100vw - 48px), (max-width: 1360px) 55vw, 740px' />
-              </Link>
-              <figcaption className={styles.caption}>{project.caption}</figcaption>
-            </figure>
           </article>
         ))}
+        </div>
         <article className={styles.enterprise}>
           <div className={styles.projectContent}>
             <h3>Aurora at GM</h3>

@@ -316,6 +316,7 @@ export default function CaseStudyLayout({
             <Link
               href='/work'
               className={styles.backLink}
+              aria-label='Back to work'
               onClick={() => {
                 trackNavigationClick({
                   action: 'back_to_work',
@@ -325,7 +326,7 @@ export default function CaseStudyLayout({
                 })
               }}
             >
-              <ArrowLeftIcon /> All work
+              <span aria-hidden='true'>..</span>work
             </Link>
 
             <div className={styles.category}>
@@ -448,7 +449,7 @@ export default function CaseStudyLayout({
                   })
                 }}
               >
-                <ArrowLeftIcon /> View all work
+                <ArrowLeftIcon /> ..work
               </Link>
               <a href='#case-study-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
             </nav>

@@ -6,8 +6,8 @@
 .indexHeader h1 { margin: 0 0 24px; color: var(--color-ink-primary, #f3eee8); font: 700 var(--text-title, 3.5rem) / 1.15 var(--font-body); letter-spacing: -0.025em; text-transform: none; }
 .indexHeader > p { margin: 0; font: 400 var(--text-lead, 1.25rem) / 1.5 var(--font-body); text-wrap: pretty; }
 .indexHeader a { color: var(--color-accent-primary, #e6aa79); text-decoration: underline; text-underline-offset: 4px; }
-.entry { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 28px; padding-block: 32px; border-top: 1px solid var(--color-border-subtle, #3b3530); }
-.entry:last-child { border-bottom: 1px solid var(--color-border-subtle, #3b3530); }
+.entry { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 28px; padding-block: 32px; }
+.entry + .entry { border-top: 1px solid var(--color-border-subtle); }
 .entryMeta { display: flex; flex-direction: column; gap: 6px; padding-top: 8px; color: var(--color-ink-muted, #a59d95); font: 400 0.875rem / 1.5 var(--font-mono); font-variant-numeric: tabular-nums; }
 .pinned { color: var(--color-accent-primary, #e6aa79); }
 .entryBody { min-width: 0; }
@@ -22,7 +22,7 @@
 .articleMeta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 20px; color: var(--color-ink-muted, #a59d95); font: 400 0.875rem / 1.5 var(--font-mono); font-variant-numeric: tabular-nums; }
 .title { margin: 0 0 24px; color: var(--color-ink-primary, #f3eee8); font: 700 var(--text-title, 3.5rem) / 1.15 var(--font-body); letter-spacing: -0.025em; text-wrap: balance; overflow-wrap: break-word; }
 .summary { margin: 0; color: var(--color-ink-secondary, #cbc5bf); font: 400 var(--text-lead, 1.25rem) / 1.5 var(--font-body); text-wrap: pretty; }
-.outline { margin-block: 32px; padding-block: 16px; border-block: 1px solid var(--color-border-subtle, #3b3530); }
+.outline { margin-block: 32px; padding: 16px 24px; background: var(--color-surface); border-radius: 12px; }
 .outline > p, .outline > summary { margin: 0 0 8px; color: var(--color-ink-secondary, #cbc5bf); font: 500 var(--text-ui, 1rem) / 1.5 var(--font-body); }
 .outline > summary { min-height: 44px; margin: 0; padding-block: 10px; cursor: pointer; }
 .outline > summary::marker { color: var(--color-accent-primary, #e6aa79); }
