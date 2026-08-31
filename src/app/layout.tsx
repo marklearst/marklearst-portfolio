@@ -9,7 +9,6 @@ import CursorOrbs from '@/components/ui/CursorOrbs'
 import KonamiCode from '@/components/ui/KonamiCode'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import CommandPalette from '@/components/ui/CommandPalette'
-import SmoothScrollProvider from '@/components/SmoothScrollProvider'
 import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
 import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
 import AnalyticsManager from '@/components/AnalyticsManager'
@@ -78,9 +77,7 @@ export default function RootLayout({
         <KonamiCode />
 
         <FigmaVarsContextProvider>
-          <SmoothScrollProvider>
-            <TerminalNavigationProvider>{children}</TerminalNavigationProvider>
-          </SmoothScrollProvider>
+          <TerminalNavigationProvider>{children}</TerminalNavigationProvider>
           <FigmaVarsDebug />
         </FigmaVarsContextProvider>
         <CommandPalette />

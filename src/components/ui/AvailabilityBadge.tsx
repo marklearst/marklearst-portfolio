@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { ArrowRight, CaretRight } from '@phosphor-icons/react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MONOKAI } from '@/lib/monokai-colors'
@@ -14,17 +15,22 @@ const MAILTO =
 
 type Stage = 'dot' | 'pill' | 'expanded'
 
+// Collapses every tween to zero for reduced-motion users — same end state, no travel.
+const dur = (seconds: number) =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ? 0
+    : seconds
+
 export default function AvailabilityBadge() {
   const [stage, setStage] = useState<Stage>('dot')
   const containerRef = useRef<HTMLDivElement>(null)
-  const pillRef = useRef<HTMLDivElement>(null)
   const textRef = useRef<HTMLSpanElement>(null)
   const ctaRef = useRef<HTMLAnchorElement>(null)
-  const dotRef = useRef<HTMLDivElement>(null)
   const hoverTlRef = useRef<gsap.core.Tween | null>(null)
   const hasExpandedRef = useRef(false)
 
-  // Stage 1 -> 2: Dot morphs into pill when footer scrolls into view
+  // Stage 1 -> 2: Prompt morphs into pill when footer scrolls into view
   useEffect(() => {
     if (!containerRef.current) return
 
@@ -39,16 +45,6 @@ export default function AvailabilityBadge() {
         const tl = gsap.timeline()
 
         tl.to(
-          dotRef.current,
-          {
-            scale: 1,
-            duration: 0.15,
-            ease: 'power2.in',
-          },
-          0,
-        )
-
-        tl.to(
           containerRef.current,
           {
             width: 'auto',
@@ -59,11 +55,11 @@ export default function AvailabilityBadge() {
             borderColor: 'rgba(255,255,255,0.06)',
             backgroundColor: 'rgba(255,255,255,0.02)',
             borderRadius: 12,
-            duration: 0.5,
+            duration: dur(0.5),
             ease: 'power3.out',
             onStart: () => setStage('pill'),
           },
-          0.1,
+          0,
         )
 
         tl.fromTo(
@@ -72,10 +68,10 @@ export default function AvailabilityBadge() {
           {
             opacity: 1,
             x: 0,
-            duration: 0.4,
+            duration: dur(0.4),
             ease: 'power2.out',
           },
-          0.35,
+          dur(0.25),
         )
       },
     })
@@ -93,7 +89,7 @@ export default function AvailabilityBadge() {
     gsap.to(containerRef.current, {
       boxShadow: `0 0 0 2px ${MONOKAI.background}, 0 0 0 5px ${MONOKAI.green}`,
       scale: 1.02,
-      duration: 0.4,
+      duration: dur(0.4),
       ease: 'expo.out',
     })
 
@@ -102,7 +98,7 @@ export default function AvailabilityBadge() {
       x: 0,
       width: 'auto',
       marginLeft: 8,
-      duration: 0.3,
+      duration: dur(0.3),
       ease: 'power2.out',
     })
   }, [stage])
@@ -114,7 +110,7 @@ export default function AvailabilityBadge() {
     gsap.to(containerRef.current, {
       boxShadow: `0 0 0 0px ${MONOKAI.background}, 0 0 0 0px ${MONOKAI.green}`,
       scale: 1,
-      duration: 0.3,
+      duration: dur(0.3),
       ease: 'expo.out',
     })
 
@@ -123,7 +119,7 @@ export default function AvailabilityBadge() {
       x: -4,
       width: 0,
       marginLeft: 0,
-      duration: 0.25,
+      duration: dur(0.25),
       ease: 'power2.in',
     })
   }, [stage])
@@ -135,27 +131,24 @@ export default function AvailabilityBadge() {
       onMouseLeave={handleMouseLeave}
       className='inline-flex items-center cursor-pointer overflow-hidden border border-transparent'
       style={{
-        width: stage === 'dot' ? 10 : undefined,
-        height: stage === 'dot' ? 10 : undefined,
+        width: stage === 'dot' ? 12 : undefined,
+        height: stage === 'dot' ? 14 : undefined,
         padding: stage === 'dot' ? 0 : undefined,
-        borderRadius: stage === 'dot' ? 9999 : 12,
+        borderRadius: stage === 'dot' ? 4 : 12,
         boxShadow: '0 0 0 1px rgba(255,255,255,0.05)',
         backdropFilter: stage !== 'dot' ? 'blur(8px)' : undefined,
       }}
       role='status'
       aria-label='Availability — open to remote roles'
     >
-      {/* The dot — always present, anchors the morph */}
-      <div className='relative flex size-2.5 shrink-0 items-center justify-center'>
-        <div
-          ref={dotRef}
-          className='size-2 rounded-full bg-monokai-green'
-          style={{
-            boxShadow: `0 0 12px ${MONOKAI.green}50, 0 0 4px ${MONOKAI.green}30`,
-            animation: 'avail-pulse 2.5s ease-in-out infinite',
-          }}
-        />
-      </div>
+      {/* Shell prompt — always present, anchors the morph */}
+      <span
+        className='flex h-3 w-2.5 shrink-0 items-center justify-center'
+        style={{ color: MONOKAI.terminal.prompt }}
+        aria-hidden
+      >
+        <CaretRight size={11} weight='bold' />
+      </span>
 
       {/* Status text — fades in after morph */}
       <span
@@ -184,37 +177,8 @@ export default function AvailabilityBadge() {
         aria-label='Send role inquiry email'
       >
         {CTA_TEXT}
-        <svg
-          width='12'
-          height='12'
-          viewBox='0 0 12 12'
-          fill='none'
-          className='shrink-0'
-          aria-hidden
-        >
-          <path
-            d='M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9'
-            stroke='currentColor'
-            strokeWidth='1.5'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          />
-        </svg>
+        <ArrowRight size={12} weight='bold' className='shrink-0' aria-hidden />
       </a>
-
-      <style jsx>{`
-        @keyframes avail-pulse {
-          0%,
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.7;
-            transform: scale(0.85);
-          }
-        }
-      `}</style>
     </div>
   )
 }
