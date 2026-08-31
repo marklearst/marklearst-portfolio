@@ -3,6 +3,7 @@ import AboutLayout from '@/components/AboutLayout'
 import AboutNote from '@/components/about/AboutNote'
 import ContactCard from '@/components/about/ContactCard'
 import ContactLink from '@/components/about/ContactLink'
+import DisclosureSummary from '@/components/ui/DisclosureSummary'
 import { createCaseStudyMdxComponents } from '@/components/mdx/CaseStudyMdxComponents'
 import AboutContent from '@/content/about.mdx'
 import { MONOKAI } from '@/lib/monokai-colors'
@@ -29,6 +30,7 @@ export default function AboutPage() {
     AboutNote,
     ContactCard,
     ContactLink,
+    DisclosureSummary,
   }
 
   return (

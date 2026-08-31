@@ -132,12 +132,14 @@ a {
 a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 [data-brand-icon] { color: var(--color-accent-primary); }
 [data-action-icon] { overflow: visible; }
+:where(a, button, summary) [data-action-icon] {
+  color: var(--color-action-icon, var(--color-accent-primary));
+}
 [data-action-icon] .icon-arrow {
   transform-origin: center;
   transition: transform 180ms cubic-bezier(.22, 1, .36, 1);
 }
-a:focus-visible [data-action-icon='external'] .icon-arrow,
-button:focus-visible [data-action-icon='external'] .icon-arrow { transform: translate(1px, -1px); }
+:where(a, button):focus-visible [data-action-icon] .icon-arrow { transition: none; }
 @media (hover: hover) and (pointer: fine) {
   a:hover [data-action-icon='external'] .icon-arrow,
   button:hover [data-action-icon='external'] .icon-arrow { transform: translate(1.5px, -1.5px); }

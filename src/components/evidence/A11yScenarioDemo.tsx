@@ -100,7 +100,6 @@ export function A11yScenarioDemo({ className = '' }: A11yScenarioDemoProps) {
               <div className={styles.record}>
                 <div className={styles.recordHeading}>
                   <span>Canvas Record</span>
-                  <span className={styles.recordMarker} aria-hidden="true" />
                 </div>
                 <p className={styles.readiness}>{record.label}</p>
                 <dl className={styles.recordFields}>

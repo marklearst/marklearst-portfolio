@@ -98,7 +98,6 @@
 .colors dd { margin: 0; font-family: var(--token-font-mono); font-size: var(--text-caption); }
 .record { min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--a11y-border); border-radius: 6px; padding: 20px; background: var(--color-canvas); }
 .recordHeading { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--token-font-mono); font-size: var(--text-caption); }
-.recordMarker { width: 8px; height: 8px; border-radius: 50%; background: var(--a11y-accent); }
 .record p { margin: 0; }
 .record .readiness { margin: 20px 0; color: var(--a11y-accent); font-size: clamp(22px, 2.4vw, 28px); font-weight: 500; line-height: 1.2; letter-spacing: -0.035em; }
 .recordFields { margin: 0; }

@@ -1,6 +1,7 @@
 'use client'
 
 import { ArrowLeftIcon, ArrowUpIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
+import DisclosureSummary from '@/components/ui/DisclosureSummary'
 
 import {
   isValidElement,
@@ -326,12 +327,9 @@ export default function CaseStudyLayout({
                 })
               }}
             >
-              <span aria-hidden='true'>..</span>work
+              <ArrowLeftIcon /> ../work
             </Link>
 
-            <div className={styles.category}>
-              <span>{category}</span>
-            </div>
             <h1 id='case-study-title' className={styles.title}>{title}</h1>
             <p className={styles.description}>{description}</p>
 
@@ -398,7 +396,7 @@ export default function CaseStudyLayout({
 
             {resolvedSections.length > 2 && (
               <details className={styles.contents}>
-                <summary>In this case study</summary>
+                <DisclosureSummary>In this case study</DisclosureSummary>
                 <nav aria-label={`${title} case study contents`}>
                   <ol>
                     {resolvedSections.map((section, index) => (
@@ -439,7 +437,8 @@ export default function CaseStudyLayout({
             <nav className={styles.endNavigation} aria-label='More projects'>
               <Link
                 href='/work'
-                className={styles.projectLink}
+                className={styles.backLink}
+                aria-label='Back to work'
                 onClick={() => {
                   trackNavigationClick({
                     action: 'back_to_work',
@@ -449,7 +448,7 @@ export default function CaseStudyLayout({
                   })
                 }}
               >
-                <ArrowLeftIcon /> ..work
+                <ArrowLeftIcon /> ../work
               </Link>
               <a href='#case-study-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
             </nav>

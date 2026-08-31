@@ -88,6 +88,7 @@
 }
 
 .contactAction:first-child {
+  --color-action-icon: var(--color-canvas);
   border-color: var(--color-ink-primary, #f3eee8);
   background: var(--color-ink-primary, #f3eee8);
   color: var(--color-canvas, #171615);
@@ -218,18 +219,6 @@
 }
 
 
-.content :global(.about-disclosure) > summary {
-  min-height: 56px;
-  padding-block: 16px;
-  color: var(--color-ink-secondary, #cbc5bf);
-  font: 500 var(--text-ui, 1rem) / 1.5 var(--font-body);
-  cursor: pointer;
-}
-
-.content :global(.about-disclosure) > summary::marker {
-  color: var(--color-accent-primary, #e6aa79);
-}
-
 .content :global(.about-detail-body),
 .content :global(.about-detail-grid) {
   padding-block: 12px 28px;
@@ -262,8 +251,7 @@
 .content :global(.about-intro) > p a:focus-visible,
 .content :global(.about-detail-body) a:focus-visible,
 .content :global(.about-projects) a:focus-visible,
-.content :global(.about-contact-links) > a:focus-visible,
-.content :global(.about-disclosure) > summary:focus-visible {
+.content :global(.about-contact-links) > a:focus-visible {
   outline: 2px solid var(--color-ink-primary, #f3eee8);
   outline-offset: 5px;
 }
@@ -280,8 +268,7 @@
   }
 
   .content :global(.about-contact-links) > a:hover,
-  .content :global(.about-projects) a:hover,
-  .content :global(.about-disclosure) > summary:hover {
+  .content :global(.about-projects) a:hover {
     color: var(--color-ink-primary, #f3eee8);
   }
 

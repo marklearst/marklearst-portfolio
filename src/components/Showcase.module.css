@@ -9,7 +9,7 @@
 .support { margin: 0; color: var(--color-ink-secondary); font: 400 var(--text-body)/1.5 var(--font-body); text-wrap: pretty; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 32px; }
 .primaryLink, .textLink { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: 48px; font: 500 var(--text-ui)/1.5 var(--font-body); text-decoration: none; }
-.primaryLink { padding: 12px 18px 12px 20px; border: 1px solid transparent; border-radius: 6px; background: var(--color-ink-primary); color: var(--color-canvas); transition: background-color 160ms ease-out, box-shadow 160ms ease-out; }
+.primaryLink { --color-action-icon: var(--color-canvas); padding: 12px 18px 12px 20px; border: 1px solid transparent; border-radius: 6px; background: var(--color-ink-primary); color: var(--color-canvas); transition: background-color 160ms ease-out, box-shadow 160ms ease-out; }
 .primaryLink svg { transition: transform 160ms cubic-bezier(.22, 1, .36, 1); }
 .textLink { gap: 10px; padding-block: 12px; color: var(--color-ink-primary); }
 .brandIcon { color: var(--color-accent-primary); }
@@ -45,9 +45,9 @@
 .imageAction { position: absolute; right: 18px; bottom: 10px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--color-surface-raised); color: var(--color-ink-secondary); transition: background-color 180ms ease-out, color 180ms ease-out; }
 .imageLink:focus-visible { background: var(--color-surface-raised); }
 .imageLink:focus-visible img { transform: scale(1.025) translateY(-2px); }
-.imageLink:focus-visible .imageAction { background: var(--color-ink-primary); color: var(--color-canvas); }
+.imageLink:focus-visible .imageAction { background: var(--color-surface); color: var(--color-accent-primary); }
 .imageLink:active img { transform: scale(1.008); }
-.imageLink:active .imageAction { background: var(--color-accent-primary); color: var(--color-canvas); }
+.imageLink:active .imageAction { background: var(--color-surface); color: var(--color-accent-primary); }
 .caption { margin-top: 12px; color: var(--color-ink-muted); font: 400 var(--text-caption)/1.5 var(--font-body); }
 .systemDiagram { padding: 28px; border: 1px solid var(--color-border-subtle); border-radius: 8px; background: var(--color-surface); }
 .diagramLabel { margin-bottom: 24px; color: var(--color-ink-muted); font: 400 var(--text-caption)/1.5 var(--font-mono); }
@@ -71,7 +71,7 @@
   .textLink:hover, .previewLink:hover, .caseLink:hover, .moreWork a:hover, .sectionHeading > a:hover, .available a:hover { color: var(--color-ink-primary); text-decoration: underline; }
   .imageLink:hover { background: var(--color-surface-raised); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 10%, transparent), 0 20px 36px -28px var(--color-canvas); }
   .imageLink:hover img { transform: scale(1.025) translateY(-2px); }
-  .imageLink:hover .imageAction { background: var(--color-ink-primary); color: var(--color-canvas); }
+  .imageLink:hover .imageAction { background: var(--color-surface); color: var(--color-accent-primary); }
   .imageLink:active img { transform: scale(1.008); }
 }
 @media (max-width: 1060px) {
