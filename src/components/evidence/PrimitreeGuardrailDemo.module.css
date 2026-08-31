@@ -59,10 +59,7 @@
 .outputTitle { color: var(--pt-muted); font-family: var(--token-font-mono); font-size: var(--text-caption); line-height: 1.5; overflow-wrap: anywhere; }
 .demo .cssOutput { margin-top: 14px; font-size: var(--text-caption); }
 .inspect { border-top: 1px solid var(--pt-border); }
-.inspect summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 48px; padding: 14px 24px; color: var(--pt-text); font-size: var(--text-caption); line-height: 1.5; list-style: none; cursor: pointer; touch-action: manipulation; }
-.inspect summary::-webkit-details-marker { display: none; }
-.inspect summary svg { transition: transform 150ms ease; }
-.inspect[open] summary svg { transform: rotate(180deg); }
+.inspect summary { gap: 16px; min-height: 48px; padding: 14px 24px; color: var(--pt-text); font-size: var(--text-caption); }
 .inspectBody { display: grid; gap: 20px; padding: 0 24px 24px; }
 .inspectBody > p { margin: 0; color: var(--pt-muted); font-size: var(--text-caption); line-height: 1.6; }
 .inspectBody > p code { font-family: var(--token-font-mono); font-size: var(--text-caption); }
@@ -128,5 +125,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .controls button, .inspect summary svg { transition: none; }
+  .controls button { transition: none; }
 }

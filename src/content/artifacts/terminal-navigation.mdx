@@ -21,19 +21,17 @@ I replaced it with a transition on the page content. Links start navigation norm
 
 The current site uses React 19.3 and Next.js 16.3.5. Navigation uses ordinary Next.js `Link` components, including the header links. Their click handlers record analytics without intercepting navigation or scheduling a later `router.push`.
 
-A small component wraps the page content in React's `ViewTransition`. The pathname is its key, so a route change replaces the boundary. React coordinates the outgoing and incoming views with the DOM update.
+A small component wraps the page content in React's `ViewTransition`. The boundary stays mounted across routes. React captures the content change when navigation commits, while Next.js manages focus and scroll.
 
 ```tsx
 'use client'
 
 import { ViewTransition } from 'react'
-import { usePathname } from 'next/navigation'
+import './PageTransition.css'
 
 export default function PageTransition({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-
   return (
-    <ViewTransition key={pathname} enter='page-enter' exit='page-exit' default='none'>
+    <ViewTransition update='route-content' default='none'>
       <div id='page-content' className='page-transition-surface' tabIndex={-1}>{children}</div>
     </ViewTransition>
   )
@@ -44,39 +42,47 @@ The header sits outside this boundary. Its logo and navigation stay in place whi
 
 ## Keep motion inside the page
 
-The outgoing content moves up slightly as it fades; the new content enters from below. CSS defines a 160ms exit and a 320ms entrance. These are animation durations, not waits inserted before navigation.
+The outgoing content moves up slightly as it fades; the new content enters from below. CSS defines a 140ms exit and a 340ms entrance. These are animation durations, not waits inserted before navigation.
 
-The root snapshot has no animation, and the transition layer does not receive pointer events. Reduced-motion preferences remove the animation duration and delay.
+The root snapshot has no animation, and the transition layer does not receive pointer events. Reduced-motion preferences disable the snapshot animations.
 
 ```css
 ::view-transition { pointer-events: none; }
 ::view-transition-old(root) { display: none; }
-::view-transition-new(root) { animation: none; }
-::view-transition-old(.page-exit) {
-  animation: page-leave 160ms cubic-bezier(0.4, 0, 1, 1) both;
+::view-transition-group(root),
+::view-transition-new(root),
+::view-transition-group(.route-content) { animation: none; }
+::view-transition-old(.route-content),
+::view-transition-new(.route-content) {
+  height: 100%;
+  object-fit: none;
+  object-position: top left;
+  mix-blend-mode: normal;
 }
-::view-transition-new(.page-enter) {
-  animation: page-arrive 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+::view-transition-old(.route-content) {
+  animation: route-content-out 140ms cubic-bezier(0.4, 0, 1, 1) both;
 }
-@keyframes page-leave {
+::view-transition-new(.route-content) {
+  animation: route-content-in 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes route-content-out {
   to { opacity: 0; transform: translateY(-8px); }
 }
-@keyframes page-arrive {
-  from { opacity: 0; transform: translateY(14px); }
+@keyframes route-content-in {
+  from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(*),
   ::view-transition-new(*),
   ::view-transition-group(*) {
-    animation-duration: 0s !important;
-    animation-delay: 0s !important;
+    animation: none !important;
   }
 }
 ```
 
 ## Preserve ordinary navigation
 
-The key uses the pathname, so an in-page anchor does not replace the page surface. Normal links retain modified-click and new-tab behavior, and Next.js continues to manage routing and history. There is no overlay state machine to complete before another link can work.
+The page surface stays mounted, including during in-page anchor navigation. Normal links retain modified-click and new-tab behavior, and Next.js continues to manage routing and history. There is no overlay state machine to complete before another link can work.
 
 The useful checks are practical: follow a case-study link, return with Back, jump to a section, navigate with the keyboard, and repeat with reduced motion enabled. Each should remain usable with the transition removed. I have not measured a performance improvement; the concrete change is the removal of the old navigation delay.

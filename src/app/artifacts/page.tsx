@@ -15,7 +15,7 @@ export default async function ArtifactsPage() {
     <main className={styles.page}>
       <div className={`${styles.container} ${styles.index}`}>
         <header className={styles.indexHeader}>
-          <h1>artifacts</h1>
+          <h1>Artifacts</h1>
           <p>Notes from building: token contracts, accessibility tooling, motion, and agent workflows.</p>
         </header>
         <div>{artifacts.map((artifact) => <ArtifactCard key={artifact.slug} slug={artifact.slug} title={artifact.title} summary={artifact.summary} tags={artifact.tags} readingTimeMinutes={artifact.readingTime.minutes} publishedAt={artifact.publishedAt} pinned={artifact.pinned} />)}</div>
