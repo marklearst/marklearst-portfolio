@@ -142,10 +142,7 @@
 .demo[data-scenario='empty'] .statusIcon { border-color: var(--color-border-subtle); color: var(--demo-muted); }
 .demo[data-scenario='empty'] .status p, .demo[data-scenario='empty'] .coverage { color: var(--color-ink-muted); }
 .report { border-top: 1px solid var(--color-border-subtle); }
-.report summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 14px 26px; color: var(--color-ink-secondary); font-size: var(--text-caption); cursor: pointer; list-style: none; }
-.report summary::-webkit-details-marker { display: none; }
-.report summary span { color: var(--color-accent-primary); font-size: 16px; transition: transform 180ms ease-out; }
-.report[open] summary span { transform: rotate(180deg); }
+.report summary { gap: 12px; min-height: 48px; padding: 14px 26px; font-size: var(--text-caption); }
 .reportBody { padding: 0 26px 24px; }
 .reportBody p { margin: 0 0 12px; color: var(--demo-muted); font-size: var(--text-caption); line-height: 1.6; }
 .reportBody p code { padding: 0; color: var(--color-ink-secondary); background: none; font-size: var(--text-caption); }
@@ -204,7 +201,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .controls button, .report summary span { transition: none; }
+  .controls button { transition: none; }
   .controls button:active { transform: none; }
   .changed { animation: none; }
 }

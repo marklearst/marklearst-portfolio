@@ -29,7 +29,7 @@ import {
 
 export type IconProps = IconBaseProps
 
-function icon(Component: IconType, brand = false) {
+function icon(Component: IconType, options: { brand?: boolean; action?: string } = {}) {
   return function Icon({ size = 16, style, ...props }: IconProps) {
     return (
       <Component
@@ -37,7 +37,8 @@ function icon(Component: IconType, brand = false) {
         focusable='false'
         size={size}
         strokeWidth={1.75}
-        data-brand-icon={brand || undefined}
+        data-brand-icon={options.brand || undefined}
+        data-action-icon={options.action}
         {...props}
         style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}
       />
@@ -51,19 +52,19 @@ export function ArrowUpRightIcon({ size = 16, style, ...props }: IconProps) {
 export function ArrowRightIcon({ size = 16, style, ...props }: IconProps) {
   return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={1.75} strokeLinecap='round' strokeLinejoin='round' data-action-icon='forward' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path className='icon-arrow' d='M4 12h15m-6-6 6 6-6 6' /></svg>
 }
-export const ArrowLeftIcon = /* @__PURE__ */ icon(TbArrowLeft)
-export const ArrowDownIcon = /* @__PURE__ */ icon(TbArrowDown)
-export const ArrowUpIcon = /* @__PURE__ */ icon(TbArrowUp)
+export const ArrowLeftIcon = /* @__PURE__ */ icon(TbArrowLeft, { action: 'back' })
+export const ArrowDownIcon = /* @__PURE__ */ icon(TbArrowDown, { action: 'down' })
+export const ArrowUpIcon = /* @__PURE__ */ icon(TbArrowUp, { action: 'up' })
 export const ChevronDownIcon = /* @__PURE__ */ icon(TbChevronDown)
 export const ChevronRightIcon = /* @__PURE__ */ icon(TbChevronRight)
 export const CloseIcon = /* @__PURE__ */ icon(TbX)
 export const CheckIcon = /* @__PURE__ */ icon(TbCheck)
 export const CopyIcon = /* @__PURE__ */ icon(TbCopy)
 export const CodeIcon = /* @__PURE__ */ icon(TbCode)
-export const GithubIcon = /* @__PURE__ */ icon(TbBrandGithub, true)
-export const FigmaIcon = /* @__PURE__ */ icon(TbBrandFigma, true)
-export const NpmIcon = /* @__PURE__ */ icon(TbBrandNpm, true)
-export const LinkedinIcon = /* @__PURE__ */ icon(TbBrandLinkedin, true)
+export const GithubIcon = /* @__PURE__ */ icon(TbBrandGithub, { brand: true })
+export const FigmaIcon = /* @__PURE__ */ icon(TbBrandFigma, { brand: true })
+export const NpmIcon = /* @__PURE__ */ icon(TbBrandNpm, { brand: true })
+export const LinkedinIcon = /* @__PURE__ */ icon(TbBrandLinkedin, { brand: true })
 export const MailIcon = /* @__PURE__ */ icon(TbMail)
 export const ComponentIcon = /* @__PURE__ */ icon(TbComponents)
 export const AccessibilityIcon = /* @__PURE__ */ icon(TbAccessible)
