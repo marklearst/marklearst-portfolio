@@ -2,10 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import type { CSSProperties } from 'react'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import styles from './Wordmark.module.css'
 
-export default function ParticleHeader() {
+export default function Wordmark() {
   const pathname = usePathname()
   const { trackNavigationClick, trackLogoHover } = useAnalytics()
 
@@ -13,7 +14,7 @@ export default function ParticleHeader() {
     <Link
       href='/'
       className={styles.link}
-      aria-label='Mark Learst - Home'
+      aria-label='Mark Learst, home'
       onClick={() => {
         if (pathname !== '/') trackNavigationClick({ action: 'logo_click', from: pathname, to: '/' })
       }}
@@ -22,10 +23,15 @@ export default function ParticleHeader() {
       }}
     >
       <span aria-hidden='true' className={styles.wordmark}>
-        <span className={styles.brace}>{'{'}</span>
-        <span>m</span><span className={styles.middle + ' brand-expansion'}>ark</span>
-        <span>l</span><span className={styles.end + ' brand-expansion'}>earst</span>
-        <span className={styles.brace}>{'}'}</span>
+        <span className={styles.initials}>ml</span>
+        <span className={styles.name}>
+          {'marklearst'.split('').map((letter, index) => (
+            <span key={index} className={styles.letter} style={{ '--letter-index': index } as CSSProperties}>
+              <span className={styles.front}>{letter}</span>
+              <span className={styles.back}>{letter}</span>
+            </span>
+          ))}
+        </span>
       </span>
     </Link>
   )

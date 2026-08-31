@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
-import ParticleHeader from '@/components/brand/ParticleHeader'
+import Wordmark from '@/components/brand/Wordmark'
 import PrimaryNav from '@/components/PrimaryNav'
 import PageTransition from '@/components/transitions/PageTransition'
 import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
@@ -44,7 +44,7 @@ export default function RootLayout({
 
         <header className='site-header'>
           <div className='site-header-inner'>
-            <ParticleHeader />
+            <Wordmark />
             <PrimaryNav />
           </div>
         </header>

@@ -1,12 +1,11 @@
 .container { width: min(100%, 1280px); margin-inline: auto; }
 .hero { position: relative; padding: 152px 40px 72px; overflow: clip; background: var(--color-canvas); color: var(--color-ink-primary); }
-.nameBox { margin: 0 0 28px; }
-.name { margin: 0; font: 600 var(--text-subheading)/1.1 var(--font-body); letter-spacing: -.045em; white-space: nowrap; }
-.heroGrid { display: grid; grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr); gap: clamp(36px, 5vw, 72px); align-items: center; }
+.name { margin: 0 0 24px; font: 550 clamp(2.75rem, 4.8vw, 4rem)/1.08 var(--font-body); letter-spacing: -.035em; text-wrap: balance; }
+.heroGrid { display: grid; grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr); gap: clamp(36px, 5vw, 72px); align-items: start; }
 .introduction { min-width: 0; }
-.lead { margin: 0 0 28px; font: 600 var(--text-title)/1.12 var(--font-body); letter-spacing: -.04em; text-wrap: balance; }
-.lead > span { color: var(--color-accent-primary); }
-.support { margin: 0; color: var(--color-ink-secondary); font: 400 var(--text-body)/1.5 var(--font-body); text-wrap: pretty; }
+.lead { margin: 0 0 24px; color: var(--color-ink-primary); font: 450 var(--text-subheading)/1.35 var(--font-body); letter-spacing: -.02em; text-wrap: pretty; }
+.support { display: grid; gap: 16px; color: var(--color-ink-secondary); font: 400 var(--text-body)/1.5 var(--font-body); text-wrap: pretty; }
+.support p { margin: 0; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 32px; }
 .primaryLink, .textLink { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: 48px; font: 500 var(--text-ui)/1.5 var(--font-body); text-decoration: none; }
 .primaryLink { --color-action-icon: var(--color-canvas); padding: 12px 18px 12px 20px; border: 1px solid transparent; border-radius: 6px; background: var(--color-ink-primary); color: var(--color-canvas); transition: background-color 160ms ease-out, box-shadow 160ms ease-out; }
@@ -16,7 +15,7 @@
 .available { margin: 24px 0 0; color: var(--color-ink-muted); font: 400 var(--text-caption)/1.5 var(--font-body); }
 .available a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-left: 4px; color: var(--color-ink-secondary); text-decoration: underline; }
 .livePreview { min-width: 0; }
-.heroPreview { position: relative; }
+.heroPreview { position: relative; padding-top: 6px; }
 .previewHeading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; padding-bottom: 16px; color: var(--color-ink-secondary); font: 500 var(--text-caption)/1.5 var(--font-body); }
 .previewLinks { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 24px; margin-top: 8px; }
 .previewLink { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding-block: 10px; color: var(--color-ink-secondary); font: 400 var(--text-caption)/1.5 var(--font-body); text-decoration: none; }
@@ -81,13 +80,13 @@
 }
 @media (max-width: 1000px) {
   .heroGrid { grid-template-columns: minmax(0, 1fr); }
-  .heroPreview { margin-top: 12px; }
+  .heroPreview { padding-top: 0; margin-top: 12px; }
   .projectGrid { column-gap: 32px; }
   .projectFeatured { column-gap: 32px; }
 }
 @media (max-width: 800px) {
   .hero { padding: 120px 24px 48px; }
-  .nameBox { margin-bottom: 24px; }
+  .name { margin-bottom: 20px; }
   .heroGrid, .projectGrid, .enterprise, .librarySample { grid-template-columns: minmax(0, 1fr); }
   .heroGrid { gap: 36px; }
   .lead { margin-bottom: 20px; }
