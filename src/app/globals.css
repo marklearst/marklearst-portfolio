@@ -173,8 +173,8 @@ html {
   scrollbar-gutter: stable;
 }
 
-/* Native scroll, no hijacking. Both scrollIntoView call sites pass
-   behavior: 'instant' deliberately, so nothing here wants smooth. */
+/* Native scroll, no hijacking. Every scrollIntoView and window.scrollTo call
+   site passes behavior: 'instant' deliberately, so nothing here wants smooth. */
 html,
 body {
   scroll-behavior: auto;
