@@ -168,14 +168,13 @@ select:focus-visible {
   gap: 0.5rem;
 }
 
-/* Smooth scrolling */
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
   scrollbar-gutter: stable;
 }
 
-/* Prevent scroll restoration jump */
+/* Native scroll, no hijacking. Every scrollIntoView and window.scrollTo call
+   site passes behavior: 'instant' deliberately, so nothing here wants smooth. */
 html,
 body {
   scroll-behavior: auto;
@@ -289,6 +288,17 @@ html[data-transitioning='true'] {
   color: rgba(252, 252, 250, 0.5);
   font-size: 0.875rem;
   margin-top: 2px;
+}
+
+/* MDX re-parses JSX text that spans several source lines into a paragraph,
+   which carries the standalone prose type scale. Nested inside a list item or
+   a timeline row, the container owns the size — otherwise a line-wrap in the
+   source silently changes the rendered font size. */
+li > p,
+.timeline-role > p,
+.timeline-description > p {
+  font-size: inherit;
+  margin: 0;
 }
 
 .timeline-subsection {

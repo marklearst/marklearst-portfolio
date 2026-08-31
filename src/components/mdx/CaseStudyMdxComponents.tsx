@@ -1,4 +1,5 @@
-import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import type { MDXComponents } from 'mdx/types'
 import { isValidElement } from 'react'
 import CodeBlock from '@/components/CodeBlock'
 import { CaseStudySection } from '@/components/CaseStudySection'
@@ -38,7 +39,7 @@ const Pre = ({ children, ...rest }: ComponentPropsWithoutRef<'pre'>) => {
   return <CodeBlock code={code} language={language} />
 }
 
-export const createCaseStudyMdxComponents = (accent: string) => {
+export const createCaseStudyMdxComponents = (accent: string): MDXComponents => {
   const Subheading = (props: ComponentPropsWithoutRef<'h3'>) => (
     <CaseStudySubheading {...props} color={accent} />
   )
@@ -54,11 +55,7 @@ export const createCaseStudyMdxComponents = (accent: string) => {
       : 'text-lg leading-relaxed'
 
     return (
-      <p
-        className={classes}
-        style={{ color: `${MONOKAI.foreground}cc` }}
-        {...rest}
-      >
+      <p className={classes} {...rest}>
         {children}
       </p>
     )
@@ -81,7 +78,7 @@ export const createCaseStudyMdxComponents = (accent: string) => {
       <CaseStudyMutedList className='space-y-2' {...props} />
     ),
     pre: Pre,
-  } as Record<string, ComponentType<unknown>>
+  }
 }
 
 export const caseStudyMdxComponents = createCaseStudyMdxComponents(
