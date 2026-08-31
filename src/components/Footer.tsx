@@ -91,9 +91,7 @@ export default function Footer() {
       <div className={styles.container}>
         <div className={styles.main}>
           <div>
-            <h3 className={styles.name}>marklearst</h3>
-            <p className={styles.availability}>
-              Need a design engineer?{' '}
+            <h2 className={styles.contactHeading}>
               <a
                 href='mailto:jobs@marklearst.com?subject=Role%20inquiry&body=Hi%20Mark%2C%0D%0A%0D%0AI%20am%20reaching%20out%20about%20a%20role%20on%20our%20team.'
                 onClick={() => {
@@ -103,9 +101,10 @@ export default function Footer() {
                   })
                 }}
               >
-                Let’s talk <span aria-hidden='true'><ArrowUpRightIcon /></span>
+                Have a role in mind? <span aria-hidden='true'><ArrowUpRightIcon /></span>
               </a>
-            </p>
+            </h2>
+            <p className={styles.availability}>Open to design engineering roles.</p>
           </div>
           <nav className={styles.socialLinks} aria-label='Contact and profiles'>
             {socialLinks.map((link) => <SocialLink key={link.name} link={link} />)}

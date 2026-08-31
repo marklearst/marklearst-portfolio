@@ -1,14 +1,47 @@
-.link { display: inline-flex; align-items: center; min-height: 44px; font: 500 20px/1 var(--font-mono); color: var(--color-ink-primary); text-decoration: none; }
-.wordmark { display: inline-flex; align-items: baseline; }
-.brace { color: var(--color-ink-muted); transition: color 180ms ease; }
-.middle, .end { display: inline-block; max-width: 0; overflow: hidden; white-space: nowrap; transition: max-width 280ms cubic-bezier(.22, 1, .36, 1); }
+.link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 48px;
+  border-radius: 6px;
+  color: var(--color-ink-primary);
+  font: 500 22px/1 var(--font-mono);
+  letter-spacing: -.055em;
+  text-decoration: none;
+}
+
+/* Letter layers share a fixed frame; hover never pushes the navigation. */
+.wordmark { position: relative; display: grid; align-items: center; height: 32px; isolation: isolate; }
+.initials, .name { grid-area: 1 / 1; }
+.initials { display: block; }
+.name { display: none; white-space: nowrap; pointer-events: none; }
+.letter { display: inline-grid; }
+.front, .back { grid-area: 1 / 1; transform-origin: 50% 75%; }
+.back { opacity: 0; transform: translateY(8px) rotateX(-65deg); filter: blur(2px); }
+
 @media (min-width: 480px) {
-  .link:focus-visible .middle { max-width: 3ch; }
-  .link:focus-visible .end { max-width: 5ch; }
+  .link { width: 10ch; }
+  .initials { display: none; }
+  .name { display: block; }
 }
+
 @media (hover: hover) and (pointer: fine) and (min-width: 480px) {
-  .link:hover .middle { max-width: 3ch; }
-  .link:hover .end { max-width: 5ch; }
-  .link:hover .brace { color: var(--color-accent-primary); }
+  .front, .back { transition: opacity 160ms ease-out, transform 220ms cubic-bezier(.22, 1, .36, 1), filter 160ms ease-out; }
+  .link:hover .front { opacity: 0; transform: translateY(-6px) rotateX(65deg); filter: blur(2px); transition-delay: calc(var(--letter-index) * 18ms); }
+  .link:hover .back {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+    transition-duration: 200ms, 300ms, 200ms;
+    transition-delay: calc(45ms + var(--letter-index) * 18ms);
+  }
+  .link:focus-visible .front { opacity: 1; transform: none; filter: none; transition: none; }
+  .link:focus-visible .back { opacity: 0; transition: none; }
 }
-@media (prefers-reduced-motion: reduce) { .middle, .end, .brace { transition: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .front, .back { transition: none; }
+  .link:hover .front { opacity: 1; transform: none; filter: none; }
+  .back { display: none; }
+}
