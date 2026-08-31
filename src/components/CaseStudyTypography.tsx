@@ -1,7 +1,6 @@
 import type { ComponentPropsWithoutRef } from 'react'
 import { MONOKAI } from '@/lib/monokai-colors'
 
-const MUTED_TEXT = `${MONOKAI.foreground}b3`
 const SUBHEADING_CLASS = 'text-2xl font-mono mt-8 mb-4'
 
 interface CaseStudySubheadingProps
@@ -41,7 +40,7 @@ export function CaseStudyMutedText({
   const classes = className ? `leading-relaxed ${className}` : 'leading-relaxed'
 
   return (
-    <div className={classes} style={{ color: MUTED_TEXT }} {...rest}>
+    <div className={classes} {...rest}>
       {children}
     </div>
   )
@@ -57,7 +56,7 @@ export function CaseStudyMutedList({
   const classes = className ? `${baseClasses} ${className}` : baseClasses
 
   return (
-    <ul className={classes} style={{ color: MUTED_TEXT }} {...rest}>
+    <ul className={classes} {...rest}>
       {children}
     </ul>
   )
@@ -73,11 +72,7 @@ export function CaseStudyParagraph({
     : 'text-lg leading-relaxed'
 
   return (
-    <div
-      className={classes}
-      style={{ color: `${MONOKAI.foreground}cc` }}
-      {...rest}
-    >
+    <div className={classes} {...rest}>
       {children}
     </div>
   )

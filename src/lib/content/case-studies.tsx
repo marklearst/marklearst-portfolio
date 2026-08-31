@@ -1,6 +1,7 @@
 import path from 'node:path'
 import fs from 'node:fs/promises'
-import type { ComponentType, ReactElement, ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import type { MDXContent } from 'mdx/types'
 import matter from 'gray-matter'
 import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
 import {
@@ -50,9 +51,6 @@ export type CaseStudyContent = Omit<CaseStudyFrontmatter, 'links'> & {
   links: { label: string; href: string; icon?: ReactNode }[]
   Content: MDXContent
 }
-
-type MDXComponents = Record<string, ComponentType<unknown>>
-type MDXContent = (props: { components?: MDXComponents }) => ReactElement
 
 const CONTENT_ROOT = path.join(process.cwd(), 'src', 'content', 'case-studies')
 
