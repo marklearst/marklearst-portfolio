@@ -30,9 +30,9 @@
 .previewAction { position: absolute; right: 12px; bottom: 8px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--color-surface-raised); color: var(--color-ink-secondary); transition: color 180ms ease-out, background-color 180ms ease-out; }
 .previewLink:focus-visible { background: var(--color-surface-raised); }
 .previewLink:focus-visible img { transform: scale(1.025); }
-.previewLink:focus-visible .previewAction { background: var(--color-ink-primary); color: var(--color-canvas); }
+.previewLink:focus-visible .previewAction { background: var(--color-surface); color: var(--color-accent-primary); }
 .previewLink:active img { transform: scale(1.008); }
-.previewLink:active .previewAction { background: var(--color-accent-primary); color: var(--color-canvas); }
+.previewLink:active .previewAction { background: var(--color-surface); color: var(--color-accent-primary); }
 .preview figcaption { margin-top: 12px; color: var(--color-ink-muted); font: 400 var(--text-caption)/1.5 var(--font-body); }
 .filters button:focus-visible, .project a:focus-visible { outline: 2px solid var(--color-ink-primary); outline-offset: 5px; border-radius: 2px; }
 .filters button:active { color: var(--color-ink-primary); }
@@ -42,7 +42,7 @@
   .projectBody h2 a:hover span { color: var(--color-ink-primary); }
   .previewLink:hover { background: var(--color-surface-raised); }
   .previewLink:hover img { transform: scale(1.025); }
-  .previewLink:hover .previewAction { background: var(--color-ink-primary); color: var(--color-canvas); }
+  .previewLink:hover .previewAction { background: var(--color-surface); color: var(--color-accent-primary); }
   .previewLink:active img { transform: scale(1.008); }
 }
 @media (max-width: 1060px) {

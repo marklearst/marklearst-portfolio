@@ -1,6 +1,7 @@
 'use client'
 
-import { ActivityIcon, ChevronDownIcon } from '@/components/ui/Icon'
+import { ActivityIcon } from '@/components/ui/Icon'
+import DisclosureSummary from '@/components/ui/DisclosureSummary'
 
 import { useId, useMemo, useState, type PointerEvent } from 'react'
 import {
@@ -252,7 +253,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
 
       {!compact && (
         <details className={styles.report}>
-          <summary>Inspect the computed report <span aria-hidden="true"><ChevronDownIcon /></span></summary>
+          <DisclosureSummary>Inspect the computed report</DisclosureSummary>
           <div className={styles.reportBody}>
             <p>Output from <code>analyzeGlucose()</code> using a fixed seed and a 14-day UTC window. No patient data. Non-finite numbers appear as null in JSON. The optional percentile profile is disabled for this example.</p>
             <pre tabIndex={0} aria-label="Computed GlucoseIQ report in JSON"><code>{JSON.stringify(report, null, 2)}</code></pre>

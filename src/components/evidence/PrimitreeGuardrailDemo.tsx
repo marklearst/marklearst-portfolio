@@ -3,7 +3,8 @@
 import { useId, useState } from 'react'
 import { PRIMITREE_DEMO } from '@/lib/primitree-demo'
 import { getPrimitreeCssExcerpt } from '@/lib/primitree-demo-display'
-import { ArrowRightIcon, ChevronDownIcon, CircleCheckIcon, CircleXIcon } from '@/components/ui/Icon'
+import { ArrowRightIcon, CircleCheckIcon, CircleXIcon } from '@/components/ui/Icon'
+import DisclosureSummary from '@/components/ui/DisclosureSummary'
 import styles from './PrimitreeGuardrailDemo.module.css'
 
 type ScenarioId = (typeof PRIMITREE_DEMO.scenarios)[number]['id']
@@ -117,7 +118,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
       </div>
 
       <details className={styles.inspect}>
-        <summary>{compact ? 'Inspect source and full output' : 'Inspect configuration and full output'}<ChevronDownIcon size={16} /></summary>
+        <DisclosureSummary>{compact ? 'Inspect source and full output' : 'Inspect configuration and full output'}</DisclosureSummary>
         <div className={styles.inspectBody}>
           <p>The two runs use the same configuration. Only <code>semantic.action.$value</code> changes.</p>
           <div className={styles.inspectFile}>

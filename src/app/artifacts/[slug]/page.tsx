@@ -4,6 +4,7 @@ import { Children, cloneElement, isValidElement, type ReactNode } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Footer from '@/components/Footer'
+import DisclosureSummary from '@/components/ui/DisclosureSummary'
 import { getArtifactBySlug, getArtifacts } from '@/lib/content/artifacts'
 import { stripFrontmatter } from '@/lib/content/strip-frontmatter'
 import { createArtifactMdxComponents } from '@/components/mdx/ArtifactMdxComponents'
@@ -47,6 +48,8 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
   const headings: { id: string; label: string }[] = []
   const prepareContent = (node: ReactNode): ReactNode => Children.map(node, (child) => {
     if (!isValidElement<{ id?: string; children?: ReactNode }>(child)) return child
+    // A code block cannot contain article headings. Preserve its single code child.
+    if (child.type === mdxComponents.pre) return child
     if (child.type === mdxComponents.h2) {
       const label = nodeText(child.props.children)
       const id = `section-${headings.length + 1}`
@@ -74,7 +77,7 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
           <ul className={styles.tags} aria-label='Topics'>{artifact.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
         </header>
         {headings.length > 1 && <details className={styles.outline}>
-          <summary>In this article</summary><nav aria-label='In this article'>
+          <DisclosureSummary>In this article</DisclosureSummary><nav aria-label='In this article'>
           <ol>{headings.map((heading) => <li key={heading.id}><a href={`#${heading.id}`}>{heading.label}</a></li>)}</ol>
         </nav></details>}
         <div className={styles.content}>{content}</div>

@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useLastRoute } from '@/hooks/useNavigationHistory'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { PROJECTS_BY_ROUTE, PROJECTS_BY_SLUG } from '@/data/projects'
-import { MONOKAI } from '@/lib/monokai-colors'
+import styles from '@/app/privacy/PrivacyPage.module.css'
 
 const getLabelFromPath = (path: string) => {
   if (!path || path === '/') return 'home'
@@ -56,10 +56,9 @@ export default function PrivacyBackLink() {
           location: 'privacy',
         })
       }}
-      className='inline-flex items-center gap-2 mb-12 font-mono text-sm transition-colors duration-300 group'
-      style={{ color: `${MONOKAI.foreground}80` }}
+      className={styles.backLink}
     >
-      <ArrowLeftIcon className='w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-200 motion-reduce:transform-none motion-reduce:transition-none' />
+      <ArrowLeftIcon size={18} />
       Back to {label}
     </Link>
   )
