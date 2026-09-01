@@ -20,7 +20,13 @@ A portfolio for Mark Learst, Senior Design Engineer at ZoomInfo, working in desi
 
 ## Positioning
 
-I build the tools design engineers use. Not a practitioner who consumes a design system, but the person whose specs, pipelines and widgets other design engineers depend on: the Variable Design Standard, Primitree, FigmaVars Hooks, a11y Companion, GlucoseIQ, and W3C Design Tokens Community Group contribution.
+I build the tools design engineers use. Not a practitioner who consumes a design system, but the person whose specs, pipelines and widgets other design engineers depend on: the Variable Design Standard, Primitree, FigmaVars Hooks, a11y Companion, GlucoseIQ, and W3C Design Tokens Community Group participation.
+
+> **Under review — evidence contradicts this claim.** Measured 2026-08-31: GitHub stars across all six repos are 0, 0, 0, 2, 1, 1; forks 0; external issues 0; and a GitHub code search for `marklearst` in any repo not owned by him returns zero results. npm last-month downloads sit at 140 / 138 / 137 / 55 — four unrelated packages within three downloads of each other, which is the signature of registry mirrors rather than people. The claim is falsifiable in under a minute by any peer who opens the GitHub sidebar, and the audience for this site is peers.
+>
+> The proposed replacement is supported by evidence that already exists and is publicly dated: **"I write the standards design systems ship against."** W3C DTCG issue #220, opened 2023-06-01, is where he coined *Design Token Contract*; it drew ten comments from named third parties and is still open. He commented substantively on six further spec threads. Three years later the Variable Design Standard formalises the idea at 24,266 words and Primitree ships seven packages enforcing it. Idea → standard → tooling, each step verifiable by clicking.
+>
+> This is his call, not mine — the current line was chosen deliberately. Full evidence in `docs/v2/04-build.md` §1.
 
 ## Conversion & proof
 
