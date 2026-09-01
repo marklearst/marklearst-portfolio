@@ -3,23 +3,23 @@
  */
 
 :root[data-theme='light'] {
-  --token-color-base-black: 11 11 10;
-  --token-color-base-white: 242 242 239;
-  --token-color-base-smoke: 21 21 20;
-  --token-color-base-raised: 30 30 28;
-  --token-color-base-gray: 199 199 194;
-  --token-color-base-muted: 161 161 155;
-  --token-color-base-border: 52 52 49;
+  --token-color-base-black: 8 8 8;
+  --token-color-base-white: 244 244 242;
+  --token-color-base-smoke: 20 20 20;
+  --token-color-base-raised: 33 33 32;
+  --token-color-base-gray: 227 227 223;
+  --token-color-base-muted: 170 170 164;
+  --token-color-base-border: 52 52 50;
   --token-color-base-orange: 255 88 0; /** Primary orange observed on https://devouringdetails.com/ on September 15, 2026. The light-mode text accent has a separate darker value for contrast. */
-  --token-color-monokai-pink: 199 199 194;
-  --token-color-monokai-orange: 199 199 194;
-  --token-color-monokai-yellow: 242 242 239;
-  --token-color-monokai-green: 199 199 194;
-  --token-color-monokai-cyan: 242 242 239;
-  --token-color-monokai-purple: 199 199 194;
-  --token-color-monokai-background: 21 21 20;
-  --token-color-monokai-background-alt: 30 30 28;
-  --token-color-monokai-foreground: 242 242 239;
+  --token-color-monokai-pink: 227 227 223;
+  --token-color-monokai-orange: 227 227 223;
+  --token-color-monokai-yellow: 244 244 242;
+  --token-color-monokai-green: 227 227 223;
+  --token-color-monokai-cyan: 244 244 242;
+  --token-color-monokai-purple: 227 227 223;
+  --token-color-monokai-background: 20 20 20;
+  --token-color-monokai-background-alt: 33 33 32;
+  --token-color-monokai-foreground: 244 244 242;
   --token-color-status-success: 146 187 138;
   --token-color-status-danger: 238 138 128;
   --token-color-status-warning: 229 189 100;
@@ -54,7 +54,7 @@
   --token-text-title: 3.5rem;
   --token-text-heading: 2.5rem;
   --token-text-subheading: 1.5rem;
-  --token-text-body: 1.125rem;
+  --token-text-body: 1.25rem;
   --token-text-lead: 1.25rem;
   --token-text-ui: 1rem;
   --token-text-caption: 0.875rem;
@@ -67,9 +67,9 @@
   --token-leading-ui: 1.5;
   --token-leading-caption: 1.5;
   --token-leading-code: 1.6;
-  --token-tracking-display: -0.035em;
-  --token-tracking-title: -0.025em;
-  --token-tracking-heading: -0.02em;
+  --token-tracking-display: -0.015em;
+  --token-tracking-title: -0.015em;
+  --token-tracking-heading: -0.01em;
   --token-tracking-body: 0em;
   --token-component-terminal-background: 255 255 255;
   --token-component-terminal-foreground: 17 17 16;

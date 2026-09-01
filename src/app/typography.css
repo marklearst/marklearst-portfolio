@@ -3,11 +3,12 @@
   --fluid-text-display: clamp(3rem, 6vw, var(--token-text-display));
   --fluid-text-title: clamp(2.5rem, 4.5vw, var(--token-text-title));
   --fluid-text-heading: clamp(2rem, 3vw, var(--token-text-heading));
+  --fluid-text-body: clamp(1.125rem, 1.05rem + 0.25vw, var(--token-text-body));
   --text-display: var(--fluid-text-display);
   --text-title: var(--fluid-text-title);
   --text-heading: var(--fluid-text-heading);
   --text-subheading: var(--token-text-subheading);
-  --text-body: var(--token-text-body);
+  --text-body: var(--fluid-text-body);
   --text-lead: var(--token-text-lead);
   --text-ui: var(--token-text-ui);
   --text-caption: var(--token-text-caption);
@@ -18,6 +19,7 @@
   --text-display: var(--fluid-text-display);
   --text-title: var(--fluid-text-title);
   --text-heading: var(--fluid-text-heading);
+  --text-body: var(--fluid-text-body);
 }
 
 :where(body, button, input, select, textarea) {
