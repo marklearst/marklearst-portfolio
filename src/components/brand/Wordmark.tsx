@@ -23,15 +23,19 @@ export default function Wordmark() {
       }}
     >
       <span aria-hidden='true' className={styles.wordmark}>
-        <span className={styles.initials}>ml</span>
-        <span className={styles.name}>
-          {'marklearst'.split('').map((letter, index) => (
-            <span key={index} className={styles.letter} style={{ '--letter-index': index } as CSSProperties}>
-              <span className={styles.front}>{letter}</span>
-              <span className={styles.back}>{letter}</span>
-            </span>
-          ))}
+        <span className={styles.brace}>{'{'}</span>
+        <span className={styles.text}>
+          <span className={styles.initials}>ml</span>
+          <span className={styles.name}>
+            {'marklearst'.split('').map((letter, index) => (
+              <span key={index} className={styles.letter} style={{ '--letter-index': index } as CSSProperties}>
+                <span className={styles.front}>{letter}</span>
+                <span className={styles.back}>{letter}</span>
+              </span>
+            ))}
+          </span>
         </span>
+        <span className={styles.brace}>{'}'}</span>
       </span>
     </Link>
   )

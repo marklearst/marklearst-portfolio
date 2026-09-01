@@ -4,49 +4,49 @@
       "black": {
         "$type": "color",
         "$value": {
-          "r": 11,
-          "g": 11,
-          "b": 10
+          "r": 8,
+          "g": 8,
+          "b": 8
         }
       },
       "white": {
         "$type": "color",
         "$value": {
-          "r": 242,
-          "g": 242,
-          "b": 239
+          "r": 244,
+          "g": 244,
+          "b": 242
         }
       },
       "smoke": {
         "$type": "color",
         "$value": {
-          "r": 21,
-          "g": 21,
+          "r": 20,
+          "g": 20,
           "b": 20
         }
       },
       "raised": {
         "$type": "color",
         "$value": {
-          "r": 30,
-          "g": 30,
-          "b": 28
+          "r": 33,
+          "g": 33,
+          "b": 32
         }
       },
       "gray": {
         "$type": "color",
         "$value": {
-          "r": 199,
-          "g": 199,
-          "b": 194
+          "r": 227,
+          "g": 227,
+          "b": 223
         }
       },
       "muted": {
         "$type": "color",
         "$value": {
-          "r": 161,
-          "g": 161,
-          "b": 155
+          "r": 170,
+          "g": 170,
+          "b": 164
         }
       },
       "border": {
@@ -54,7 +54,7 @@
         "$value": {
           "r": 52,
           "g": 52,
-          "b": 49
+          "b": 50
         }
       },
       "orange": {
@@ -260,7 +260,7 @@
     "body": {
       "$type": "dimension",
       "$value": {
-        "value": 1.125,
+        "value": 1.25,
         "unit": "rem"
       }
     },
@@ -328,21 +328,21 @@
     "display": {
       "$type": "dimension",
       "$value": {
-        "value": -0.035,
+        "value": -0.015,
         "unit": "em"
       }
     },
     "title": {
       "$type": "dimension",
       "$value": {
-        "value": -0.025,
+        "value": -0.015,
         "unit": "em"
       }
     },
     "heading": {
       "$type": "dimension",
       "$value": {
-        "value": -0.02,
+        "value": -0.01,
         "unit": "em"
       }
     },
