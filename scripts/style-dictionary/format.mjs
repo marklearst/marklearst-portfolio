@@ -17,31 +17,45 @@ const toKebab = (value) =>
     .replace(/_/g, "-")
     .toLowerCase();
 
+const themeVariableName = (token) => {
+  if (!token.path || token.path.length <= 1 || !Object.hasOwn(themeNamespaces, token.path[0])) return null;
+  const namespace = themeNamespaces[token.path[0]];
+  return `--${namespace}-${token.path.slice(1).map(toKebab).join("-")}`;
+};
+
+export const assertUniqueCssVariableNames = (dictionary) => {
+  for (const getName of [(token) => `--${token.name}`, themeVariableName]) {
+    const sources = new Map();
+    for (const token of dictionary.allTokens) {
+      const name = getName(token);
+      if (!name) continue;
+      const source = token.path.join(".");
+      if (sources.has(name)) {
+        throw new Error(`CSS variable name collision: ${name} from ${sources.get(name)} and ${source}`);
+      }
+      sources.set(name, source);
+    }
+  }
+};
+
 export const tailwindThemeCss = ({ dictionary, options }) => {
   const prefix = options?.prefix ?? "token";
 
   const entries = dictionary.allTokens
-    .filter((token) => token.path?.length > 1 && token.path[0] in themeNamespaces)
+    .filter((token) => themeVariableName(token))
     .map((token) => {
-      const namespace = themeNamespaces[token.path[0]];
-      const nameSuffix = token.path.slice(1).map(toKebab).join("-");
-      const themeVar = `--${namespace}-${nameSuffix}`;
+      const themeVar = themeVariableName(token);
       const tokenName = token.name.startsWith(`${prefix}-`) ? token.name : `${prefix}-${token.name}`;
       const tokenVar = `--${tokenName}`;
       const value = isColor(token) ? `rgb(var(${tokenVar}))` : `var(${tokenVar})`;
       return { name: themeVar, value };
     });
 
-  const deduped = new Map();
-  for (const entry of entries) {
-    deduped.set(entry.name, entry.value);
-  }
-
-  const sorted = [...deduped.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  const sorted = entries.sort((a, b) => a.name.localeCompare(b.name));
   const lines = [
     "/* Generated from src/tokens/*.json via Style Dictionary. */",
     "@theme inline {",
-    ...sorted.map(([name, value]) => `  ${name}: ${value};`),
+    ...sorted.map(({ name, value }) => `  ${name}: ${value};`),
     "}",
     "",
   ];
