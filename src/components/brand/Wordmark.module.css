@@ -1,18 +1,21 @@
 .link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  min-width: 44px;
+  width: 52px;
   min-height: 48px;
   border-radius: 6px;
   color: var(--color-ink-primary);
-  font: 500 22px/1 var(--font-mono);
-  letter-spacing: -.055em;
+  font: 500 18px/1 var(--font-mono);
+  letter-spacing: -.045em;
   text-decoration: none;
 }
 
-/* Letter layers share a fixed frame; hover never pushes the navigation. */
-.wordmark { position: relative; display: grid; align-items: center; height: 32px; isolation: isolate; }
+/* Braces remain still while the letter layers share one fixed frame. */
+.wordmark { display: inline-flex; align-items: center; gap: 2px; height: 32px; isolation: isolate; pointer-events: none; user-select: none; }
+.brace { font-weight: 400; opacity: .72; }
+.text { display: grid; align-items: center; }
 .initials, .name { grid-area: 1 / 1; }
 .initials { display: block; }
 .name { display: none; white-space: nowrap; pointer-events: none; }
@@ -21,7 +24,8 @@
 .back { opacity: 0; transform: translateY(8px) rotateX(-65deg); filter: blur(2px); }
 
 @media (min-width: 480px) {
-  .link { width: 10ch; }
+  .link { width: 168px; justify-content: flex-start; font-size: 22px; }
+  .wordmark { gap: 4px; }
   .initials { display: none; }
   .name { display: block; }
 }

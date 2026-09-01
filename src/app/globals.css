@@ -12,7 +12,7 @@ body {
   background: var(--color-canvas);
   color: var(--color-ink-secondary);
   font-size: var(--text-body);
-  line-height: 1.5;
+  line-height: var(--token-leading-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-synthesis: none;
@@ -99,10 +99,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-ink-primary);
   font-weight: 600;
   line-height: 1.15;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--token-tracking-heading);
   text-wrap: balance;
 }
-h1 { font-size: var(--text-title); }
+h1 { font-size: var(--text-title); letter-spacing: var(--token-tracking-title); }
 h2 { font-size: var(--text-heading); }
 h3 { font-size: var(--text-subheading); }
 h4 { font-size: var(--text-lead); }
@@ -147,7 +147,7 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 html, body { scroll-behavior: auto; }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-accent-primary) 28%, var(--color-canvas));
+  background: color-mix(in srgb, var(--color-ink-primary) 24%, var(--color-canvas));
   color: var(--color-ink-primary);
 }
 

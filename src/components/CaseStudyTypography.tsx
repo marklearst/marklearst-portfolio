@@ -52,7 +52,7 @@ export function CaseStudyMutedList({
   const classes = className ? `${styles.list} ${className}` : styles.list
 
   return (
-    <ul className={classes} {...rest}>
+    <ul className={classes} role='list' {...rest}>
       {children}
     </ul>
   )

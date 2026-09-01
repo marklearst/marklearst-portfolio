@@ -3,38 +3,38 @@
  */
 
 :root {
-  --token-color-base-black: 11 11 10;
-  --token-color-base-white: 242 242 239;
-  --token-color-base-smoke: 21 21 20;
-  --token-color-base-raised: 30 30 28;
-  --token-color-base-gray: 199 199 194;
-  --token-color-base-muted: 161 161 155;
-  --token-color-base-border: 52 52 49;
+  --token-color-base-black: 8 8 8;
+  --token-color-base-white: 244 244 242;
+  --token-color-base-smoke: 20 20 20;
+  --token-color-base-raised: 33 33 32;
+  --token-color-base-gray: 227 227 223;
+  --token-color-base-muted: 170 170 164;
+  --token-color-base-border: 52 52 50;
   --token-color-base-orange: 255 88 0; /** Primary orange observed on https://devouringdetails.com/ on September 15, 2026. The light-mode text accent has a separate darker value for contrast. */
-  --token-color-monokai-pink: 199 199 194;
-  --token-color-monokai-orange: 199 199 194;
-  --token-color-monokai-yellow: 242 242 239;
-  --token-color-monokai-green: 199 199 194;
-  --token-color-monokai-cyan: 242 242 239;
-  --token-color-monokai-purple: 199 199 194;
-  --token-color-monokai-background: 21 21 20;
-  --token-color-monokai-background-alt: 30 30 28;
-  --token-color-monokai-foreground: 242 242 239;
+  --token-color-monokai-pink: 227 227 223;
+  --token-color-monokai-orange: 227 227 223;
+  --token-color-monokai-yellow: 244 244 242;
+  --token-color-monokai-green: 227 227 223;
+  --token-color-monokai-cyan: 244 244 242;
+  --token-color-monokai-purple: 227 227 223;
+  --token-color-monokai-background: 20 20 20;
+  --token-color-monokai-background-alt: 33 33 32;
+  --token-color-monokai-foreground: 244 244 242;
   --token-color-status-success: 146 187 138;
   --token-color-status-danger: 238 138 128;
   --token-color-status-warning: 229 189 100;
-  --token-color-canvas: 11 11 10;
-  --token-color-surface: 21 21 20;
-  --token-color-surface-raised: 30 30 28;
-  --token-color-ink-primary: 242 242 239;
-  --token-color-ink-secondary: 199 199 194;
-  --token-color-ink-muted: 161 161 155;
+  --token-color-canvas: 8 8 8;
+  --token-color-surface: 20 20 20;
+  --token-color-surface-raised: 33 33 32;
+  --token-color-ink-primary: 244 244 242;
+  --token-color-ink-secondary: 227 227 223;
+  --token-color-ink-muted: 170 170 164;
   --token-color-accent-primary: 255 88 0;
-  --token-color-accent-secondary: 199 199 194;
+  --token-color-accent-secondary: 227 227 223;
   --token-color-accent-success: 146 187 138;
   --token-color-accent-danger: 238 138 128;
   --token-color-accent-warning: 229 189 100;
-  --token-color-border-subtle: 52 52 49;
+  --token-color-border-subtle: 52 52 50;
   --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace; /** Existing MonoLisa for code and technical detail; unchanged font files. */
   --token-font-sans: 'DM Sans', Arial, sans-serif; /** Self-hosted DM Sans variable roman and italic, licensed under SIL OFL 1.1. Sources and license are in public/fonts/dm-sans. */
   --token-font-serif: ui-serif, Georgia, serif;
@@ -54,7 +54,7 @@
   --token-text-title: 3.5rem;
   --token-text-heading: 2.5rem;
   --token-text-subheading: 1.5rem;
-  --token-text-body: 1.125rem;
+  --token-text-body: 1.25rem;
   --token-text-lead: 1.25rem;
   --token-text-ui: 1rem;
   --token-text-caption: 0.875rem;
@@ -67,15 +67,15 @@
   --token-leading-ui: 1.5;
   --token-leading-caption: 1.5;
   --token-leading-code: 1.6;
-  --token-tracking-display: -0.035em;
-  --token-tracking-title: -0.025em;
-  --token-tracking-heading: -0.02em;
+  --token-tracking-display: -0.015em;
+  --token-tracking-title: -0.015em;
+  --token-tracking-heading: -0.01em;
   --token-tracking-body: 0em;
-  --token-component-terminal-background: 21 21 20;
-  --token-component-terminal-foreground: 242 242 239;
+  --token-component-terminal-background: 20 20 20;
+  --token-component-terminal-foreground: 244 244 242;
   --token-component-terminal-accent: 255 88 0;
   --token-component-terminal-success: 146 187 138;
   --token-component-terminal-error: 238 138 128;
-  --token-component-card-border: 52 52 49;
+  --token-component-card-border: 52 52 50;
   --token-component-card-shadow: 0px 30px 80px 0px rgba(0, 0, 0, 0.45);
 }
