@@ -146,11 +146,11 @@
     "sans": {
       "$type": "fontFamily",
       "$value": [
-        "DM Sans",
+        "Wotfard",
         "Arial",
         "sans-serif"
       ],
-      "$description": "Self-hosted DM Sans variable roman and italic, licensed under SIL OFL 1.1. Sources and license are in public/fonts/dm-sans."
+      "$description": "Licensed Wotfard webfonts: Light, Regular, and Medium with matching italics. Font binaries are provisioned separately from the public repository."
     },
     "serif": {
       "$type": "fontFamily",
