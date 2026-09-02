@@ -2,7 +2,7 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-:root {
+:root[data-theme='light'] {
   --token-color-base-black: 8 8 8;
   --token-color-base-white: 244 244 242;
   --token-color-base-smoke: 20 20 20;
@@ -23,24 +23,24 @@
   --token-color-status-success: 146 187 138;
   --token-color-status-danger: 238 138 128;
   --token-color-status-warning: 229 189 100;
-  --token-color-canvas: 8 8 8;
-  --token-color-surface: 20 20 20;
-  --token-color-surface-raised: 33 33 32;
-  --token-color-ink-primary: 244 244 242;
-  --token-color-ink-secondary: 227 227 223;
-  --token-color-ink-muted: 170 170 164;
-  --token-color-accent-primary: 255 88 0;
-  --token-color-accent-secondary: 227 227 223;
-  --token-color-accent-success: 146 187 138;
-  --token-color-accent-danger: 238 138 128;
-  --token-color-accent-warning: 229 189 100;
-  --token-color-border-subtle: 52 52 50;
+  --token-color-canvas: 247 247 243;
+  --token-color-surface: 255 255 255;
+  --token-color-surface-raised: 236 236 230;
+  --token-color-ink-primary: 17 17 16;
+  --token-color-ink-secondary: 71 71 67;
+  --token-color-ink-muted: 98 98 91;
+  --token-color-accent-primary: 185 68 9;
+  --token-color-accent-secondary: 71 71 67;
+  --token-color-accent-success: 60 108 52;
+  --token-color-accent-danger: 173 57 49;
+  --token-color-accent-warning: 118 81 9;
+  --token-color-border-subtle: 209 209 200;
   --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace; /** Existing MonoLisa for code and technical detail; unchanged font files. */
-  --token-font-sans: 'DM Sans', Arial, sans-serif; /** Self-hosted DM Sans variable roman and italic, licensed under SIL OFL 1.1. Sources and license are in public/fonts/dm-sans. */
+  --token-font-sans: Wotfard, Arial, sans-serif; /** Licensed Wotfard webfonts: Light, Regular, and Medium with matching italics. Font binaries are provisioned separately from the public repository. */
   --token-font-serif: ui-serif, Georgia, serif;
-  --token-font-body: 'DM Sans', Arial, sans-serif;
-  --token-font-display: 'DM Sans', Arial, sans-serif;
-  --token-font-ui: 'DM Sans', Arial, sans-serif;
+  --token-font-body: Wotfard, Arial, sans-serif;
+  --token-font-display: Wotfard, Arial, sans-serif;
+  --token-font-ui: Wotfard, Arial, sans-serif;
   --token-space-xs: 4px;
   --token-space-sm: 8px;
   --token-space-md: 16px;
@@ -71,11 +71,11 @@
   --token-tracking-title: -0.015em;
   --token-tracking-heading: -0.01em;
   --token-tracking-body: 0em;
-  --token-component-terminal-background: 20 20 20;
-  --token-component-terminal-foreground: 244 244 242;
-  --token-component-terminal-accent: 255 88 0;
-  --token-component-terminal-success: 146 187 138;
-  --token-component-terminal-error: 238 138 128;
-  --token-component-card-border: 52 52 50;
+  --token-component-terminal-background: 255 255 255;
+  --token-component-terminal-foreground: 17 17 16;
+  --token-component-terminal-accent: 185 68 9;
+  --token-component-terminal-success: 60 108 52;
+  --token-component-terminal-error: 173 57 49;
+  --token-component-card-border: 209 209 200;
   --token-component-card-shadow: 0px 30px 80px 0px rgba(0, 0, 0, 0.45);
 }
