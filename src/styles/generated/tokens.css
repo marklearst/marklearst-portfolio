@@ -36,11 +36,11 @@
   --token-color-accent-warning: 229 189 100;
   --token-color-border-subtle: 52 52 50;
   --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace; /** Existing MonoLisa for code and technical detail; unchanged font files. */
-  --token-font-sans: 'DM Sans', Arial, sans-serif; /** Self-hosted DM Sans variable roman and italic, licensed under SIL OFL 1.1. Sources and license are in public/fonts/dm-sans. */
+  --token-font-sans: Wotfard, Arial, sans-serif; /** Licensed Wotfard webfonts: Light, Regular, and Medium with matching italics. Font binaries are provisioned separately from the public repository. */
   --token-font-serif: ui-serif, Georgia, serif;
-  --token-font-body: 'DM Sans', Arial, sans-serif;
-  --token-font-display: 'DM Sans', Arial, sans-serif;
-  --token-font-ui: 'DM Sans', Arial, sans-serif;
+  --token-font-body: Wotfard, Arial, sans-serif;
+  --token-font-display: Wotfard, Arial, sans-serif;
+  --token-font-ui: Wotfard, Arial, sans-serif;
   --token-space-xs: 4px;
   --token-space-sm: 8px;
   --token-space-md: 16px;
