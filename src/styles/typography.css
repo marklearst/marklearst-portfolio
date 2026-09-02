@@ -1,4 +1,4 @@
-/* Fluid CSS adapter for the finite source-token scale; DM Sans uses optical sizing. */
+/* Fluid CSS adapter for the finite source-token scale. */
 :root {
   --fluid-text-display: clamp(3rem, 6vw, var(--token-text-display));
   --fluid-text-title: clamp(2.5rem, 4.5vw, var(--token-text-title));
@@ -20,8 +20,4 @@
   --text-title: var(--fluid-text-title);
   --text-heading: var(--fluid-text-heading);
   --text-body: var(--fluid-text-body);
-}
-
-:where(body, button, input, select, textarea) {
-  font-optical-sizing: auto;
 }
