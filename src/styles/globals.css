@@ -1,10 +1,11 @@
 @import 'tailwindcss';
-@import './theme.css';
-@import './tokens.css';
-@import './tokens.light.css';
+@import './generated/theme.css';
+@import './generated/tokens.css';
+@import './generated/tokens.light.css';
 @import './monolisa.css';
 @import './fonts.css';
 @import './typography.css';
+@import './motion.css';
 
 /* Base styles */
 body {
@@ -44,51 +45,6 @@ html:has(dialog[open]) body {
 }
 .skip-link:focus { transform: translateY(0); }
 
-.site-header {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 40;
-  background: color-mix(in srgb, var(--color-canvas) 92%, transparent);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  view-transition-name: site-header;
-}
-
-::view-transition-group(site-header) { z-index: 1; }
-::view-transition-group(site-header),
-::view-transition-new(site-header) { animation: none; }
-::view-transition-old(site-header) { display: none; }
-
-.site-header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  width: min(calc(100% - 80px), 1280px);
-  min-height: 80px;
-  margin-inline: auto;
-}
-
-@media (max-width: 1060px) {
-  .site-header-inner { width: calc(100% - 56px); }
-}
-@media (max-width: 800px) {
-  .site-header-inner { width: calc(100% - 48px); }
-}
-@media (max-width: 479px) {
-  .site-header-inner { width: calc(100% - 32px); min-height: 72px; gap: 8px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-gradient-x,
-  .site-header *,
-  .site-header *::before,
-  .site-header *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
 @media (min-width: 640px) {
   html { scroll-padding-top: 7rem; }
 }
@@ -97,7 +53,7 @@ html:has(dialog[open]) body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-body);
   color: var(--color-ink-primary);
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.15;
   letter-spacing: var(--token-tracking-heading);
   text-wrap: balance;
@@ -130,7 +86,7 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 }
 [data-action-icon] .icon-arrow {
   transform-origin: center;
-  transition: transform 180ms cubic-bezier(.22, 1, .36, 1);
+  transition: transform 180ms var(--ease-out);
 }
 :where(a, button):focus-visible [data-action-icon] .icon-arrow { transition: none; }
 @media (hover: hover) and (pointer: fine) {
@@ -151,68 +107,8 @@ html, body { scroll-behavior: auto; }
   color: var(--color-ink-primary);
 }
 
-/* Career timeline */
-.timeline-entries {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  margin-top: 20px;
-}
-
-.timeline-entry {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.timeline-dot {
-  flex-shrink: 0;
-  width: 6px;
-  height: 6px;
-  margin-top: 8px;
-  border-radius: 50%;
-  background: var(--color-accent-primary);
-}
-
-.timeline-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.timeline-year {
-  @apply font-mono;
-  font-weight: 500;
-  color: var(--color-ink-primary);
-}
-
-.timeline-role {
-  @apply font-body;
-  color: var(--color-ink-secondary);
-  font-size: 0.9375rem;
-}
-
-.timeline-description {
-  color: var(--color-ink-muted);
-  font-size: 0.875rem;
-  margin-top: 2px;
-}
-
-/* MDX re-parses JSX text that spans several source lines into a paragraph,
-   which carries the standalone prose type scale. Nested inside a list item or
-   a timeline row, the container owns the size — otherwise a line-wrap in the
-   source silently changes the rendered font size. */
-li > p,
-.timeline-role > p,
-.timeline-description > p {
+/* Source line wrapping in MDX must not change a list item's type size. */
+li > p {
   font-size: inherit;
   margin: 0;
-}
-
-.timeline-subsection {
-  margin-bottom: 40px;
-}
-
-.timeline-subsection:last-child {
-  margin-bottom: 0;
 }
