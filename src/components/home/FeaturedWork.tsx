@@ -1,14 +1,13 @@
-'use client'
-
 import { ArrowRightIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
 
-import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import GlucoseDemo from '@/components/glucose/GlucoseDemo'
 import { PROJECTS } from '@/data/projects'
-import { useAnalytics, useSectionViewTracking } from '@/hooks/useAnalytics'
-import styles from './Showcase.module.css'
+import TrackedLink from '@/components/analytics/TrackedLink'
+import SectionViewTracker from '@/components/analytics/SectionViewTracker'
+import AuroraArchitecture from '@/components/evidence/AuroraArchitecture'
+import styles from '@/components/home/FeaturedWork.module.css'
 
 const SHOWCASES = [
   {
@@ -43,18 +42,15 @@ const SHOWCASES = [
   },
 ]
 
-export default function FeaturedWork() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const { trackCaseStudyClick } = useAnalytics()
-  useSectionViewTracking({ ref: sectionRef, section: 'featured_work', data: { location: 'home' } })
-  const trackProject = (slug: string) => {
-    const project = PROJECTS.find((item) => item.slug === slug)
-    if (!project) return
-    trackCaseStudyClick({ project: slug, category: project.category, route: project.route, source: 'featured_work' })
-  }
+function projectClickEvent(slug: string) {
+  const project = PROJECTS.find(item => item.slug === slug)!
+  return { type: 'case-study' as const, data: { project: slug, category: project.category, route: project.route, source: 'featured_work' } }
+}
 
+export default function FeaturedWork() {
   return (
-    <section id='work' ref={sectionRef} className={styles.work} aria-labelledby='selected-work-heading'>
+    <section id='work' className={styles.work} aria-labelledby='selected-work-heading'>
+      <SectionViewTracker targetId='work' section='featured_work' location='home' />
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
           <h2 id='selected-work-heading'>Selected work</h2>
@@ -65,18 +61,18 @@ export default function FeaturedWork() {
           <article key={project.slug} className={`${styles.project} ${index === 0 ? styles.projectFeatured : ''}`}>
             <h3 className={styles.projectTitle}>{project.title}</h3>
             <figure className={styles.figure}>
-              <Link className={styles.imageLink} href={`/work/${project.slug}`} aria-label={`Explore ${project.title}`} onClick={() => trackProject(project.slug)}>
+              <TrackedLink className={styles.imageLink} href={`/work/${project.slug}`} aria-label={`Explore ${project.title}`} event={projectClickEvent(project.slug)}>
                 <span className={styles.imageViewport}>
                   <Image src={project.image} alt={project.alt} width={1280} height={720} sizes={index === 0 ? '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 60vw, 770px' : '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 45vw, 600px'} />
                 </span>
                 <span className={styles.imageAction} aria-hidden='true'><ArrowRightIcon size={20} /></span>
-              </Link>
+              </TrackedLink>
               <figcaption className={styles.caption}>{project.caption}</figcaption>
             </figure>
             <div className={styles.projectContent}>
               <p className={styles.projectSummary}>{project.summary}</p>
               <p className={styles.projectNote}>{project.note}</p>
-              <Link className={styles.caseLink} href={`/work/${project.slug}`} onClick={() => trackProject(project.slug)}>{project.linkLabel} <span aria-hidden='true'><ArrowRightIcon /></span></Link>
+              <TrackedLink className={styles.caseLink} href={`/work/${project.slug}`} event={projectClickEvent(project.slug)}>{project.linkLabel} <span aria-hidden='true'><ArrowRightIcon /></span></TrackedLink>
             </div>
           </article>
         ))}
@@ -85,25 +81,16 @@ export default function FeaturedWork() {
           <div className={styles.projectContent}>
             <h3>Aurora at GM</h3>
             <p className={styles.projectSummary}>At GM, I architected Aurora for Chevrolet, Buick, GMC, and Cadillac, with 60% component reuse and a WCAG 2.1 AA accessibility target.</p>
-            <Link href='/work/aurora-gm' className={styles.caseLink} onClick={() => trackProject('aurora-gm')}>Inside Aurora <span aria-hidden='true'><ArrowRightIcon /></span></Link>
+            <TrackedLink href='/work/aurora-gm' className={styles.caseLink} event={projectClickEvent('aurora-gm')}>Inside Aurora <span aria-hidden='true'><ArrowRightIcon /></span></TrackedLink>
           </div>
-          <figure className={styles.figure}>
-            <div className={styles.systemDiagram} role='img' aria-label='Conceptual Aurora architecture: Chevrolet, Buick, GMC, and Cadillac use brand-specific token themes above a shared React component layer.'>
-              <div className={styles.diagramLabel}>Aurora / system structure</div>
-              <div className={styles.brands}><span>Chevrolet</span><span>Buick</span><span>GMC</span><span>Cadillac</span></div>
-              <div className={styles.branches} />
-              <div className={styles.sharedLayer}>Brand-specific token themes</div>
-              <div className={styles.sharedLayer}>Shared React components</div>
-            </div>
-            <figcaption className={styles.diagramCaption}>Conceptual architecture diagram. The original internal interface is not shown.</figcaption>
-          </figure>
+          <AuroraArchitecture />
         </article>
         <article className={styles.librarySample} aria-labelledby='glucose-sample-heading'>
           <div className={styles.projectContent}>
             <p className={styles.eyebrow}>My library, running here</p>
             <h3 id='glucose-sample-heading'>GlucoseIQ</h3>
             <p className={styles.projectSummary}>Headless TypeScript library for CGM and glucose data. 17 clinical metrics, device connectors, FHIR interop, and SVG rendering over a zero-dependency core.</p>
-            <Link href='/work/glucoseiq' className={styles.caseLink} onClick={() => trackProject('glucoseiq')}>GlucoseIQ case study <ArrowRightIcon /></Link>
+            <TrackedLink href='/work/glucoseiq' className={styles.caseLink} event={projectClickEvent('glucoseiq')}>GlucoseIQ case study <ArrowRightIcon /></TrackedLink>
           </div>
           <div className={styles.livePreview}>
             <GlucoseDemo compact />

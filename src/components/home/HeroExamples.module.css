@@ -1,0 +1,107 @@
+.examples {
+  min-width: 0;
+  padding-top: 6px;
+}
+
+.heading {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.heading > h2 {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font: 400 var(--text-caption)/1.5 var(--font-body);
+}
+
+.choices {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(var(--example-count), minmax(0, 1fr));
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px;
+  border-radius: 10px;
+  background: var(--color-surface);
+  box-shadow: inset 0 1px 0 var(--color-border-subtle);
+}
+
+.selection {
+  position: absolute;
+  z-index: -1;
+  inset: 4px auto 4px 4px;
+  width: calc((100% - 8px - (var(--example-count) - 1) * 4px) / var(--example-count));
+  border-radius: 7px;
+  background: var(--color-surface-raised);
+  box-shadow: inset 0 1px 0 var(--color-border-subtle), 0 2px 4px rgb(0 0 0 / 18%);
+  transform: translateX(calc(var(--example-index) * (100% + 4px)));
+  pointer-events: none;
+}
+
+.choices[data-motion='true'] .selection {
+  transition: transform 280ms var(--ease-out);
+}
+
+.choices button {
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--color-ink-muted);
+  font: 500 var(--text-caption)/1.4 var(--font-body);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.choices[data-motion='true'] button {
+  transition: color var(--duration-feedback) ease-out;
+}
+
+.choices button[aria-pressed='true'] {
+  color: var(--color-ink-primary);
+}
+
+.choices button:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 2px;
+}
+
+.choices button:active {
+  background: rgb(255 255 255 / 4%);
+}
+
+.panels {
+  position: relative;
+}
+
+.panels[data-morphing] {
+  overflow: clip;
+}
+
+.panel {
+  display: flow-root;
+  min-width: 0;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .choices button:hover {
+    color: var(--color-ink-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .choices[data-motion='true'] button, .choices[data-motion='true'] .selection {
+    transition: none;
+  }
+}
