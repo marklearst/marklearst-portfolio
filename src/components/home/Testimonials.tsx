@@ -1,8 +1,5 @@
-'use client'
-
-import { useRef } from 'react'
 import Image from 'next/image'
-import { useSectionViewTracking } from '@/hooks/useAnalytics'
+import SectionViewTracker from '@/components/analytics/SectionViewTracker'
 import styles from './Testimonials.module.css'
 
 interface Testimonial {
@@ -38,20 +35,13 @@ const testimonials: Testimonial[] = [
 ]
 
 export default function Testimonials() {
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useSectionViewTracking({
-    ref: sectionRef,
-    section: 'testimonials',
-    data: { location: 'home' },
-  })
-
   return (
     <section
-      ref={sectionRef}
+      id='testimonials'
       aria-labelledby='testimonials-heading'
       className={styles.section}
     >
+      <SectionViewTracker targetId='testimonials' section='testimonials' location='home' />
       <div className={styles.container}>
         <h2
           id='testimonials-heading'
