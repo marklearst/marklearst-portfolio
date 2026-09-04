@@ -9,11 +9,15 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-webfonts.mjs && node scripts/build-tokens-sd.mjs --check && next build",
     "start": "next start",
     "lint": "eslint",
     "tokens:build": "node scripts/build-tokens-sd.mjs",
-    "tokens:validate": "node scripts/validate-tokens.mjs"
+    "tokens:validate": "node scripts/validate-tokens.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"src/**/*.test.mjs\" \"scripts/**/*.test.mjs\"",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check",
+    "tokens:check": "node scripts/build-tokens-sd.mjs --check"
   },
   "dependencies": {
     "@figma-vars/hooks": "^4.0.0",
@@ -23,20 +27,16 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.3.5",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "@types/three": "0.160.0",
     "@vercel/analytics": "^1.6.1",
     "@vercel/og": "^0.8.6",
     "@vercel/speed-insights": "^1.3.1",
     "gray-matter": "^4.0.3",
-    "gsap": "^3.15.0",
     "next": "16.3.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-icons": "5.7.0",
     "react-syntax-highlighter": "^16.1.1",
-    "remark-gfm": "^4.0.1",
-    "three": "0.160.1",
-    "zustand": "^5.0.15"
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
