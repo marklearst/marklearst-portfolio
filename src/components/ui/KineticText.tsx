@@ -14,19 +14,14 @@ export default function KineticText({
   return (
     <span className={className} style={style}>
       {text.split('').map((char, i) => (
-        // Wrapper provides the clip-path mask for reveal animation
-        // pb-[0.15em] prevents descender clipping, pt for ascenders
+        // Outer span is the clip mask the intro rises through.
+        // Padding keeps ascenders and descenders inside the mask.
         <span
           key={i}
           className='inline-block overflow-hidden align-bottom'
           style={{ paddingBottom: '0.15em', paddingTop: '0.05em' }}
         >
-          <span
-            className='kinetic-char inline-block'
-            style={{ willChange: 'transform' }}
-          >
-            {char}
-          </span>
+          <span className='kinetic-char inline-block'>{char}</span>
         </span>
       ))}
     </span>
