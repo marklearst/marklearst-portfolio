@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { CSSProperties } from 'react'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { trackNavigationClick } from '@/lib/analytics'
 import styles from './PrimaryNav.module.css'
 
 const items = [
@@ -14,7 +14,6 @@ const items = [
 
 export default function PrimaryNav() {
   const pathname = usePathname()
-  const { trackNavigationClick } = useAnalytics()
   const activeIndex = items.findIndex(({ href }) => pathname === href || pathname.startsWith(`${href}/`))
 
   return (
