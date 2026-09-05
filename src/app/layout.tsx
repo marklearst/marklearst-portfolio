@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import './globals.css'
-import Wordmark from '@/components/brand/Wordmark'
-import PrimaryNav from '@/components/PrimaryNav'
+import '../styles/globals.css'
+import SiteHeader from '@/components/shell/SiteHeader'
 import PageTransition from '@/components/transitions/PageTransition'
-import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
+import FigmaVarsContextProvider from '@/components/dev/FigmaVarsProvider'
 import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
-import AnalyticsManager from '@/components/AnalyticsManager'
-import NavigationHistoryTracker from '@/components/NavigationHistoryTracker'
+import AnalyticsManager from '@/components/analytics/AnalyticsManager'
+import NavigationHistoryTracker from '@/components/navigation/NavigationHistoryTracker'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marklearst.com'),
@@ -37,22 +36,20 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <head>
-        <link rel='preload' href='/fonts/dm-sans/dm-sans-latin-normal.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+        <link rel='preload' href='/fonts/wotfard/wotfard-regular-webfont.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+        <link rel='preload' href='/fonts/wotfard/wotfard-medium-webfont.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
       </head>
       <body>
         <a className='skip-link' href='#page-content'>Skip to content</a>
 
-        <header className='site-header'>
-          <div className='site-header-inner'>
-            <Wordmark />
-            <PrimaryNav />
-          </div>
-        </header>
+        <SiteHeader />
 
-        <FigmaVarsContextProvider>
-          <PageTransition>{children}</PageTransition>
-          {process.env.NODE_ENV !== 'production' && <FigmaVarsDebug />}
-        </FigmaVarsContextProvider>
+        <PageTransition>{children}</PageTransition>
+        {process.env.NODE_ENV !== 'production' && (
+          <FigmaVarsContextProvider>
+            <FigmaVarsDebug />
+          </FigmaVarsContextProvider>
+        )}
         <AnalyticsManager />
         <NavigationHistoryTracker />
         <SpeedInsights />
