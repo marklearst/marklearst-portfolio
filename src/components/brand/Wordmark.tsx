@@ -3,12 +3,11 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { CSSProperties } from 'react'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { trackNavigationClick, trackLogoHover } from '@/lib/analytics'
 import styles from './Wordmark.module.css'
 
 export default function Wordmark() {
   const pathname = usePathname()
-  const { trackNavigationClick, trackLogoHover } = useAnalytics()
 
   return (
     <Link
