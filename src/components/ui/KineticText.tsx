@@ -1,5 +1,3 @@
-'use client'
-
 interface KineticTextProps {
   text: string
   className?: string
