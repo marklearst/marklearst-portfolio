@@ -1,24 +1,24 @@
-import type { ComponentPropsWithoutRef } from 'react'
-import styles from './CaseStudyLayout.module.css'
+import type { ComponentPropsWithRef } from 'react'
+import styles from './Prose.module.css'
 
-interface CaseStudySubheadingProps
-  extends ComponentPropsWithoutRef<'h3'> {
+interface ProseSubheadingProps
+  extends ComponentPropsWithRef<'h3'> {
   color?: string
 }
 
-type CaseStudyMutedTextProps = ComponentPropsWithoutRef<'div'>
+type ProseTextProps = ComponentPropsWithRef<'div'>
 
-type CaseStudyMutedListProps = ComponentPropsWithoutRef<'ul'>
+type ProseListProps = ComponentPropsWithRef<'ul'>
 
-type CaseStudyParagraphProps = ComponentPropsWithoutRef<'div'>
+type ProseBlockProps = ComponentPropsWithRef<'div'>
 
-export function CaseStudySubheading({
+export function ProseSubheading({
   children,
   color,
   className,
   style,
   ...rest
-}: CaseStudySubheadingProps) {
+}: ProseSubheadingProps) {
   const classes = className
     ? `${styles.subheading} ${className}`
     : styles.subheading
@@ -30,11 +30,11 @@ export function CaseStudySubheading({
   )
 }
 
-export function CaseStudyMutedText({
+export function ProseText({
   children,
   className,
   ...rest
-}: CaseStudyMutedTextProps) {
+}: ProseTextProps) {
   const classes = className ? `${styles.mutedText} ${className}` : styles.mutedText
 
   return (
@@ -44,11 +44,11 @@ export function CaseStudyMutedText({
   )
 }
 
-export function CaseStudyMutedList({
+export function ProseList({
   children,
   className,
   ...rest
-}: CaseStudyMutedListProps) {
+}: ProseListProps) {
   const classes = className ? `${styles.list} ${className}` : styles.list
 
   return (
@@ -58,11 +58,11 @@ export function CaseStudyMutedList({
   )
 }
 
-export function CaseStudyParagraph({
+export function ProseBlock({
   children,
   className,
   ...rest
-}: CaseStudyParagraphProps) {
+}: ProseBlockProps) {
   const classes = className
     ? `${styles.paragraph} ${className}`
     : styles.paragraph
