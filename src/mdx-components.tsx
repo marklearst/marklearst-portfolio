@@ -1,8 +1,5 @@
 import type { ComponentPropsWithoutRef } from 'react'
-
-type MDXComponents = {
-  [key: string]: React.ComponentType<ComponentPropsWithoutRef<'div'>>
-}
+import type { MDXComponents } from 'mdx/types'
 
 export function useMDXComponents(components: MDXComponents = {}) {
   return {
