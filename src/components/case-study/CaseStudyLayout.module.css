@@ -1,0 +1,309 @@
+.page {
+  --case-accent: var(--color-accent-primary, #e6aa79);
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  background: var(--color-canvas, #171615);
+  color: var(--color-ink-secondary, #cbc5bf);
+  font-family: var(--font-body);
+}
+
+.container {
+  width: min(calc(100% - 48px), 54rem);
+  margin-inline: auto;
+}
+
+.hero {
+  padding-block: 144px 8px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 10px;
+  color: var(--color-ink-muted, #a59d95);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-mono);
+  text-decoration: none;
+}
+
+.backLink svg {
+  color: var(--case-accent);
+}
+
+.hero .backLink {
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-title, 3.5rem) / var(--leading-title, 1.15) var(--font-body);
+  letter-spacing: var(--tracking-title, -0.015em);
+  text-transform: none;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  scroll-margin-top: 7rem;
+}
+
+.description {
+  margin-block: 20px 16px;
+  color: var(--color-ink-secondary, #cbc5bf);
+  font: 400 var(--text-lead, 1.25rem) / var(--leading-lead, 1.5) var(--font-body);
+  text-wrap: pretty;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr 1.7fr;
+  gap: 24px;
+  margin: 8px 0 0;
+  padding: 24px;
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.meta dt {
+  margin: 0 0 8px;
+  color: var(--color-ink-muted, #a59d95);
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-body);
+}
+
+.meta dd {
+  margin: 0;
+  color: var(--color-ink-secondary, #cbc5bf);
+  font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+}
+
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.technologies span {
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-mono);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 24px;
+}
+
+.links .projectLink {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--color-surface);
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.projectLink,
+.disabledLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding-block: 8px;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-subtle, #3b3530);
+  text-underline-offset: 5px;
+}
+
+.disabledLink {
+  color: var(--color-ink-muted, #a59d95);
+  text-decoration: none;
+}
+
+.projectLink svg,
+.disabledLink svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.links .projectLink > svg:first-child {
+  color: var(--case-accent);
+}
+
+.externalArrow {
+  margin-left: 2px;
+  color: var(--case-accent);
+}
+
+.body {
+  padding-bottom: 32px;
+}
+
+.section {
+  padding-block: 40px;
+  scroll-margin-top: 7rem;
+}
+
+.sectionHeading {
+  margin-bottom: 24px;
+}
+
+.sectionHeading h2,
+.standaloneHeading {
+  margin: 0;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-heading, 2.5rem) / var(--leading-heading, 1.25) var(--font-body);
+  letter-spacing: var(--tracking-heading, -0.01em);
+  text-transform: none;
+  text-wrap: balance;
+}
+
+.standaloneHeading {
+  margin-bottom: 28px;
+}
+
+.standaloneSection {
+  scroll-margin-top: 7rem;
+}
+
+.impact {
+  margin-block: 12px 28px;
+  padding-block: 28px;
+}
+
+.impactGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 24px;
+}
+
+.metric {
+  margin: 0 0 8px;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.metricDescription {
+  margin: 0;
+  color: var(--color-ink-muted, #a59d95);
+  font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+}
+
+.factsTitle {
+  margin: 0;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-subheading, 1.5rem) / var(--leading-subheading, 1.35) var(--font-body);
+}
+
+.contents {
+  margin-top: 12px;
+  padding-inline: 24px;
+}
+
+.contents ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.contents a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 8px;
+  color: var(--color-ink-secondary, #cbc5bf);
+  font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+  text-decoration: none;
+}
+
+.endNavigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+  padding-block: 16px;
+}
+
+.endNavigation .backLink {
+  gap: 8px;
+}
+
+.page a:focus-visible,
+.contents summary:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 5px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .links .projectLink:hover {
+    background: var(--color-surface-raised);
+  }
+
+  .projectLink:hover {
+    text-decoration-color: var(--case-accent);
+  }
+
+  .backLink:hover,
+.contents a:hover {
+    color: var(--color-ink-primary, #f3eee8);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .container {
+    width: calc(100% - 40px);
+  }
+
+  .hero {
+    padding-top: 128px;
+  }
+
+  .description {
+    font-size: var(--text-body, 1.125rem);
+  }
+
+  .meta {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .meta > div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .section {
+    padding-block: 32px;
+  }
+
+  .sectionHeading {
+    margin-bottom: 24px;
+  }
+
+  .impactGrid,
+.contents ol {
+    grid-template-columns: 1fr;
+  }
+
+  .impactGrid {
+    gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .links .projectLink {
+    transition: none;
+  }
+}
