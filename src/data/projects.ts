@@ -14,20 +14,6 @@ export type ProjectCategoryColor =
   | 'orange'
   | 'yellow'
 
-export type ProjectTerminalDurationKey =
-  | 'homeRoute'
-  | 'workRoute'
-  | 'workRouteWithPackages'
-
-export interface ProjectTerminalConfig {
-  command: string
-  loading?: string
-  packages?: string[]
-  output?: string
-  outputWithCheck?: boolean
-  durationKey: ProjectTerminalDurationKey
-}
-
 export interface ProjectMeta {
   slug: string
   route: string
@@ -46,10 +32,6 @@ export interface ProjectMeta {
   openSource?: boolean
   technologies: string[]
   tags: string[]
-  commitHash: string
-  cardGradient: string
-  caseStudyGradient: string
-  terminal: ProjectTerminalConfig
 }
 
 export const PROJECTS: ProjectMeta[] = [
@@ -81,17 +63,6 @@ export const PROJECTS: ProjectMeta[] = [
       'GitHub Actions',
     ],
     tags: ['React', 'Design Tokens', 'Storybook'],
-    commitHash: 'a3f9c2d',
-    cardGradient: 'from-purple-500/10 via-pink-500/5 to-transparent',
-    caseStudyGradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/aurora-gm',
-      loading: 'Loading design system...',
-      packages: ['react', 'react-dom', 'storybook'],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'hailstorm',
@@ -119,17 +90,6 @@ export const PROJECTS: ProjectMeta[] = [
       'Playwright',
     ],
     tags: ['Design Tokens', 'Storybook', 'Accessibility'],
-    commitHash: 'h7a15c1',
-    cardGradient: 'from-purple-500/10 via-indigo-500/5 to-transparent',
-    caseStudyGradient: 'from-purple-500/20 via-blue-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/hailstorm',
-      loading: 'Loading design system...',
-      packages: ['react@19.2.3', 'storybook@10.1.11', 'tailwindcss@4.1.18'],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'figmavars-hooks',
@@ -157,23 +117,6 @@ export const PROJECTS: ProjectMeta[] = [
       'npm',
     ],
     tags: ['React 19', 'TypeScript', 'Figma API'],
-    commitHash: 'b7e4f1a',
-    cardGradient: 'from-teal-500/10 via-cyan-500/5 to-transparent',
-    caseStudyGradient: 'from-cyan-500/20 via-teal-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/@figmavars/hooks',
-      loading: 'Loading open source library...',
-      packages: [
-        'react@19.2.3',
-        'react-dom@19.2.3',
-        'typescript@5.3.3',
-        '@vitest/ui@2.1.9',
-        'swr@2.3.7',
-      ],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'primitree',
@@ -201,22 +144,6 @@ export const PROJECTS: ProjectMeta[] = [
       'React 19',
     ],
     tags: ['Design Tokens', 'TypeScript', 'CLI'],
-    commitHash: 'd0c5999',
-    cardGradient: 'from-cyan-500/10 via-emerald-500/5 to-transparent',
-    caseStudyGradient: 'from-cyan-500/20 via-emerald-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/primitree',
-      loading: 'Loading token pipeline...',
-      packages: [
-        'primitree@1.0.0-next.1',
-        '@primitree/core@1.0.0-next.1',
-        '@primitree/dtcg@1.0.0-next.1',
-        '@primitree/mcp@1.0.0-next.1',
-      ],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'glucoseiq',
@@ -244,22 +171,6 @@ export const PROJECTS: ProjectMeta[] = [
       'Changesets',
     ],
     tags: ['TypeScript', 'Health Tech', 'npm'],
-    commitHash: 'acc209c',
-    cardGradient: 'from-pink-500/10 via-rose-500/5 to-transparent',
-    caseStudyGradient: 'from-pink-500/20 via-rose-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/glucoseiq',
-      loading: 'Loading analytics core...',
-      packages: [
-        '@glucoseiq/core@1.0.0-next.0',
-        '@glucoseiq/react@1.0.0-next.0',
-        '@glucoseiq/tokens@1.0.0-next.0',
-        '@glucoseiq/cli@1.0.0-next.0',
-      ],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'a11y-companion',
@@ -286,22 +197,6 @@ export const PROJECTS: ProjectMeta[] = [
       'Accessibility',
     ],
     tags: ['Figma Widget', 'WCAG 2.2', 'Accessibility'],
-    commitHash: 'c9d2e8b',
-    cardGradient: 'from-green-500/10 via-emerald-500/5 to-transparent',
-    caseStudyGradient: 'from-green-500/20 via-emerald-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/a11y-companion',
-      loading: 'Loading Figma Widget...',
-      packages: [
-        '@figma/widget-typings@1.12.1',
-        'typescript@6.0.3',
-        'eslint@10.6.0',
-        'esbuild@0.25.5',
-      ],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'diabetic-utils',
@@ -327,17 +222,6 @@ export const PROJECTS: ProjectMeta[] = [
       'HealthKit',
     ],
     tags: ['TypeScript', 'npm', 'Health Tech'],
-    commitHash: 'e4a7b3f',
-    cardGradient: 'from-pink-500/10 via-red-500/5 to-transparent',
-    caseStudyGradient: 'from-orange-500/20 via-yellow-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/diabetic-utils',
-      loading: 'Loading open source library...',
-      packages: ['typescript@5.3.3', 'vitest@1.0.0', 'tsup@8.0.0'],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'variable-design-standard',
@@ -364,17 +248,6 @@ export const PROJECTS: ProjectMeta[] = [
       'Governance Models',
     ],
     tags: ['Specification', 'Design Tokens', 'W3C'],
-    commitHash: 'f9c231d',
-    cardGradient: 'from-orange-500/10 via-yellow-500/5 to-transparent',
-    caseStudyGradient: 'from-purple-500/20 via-indigo-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/variable-design-standard',
-      loading: 'Initializing design system...',
-      packages: ['@dtcg/validator@1.0.0', 'typescript@5.3.3', 'semver@7.5.4'],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
   {
     slug: 'skydio',
@@ -400,26 +273,23 @@ export const PROJECTS: ProjectMeta[] = [
       'Config-Driven UI',
     ],
     tags: ['React', 'Storybook', 'Consulting'],
-    commitHash: 'd8e5c7b',
-    cardGradient: 'from-teal-500/10 via-blue-500/5 to-transparent',
-    caseStudyGradient: 'from-cyan-500/20 via-blue-500/10 to-transparent',
-    terminal: {
-      command: 'cd /work/skydio',
-      loading: 'Loading Storybook...',
-      packages: ['react', 'react-dom', 'storybook', 'tailwindcss'],
-      output: 'Ready',
-      outputWithCheck: true,
-      durationKey: 'workRouteWithPackages',
-    },
   },
 ]
 
 const publishedTimestamp = (project: ProjectMeta) =>
   project.publishedAt ? new Date(project.publishedAt).getTime() : 0
 
-export const FEATURED_PROJECTS = PROJECTS.filter(
-  (project) => project.featured,
-).sort((a, b) => publishedTimestamp(b) - publishedTimestamp(a))
+const SELECTED_PROJECT_ORDER = ['primitree', 'skydio', 'aurora-gm', 'a11y-companion', 'glucoseiq']
+const selectedRank = (slug: string) => {
+  const index = SELECTED_PROJECT_ORDER.indexOf(slug)
+  return index === -1 ? SELECTED_PROJECT_ORDER.length : index
+}
+
+/** Shared by the Work index and previous/next case-study navigation. */
+export const PROJECTS_IN_DISPLAY_ORDER = [...PROJECTS].sort((a, b) => {
+  const priority = selectedRank(a.slug) - selectedRank(b.slug)
+  return priority || publishedTimestamp(b) - publishedTimestamp(a)
+})
 
 export const PROJECTS_BY_ROUTE = PROJECTS.reduce<Record<string, ProjectMeta>>(
   (acc, project) => {
