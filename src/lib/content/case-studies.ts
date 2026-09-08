@@ -1,15 +1,8 @@
 import path from 'node:path'
 import fs from 'node:fs/promises'
-import type { ReactNode } from 'react'
 import type { MDXContent } from 'mdx/types'
 import matter from 'gray-matter'
 import type { ProjectCategory, ProjectCategoryColor } from '@/data/projects'
-import {
-  ExternalLinkIcon,
-  FigmaIcon,
-  GitHubIcon,
-  NpmIcon,
-} from '@/components/CaseStudyLinkIcons'
 import A11yCompanionContent from '@/content/case-studies/a11y-companion.mdx'
 import AuroraGMContent from '@/content/case-studies/aurora-gm.mdx'
 import DiabeticUtilsContent from '@/content/case-studies/diabetic-utils.mdx'
@@ -20,9 +13,9 @@ import PrimitreeContent from '@/content/case-studies/primitree.mdx'
 import SkydioContent from '@/content/case-studies/skydio.mdx'
 import VariableDesignStandardContent from '@/content/case-studies/variable-design-standard.mdx'
 
-type CaseStudyLinkIcon = 'github' | 'npm' | 'figma' | 'external'
+export type CaseStudyLinkIcon = 'github' | 'npm' | 'figma' | 'external'
 
-type CaseStudyLinkInput = {
+export type CaseStudyLinkInput = {
   label: string
   href: string
   icon?: CaseStudyLinkIcon
@@ -47,8 +40,8 @@ export type CaseStudyFrontmatter = {
   gradient: string
 }
 
-export type CaseStudyContent = Omit<CaseStudyFrontmatter, 'links'> & {
-  links: { label: string; href: string; icon?: ReactNode }[]
+export type CaseStudyContent = CaseStudyFrontmatter & {
+  links: CaseStudyLinkInput[]
   Content: MDXContent
 }
 
@@ -99,19 +92,6 @@ const CASE_STUDY_ENTRIES: Record<
   },
 }
 
-const LINK_ICON_MAP: Record<CaseStudyLinkIcon, () => ReactNode> = {
-  github: () => <GitHubIcon />,
-  npm: () => <NpmIcon />,
-  figma: () => <FigmaIcon />,
-  external: () => <ExternalLinkIcon />,
-}
-
-const resolveLinks = (links: CaseStudyLinkInput[] = []) =>
-  links.map((link) => ({
-    ...link,
-    icon: link.icon ? LINK_ICON_MAP[link.icon]?.() : undefined,
-  }))
-
 const loadFrontmatter = async (fileName: string) => {
   const raw = await fs.readFile(path.join(CONTENT_ROOT, fileName), 'utf8')
   const { data } = matter(raw)
@@ -130,7 +110,7 @@ export const getCaseStudyBySlug = async (
 
   return {
     ...frontmatter,
-    links: resolveLinks(frontmatter.links),
+    links: frontmatter.links ?? [],
     Content: entry.Content,
   }
 }
