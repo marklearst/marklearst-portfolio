@@ -5,8 +5,8 @@ import { ArrowRightIcon } from '@/components/ui/Icon'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PROJECTS, type ProjectMeta } from '@/data/projects'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { PROJECTS_IN_DISPLAY_ORDER, type ProjectMeta } from '@/data/projects'
+import { trackCaseStudyClick, trackProjectCardHover, trackProjectCardImpression } from '@/lib/analytics'
 import styles from './WorkCatalog.module.css'
 
 const FILTERS = [
@@ -26,21 +26,9 @@ const PREVIEWS: Record<string, { src: string; alt: string; caption: string }> = 
   skydio: { src: '/images/skydio-orbit-story.jpg', alt: 'Skydio Autonomy Widget Orbit Mode in Storybook.', caption: 'Orbit Mode · Storybook' },
 }
 
-const selectedOrder = ['primitree', 'skydio', 'aurora-gm', 'a11y-companion', 'glucoseiq']
-const selectedRank = (slug: string) => {
-  const index = selectedOrder.indexOf(slug)
-  return index === -1 ? selectedOrder.length : index
-}
-
-const sortedProjects = [...PROJECTS].sort((a, b) => {
-  const priority = selectedRank(a.slug) - selectedRank(b.slug)
-  return priority || (new Date(b.publishedAt ?? 0).getTime() - new Date(a.publishedAt ?? 0).getTime())
-})
-
 function ProjectRow({ project, index }: { project: ProjectMeta; index: number }) {
   const rowRef = useRef<HTMLElement>(null)
   const trackedHover = useRef(false)
-  const { trackCaseStudyClick, trackProjectCardHover, trackProjectCardImpression } = useAnalytics()
   const preview = PREVIEWS[project.slug]
 
   useEffect(() => {
@@ -53,7 +41,7 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
     }, { threshold: 0.4 })
     observer.observe(element)
     return () => observer.disconnect()
-  }, [index, project.slug, trackProjectCardImpression])
+  }, [index, project.slug])
 
   return (
     <article ref={rowRef} className={`${styles.project} ${preview ? styles.withPreview : ''}`} onMouseEnter={() => {
@@ -86,7 +74,7 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
 
 export default function WorkCatalog() {
   const [activeFilter, setActiveFilter] = useState('all')
-  const filteredProjects = useMemo(() => sortedProjects.filter((project) => FILTERS.find((filter) => filter.id === activeFilter)!.matches(project)), [activeFilter])
+  const filteredProjects = useMemo(() => PROJECTS_IN_DISPLAY_ORDER.filter((project) => FILTERS.find((filter) => filter.id === activeFilter)!.matches(project)), [activeFilter])
 
   return (
     <section className={styles.catalog} aria-labelledby='work-title'>
