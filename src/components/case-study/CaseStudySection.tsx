@@ -2,6 +2,7 @@
 
 import { useId, type ReactNode } from 'react'
 import styles from './CaseStudyLayout.module.css'
+import prose from '@/components/content/Prose.module.css'
 
 export interface CaseStudySectionProps {
   title: string
@@ -33,7 +34,7 @@ export function CaseStudySection({
         {title}
       </h2>
       <div
-        className={`${styles.standaloneContent} ${contentClassName}`}
+        className={`${prose.standaloneContent} ${contentClassName}`}
       >
         {children}
       </div>
