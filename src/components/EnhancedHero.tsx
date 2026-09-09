@@ -1,11 +1,26 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { Fragment, useRef, useEffect, useState } from 'react'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
 import Link from 'next/link'
 import { useAnalytics } from '@/hooks/useAnalytics'
+
+const TAGLINE = [
+  { word: 'Design', role: true },
+  { word: 'engineer', role: true },
+  { word: 'and' },
+  { word: 'UI', role: true },
+  { word: 'architect', role: true },
+  { word: 'who' },
+  { word: 'sets' },
+  { word: 'system' },
+  { word: 'direction' },
+  { word: 'in' },
+  { word: 'code' },
+]
+
 // Typewriter component for terminal effect
 function Typewriter({
   text,
@@ -163,67 +178,21 @@ export default function EnhancedHero() {
             perspective: '1000px', // Enable 3D transforms
           }}
         >
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
-          >
-            Principal
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
-          >
-            Design
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
-          >
-            Engineer
-          </span>{' '}
-          <span className='hero-description-word inline-block'>who</span>{' '}
-          <span className='hero-description-word inline-block'>builds</span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.green }}
-          >
-            accessible
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.purple }}
-          >
-            design
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.purple }}
-          >
-            systems
-          </span>{' '}
-          <span className='hero-description-word inline-block'>and</span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.cyan }}
-          >
-            React
-          </span>{' '}
-          <span className='hero-description-word inline-block'>component</span>{' '}
-          <span className='hero-description-word inline-block'>libraries</span>{' '}
-          <span className='hero-description-word inline-block'>that</span>{' '}
-          <span className='hero-description-word inline-block'>teams</span>{' '}
-          <span className='hero-description-word inline-block'>actually</span>{' '}
-          <span className='hero-description-word inline-block'>want</span>{' '}
-          <span className='hero-description-word inline-block'>to</span>{' '}
-          <span className='hero-description-word inline-block'>use.</span>{' '}
-          <span className='hero-description-word inline-block'>I</span>{' '}
-          <span className='hero-description-word inline-block'>build</span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.pink }}
-          >
-            open source.
-          </span>
+          {TAGLINE.map(({ word, role }, i) => (
+            <Fragment key={word}>
+              {i > 0 && ' '}
+              <span
+                className='hero-description-word inline-block'
+                style={
+                  role ?
+                    { color: MONOKAI.foreground, letterSpacing: '0.01em' }
+                  : undefined
+                }
+              >
+                {word}
+              </span>
+            </Fragment>
+          ))}
         </p>
 
         {/* Skill badges - minimal, background only, no border, no hover */}
