@@ -1,26 +1,9 @@
-import type { Metadata } from 'next'
-import CaseStudyLayout from '@/components/CaseStudyLayout'
-import {
-  createCaseStudyMdxComponents,
-} from '@/components/mdx/CaseStudyMdxComponents'
-import { extractCaseStudySections } from '@/lib/content/case-study-sections'
-import { getCaseStudyBySlug } from '@/lib/content/case-studies'
-import { getCategoryColor } from '@/lib/project-categories'
+import CaseStudyPage, { getCaseStudyMetadata } from '@/components/case-study/CaseStudyPage'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const { title, description } = await getCaseStudyBySlug('skydio')
-  return { title: `${title} | Mark Learst`, description }
+export function generateMetadata() {
+  return getCaseStudyMetadata('skydio')
 }
 
-export default async function SkydioPage() {
-  const { Content, links, ...frontmatter } = await getCaseStudyBySlug('skydio')
-
-  const accent = getCategoryColor(frontmatter.categoryColor)
-  const mdxComponents = createCaseStudyMdxComponents(accent)
-  const content = Content({ components: mdxComponents })
-  const sections = extractCaseStudySections(content)
-
-  return (
-    <CaseStudyLayout {...frontmatter} links={links} sections={sections} />
-  )
+export default function SkydioPage() {
+  return <CaseStudyPage slug='skydio' />
 }
