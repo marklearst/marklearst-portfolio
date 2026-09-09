@@ -2,7 +2,7 @@ import { colorWithAlpha } from '@/lib/color-alpha'
 import { ImageResponse } from 'next/og'
 import { getCaseStudyBySlug } from '@/lib/content/case-studies'
 import { MONOKAI } from '@/lib/monokai-colors'
-import { getCategoryColor } from '@/lib/project-categories'
+import { getCategoryColor } from '@/lib/category-colors'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 

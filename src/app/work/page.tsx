@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import Footer from '@/components/Footer'
-import WorkCatalog from '@/components/WorkCatalog'
-import styles from '@/components/WorkCatalog.module.css'
+import Footer from '@/components/shell/Footer'
+import WorkCatalog from '@/components/work/WorkCatalog'
+import styles from '@/components/work/WorkCatalog.module.css'
 
 export const metadata: Metadata = {
   title: 'Work - Mark Learst',
