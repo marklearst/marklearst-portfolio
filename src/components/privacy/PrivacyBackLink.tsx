@@ -4,10 +4,10 @@ import { ArrowLeftIcon } from '@/components/ui/Icon'
 
 import { useMemo } from 'react'
 import Link from 'next/link'
-import { useLastRoute } from '@/hooks/useNavigationHistory'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import { useLastRoute } from '@/components/navigation/useNavigationHistory'
+import { trackNavigationClick } from '@/lib/analytics'
 import { PROJECTS_BY_ROUTE, PROJECTS_BY_SLUG } from '@/data/projects'
-import styles from '@/app/privacy/PrivacyPage.module.css'
+import styles from '@/components/privacy/PrivacyPage.module.css'
 
 const getLabelFromPath = (path: string) => {
   if (!path || path === '/') return 'home'
@@ -34,7 +34,6 @@ const getLabelFromPath = (path: string) => {
 
 export default function PrivacyBackLink() {
   const lastRoute = useLastRoute()
-  const { trackNavigationClick } = useAnalytics()
 
   const { href, label } = useMemo(() => {
     const safeRoute = lastRoute || '/'

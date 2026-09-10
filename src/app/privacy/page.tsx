@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import styles from './PrivacyPage.module.css'
-import PrivacyBackLink from '@/components/ui/PrivacyBackLink'
-import Footer from '@/components/Footer'
+import styles from '../../components/privacy/PrivacyPage.module.css'
+import PrivacyBackLink from '@/components/privacy/PrivacyBackLink'
+import Footer from '@/components/shell/Footer'
 
 export const metadata: Metadata = {
   title: 'Privacy - Mark Learst',
@@ -27,7 +27,7 @@ export default function PrivacyPage() {
         <div className={styles.content}>
           <section>
             <h2>What I collect</h2>
-            <ul>
+            <ul role='list'>
               <li>Anonymous page views and route transitions</li>
               <li>
                 Interaction events like clicks, scroll depth, and section
@@ -42,9 +42,8 @@ export default function PrivacyPage() {
           <section>
             <h2>Why I collect it</h2>
             <p>
-              The goal is clarity, not surveillance. I use the data to improve
-              the site, learn which work is useful, and write more of what
-              people actually want to read.
+              I use the data to improve the site and see which projects and
+              articles people find useful.
             </p>
           </section>
 
@@ -74,7 +73,7 @@ export default function PrivacyPage() {
         </div>
       </div>
 
-      <Footer />
+      <Footer showPrivacyLink={false} />
     </main>
   )
 }
