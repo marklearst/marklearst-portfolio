@@ -61,9 +61,9 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'DESIGN SYSTEMS',
     categoryColor: 'purple',
     summary:
-      "Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance.",
+      "Shared React components and brand-specific token themes for Chevrolet, Buick, GMC, and Cadillac, with a WCAG 2.1 AA accessibility target.",
     description:
-      "Built GM's first cross-brand React design system achieving 60% component reuse across 4 brands (Chevy, Buick, GMC, Cadillac) with WCAG 2.1 AA compliance embedded into every component.",
+      "Led design and implementation of GM's cross-brand React design system, with shared components, brand-specific token themes, and a WCAG 2.1 AA accessibility target.",
     role: 'Senior Design Engineer, Lead - Authored Design Token Governance Document',
     timeline: 'Jun 2021 - Sep 2024 (3+ years)',
     publishedAt: '2024-09-01',
@@ -73,7 +73,7 @@ export const PROJECTS: ProjectMeta[] = [
       'React',
       'React Native',
       'TypeScript',
-      'Storybook 10',
+      'Storybook',
       'Style Dictionary',
       'Design Tokens',
       'WCAG 2.1 AA',
@@ -87,7 +87,7 @@ export const PROJECTS: ProjectMeta[] = [
     terminal: {
       command: 'cd /work/aurora-gm',
       loading: 'Loading design system...',
-      packages: ['react@18.2.0', 'react-dom@18.2.0', 'storybook@9.0.15'],
+      packages: ['react', 'react-dom', 'storybook'],
       output: 'Ready',
       outputWithCheck: true,
       durationKey: 'workRouteWithPackages',
@@ -183,7 +183,7 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'DEVELOPER TOOLS',
     categoryColor: 'cyan',
     summary:
-      'DTCG token pipeline that turns design system architecture into a checkable contract. Layer rules, identity-preserving diffs, and emitters for CSS, Tailwind, and TypeScript.',
+      'Token architecture rules, Figma-export diffs that preserve identity, and DTCG, CSS, Tailwind, and TypeScript output from one pipeline.',
     description:
       'DTCG token pipeline that turns design system architecture into a checkable contract. Six packages covering a CLI, token graph, emitters for CSS, Tailwind and TypeScript, React hooks, and an MCP server.',
     role: 'Creator & Maintainer',
@@ -386,7 +386,7 @@ export const PROJECTS: ProjectMeta[] = [
     summary:
       'Built React/Storybook component library and onboarded product and engineering teams on adoption patterns for autonomous drone platform.',
     description:
-      "Built production-grade React widget system for Skydio's Rivit design language, enabling real-time drone control with config-driven UI architecture and Storybook documentation.",
+      "Built a React mission-control widget implementing Skydio's Rivit design language, with configurable actions, shared state, and Storybook documentation.",
     role: 'Frontend Consultant - Component Architecture & Storybook',
     timeline: '2024 (Contract)',
     publishedAt: '2024-05-01',
@@ -394,8 +394,8 @@ export const PROJECTS: ProjectMeta[] = [
     technologies: [
       'React',
       'TypeScript',
-      'Storybook 9',
-      'Tailwind CSS v4',
+      'Storybook',
+      'Tailwind CSS',
       'Vite',
       'Config-Driven UI',
     ],
@@ -406,12 +406,7 @@ export const PROJECTS: ProjectMeta[] = [
     terminal: {
       command: 'cd /work/skydio',
       loading: 'Loading Storybook...',
-      packages: [
-        'react@19.1.0',
-        'react-dom@^19.1.0',
-        'storybook@9.0.15',
-        'tailwindcss@4.1.11',
-      ],
+      packages: ['react', 'react-dom', 'storybook', 'tailwindcss'],
       output: 'Ready',
       outputWithCheck: true,
       durationKey: 'workRouteWithPackages',

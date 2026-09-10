@@ -3,65 +3,72 @@ slug: skydio
 title: Skydio Autonomy Widget
 category: CONSULTING
 categoryColor: yellow
-description: "Built production-grade React widget system for Skydio's Rivit design language, enabling real-time drone control with config-driven UI architecture and Storybook documentation."
+description: "Built a React mission-control widget implementing Skydio's Rivit design language, with configurable actions, shared state, and Storybook documentation."
 role: "Frontend Consultant - Component Architecture & Storybook"
 timeline: "2024 (Contract)"
 technologies:
   - React
   - TypeScript
-  - Storybook 9
-  - Tailwind CSS v4
+  - Storybook
+  - Tailwind CSS
   - Vite
   - Config-Driven UI
 links:
-  - label: GitHub (private)
-    href: ""
-    icon: github
-  - label: Storybook (password)
-    href: https://skydio-storybook-protected.vercel.app
+  - label: Storybook
+    href: https://skydio-autonomy-widget.vercel.app/
     icon: external
 impact:
-  - metric: Production
-    description: "Delivered widget system for real-time autonomous drone control"
+  - metric: Delivered
+    description: "React widget system for autonomous drone mission controls"
   - metric: Storybook
-    description: "Comprehensive component documentation with accessibility testing"
+    description: "Interactive component documentation with accessibility testing"
   - metric: Config-Driven
-    description: "Action-based architecture enabling UI-as-API pattern"
+    description: "Declarative action configuration and runtime state integration"
 gradient: from-cyan-500/20 via-blue-500/10 to-transparent
 ---
 
-<CaseStudySection title="The Challenge">
+<CaseStudySection title="Overview">
   <div className="space-y-6">
+    <figure className="mb-12">
+      <a href="https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--orbit-mode" className="block rounded-[8px]">
+        <Image
+          src="/images/skydio-orbit-story.jpg"
+          alt="Skydio Autonomy Widget in Storybook's Orbit Mode, showing Orbiting status, a circular timer, Stop control, and orbit slider."
+          width={1280}
+          height={720}
+          sizes="(max-width: 1072px) calc(100vw - 48px), 1024px"
+          className="h-auto w-full rounded-[8px]"
+        />
+      </a>
+      <figcaption className="mt-3 text-sm leading-relaxed text-white/60">
+        {'Orbit Mode in the public Autonomy Widget Storybook. '}
+        <a href="https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--orbit-mode" className="underline underline-offset-4">
+          {'Explore the component.'}
+        </a>
+      </figcaption>
+    </figure>
     <CaseStudyParagraph>
-      Skydio, a leading autonomous drone company, needed a production-grade
-      React widget for their Rivit design language to control real-time drone
-      missions. The challenge required:
+      The <strong>Skydio Autonomy Widget</strong> is a React interface for
+      drone mission controls. As a frontend consultant, I built its component
+      architecture and Storybook documentation, implementing Skydio's Rivit
+      design language. The delivered widget supports Waypoint, RTD, Orbit,
+      and Tracking mission types.
     </CaseStudyParagraph>
-    <CaseStudyMutedList className="space-y-3">
-      <li>Highly composable widget system supporting multiple mission types (Waypoint, RTD, Orbit, Tracking)</li>
-      <li>Real-time UI updates synchronized with drone state</li>
-      <li>Config-driven architecture for seamless Figma-to-code parity</li>
-      <li>Responsive design adapting from mobile to desktop control interfaces</li>
-      <li>Comprehensive Storybook documentation for product and engineering teams</li>
-    </CaseStudyMutedList>
     <CaseStudyParagraph>
-      The widget needed to function as a "UI microservice" that could be
-      integrated into Skydio's drone control systems with minimal coupling.
+      The widget was designed as a "UI microservice" with minimal coupling to
+      Skydio's control systems and layouts for mobile and desktop. The linked
+      Storybook lets reviewers inspect the components, their props, and
+      interactive examples.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="The Solution">
+<CaseStudySection title="Implementation Decisions">
   <div className="space-y-6">
-    <CaseStudyParagraph>
-      I built the <strong>Autonomy Widget</strong> using a config-driven
-      architecture that maps all actions, icons, and controls declaratively--
-      making UI parity with Figma designs effortless.
-    </CaseStudyParagraph>
-
-    <CaseStudySubheading>Config-Driven Architecture</CaseStudySubheading>
+    <CaseStudySubheading className="mt-0">Declare Actions in Configuration</CaseStudySubheading>
     <CaseStudyMutedText>
-      Central action configuration pattern enabling declarative UI:
+      I put each action's icon, label, tooltip, and variant in a shared
+      configuration. Controls read that configuration to render mission actions:
     </CaseStudyMutedText>
 
 <CodeBlock
@@ -88,51 +95,40 @@ const ACTION_CONFIGS = {
 <IconButton {...ACTION_CONFIGS[action]} />`}
 />
 
-    <CaseStudySubheading>State Management Pattern</CaseStudySubheading>
+    <CaseStudySubheading>Separate Mission State from Controls</CaseStudySubheading>
     <CaseStudyMutedText>
-      React Context Provider pattern for unified widget state:
+      A React Context provider manages mission type, timer, and action states.
+      Remote state synchronization, event subscription hooks for analytics
+      telemetry, and runtime config injection connect the widget to the
+      surrounding application.
     </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Central state provider managing mission type, timer, and action states</li>
-      <li>Remote state synchronization for real-time drone updates</li>
-      <li>Event subscription hooks for analytics telemetry</li>
-      <li>Config injection at runtime for dynamic UI behavior</li>
-    </CaseStudyMutedList>
-
-    <CaseStudySubheading>Component System</CaseStudySubheading>
-    <CaseStudyMutedText>Built highly composable React components:</CaseStudyMutedText>
+    <CaseStudyMutedText>The component system includes:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li><strong>Dynamic Timer:</strong> Circular countdown ring with animated icon transitions</li>
       <li><strong>OrbitSlider:</strong> Dual progress indicators with chevron controls</li>
       <li><strong>IconButton:</strong> Shared component with icons, tooltips, and labels</li>
       <li><strong>StatusMessage:</strong> Expandable area for mission updates</li>
-      <li><strong>Tooltip System:</strong> Custom accessible tooltips with ARIA support</li>
+      <li><strong>Tooltip System:</strong> Custom tooltips with ARIA support</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Responsive Design</CaseStudySubheading>
-    <CaseStudyMutedText>Adaptive layouts using Tailwind CSS v4:</CaseStudyMutedText>
+    <CaseStudySubheading>Make Component States Reviewable</CaseStudySubheading>
+    <CaseStudyMutedText>
+      I documented the components in Storybook with prop tables and usage
+      examples for product and engineering teams. The stories include:
+    </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Compact mobile mode with minimal controls</li>
-      <li>Expanded desktop mode showing full action sets</li>
-      <li>Design tokens synced with Figma Variables</li>
-      <li>Responsive by default with mobile-first approach</li>
-    </CaseStudyMutedList>
-
-    <CaseStudySubheading>Storybook Documentation</CaseStudySubheading>
-    <CaseStudyMutedText>Comprehensive component playground:</CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Storybook 9 with Vite integration for fast builds</li>
-      <li>Accessibility addon (@storybook/addon-a11y) for WCAG testing</li>
+      <li>Storybook with Vite integration</li>
+      <li>Accessibility addon (@storybook/addon-a11y) for automated accessibility checks</li>
       <li>Theme switching addon for light/dark mode validation</li>
       <li>Component Docs tabs with prop tables and usage examples</li>
     </CaseStudyMutedList>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Technical Implementation">
+<CaseStudySection title="Implementation & Handoff">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">Barrel Architecture Pattern</CaseStudySubheading>
-    <CaseStudyMutedText>Modular exports for clean import paths:</CaseStudyMutedText>
+    <CaseStudySubheading className="mt-0">Component Exports</CaseStudySubheading>
+    <CaseStudyMutedText>Shared exports give consumers one component import path:</CaseStudyMutedText>
 
 <CodeBlock
   language="typescript"
@@ -150,25 +146,14 @@ import IconButton from '@/components/IconButton'`}
 />
 
     <CaseStudySubheading>Figma-to-Code Workflow</CaseStudySubheading>
-    <CaseStudyMutedText>Streamlined design handoff:</CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Figma-exported SVG icons imported as React components</li>
-      <li>Design tokens from Figma Variables mapped to Tailwind config</li>
-      <li>Config-driven approach maintains 1:1 parity with Figma designs</li>
-      <li>Minimal translation layer between design and code</li>
-    </CaseStudyMutedList>
-
-    <CaseStudySubheading>Integration Patterns</CaseStudySubheading>
-    <CaseStudyMutedText>Widget functions as "UI microservice":</CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Remote state synchronization with drone control systems</li>
-      <li>Config injection at runtime for dynamic behavior</li>
-      <li>Event subscription hooks for analytics telemetry</li>
-      <li>Minimal coupling to external systems</li>
-    </CaseStudyMutedList>
+    <CaseStudyMutedText>
+      Figma-exported SVG icons became React components, and Figma Variables
+      mapped to the Tailwind config. Tailwind CSS layouts provide compact
+      mobile controls and an expanded desktop mode with full action sets.
+    </CaseStudyMutedText>
 
     <CaseStudySubheading>Build & Tooling</CaseStudySubheading>
-    <CaseStudyMutedText>Modern development stack:</CaseStudyMutedText>
+    <CaseStudyMutedText>The development setup includes:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Vite for fast builds and HMR</li>
       <li>pnpm workspace management</li>
@@ -179,42 +164,12 @@ import IconButton from '@/components/IconButton'`}
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Impact & Deliverables">
+<CaseStudySection title="Deliverables">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      The Autonomy Widget established a production-grade foundation for Skydio's
-      drone control interfaces:
-    </CaseStudyParagraph>
-    <CaseStudyMutedList className="space-y-4">
-      <li>
-        <strong>Production-ready widget system</strong> powering real-time
-        autonomous drone missions (Waypoint, RTD, Orbit, Tracking)
-      </li>
-      <li>
-        <strong>Config-driven architecture</strong> enabling effortless
-        Figma-to-code parity through declarative ACTION_CONFIGS mapping
-      </li>
-      <li>
-        <strong>Storybook 9 documentation</strong> with accessibility testing,
-        prop tables, and interactive examples for team onboarding
-      </li>
-      <li>
-        <strong>Responsive design</strong> adapting from compact mobile controls
-        to expanded desktop interfaces
-      </li>
-      <li>
-        <strong>UI-as-API pattern</strong> functioning as microservice with
-        remote state sync and event hooks
-      </li>
-      <li>
-        <strong>Team onboarding</strong> training product and engineering teams
-        on component patterns and adoption workflows
-      </li>
-    </CaseStudyMutedList>
-    <CaseStudyParagraph className="mt-8">
-      Delivered a composable, well-documented component library that accelerated
-      Skydio's product development while maintaining design system consistency
-      across their autonomous drone platform.
+      I delivered the configurable widget system, responsive components, and
+      Storybook documentation, and trained product and engineering teams on
+      component patterns and adoption workflows.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
