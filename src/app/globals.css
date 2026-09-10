@@ -15,23 +15,9 @@ html {
 }
 
 .site-header {
-  background: #101010;
-}
-
-.site-header::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  inset-inline: 0;
-  height: 2rem;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    #101010,
-    rgb(16 16 16 / 0.85) 25%,
-    rgb(16 16 16 / 0.4) 60%,
-    rgb(16 16 16 / 0)
-  );
+  background: #101010d4;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .site-header a[aria-label='Mark Learst - Home'] {
