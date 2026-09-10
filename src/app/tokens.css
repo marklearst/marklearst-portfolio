@@ -27,7 +27,7 @@
   --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace;
   --token-font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --token-font-serif: ui-serif, Georgia, serif;
-  --token-font-body: MonoLisa, 'SF Mono', Consolas, monospace;
+  --token-font-body: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --token-font-display: MonoLisa, 'SF Mono', Consolas, monospace;
   --token-font-ui: ui-sans-serif, system-ui, -apple-system, sans-serif;
   --token-space-xs: 4px;

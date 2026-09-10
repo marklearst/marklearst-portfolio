@@ -68,7 +68,7 @@ export default function EnhancedHero() {
   return (
     <section
       ref={heroRef}
-      className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-40 sm:pt-0 overflow-hidden'
+      className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-40 sm:pt-32 overflow-hidden'
     >
       {/* Gradient fade at bottom for smooth transition */}
       <div
@@ -156,7 +156,7 @@ export default function EnhancedHero() {
 
         {/* TAGLINE - Split word animation with semantic color accents */}
         <p
-          className='hero-description text-[clamp(20px,2.5vw,32px)] leading-[1.4] mb-6 max-w-5xl opacity-0 font-mono'
+          className='hero-description text-[clamp(20px,2.5vw,32px)] leading-[1.4] mb-6 max-w-5xl opacity-0 font-body'
           style={{
             color: `${MONOKAI.foreground}dd`,
             fontWeight: 400,
@@ -253,7 +253,7 @@ export default function EnhancedHero() {
         {/* BIO - semantic color for each mention */}
         <div className='hero-bio relative mb-10 opacity-0'>
           <p
-            className='text-[clamp(15px,1.6vw,18px)] leading-relaxed max-w-4xl font-mono'
+            className='text-[clamp(15px,1.6vw,18px)] leading-relaxed max-w-4xl font-body'
             style={{ color: `${MONOKAI.foreground}99` }}
           >
             At <span style={{ color: MONOKAI.foreground }}>GM</span>, I
@@ -269,7 +269,7 @@ export default function EnhancedHero() {
           </p>
           {/* Current project */}
           <p
-            className='mt-3 text-xs font-mono'
+            className='mt-3 text-xs font-body'
             style={{ color: `${MONOKAI.foreground}50` }}
           >
             Building{' '}
