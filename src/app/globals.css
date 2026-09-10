@@ -6,7 +6,7 @@
 
 /* Base styles */
 body {
-  @apply bg-black text-white/80 font-mono;
+  @apply bg-black text-white/80 font-body;
   font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
@@ -313,11 +313,13 @@ html[data-transitioning='true'] {
 }
 
 .timeline-year {
+  @apply font-mono;
   font-weight: 500;
   color: #fcfcfa;
 }
 
 .timeline-role {
+  @apply font-mono;
   color: rgba(252, 252, 250, 0.7);
   font-size: 0.9375rem;
 }

@@ -55,7 +55,7 @@ export function useMDXComponents(components: MDXComponents = {}) {
     // Table data cell - comfortable padding, muted text
     td: ({ children, ...props }: ComponentPropsWithoutRef<'td'>) => (
       <td
-        className="px-4 py-3 text-white/70 whitespace-nowrap"
+        className="px-4 py-3 font-body text-white/70 whitespace-nowrap"
         {...props}
       >
         {children}
