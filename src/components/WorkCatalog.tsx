@@ -182,7 +182,7 @@ export default function WorkCatalog() {
         <h2 className='work-title text-[clamp(48px,7vw,96px)] font-mono font-bold! lowercase leading-[0.9] mb-6'>
           All work
         </h2>
-        <p className='work-summary mt-4 max-w-none font-mono text-[clamp(16px,2vw,22px)] leading-relaxed text-white/70'>
+        <p className='work-summary mt-4 max-w-none font-body text-[clamp(16px,2vw,22px)] leading-relaxed text-white/70'>
           Everything I ship lives here, design systems, React UI architecture,
           tokens, Storybook docs, accessibility work, motion experiments, and
           the tooling that makes teams faster. Some projects are shipped in
@@ -293,7 +293,7 @@ export default function WorkCatalog() {
             </div>
           ))}
         </div>
-      : <div className='rounded-2xl border border-white/10 bg-white/5 p-8 text-center font-mono text-sm text-white/60'>
+      : <div className='rounded-2xl border border-white/10 bg-white/5 p-8 text-center font-body text-sm text-white/60'>
           No projects match those filters.
         </div>
       }

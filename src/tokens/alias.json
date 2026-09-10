@@ -47,7 +47,7 @@
     }
   },
   "font": {
-    "body": { "$type": "fontFamily", "$value": "{font.mono}" },
+    "body": { "$type": "fontFamily", "$value": "{font.sans}" },
     "display": { "$type": "fontFamily", "$value": "{font.mono}" },
     "ui": { "$type": "fontFamily", "$value": "{font.sans}" }
   }

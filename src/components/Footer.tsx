@@ -242,7 +242,7 @@ export default function Footer() {
             <h3 className='text-3xl font-mono lowercase mb-4 tracking-tight'>
               marklearst
             </h3>
-            <p className='text-white/50 text-sm leading-relaxed mb-6 font-mono whitespace-normal break-normal text-balance'>
+            <p className='text-white/50 text-sm leading-relaxed mb-6 font-body whitespace-normal break-normal text-balance'>
               I architect design systems, build developer tools designers
               actually want to use, and ship open-source that solves real
               problems.
