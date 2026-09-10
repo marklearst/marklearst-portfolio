@@ -1,5 +1,5 @@
 import { ArrowUpRightIcon } from '@/components/ui/Icon'
-import styles from '../AboutLayout.module.css'
+import styles from './AboutLayout.module.css'
 
 interface ContactCardProps {
   href: string

@@ -25,7 +25,7 @@
 .title {
   margin: 0;
   color: var(--color-ink-primary, #f3eee8);
-  font: 600 var(--text-title, 3.5rem) / var(--leading-title, 1.15) var(--font-body);
+  font: 500 var(--text-title, 3.5rem) / var(--leading-title, 1.15) var(--font-body);
   letter-spacing: var(--tracking-title, -0.015em);
   text-transform: none;
   text-wrap: balance;
@@ -113,6 +113,8 @@
 }
 
 .content :global(.timeline-entries) {
+  display: flex;
+  flex-direction: column;
   gap: 0;
   margin: 0;
 }
@@ -143,7 +145,7 @@
 
 .content :global(.timeline-role) {
   color: var(--color-ink-primary, #f3eee8);
-  font: 600 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
+  font: 500 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
 }
 
 .content :global(.timeline-description) {
@@ -172,7 +174,7 @@
 
 .content :global(.about-skills) dt {
   color: var(--color-ink-primary, #f3eee8);
-  font: 600 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
 }
 
 .content :global(.about-skills) dd {
@@ -189,7 +191,6 @@
   background: var(--color-surface);
 }
 
-
 .content :global(.about-detail-body),
 .content :global(.about-detail-grid) {
   padding-block: 12px 28px;
@@ -200,7 +201,7 @@
 .content :global(.about-detail-grid) h3 {
   margin: 0 0 12px;
   font-size: var(--text-body, 1.125rem);
-  font-weight: 600;
+  font-weight: 500;
   line-height: var(--leading-subheading, 1.35);
 }
 
@@ -228,6 +229,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+
   .contactAction:hover {
     border-color: var(--color-accent-primary, #e6aa79);
     color: var(--color-ink-primary);
@@ -246,23 +248,67 @@
   .content :global(.about-detail-body) a:hover {
     text-decoration-color: var(--color-accent-primary);
   }
-
 }
 
 @media (max-width: 680px) {
-  .container { width: calc(100% - 40px); }
-  .hero { padding-top: 128px; }
-  .summary { font-size: var(--text-body, 1.125rem); }
-  .content :global(.timeline-content) { display: flex; flex-direction: column; gap: 8px; }
-  .content :global(.timeline-entry) { padding-block: 20px; }
-  .content :global(.about-detail-grid) { grid-template-columns: 1fr; }
-  .content :global(.about-skills) > div { grid-template-columns: 1fr; gap: 4px; }
-  .content :global(.about-contact-links) { flex-direction: column; align-items: flex-start; }
+
+  .container {
+    width: calc(100% - 40px);
+  }
+
+  .hero {
+    padding-top: 128px;
+  }
+
+  .summary {
+    font-size: var(--text-body, 1.125rem);
+  }
+
+  .content :global(.timeline-content) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .content :global(.timeline-entry) {
+    padding-block: 20px;
+  }
+
+  .content :global(.about-detail-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  .content :global(.about-skills) > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .content :global(.about-contact-links) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .contactAction,
   .content :global(.about-contact-links) > a {
     transition: none;
   }
+}
+
+/* MDX may wrap multiline text in a paragraph; the timeline owns its type. */
+
+.content :global(.timeline-role) > p,
+.content :global(.timeline-description) > p {
+  font-size: inherit;
+  margin: 0;
+}
+
+.content :global(.timeline-subsection) {
+  margin-bottom: 40px;
+}
+
+.content :global(.timeline-subsection):last-child {
+  margin-bottom: 0;
 }
