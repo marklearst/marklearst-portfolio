@@ -1,8 +1,9 @@
 import path from 'node:path'
 import fs from 'node:fs/promises'
-import type { ComponentType, ReactElement } from 'react'
+import type { MDXContent } from 'mdx/types'
 import matter from 'gray-matter'
 import { estimateReadingTime } from '@/lib/content/reading-time'
+import { orderArtifacts } from '@/lib/content/adjacent-content'
 import TerminalNavigationContent from '@/content/artifacts/terminal-navigation.mdx'
 import VariableDesignStandardSemverContent from '@/content/artifacts/variable-design-standard-semver.mdx'
 import AgenticWorkflowsContent from '@/content/artifacts/agentic-workflows-claude-cursor.mdx'
@@ -26,9 +27,6 @@ export type ArtifactContent = ArtifactFrontmatter & {
   }
   publishedAt: Date
 }
-
-type MDXComponents = Record<string, ComponentType<unknown>>
-type MDXContent = (props: { components?: MDXComponents }) => ReactElement
 
 const CONTENT_ROOT = path.join(process.cwd(), 'src', 'content', 'artifacts')
 
@@ -79,11 +77,7 @@ const resolveArtifact = async (
 export const getArtifacts = async (): Promise<ArtifactContent[]> => {
   const artifacts = await Promise.all(ARTIFACT_ENTRIES.map(resolveArtifact))
 
-  return artifacts.sort((a, b) => {
-    if (a.pinned && !b.pinned) return -1
-    if (!a.pinned && b.pinned) return 1
-    return b.publishedAt.getTime() - a.publishedAt.getTime()
-  })
+  return orderArtifacts(artifacts)
 }
 
 export const getArtifactBySlug = async (slug: string) => {
