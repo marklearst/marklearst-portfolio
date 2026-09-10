@@ -60,6 +60,7 @@ function CodeToggleIcon({
     <svg
       width={size}
       height={size}
+      className='h-11 w-11 sm:h-12 sm:w-12'
       viewBox={`0 0 ${size} ${size}`}
       fill='none'
       style={{
@@ -314,7 +315,7 @@ export default function PrimaryNav() {
   return (
     <nav
       ref={navRef}
-      className='relative flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md pl-5 pr-3 shadow-[0_12px_30px_rgba(0,0,0,0.35)]'
+      className='relative flex items-center justify-between gap-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md px-2 shadow-[0_12px_30px_rgba(0,0,0,0.35)] sm:gap-2 sm:pl-5 sm:pr-3'
       onMouseLeave={() => setHoverKey(null)}
     >
       <div
@@ -350,7 +351,7 @@ export default function PrimaryNav() {
                 location: 'header',
               })
             }}
-            className='primary-nav-link px-2 pt-2 pb-1.5 text-xs font-mono uppercase tracking-wider transition-colors duration-200'
+            className='primary-nav-link flex min-h-11 min-w-11 items-center justify-center px-1 text-xs font-mono uppercase tracking-wider transition-colors duration-200 sm:px-2'
             aria-current={active ? 'page' : undefined}
             style={{
               color: active ? MONOKAI.foreground : `${MONOKAI.foreground}80`,
@@ -382,7 +383,7 @@ export default function PrimaryNav() {
         )
       })}
       <div
-        className='w-px h-10 mr-3 mx-1'
+        className='w-px h-8 shrink-0 mx-1 sm:h-10 sm:mr-3'
         style={{
           background:
             'linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent)',
@@ -392,6 +393,7 @@ export default function PrimaryNav() {
       <button
         type='button'
         onClick={handleToggleNeuralText}
+        className='flex min-h-11 min-w-11 shrink-0 items-center justify-center'
         onMouseEnter={() => setHoverKey(null)}
         aria-label={
           neuralTextVisible ? 'Hide code keywords' : 'Show code keywords'
@@ -407,7 +409,7 @@ export default function PrimaryNav() {
         type='button'
         onClick={toggleOrbs}
         onMouseEnter={() => setHoverKey(null)}
-        className='p-2'
+        className='flex min-h-11 min-w-11 shrink-0 items-center justify-center p-2'
         style={{ color: MONOKAI.foreground }}
         aria-label={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}
         title={orbsVisible ? 'Hide cursor effects' : 'Show cursor effects'}

@@ -63,8 +63,9 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
 
     <CaseStudySubheading className="mt-0">Quick Start (hooks + provider)</CaseStudySubheading>
     <CaseStudyMutedText>
-      A lightweight provider wraps your app while hooks fetch and cache variables
-      with SWR under the hood:
+      The browser consumes approved design-token data exported as JSON in the
+      Figma Variables API response format. Authentication stays in the server
+      or build/export process; credentials are never passed to the browser:
     </CaseStudyMutedText>
     <CodeBlock
       language="tsx"
@@ -72,12 +73,15 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       code={[
         "import { FigmaVarsProvider, useVariables } from '@figma-vars/hooks'",
         "",
-        "const FIGMA_TOKEN = process.env.NEXT_PUBLIC_FIGMA_TOKEN",
-        "const FIGMA_FILE_KEY = 'your-file-key'",
+        "import exportedVariables from './figma-variables.json'",
         "",
         "export function App() {",
         "  return (",
-        "    <FigmaVarsProvider token={FIGMA_TOKEN} fileKey={FIGMA_FILE_KEY}>",
+        "    <FigmaVarsProvider",
+        "      token={null}",
+        "      fileKey={null}",
+        "      fallbackFile={exportedVariables}",
+        "    >",
         "      <Variables />",
         "    </FigmaVarsProvider>",
         "  )",
@@ -131,7 +135,8 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
 
     <CaseStudySubheading>Storybook Integration</CaseStudySubheading>
     <CaseStudyMutedText>
-      Wrap stories once and surface live variables across your component docs:
+      Wrap stories once to use the approved JSON export across your component
+      docs. Refresh the export when approved variables change:
     </CaseStudyMutedText>
     <CodeBlock
       language="tsx"
@@ -141,13 +146,16 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
         "import { FigmaVarsProvider } from '@figma-vars/hooks'",
         "import type { Preview } from '@storybook/react'",
         "",
-        "const FIGMA_TOKEN = process.env.STORYBOOK_FIGMA_TOKEN",
-        "const FIGMA_FILE_KEY = process.env.STORYBOOK_FIGMA_FILE_KEY",
+        "import exportedVariables from './figma-variables.json'",
         "",
         "const preview: Preview = {",
         "  decorators: [",
         "    Story => (",
-        "      <FigmaVarsProvider token={FIGMA_TOKEN} fileKey={FIGMA_FILE_KEY}>",
+        "      <FigmaVarsProvider",
+        "        token={null}",
+        "        fileKey={null}",
+        "        fallbackFile={exportedVariables}",
+        "      >",
         "        <Story />",
         "      </FigmaVarsProvider>",
         "    ),",
