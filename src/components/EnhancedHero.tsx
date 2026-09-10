@@ -1,11 +1,25 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { Fragment, useRef, useEffect, useState } from 'react'
 import { useHeroAnimation } from '@/hooks/useHeroAnimation'
 import { MONOKAI } from '@/lib/monokai-colors'
 import KineticText from '@/components/ui/KineticText'
 import Link from 'next/link'
 import { useAnalytics } from '@/hooks/useAnalytics'
+const HERO_DESCRIPTION = [
+  {
+    text: 'Design engineer and UI architect who sets system direction in code.',
+    color: MONOKAI.foreground,
+  },
+  { text: 'I build' },
+  { text: 'design systems', color: MONOKAI.green },
+  { text: 'from the tokens up, and the governance that keeps' },
+  { text: 'Figma and production React', color: MONOKAI.cyan },
+  { text: 'aligned. When work repeats, I turn it into an' },
+  { text: 'agent workflow', color: MONOKAI.purple },
+  { text: 'with tests and human review before anything ships.' },
+]
+
 // Typewriter component for terminal effect
 function Typewriter({
   text,
@@ -163,67 +177,19 @@ export default function EnhancedHero() {
             perspective: '1000px', // Enable 3D transforms
           }}
         >
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
-          >
-            Principal
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
-          >
-            Design
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.foreground, letterSpacing: '0.01em' }}
-          >
-            Engineer
-          </span>{' '}
-          <span className='hero-description-word inline-block'>who</span>{' '}
-          <span className='hero-description-word inline-block'>builds</span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.green }}
-          >
-            accessible
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.purple }}
-          >
-            design
-          </span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.purple }}
-          >
-            systems
-          </span>{' '}
-          <span className='hero-description-word inline-block'>and</span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.cyan }}
-          >
-            React
-          </span>{' '}
-          <span className='hero-description-word inline-block'>component</span>{' '}
-          <span className='hero-description-word inline-block'>libraries</span>{' '}
-          <span className='hero-description-word inline-block'>that</span>{' '}
-          <span className='hero-description-word inline-block'>teams</span>{' '}
-          <span className='hero-description-word inline-block'>actually</span>{' '}
-          <span className='hero-description-word inline-block'>want</span>{' '}
-          <span className='hero-description-word inline-block'>to</span>{' '}
-          <span className='hero-description-word inline-block'>use.</span>{' '}
-          <span className='hero-description-word inline-block'>I</span>{' '}
-          <span className='hero-description-word inline-block'>build</span>{' '}
-          <span
-            className='hero-description-word inline-block'
-            style={{ color: MONOKAI.pink }}
-          >
-            open source.
-          </span>
+          {HERO_DESCRIPTION.flatMap(({ text, color }) =>
+            text.split(' ').map((word) => ({ word, color })),
+          ).map(({ word, color }, index) => (
+            <Fragment key={index}>
+              {index > 0 && ' '}
+              <span
+                className='hero-description-word inline-block'
+                style={color ? { color } : undefined}
+              >
+                {word}
+              </span>
+            </Fragment>
+          ))}
         </p>
 
         {/* Skill badges - minimal, background only, no border, no hover */}
