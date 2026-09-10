@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import Footer from '@/components/Footer'
+import Footer from '@/components/shell/Footer'
 import styles from './AboutLayout.module.css'
 
 export default function AboutLayout({
