@@ -10,6 +10,43 @@ body {
   font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
+html {
+  scroll-padding-top: 10rem;
+}
+
+.site-header {
+  background: #101010;
+}
+
+.site-header::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  inset-inline: 0;
+  height: 2rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #101010,
+    rgb(16 16 16 / 0.85) 25%,
+    rgb(16 16 16 / 0.4) 60%,
+    rgb(16 16 16 / 0)
+  );
+}
+
+.site-header a[aria-label='Mark Learst - Home'] {
+  display: flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+@media (min-width: 640px) {
+  html {
+    scroll-padding-top: 8rem;
+  }
+}
+
 /* MonoLisa for headings - refined monospaced aesthetic */
 h1 {
   @apply font-mono lowercase text-white;
@@ -73,7 +110,8 @@ select:focus-visible {
 }
 
 .primary-nav-link:focus-visible {
-  outline: none;
+  outline: 2px solid #78dce8;
+  outline-offset: -3px;
   box-shadow: none;
 }
 

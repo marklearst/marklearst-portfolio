@@ -1,6 +1,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import type { MDXComponents } from 'mdx/types'
 import { isValidElement } from 'react'
+import Image from 'next/image'
 import CodeBlock from '@/components/CodeBlock'
 import { CaseStudySection } from '@/components/CaseStudySection'
 import {
@@ -68,6 +69,7 @@ export const createCaseStudyMdxComponents = (accent: string): MDXComponents => {
     CaseStudyParagraph,
     CaseStudyMutedList,
     CodeBlock,
+    Image,
     p: Paragraph,
     // Passthrough anchor - prevents MDX from double-wrapping links
     a: ({ children, ...rest }: ComponentPropsWithoutRef<'a'>) => (

@@ -17,7 +17,7 @@ import NavigationHistoryTracker from '@/components/NavigationHistoryTracker'
 export const metadata: Metadata = {
   metadataBase: new URL('https://marklearst.com'),
   title:
-    'Mark Learst | Principal Design Engineer (Design Systems, React, Accessibility, DX + AI Tooling)',
+    'Mark Learst | Principal Design Engineer (Design Systems, React, Accessibility, DX + AI Agentic Workflow)',
   description:
     'Principal Design Engineer | Design Systems & Design Tokens | Frontend Platform & Architecture | React, TypeScript, Storybook & Component Libraries | Accessibility, Interaction Design & Motion',
   icons: {
@@ -61,11 +61,11 @@ export default function RootLayout({
         <ScrollProgress />
 
         {/* Header with ML logo - staggered entrance */}
-        <header className='fixed top-4 left-4 right-4 sm:top-8 sm:left-8 sm:right-8 z-40 flex items-center justify-between gap-4'>
-          <div className='opacity-0 animate-[fadeIn_0.5s_ease-out_0.8s_forwards]'>
+        <header className='site-header fixed top-0 inset-x-0 z-40 isolate flex flex-wrap items-center justify-between gap-2 px-4 pt-4 pb-3 sm:flex-nowrap sm:gap-4 sm:px-8 sm:pt-8'>
+          <div className='pointer-events-auto flex min-h-11 items-center opacity-0 animate-[fadeIn_0.5s_ease-out_0.8s_forwards]'>
             <ParticleHeader />
           </div>
-          <div className='opacity-0 animate-[fadeIn_0.5s_ease-out_1s_forwards]'>
+          <div className='pointer-events-auto w-full opacity-0 animate-[fadeIn_0.5s_ease-out_1s_forwards] sm:w-auto'>
             <PrimaryNav />
           </div>
         </header>

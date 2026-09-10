@@ -68,7 +68,7 @@ export default function EnhancedHero() {
   return (
     <section
       ref={heroRef}
-      className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-24 sm:pt-0 overflow-hidden'
+      className='relative min-h-screen flex flex-col items-center justify-start sm:justify-center px-6 pt-40 sm:pt-0 overflow-hidden'
     >
       {/* Gradient fade at bottom for smooth transition */}
       <div
@@ -259,22 +259,22 @@ export default function EnhancedHero() {
             At <span style={{ color: MONOKAI.foreground }}>GM</span>, I
             architected Aurora serving 4 brands with{' '}
             <span style={{ color: MONOKAI.purple }}>60% component reuse</span>{' '}
-            and <span style={{ color: MONOKAI.green }}>WCAG 2.2 AA</span>{' '}
-            compliance. I ship{' '}
+            and a <span style={{ color: MONOKAI.green }}>WCAG 2.1 AA</span>{' '}
+            accessibility target. I ship{' '}
             <span style={{ color: MONOKAI.pink }}>open-source</span> with real
             adoption:{' '}
             <span style={{ color: MONOKAI.green }}>a11y Companion</span> (400+
             users), <span style={{ color: MONOKAI.cyan }}>FigmaVars Hooks</span>
             , <span style={{ color: MONOKAI.pink }}>Diabetic Utils</span>.
           </p>
-          {/* VDS teaser */}
+          {/* Current project */}
           <p
             className='mt-3 text-xs font-mono'
             style={{ color: `${MONOKAI.foreground}50` }}
           >
             Building{' '}
             <a
-              href='https://variable-design-standard.vercel.app/'
+              href='https://primitree.com'
               target='_blank'
               rel='noopener noreferrer'
               className='transition-colors hover:underline'
@@ -286,9 +286,9 @@ export default function EnhancedHero() {
                 (e.currentTarget.style.color = MONOKAI.purple)
               }
             >
-              Variable Design Standard
+              Primitree
             </a>{' '}
-            — spec-driven design token governance.
+            with token architecture rules a build can check.
           </p>
         </div>
 
