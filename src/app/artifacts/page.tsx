@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import ArtifactCard from '@/components/ArtifactCard'
-import Footer from '@/components/Footer'
+import ArtifactCard from '@/components/artifacts/ArtifactCard'
+import Footer from '@/components/shell/Footer'
 import { getArtifacts } from '@/lib/content/artifacts'
-import styles from '@/components/ArtifactLayout.module.css'
+import styles from '@/components/artifacts/ArtifactLayout.module.css'
 
 export const metadata: Metadata = {
   title: 'Artifacts - Mark Learst',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ArtifactsPage() {
-  const artifacts = (await getArtifacts()).sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime())
+  const artifacts = await getArtifacts()
   return (
     <main className={styles.page}>
       <div className={`${styles.container} ${styles.index}`}>
