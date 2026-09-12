@@ -156,7 +156,7 @@ export default function EnhancedHero() {
           </div>
         </div>
 
-        {/* NAME - Clean, powerful, with kinetic hover effect */}
+        {/* NAME - letter-split for the load-in reveal */}
         <div ref={nameBoxRef} className='mb-6 opacity-0'>
           <h1
             className='text-[clamp(36px,12vw,84px)] sm:text-[clamp(64px,10vw,140px)] leading-[0.9] font-mono tracking-[-0.03em] sm:tracking-[-0.02em] whitespace-nowrap'
@@ -169,7 +169,7 @@ export default function EnhancedHero() {
           </h1>
         </div>
 
-        {/* TAGLINE - Split word animation with semantic color accents */}
+        {/* TAGLINE - one span per word so the intro can stagger them */}
         <p
           className='hero-description text-[clamp(20px,2.5vw,32px)] leading-[1.4] mb-6 max-w-5xl opacity-0 font-mono'
           style={{
