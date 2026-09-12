@@ -1,6 +1,7 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useId } from 'react'
+import { useAnimatedSelection } from '@/hooks/useAnimatedSelection'
 import {
   A11Y_DEMO_SAMPLE_DATE,
   A11Y_DEMO_SCENARIOS,
@@ -22,7 +23,7 @@ interface A11yScenarioDemoProps {
 
 export function A11yScenarioDemo({ className = '' }: A11yScenarioDemoProps) {
   const id = useId()
-  const [selectedId, setSelectedId] = useState<A11yDemoScenarioId>('ready-for-handoff')
+  const { value: selectedId, motion, select } = useAnimatedSelection<A11yDemoScenarioId>('ready-for-handoff')
   const selected = demos.find((demo) => demo.scenario.id === selectedId)!
 
   return (
@@ -39,14 +40,14 @@ export function A11yScenarioDemo({ className = '' }: A11yScenarioDemoProps) {
             type="button"
             aria-pressed={selectedId === scenario.id}
             aria-controls={`${id}-evidence`}
-            onClick={() => setSelectedId(scenario.id)}
+            onClick={event => select(scenario.id, event.detail > 0)}
           >
             {scenario.label}
           </button>
         ))}
       </div>
 
-      <div id={`${id}-evidence`} className={styles.panels}>
+      <div id={`${id}-evidence`} className={styles.panels} data-motion={motion}>
         {demos.map(({ scenario, contrast, contrastRatio, recordedKinds, partialEvidence, record }) => {
           const active = scenario.id === selectedId
           const { widget } = scenario
