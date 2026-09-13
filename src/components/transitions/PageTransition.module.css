@@ -1,0 +1,6 @@
+/* This is a programmatic focus target for the skip link and route changes.
+   Interactive elements retain their own visible focus treatment. */
+
+.surface:focus {
+  outline: none;
+}
