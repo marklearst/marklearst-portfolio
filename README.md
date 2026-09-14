@@ -2,57 +2,50 @@
 
 Coder to the core, think like a designer.
 
-This is my portfolio and a living build log. I am a principal design engineer who ships design systems, React UI architecture, and accessibility-first interfaces that hold up in production. I care about performance, motion with intent, and making the handoff between design and code feel invisible.
+Design systems, React component libraries, developer tools, and working interface examples. Case studies and articles are authored in MDX.
 
-What you will find here:
+## Stack
 
-- Case studies and artifacts written in MDX so the work stays close to the code.
-- A Monokai-inspired visual system and terminal-style navigation.
-- A command palette for fast navigation.
+- Next.js 16 App Router, React 19, and TypeScript
+- CSS Modules for component styles, Tailwind CSS 4 for existing utilities
+- Style Dictionary for generated token CSS
+- Wotfard for reading and MonoLisa for code
+- GlucoseIQ for the interactive glucose example
 
-## Tech
+See [Architecture](./ARCHITECTURE.md) for ownership, component contracts, and the server/client boundary. See [Token source](./src/tokens/README.md) for generation and validation.
 
-- [Next.js](https://nextjs.org) 16 (App Router), [React](https://react.dev) 19, [TypeScript](https://www.typescriptlang.org)
-- [Style Dictionary](https://github.com/amzn/style-dictionary), [Variables Design Standard](https://variable-design-standard.vercel.app), [FigmaVars Hooks](https://github.com/marklearst/figma-vars-hooks)
-- [Tailwind CSS](https://tailwindcss.com) v4, [GSAP](https://greensock.com/gsap/), [Three.js](https://threejs.org)
-- [Zustand](https://zustand-demo.pmnd.rs/), [Lenis](https://lenis.darkroom.engineering/)
+## Development
 
-## Content architecture
+Use Node.js 24 or later and the pnpm version declared in `package.json`.
 
-- About: `src/content/about.mdx`
-- Artifacts: `src/content/artifacts/*.mdx`
-- Case studies: `src/content/case-studies/*.mdx`
-- Content loaders: `src/lib/content/*`
-- MDX components: `src/components/mdx/*`
-
-If you add a new case study, create the MDX file and register it in `src/lib/content/case-studies.tsx`.
-
-## Routes
-
-```
-Route (app)
-┌ ○ /
-├ ○ /_not-found
-├ ○ /about
-├ ○ /artifacts
-├ ● /artifacts/[slug]
-│ ├ /artifacts/variable-design-standard-semver
-│ └ /artifacts/terminal-navigation
-├ ○ /privacy
-├ ○ /work/a11y-companion
-├ ○ /work/aurora-gm
-├ ○ /work/diabetic-utils
-├ ○ /work/figmavars-hooks
-├ ○ /work/skydio
-└ ○ /work/variable-design-standard
-```
-
-## Run locally
-
-```bash
+```sh
 pnpm install
 pnpm dev
 ```
+
+Licensed Wotfard webfont binaries are supplied separately in `public/fonts/wotfard/`. They are excluded from Git. The build checks for the original files; it does not convert or subset them. See the README in that directory for the required filenames.
+
+## Verification
+
+```sh
+pnpm check
+pnpm build
+```
+
+`check` runs ESLint, TypeScript, behavior tests, and generated-token drift detection. `build` also verifies the licensed fonts and token output before building every route.
+
+The recorded Primitree demo has an optional fresh-CLI replay test. Without `PRIMITREE_DEMO_CLI`, that test is reported as skipped; the recorded-result tests still run.
+
+## Content
+
+- About: `src/content/about.mdx`
+- Case studies: `src/content/case-studies/*.mdx`
+- Articles: `src/content/artifacts/*.mdx`
+- Loaders and registries: `src/lib/content/`
+- Project catalog and display order: `src/data/projects.ts`
+- MDX rendering: `src/components/mdx/`
+
+Case studies use explicit `/work/<slug>` routes with a shared server composition. Articles use `/artifacts/[slug]` and their registered frontmatter slugs. See the architecture guide before adding a new entry so catalog and adjacent navigation stay aligned.
 
 ## Contact
 
