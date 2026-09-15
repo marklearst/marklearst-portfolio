@@ -225,16 +225,14 @@ export default function EnhancedHero() {
             className='text-[clamp(15px,1.6vw,18px)] leading-relaxed max-w-4xl font-mono'
             style={{ color: `${MONOKAI.foreground}99` }}
           >
-            At <span style={{ color: MONOKAI.foreground }}>GM</span>, I
-            architected Aurora serving 4 brands with{' '}
-            <span style={{ color: MONOKAI.purple }}>60% component reuse</span>{' '}
-            and <span style={{ color: MONOKAI.green }}>WCAG 2.2 AA</span>{' '}
-            compliance. I ship{' '}
-            <span style={{ color: MONOKAI.pink }}>open-source</span> with real
-            adoption:{' '}
-            <span style={{ color: MONOKAI.green }}>a11y Companion</span> (400+
-            users), <span style={{ color: MONOKAI.cyan }}>FigmaVars Hooks</span>
-            , <span style={{ color: MONOKAI.pink }}>Diabetic Utils</span>.
+            I build{' '}
+            <span style={{ color: MONOKAI.purple }}>design systems</span> from
+            the tokens up, and the governance that keeps{' '}
+            <span style={{ color: MONOKAI.foreground }}>Figma</span> and
+            production <span style={{ color: MONOKAI.cyan }}>React</span>{' '}
+            aligned. When work repeats, I turn it into an{' '}
+            <span style={{ color: MONOKAI.yellow }}>agent workflow</span> with
+            tests and human review before anything ships.
           </p>
           {/* VDS teaser */}
           <p
