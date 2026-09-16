@@ -1,17 +1,11 @@
-import { readFile } from 'node:fs/promises'
+import { isWoff2, publicFile, wotfardPaths } from './webfont-paths.mjs'
 
-const css = await readFile(new URL('../src/styles/fonts.css', import.meta.url), 'utf8')
-const paths = [...css.matchAll(/url\(['"]?(\/fonts\/wotfard\/[^'"\s)]+)['"]?\)/g)]
+const paths = await wotfardPaths()
 const failures = []
 
-for (const [, path] of paths) {
-  try {
-    const bytes = await readFile(new URL(`../public${path}`, import.meta.url))
-    if (bytes.subarray(0, 4).toString('ascii') !== 'wOF2') {
-      failures.push(`${path}: expected an original WOFF2 file`)
-    }
-  } catch {
-    failures.push(`${path}: missing licensed font file`)
+for (const path of paths) {
+  if (!(await isWoff2(publicFile(path)))) {
+    failures.push(`${path}: missing licensed font file or not an original WOFF2`)
   }
 }
 
