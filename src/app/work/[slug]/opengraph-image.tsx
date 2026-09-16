@@ -1,7 +1,8 @@
+import { colorWithAlpha } from '@/lib/color-alpha'
 import { ImageResponse } from 'next/og'
 import { getCaseStudyBySlug } from '@/lib/content/case-studies'
 import { MONOKAI } from '@/lib/monokai-colors'
-import { getCategoryColor } from '@/lib/project-categories'
+import { getCategoryColor } from '@/lib/category-colors'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
@@ -69,7 +70,7 @@ export default async function Image({
             width: '600px',
             height: '600px',
             borderRadius: '50%',
-            background: `radial-gradient(circle, ${categoryColor}20 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${colorWithAlpha(categoryColor, 0x20 / 255)} 0%, transparent 70%)`,
             filter: 'blur(100px)',
           }}
         />
@@ -81,7 +82,7 @@ export default async function Image({
             width: '500px',
             height: '500px',
             borderRadius: '50%',
-            background: `radial-gradient(circle, ${MONOKAI.purple}20 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${colorWithAlpha(MONOKAI.purple, 0x20 / 255)} 0%, transparent 70%)`,
             filter: 'blur(100px)',
           }}
         />
@@ -93,7 +94,6 @@ export default async function Image({
             justifyContent: 'space-between',
             alignItems: 'center',
             marginBottom: '60px',
-            zIndex: 10,
           }}
         >
           <div
@@ -110,8 +110,8 @@ export default async function Image({
               <img
                 src={logoData}
                 alt=''
-                width='48'
-                height='48'
+                width={48}
+                height={48}
                 style={{ borderRadius: '8px' }}
               />
             )}
@@ -120,7 +120,7 @@ export default async function Image({
               <span>marklearst</span>
               <span style={{ opacity: 0.5 }}>{'}'}</span>
               <span
-                style={{ marginLeft: '12px', color: `${MONOKAI.foreground}40` }}
+                style={{ marginLeft: '12px', color: `${colorWithAlpha(MONOKAI.foreground, 0x40 / 255)}` }}
               >
                 / work
               </span>
@@ -129,7 +129,7 @@ export default async function Image({
           <div
             style={{
               fontSize: '24px',
-              color: `${MONOKAI.foreground}40`,
+              color: `${colorWithAlpha(MONOKAI.foreground, 0x40 / 255)}`,
             }}
           >
             {project.timeline}
@@ -142,7 +142,6 @@ export default async function Image({
             display: 'flex',
             flexDirection: 'column',
             flex: 1,
-            zIndex: 10,
           }}
         >
           {/* Category Badge */}
@@ -151,13 +150,13 @@ export default async function Image({
               display: 'flex',
               padding: '6px 16px',
               borderRadius: '4px',
-              backgroundColor: `${categoryColor}15`,
-              border: `1px solid ${categoryColor}30`,
+              backgroundColor: `${colorWithAlpha(categoryColor, 0x15 / 255)}`,
+              border: `1px solid ${colorWithAlpha(categoryColor, 0x30 / 255)}`,
               color: categoryColor,
               fontSize: '18px',
               fontWeight: 600,
               marginBottom: '24px',
-              width: 'fit-content',
+              alignSelf: 'flex-start',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
             }}
@@ -182,7 +181,7 @@ export default async function Image({
           <div
             style={{
               fontSize: '28px',
-              color: `${MONOKAI.foreground}80`,
+              color: `${colorWithAlpha(MONOKAI.foreground, 0x80 / 255)}`,
               lineHeight: 1.5,
               marginBottom: '48px',
               maxWidth: '900px',
@@ -206,9 +205,9 @@ export default async function Image({
                 style={{
                   padding: '6px 16px',
                   borderRadius: '100px',
-                  border: `1px solid ${MONOKAI.foreground}15`,
-                  backgroundColor: `${MONOKAI.foreground}05`,
-                  color: `${MONOKAI.foreground}60`,
+                  border: `1px solid ${colorWithAlpha(MONOKAI.foreground, 0x15 / 255)}`,
+                  backgroundColor: `${colorWithAlpha(MONOKAI.foreground, 0x05 / 255)}`,
+                  color: `${colorWithAlpha(MONOKAI.foreground, 0x60 / 255)}`,
                   fontSize: '18px',
                   fontWeight: 500,
                 }}

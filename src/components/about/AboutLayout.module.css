@@ -1,0 +1,314 @@
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  background: var(--color-canvas, #171615);
+  color: var(--color-ink-secondary, #cbc5bf);
+  font-family: var(--font-body);
+}
+
+.container {
+  width: min(calc(100% - 48px), 54rem);
+  margin-inline: auto;
+}
+
+.hero {
+  padding-block: 144px 28px;
+}
+
+.tagline {
+  margin: 0 0 16px;
+  color: var(--color-accent-primary, #e6aa79);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+}
+
+.title {
+  margin: 0;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-title, 3.5rem) / var(--leading-title, 1.15) var(--font-body);
+  letter-spacing: var(--tracking-title, -0.015em);
+  text-transform: none;
+  text-wrap: balance;
+}
+
+.summary {
+  margin: 20px 0 0;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 400 var(--text-lead, 1.25rem) / var(--leading-lead, 1.5) var(--font-body);
+  text-wrap: balance;
+}
+
+.content {
+  padding-bottom: 64px;
+  font: 400 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
+  letter-spacing: var(--tracking-body, 0);
+}
+
+.content :global(.about-intro) {
+  margin-bottom: 48px;
+}
+
+.content :global(.about-intro) > p {
+  margin: 0 0 1.5em;
+  font: 400 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
+}
+
+.content :global(.about-intro) > p a,
+.content :global(.about-detail-body) a {
+  color: var(--color-ink-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-muted);
+  text-underline-offset: 4px;
+}
+
+.content :global(.about-intro) > :global(.about-availability) {
+  color: var(--color-ink-secondary, #cbc5bf);
+  font-size: var(--text-ui, 1rem);
+}
+
+.content :global(.about-contact-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.contactAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid var(--color-border-subtle, #3b3530);
+  border-radius: 6px;
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+  text-decoration: none;
+  transition: color 180ms ease-out, border-color 180ms ease-out, background-color 180ms ease-out;
+}
+
+.contactAction:first-child {
+  --color-action-icon: var(--color-canvas);
+  border-color: var(--color-ink-primary, #f3eee8);
+  background: var(--color-ink-primary, #f3eee8);
+  color: var(--color-canvas, #171615);
+}
+
+.content :global(.about-contact-links) {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 0;
+  margin-top: 12px;
+}
+
+.content :global(.about-contact-links) > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-ink-secondary, #cbc5bf);
+  font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+  overflow-wrap: anywhere;
+}
+
+.content :global(.timeline-entries) {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+}
+
+.content :global(.timeline-entry) {
+  display: block;
+  padding-block: 20px;
+}
+
+.content :global(.timeline-dot) {
+  display: none;
+}
+
+.content :global(.timeline-content) {
+  display: grid;
+  grid-template-columns: 184px minmax(0, 1fr);
+  column-gap: 28px;
+  row-gap: 6px;
+}
+
+.content :global(.timeline-year) {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  color: var(--color-ink-muted, #a59d95);
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.content :global(.timeline-role) {
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
+}
+
+.content :global(.timeline-description) {
+  grid-column: 2;
+  margin: 0;
+  color: var(--color-ink-secondary, #cbc5bf);
+  font-size: var(--text-ui, 1rem);
+  line-height: var(--leading-body, 1.5);
+}
+
+.content :global(.about-supporting) {
+  margin-top: 40px;
+}
+
+.content :global(.about-skills) {
+  margin: 0;
+  padding-block: 8px 24px;
+}
+
+.content :global(.about-skills) > div {
+  display: grid;
+  grid-template-columns: 184px minmax(0, 1fr);
+  gap: 12px 28px;
+  padding-block: 14px;
+}
+
+.content :global(.about-skills) dt {
+  color: var(--color-ink-primary, #f3eee8);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+}
+
+.content :global(.about-skills) dd {
+  margin: 0;
+  color: var(--color-ink-secondary, #cbc5bf);
+  font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+  text-wrap: pretty;
+}
+
+.content :global(.about-disclosure) {
+  margin-block: 8px;
+  padding-inline: 20px;
+  border-radius: 10px;
+  background: var(--color-surface);
+}
+
+.content :global(.about-detail-body),
+.content :global(.about-detail-grid) {
+  padding-block: 12px 28px;
+  font-size: var(--text-ui, 1rem);
+}
+
+.content :global(.about-detail-body) h3,
+.content :global(.about-detail-grid) h3 {
+  margin: 0 0 12px;
+  font-size: var(--text-body, 1.125rem);
+  font-weight: 500;
+  line-height: var(--leading-subheading, 1.35);
+}
+
+.content :global(.about-detail-body) ul,
+.content :global(.about-detail-grid) ul {
+  margin-top: 0;
+}
+
+.content :global(.about-detail-grid) {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.content :global(.about-detail-grid-two) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contactAction:focus-visible,
+.content :global(.about-intro) > p a:focus-visible,
+.content :global(.about-detail-body) a:focus-visible,
+.content :global(.about-contact-links) > a:focus-visible {
+  outline: 2px solid var(--color-ink-primary, #f3eee8);
+  outline-offset: 5px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .contactAction:hover {
+    border-color: var(--color-accent-primary, #e6aa79);
+    color: var(--color-ink-primary);
+  }
+
+  .contactAction:first-child:hover {
+    background: var(--color-accent-primary, #e6aa79);
+    color: var(--color-canvas, #171615);
+  }
+
+  .content :global(.about-contact-links) > a:hover {
+    color: var(--color-ink-primary, #f3eee8);
+  }
+
+  .content :global(.about-intro) > p a:hover,
+  .content :global(.about-detail-body) a:hover {
+    text-decoration-color: var(--color-accent-primary);
+  }
+}
+
+@media (max-width: 680px) {
+
+  .container {
+    width: calc(100% - 40px);
+  }
+
+  .hero {
+    padding-top: 128px;
+  }
+
+  .summary {
+    font-size: var(--text-body, 1.125rem);
+  }
+
+  .content :global(.timeline-content) {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .content :global(.timeline-entry) {
+    padding-block: 20px;
+  }
+
+  .content :global(.about-detail-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  .content :global(.about-skills) > div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .content :global(.about-contact-links) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .contactAction,
+  .content :global(.about-contact-links) > a {
+    transition: none;
+  }
+}
+
+/* MDX may wrap multiline text in a paragraph; the timeline owns its type. */
+
+.content :global(.timeline-role) > p,
+.content :global(.timeline-description) > p {
+  font-size: inherit;
+  margin: 0;
+}
+
+.content :global(.timeline-subsection) {
+  margin-bottom: 40px;
+}
+
+.content :global(.timeline-subsection):last-child {
+  margin-bottom: 0;
+}

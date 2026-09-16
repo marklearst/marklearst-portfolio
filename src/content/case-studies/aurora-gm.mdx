@@ -30,7 +30,7 @@ impact:
 gradient: from-purple-500/20 via-pink-500/10 to-transparent
 ---
 
-<CaseStudySection title='Overview'>
+<CaseStudySection title='Shared components for four GM brands'>
   <div className='space-y-6'>
     <CaseStudyParagraph>
       <strong>Aurora</strong> is GM's cross-brand design system for Chevrolet,
@@ -44,12 +44,12 @@ gradient: from-purple-500/20 via-pink-500/10 to-transparent
       while keeping brand-specific themes and behavior. The linked Aurora
       documentation provides a reference for the system.
     </CaseStudyParagraph>
+    <AuroraArchitecture />
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Implementation Decisions">
+<CaseStudySection title="Keep brand differences in the token layer">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">Share Components, Keep Brand Themes</CaseStudySubheading>
     <CaseStudyMutedText>
       I built a token-based theming system that allowed 60% of components to be
       shared across all 4 brands, while the remaining 40% could be customized
@@ -66,7 +66,7 @@ gradient: from-purple-500/20 via-pink-500/10 to-transparent
       handling platform-specific rendering.
     </CaseStudyMutedText>
 
-    <CaseStudySubheading>Connect Token Governance to Delivery</CaseStudySubheading>
+    <CaseStudySubheading>From governance to generated code</CaseStudySubheading>
     <CaseStudyMutedText>
       I designed and built automated workflows that synced design tokens
       from Figma Variables through Style Dictionary into React and React Native
@@ -76,7 +76,7 @@ gradient: from-purple-500/20 via-pink-500/10 to-transparent
       component tokens) supported brand-specific themes.
     </CaseStudyMutedText>
 
-    <CaseStudySubheading>Make Accessibility Part of Component Review</CaseStudySubheading>
+    <CaseStudySubheading>Accessibility in component review</CaseStudySubheading>
     <CaseStudyMutedText>
       WCAG 2.1 AA was the accessibility target. Component work included:
     </CaseStudyMutedText>
@@ -97,7 +97,21 @@ gradient: from-purple-500/20 via-pink-500/10 to-transparent
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Adoption">
+<CaseStudySection title="The governance behind a token change">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      Aurora's published <a href="https://zeroheight.com/8ee82a8f9/p/12a682-wip---aurora-design-tokens-governance" target="_blank" rel="noopener noreferrer">token governance guide</a>,
+      marked WIP, makes the naming and review process available to inspect:
+    </CaseStudyParagraph>
+    <CaseStudyMutedList className="space-y-2">
+      <li><a href="https://zeroheight.com/8ee82a8f9/p/33aeb8-naming-convention" target="_blank" rel="noopener noreferrer">Names carry structure.</a> Namespace, category, property, variant, scale, and state describe a token's role.</li>
+      <li><a href="https://zeroheight.com/8ee82a8f9/p/99609f-design-token-contract" target="_blank" rel="noopener noreferrer">Changes have shared ownership.</a> Design and development approve naming changes before implementation.</li>
+      <li><a href="https://zeroheight.com/8ee82a8f9/p/86e293-token-review-and-approval" target="_blank" rel="noopener noreferrer">Review precedes publication.</a> Proposals include values, scope, inheritance, and usage examples. Approved changes enter the central repository with a record.</li>
+    </CaseStudyMutedList>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="Helping four teams adopt one system">
   <div className="space-y-6">
     <CaseStudyParagraph>
       I trained and onboarded 50+ engineers and designers through workshops,

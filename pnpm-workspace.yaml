@@ -3,3 +3,8 @@ packages:
 allowBuilds:
   sharp: true
   unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@types/node@24.13.5'
+overrides:
+  # Patched within Babel's declared range; avoids the older cyclic peer resolution.
+  'browserslist@^4.24.0': 4.28.9

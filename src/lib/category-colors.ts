@@ -9,3 +9,5 @@ export const CATEGORY_COLORS: Record<ProjectCategoryColor, string> = {
   orange: MONOKAI.orange,
   yellow: MONOKAI.yellow,
 }
+
+export const getCategoryColor = (color: ProjectCategoryColor): string => CATEGORY_COLORS[color]

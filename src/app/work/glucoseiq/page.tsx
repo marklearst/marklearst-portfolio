@@ -1,21 +1,9 @@
-import CaseStudyLayout from '@/components/CaseStudyLayout'
-import {
-  createCaseStudyMdxComponents,
-} from '@/components/mdx/CaseStudyMdxComponents'
-import { extractCaseStudySections } from '@/lib/content/case-study-sections'
-import { getCaseStudyBySlug } from '@/lib/content/case-studies'
-import { getCategoryColor } from '@/lib/project-categories'
+import CaseStudyPage, { getCaseStudyMetadata } from '@/components/case-study/CaseStudyPage'
 
-export default async function GlucoseIQPage() {
-  const { Content, links, ...frontmatter } =
-    await getCaseStudyBySlug('glucoseiq')
+export function generateMetadata() {
+  return getCaseStudyMetadata('glucoseiq')
+}
 
-  const accent = getCategoryColor(frontmatter.categoryColor)
-  const mdxComponents = createCaseStudyMdxComponents(accent)
-  const content = Content({ components: mdxComponents })
-  const sections = extractCaseStudySections(content)
-
-  return (
-    <CaseStudyLayout {...frontmatter} links={links} sections={sections} />
-  )
+export default function GlucoseIQPage() {
+  return <CaseStudyPage slug='glucoseiq' />
 }

@@ -1,157 +1,104 @@
+import { ArrowLeftIcon, ArrowRightIcon, ArrowUpIcon } from '@/components/ui/Icon'
 import type { Metadata } from 'next'
+import { Children, cloneElement, isValidElement, type ReactNode } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import Footer from '@/components/Footer'
+import Footer from '@/components/shell/Footer'
+import DisclosureSummary from '@/components/ui/DisclosureSummary'
+import RelatedNavigation from '@/components/navigation/RelatedNavigation'
 import { getArtifactBySlug, getArtifacts } from '@/lib/content/artifacts'
-import { getArtifactAccentColor } from '@/lib/content/artifact-tags'
+import { getAdjacentContent } from '@/lib/content/adjacent-content'
 import { stripFrontmatter } from '@/lib/content/strip-frontmatter'
-import { MONOKAI } from '@/lib/monokai-colors'
-import { createArtifactMdxComponents } from '@/components/mdx/ArtifactMdxComponents'
-import ArtifactTag from '@/components/ArtifactTag'
+import { artifactMdxComponents } from '@/components/mdx/ArtifactMdxComponents'
+import styles from '@/components/artifacts/ArtifactLayout.module.css'
 
-type ArtifactPageProps = {
-  params: Promise<{ slug?: string }>
+type ArtifactPageProps = { params: Promise<{ slug?: string }> }
+const formatDate = (date: Date) => new Intl.DateTimeFormat('en-US', {
+  month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+}).format(date)
+
+const nodeText = (node: ReactNode): string => {
+  if (typeof node === 'string' || typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(nodeText).join('')
+  if (isValidElement<{ children?: ReactNode }>(node)) return nodeText(node.props.children)
+  return ''
 }
-
-const formatDate = (date: Date) =>
-  new Intl.DateTimeFormat('en-US', {
-    month: 'short',
-    day: '2-digit',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(date)
 
 export async function generateStaticParams() {
-  const artifacts = await getArtifacts()
-  return artifacts.map((artifact) => ({ slug: artifact.slug }))
+  return (await getArtifacts()).map((artifact) => ({ slug: artifact.slug }))
 }
 
-export async function generateMetadata({
-  params,
-}: ArtifactPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: ArtifactPageProps): Promise<Metadata> {
   const { slug } = await params
-  if (!slug) {
-    return {
-      title: 'Artifacts - Mark Learst',
-      description:
-        'Technical writeups and experiments across design systems, motion, frontend, design engineering, and tooling.',
-    }
-  }
-
+  if (!slug) return { title: 'Artifacts - Mark Learst' }
   const artifact = await getArtifactBySlug(slug)
-
-  return {
-    title: `${artifact.title} - Mark Learst`,
-    description: artifact.summary,
-  }
+  return { title: `${artifact.title} - Mark Learst`, description: artifact.summary }
 }
 
 export default async function ArtifactPage({ params }: ArtifactPageProps) {
   const { slug } = await params
-  if (!slug) {
-    notFound()
-  }
-
-  const artifact = await getArtifactBySlug(slug)
-  const siteUrl = 'https://marklearst.com'
-  const shareUrl = `${siteUrl}/artifacts/${artifact.slug}`
-  const shareText = `${artifact.title} - ${artifact.summary}`
+  if (!slug) notFound()
+  const artifacts = await getArtifacts()
+  const artifact = artifacts.find(item => item.slug === slug)
+  if (!artifact) notFound()
+  const { previous, next } = getAdjacentContent(artifacts, slug)
+  const shareUrl = `https://marklearst.com/artifacts/${artifact.slug}`
   const encodedUrl = encodeURIComponent(shareUrl)
-  const encodedText = encodeURIComponent(shareText)
+  const encodedText = encodeURIComponent(`${artifact.title} - ${artifact.summary}`)
   const shareLinks = [
-    {
-      label: 'Share on X',
-      href: `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
-    },
-    {
-      label: 'Share on LinkedIn',
-      href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-    },
+    { label: 'Share on X', href: `https://x.com/intent/tweet?text=${encodedText}&url=${encodedUrl}` },
+    { label: 'Share on LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}` },
   ]
-  const accent = getArtifactAccentColor(artifact.tags)
-  const mdxComponents = createArtifactMdxComponents(accent)
-  const Content = artifact.Content
-  const content = stripFrontmatter(Content({ components: mdxComponents }))
+  const headings: { id: string; label: string }[] = []
+  const prepareContent = (node: ReactNode): ReactNode => Children.map(node, (child) => {
+    if (!isValidElement<{ id?: string; children?: ReactNode }>(child)) return child
+    // A code block cannot contain article headings. Preserve its single code child.
+    if (child.type === artifactMdxComponents.pre) return child
+    if (child.type === artifactMdxComponents.h2) {
+      const label = nodeText(child.props.children)
+      const id = `section-${headings.length + 1}`
+      headings.push({ id, label })
+      return cloneElement(child, { id })
+    }
+    if (child.props.children === undefined) return child
+    return cloneElement(child, { children: prepareContent(child.props.children) })
+  })
+  const content = prepareContent(stripFrontmatter(artifact.Content({ components: artifactMdxComponents })))
+  const relatedProject = artifact.slug.startsWith('a11y-companion')
+    ? { title: 'a11y Companion case study', href: '/work/a11y-companion' }
+    : artifact.slug === 'variable-design-standard-semver'
+      ? { title: 'Variable Design Standard case study', href: '/work/variable-design-standard' }
+      : null
 
   return (
-    <main className='min-h-screen relative overflow-hidden'>
-      <div className='absolute inset-0 pointer-events-none'>
-        <div
-          className='absolute top-1/4 left-1/3 w-130 h-130 rounded-full blur-[140px] opacity-20'
-          style={{ backgroundColor: MONOKAI.cyan }}
+    <main className={styles.page}>
+      <article className={`${styles.container} ${styles.article}`}>
+        <Link href='/artifacts' className={styles.backLink}><span aria-hidden='true'><ArrowLeftIcon /></span> ../artifacts</Link>
+        <header>
+          <div className={styles.articleMeta}><time dateTime={artifact.publishedAt.toISOString()}>{formatDate(artifact.publishedAt)}</time><span>{artifact.readingTime.minutes} min read</span></div>
+          <h1 id='article-title' className={styles.title}>{artifact.title}</h1>
+          <p className={styles.summary}>{artifact.summary}</p>
+          <ul className={styles.tags} aria-label='Topics'>{artifact.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+        </header>
+        {headings.length > 1 && <details className={styles.outline}>
+          <DisclosureSummary>In this article</DisclosureSummary><nav aria-label='In this article'>
+          <ol>{headings.map((heading) => <li key={heading.id}><a href={`#${heading.id}`}>{heading.label}</a></li>)}</ol>
+        </nav></details>}
+        <div className={styles.content}>{content}</div>
+        <footer className={styles.articleEnd}>
+          {relatedProject && <><p>Related work</p><Link href={relatedProject.href}>{relatedProject.title} <span aria-hidden='true'><ArrowRightIcon /></span></Link></>}
+          <div className={styles.share}>{shareLinks.map((link) => <a key={link.label} href={link.href} target='_blank' rel='noopener noreferrer'>{link.label}</a>)}</div>
+        </footer>
+        <RelatedNavigation
+          itemType='article'
+          previous={previous ? { href: `/artifacts/${previous.slug}`, title: previous.title } : null}
+          next={next ? { href: `/artifacts/${next.slug}`, title: next.title } : null}
         />
-        <div
-          className='absolute bottom-1/3 right-1/4 w-130 h-130 rounded-full blur-[160px] opacity-15'
-          style={{ backgroundColor: MONOKAI.purple }}
-        />
-      </div>
-
-      <article className='relative z-10 px-6 pt-36 pb-24'>
-        <div className='max-w-4xl mx-auto'>
-          <Link
-            href='/artifacts'
-            className='inline-flex items-center gap-2 mb-10 font-mono text-sm transition-colors duration-300 group'
-            style={{ color: `${MONOKAI.foreground}80` }}
-          >
-            <svg
-              className='w-4 h-4 transform group-hover:-translate-x-1 transition-transform duration-300'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M10 19l-7-7m0 0l7-7m-7 7h18'
-              />
-            </svg>
-            Back to artifacts
-          </Link>
-
-          <div className='flex flex-wrap items-center gap-4 text-xs font-mono uppercase tracking-wider text-white/40 mb-6'>
-            <span>{formatDate(artifact.publishedAt)}</span>
-            <span>{artifact.readingTime.minutes} min read</span>
-          </div>
-
-          <h1
-            className='text-[clamp(48px,7vw,96px)] font-mono font-bold! lowercase leading-[0.9] mb-6'
-            style={{ color: MONOKAI.foreground }}
-          >
-            {artifact.title}
-          </h1>
-
-          <p
-            className='text-[clamp(16px,2vw,22px)] leading-relaxed max-w-3xl mb-10'
-            style={{ color: `${MONOKAI.foreground}b3` }}
-          >
-            {artifact.summary}
-          </p>
-
-          <div className='flex flex-wrap gap-2 mb-12'>
-            {artifact.tags.map((tag) => (
-              <ArtifactTag key={tag} tag={tag} />
-            ))}
-          </div>
-
-          <div className='flex flex-wrap items-center gap-3 mb-12 text-xs font-mono uppercase tracking-wider text-white/40'>
-            {shareLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='px-3 py-1.5 rounded-md border border-white/20 text-white/70 transition-colors duration-300 hover:text-white/90 hover:border-white/60'
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          <div className='space-y-6'>{content}</div>
-        </div>
+        <nav className={styles.endNavigation} aria-label='Article controls'>
+          <Link href='/artifacts' className={styles.backLink} aria-label='Back to artifacts'><ArrowLeftIcon /> ../artifacts</Link>
+          <a href='#article-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
+        </nav>
       </article>
-
       <Footer />
     </main>
   )

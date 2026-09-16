@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+@import './generated/theme.css';
+@import './generated/tokens.css';
+@import './generated/tokens.light.css';
+@import './monolisa.css';
+@import './fonts.css';
+@import './typography.css';
+@import './motion.css';
+
+/* Base styles */
+body {
+  @apply font-body;
+  background: var(--color-canvas);
+  color: var(--color-ink-secondary);
+  font-size: var(--text-body);
+  line-height: var(--token-leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  font-feature-settings: 'liga' 1, 'calt' 1;
+}
+
+html {
+  color-scheme: dark;
+  scroll-padding-top: 6rem;
+  scrollbar-gutter: stable;
+}
+
+html:has(dialog[open]),
+html:has(dialog[open]) body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 60;
+  top: 12px;
+  left: 24px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  background: #fcfcfa;
+  color: #101010;
+  transform: translateY(calc(-100% - 24px));
+}
+.skip-link:focus { transform: translateY(0); }
+
+@media (min-width: 640px) {
+  html { scroll-padding-top: 7rem; }
+}
+
+/* Narrative headings share the reading family. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  color: var(--color-ink-primary);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: var(--token-tracking-heading);
+  text-wrap: balance;
+}
+h1 { font-size: var(--text-title); letter-spacing: var(--token-tracking-title); }
+h2 { font-size: var(--text-heading); }
+h3 { font-size: var(--text-subheading); }
+h4 { font-size: var(--text-lead); }
+h5 { font-size: var(--text-body); }
+h6 { font-size: var(--text-ui); }
+
+code {
+  @apply font-mono text-sm bg-white/5 px-2 py-1 rounded;
+}
+
+a {
+  @apply transition-colors duration-200;
+}
+
+/* Visible focus without changing control geometry. */
+:where(button, a, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 4px;
+}
+a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
+[data-brand-icon] { color: var(--color-accent-primary); }
+[data-action-icon] { overflow: visible; }
+:where(a, button, summary) [data-action-icon] {
+  color: var(--color-action-icon, var(--color-accent-primary));
+}
+[data-action-icon] .icon-arrow {
+  transform-origin: center;
+  transition: transform 180ms var(--ease-out);
+}
+:where(a, button):focus-visible [data-action-icon] .icon-arrow { transition: none; }
+@media (hover: hover) and (pointer: fine) {
+  a:hover [data-action-icon='external'] .icon-arrow,
+  button:hover [data-action-icon='external'] .icon-arrow { transform: translate(1.5px, -1.5px); }
+  a:hover [data-action-icon='forward'] .icon-arrow,
+  button:hover [data-action-icon='forward'] .icon-arrow { transform: translateX(2px); }
+}
+:where(a, button):active [data-action-icon] .icon-arrow { transform: translate(0); transition-duration: 80ms; }
+@media (prefers-reduced-motion: reduce) {
+  [data-action-icon] .icon-arrow { transition: none; transform: none !important; }
+}
+
+html, body { scroll-behavior: auto; }
+
+::selection {
+  background: color-mix(in srgb, var(--color-ink-primary) 24%, var(--color-canvas));
+  color: var(--color-ink-primary);
+}
+
+/* Source line wrapping in MDX must not change a list item's type size. */
+li > p {
+  font-size: inherit;
+  margin: 0;
+}

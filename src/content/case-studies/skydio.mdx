@@ -27,26 +27,40 @@ impact:
 gradient: from-cyan-500/20 via-blue-500/10 to-transparent
 ---
 
-<CaseStudySection title="Overview">
+<CaseStudySection title="One widget, four mission types">
   <div className="space-y-6">
-    <figure className="mb-12">
-      <a href="https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--orbit-mode" className="block rounded-[8px]">
-        <Image
-          src="/images/skydio-orbit-story.jpg"
-          alt="Skydio Autonomy Widget in Storybook's Orbit Mode, showing Orbiting status, a circular timer, Stop control, and orbit slider."
-          width={1280}
-          height={720}
-          sizes="(max-width: 1072px) calc(100vw - 48px), 1024px"
-          className="h-auto w-full rounded-[8px]"
-        />
-      </a>
-      <figcaption className="mt-3 text-sm leading-relaxed text-white/60">
-        {'Orbit Mode in the public Autonomy Widget Storybook. '}
-        <a href="https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--orbit-mode" className="underline underline-offset-4">
-          {'Explore the component.'}
-        </a>
-      </figcaption>
-    </figure>
+    <EvidenceGallery
+      label="Skydio Autonomy Widget states"
+      items={[
+        {
+          src: '/images/skydio-orbit-story.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Orbit mode',
+          alt: 'Skydio Autonomy Widget in Storybook Orbit Mode, showing Orbiting status, a circular timer, Stop control, and orbit slider.',
+          caption: 'Orbit Mode in the public Storybook. Inspect the timer, mission actions, and orbit control in the running component example.',
+          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--orbit-mode',
+        },
+        {
+          src: '/images/skydio-expanded-controls.jpg',
+          width: 960,
+          height: 540,
+          title: 'Expanded controls',
+          alt: 'Skydio Storybook Expanded story showing Flying to Point 1, Stop, and an expanded row of mission controls.',
+          caption: 'The expanded story exposes the mission controls beneath the current status and Stop action.',
+          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--expanded',
+        },
+        {
+          src: '/images/skydio-paused-state.jpg',
+          width: 960,
+          height: 540,
+          title: 'Paused mission',
+          alt: 'Skydio Storybook Paused story showing Mission Paused, a circular timer at 6:47, and a blue Resume control.',
+          caption: 'The paused story keeps the remaining time visible and changes the primary action to Resume.',
+          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--paused',
+        },
+      ]}
+    />
     <CaseStudyParagraph>
       The <strong>Skydio Autonomy Widget</strong> is a React interface for
       drone mission controls. As a frontend consultant, I built its component
@@ -63,9 +77,8 @@ gradient: from-cyan-500/20 via-blue-500/10 to-transparent
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Implementation Decisions">
+<CaseStudySection title="Actions come from configuration">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">Declare Actions in Configuration</CaseStudySubheading>
     <CaseStudyMutedText>
       I put each action's icon, label, tooltip, and variant in a shared
       configuration. Controls read that configuration to render mission actions:
@@ -95,7 +108,7 @@ const ACTION_CONFIGS = {
 <IconButton {...ACTION_CONFIGS[action]} />`}
 />
 
-    <CaseStudySubheading>Separate Mission State from Controls</CaseStudySubheading>
+    <CaseStudySubheading>Mission state and controls</CaseStudySubheading>
     <CaseStudyMutedText>
       A React Context provider manages mission type, timer, and action states.
       Remote state synchronization, event subscription hooks for analytics
@@ -111,7 +124,7 @@ const ACTION_CONFIGS = {
       <li><strong>Tooltip System:</strong> Custom tooltips with ARIA support</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Make Component States Reviewable</CaseStudySubheading>
+    <CaseStudySubheading>Reviewing component states</CaseStudySubheading>
     <CaseStudyMutedText>
       I documented the components in Storybook with prop tables and usage
       examples for product and engineering teams. The stories include:
@@ -125,9 +138,16 @@ const ACTION_CONFIGS = {
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Implementation & Handoff">
+<CaseStudySection title="A component system the team can extend">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">Component Exports</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Figma-exported SVG icons became React components, and Figma Variables
+      mapped to the Tailwind config. Tailwind CSS layouts provide compact
+      mobile controls and an expanded desktop mode with full action sets.
+    </CaseStudyMutedText>
+
+    <CaseStudyDetails summary="Component imports and build setup">
+    <CaseStudySubheading className="mt-0">Component exports</CaseStudySubheading>
     <CaseStudyMutedText>Shared exports give consumers one component import path:</CaseStudyMutedText>
 
 <CodeBlock
@@ -145,14 +165,7 @@ import AutonomyWidget from '@/components/AutonomyWidget'
 import IconButton from '@/components/IconButton'`}
 />
 
-    <CaseStudySubheading>Figma-to-Code Workflow</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Figma-exported SVG icons became React components, and Figma Variables
-      mapped to the Tailwind config. Tailwind CSS layouts provide compact
-      mobile controls and an expanded desktop mode with full action sets.
-    </CaseStudyMutedText>
-
-    <CaseStudySubheading>Build & Tooling</CaseStudySubheading>
+    <CaseStudySubheading>Build setup</CaseStudySubheading>
     <CaseStudyMutedText>The development setup includes:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Vite for fast builds and HMR</li>
@@ -161,10 +174,11 @@ import IconButton from '@/components/IconButton'`}
       <li>TypeScript strict mode for type safety</li>
       <li>Deployed via Vercel for Storybook hosting</li>
     </CaseStudyMutedList>
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Deliverables">
+<CaseStudySection title="Handoff through Storybook">
   <div className="space-y-6">
     <CaseStudyParagraph>
       I delivered the configurable widget system, responsive components, and
