@@ -1,7 +1,7 @@
 ---
 title: Replacing Terminal Navigation with Page Transitions
 slug: terminal-navigation
-summary: Moving route motion into React ViewTransition while keeping normal links, a stable header, and reduced-motion support.
+summary: A short fade on the committed page, with normal links, a stable header, and no animation for keyboard or history navigation.
 tags:
   - motion
   - frontend
@@ -11,7 +11,7 @@ published_at: 2026-01-10
 pinned: false
 ---
 
-**Updated September 15, 2026**
+**Updated September 16, 2026**
 
 I originally built a terminal overlay for this portfolio because the command-line metaphor felt familiar. Clicking a link started an entrance animation, typed a command, and waited 450ms before calling the router. Even when the next page was ready, the visitor had to wait for the performance. The overlay also needed its own state, timers, and recovery logic.
 
@@ -19,70 +19,39 @@ I replaced it with a transition on the page content. Links start navigation norm
 
 ## Let the router navigate
 
-The current site uses React 19.3 and Next.js 16.3.5. Navigation uses ordinary Next.js `Link` components, including the header links. Their click handlers record analytics without intercepting navigation or scheduling a later `router.push`.
+Navigation uses ordinary Next.js `Link` components, including the header links. Their click handlers record analytics without intercepting navigation or scheduling a later `router.push`.
 
-A small component wraps the page content in React's `ViewTransition`. The boundary stays mounted across routes. React captures the content change when navigation commits, while Next.js manages focus and scroll.
+A stable `PageTransition` wrapper watches `usePathname()`. When a new pathname commits after pointer input, it uses the Web Animations API to fade the new page from 72% to full opacity in 180ms. Next.js continues to manage navigation, focus, and scroll.
+
+This is the animation inside the layout effect, after the input and reduced-motion checks:
 
 ```tsx
-'use client'
+const animation = element.animate([{ opacity: 0.72 }, { opacity: 1 }], {
+  duration: 180,
+  easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+})
 
-import { ViewTransition } from 'react'
-import './PageTransition.css'
+const stop = () => animation.cancel()
+preference.addEventListener('change', stop)
 
-export default function PageTransition({ children }: { children: React.ReactNode }) {
-  return (
-    <ViewTransition update='route-content' default='none'>
-      <div id='page-content' className='page-transition-surface' tabIndex={-1}>{children}</div>
-    </ViewTransition>
-  )
+return () => {
+  stop()
+  preference.removeEventListener('change', stop)
 }
 ```
 
-The header sits outside this boundary. Its logo and navigation stay in place while the content changes below them. The page surface also provides the target for the visible-on-focus “Skip to content” link.
+The header sits outside the animated surface. Its logo and navigation stay in place while the content changes below them. The wrapper also provides the target for the “Skip to content” link.
 
-## Keep motion inside the page
+## Keep the new page in place
 
-The outgoing content moves up slightly as it fades; the new content enters from below. CSS defines a 140ms exit and a 340ms entrance. These are animation durations, not waits inserted before navigation.
+An earlier version captured the outgoing page and blurred and translated both pages during the change. It looked disjointed when the routes had different scroll positions. The current transition animates only the committed page. There is no outgoing snapshot, blur, or movement.
 
-The root snapshot has no animation, and the transition layer does not receive pointer events. Reduced-motion preferences disable the snapshot animations.
+The first render stays still. So do section links, since changing a hash does not change the pathname. Keyboard navigation, Back and Forward, and reduced-motion preferences all skip the fade and show the committed content immediately.
 
-```css
-::view-transition { pointer-events: none; }
-::view-transition-old(root) { display: none; }
-::view-transition-group(root),
-::view-transition-new(root),
-::view-transition-group(.route-content) { animation: none; }
-::view-transition-old(.route-content),
-::view-transition-new(.route-content) {
-  height: 100%;
-  object-fit: none;
-  object-position: top left;
-  mix-blend-mode: normal;
-}
-::view-transition-old(.route-content) {
-  animation: route-content-out 140ms cubic-bezier(0.4, 0, 1, 1) both;
-}
-::view-transition-new(.route-content) {
-  animation: route-content-in 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-@keyframes route-content-out {
-  to { opacity: 0; transform: translateY(-8px); }
-}
-@keyframes route-content-in {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(*),
-  ::view-transition-new(*),
-  ::view-transition-group(*) {
-    animation: none !important;
-  }
-}
-```
+Another route change or unmount cancels any running animation. Changing the reduced-motion preference cancels it too. The effect removes its listener during cleanup.
 
 ## Preserve ordinary navigation
 
-The page surface stays mounted, including during in-page anchor navigation. Normal links retain modified-click and new-tab behavior, and Next.js continues to manage routing and history. There is no overlay state machine to complete before another link can work.
+Normal links retain modified-click and new-tab behavior. The transition adds no delay before navigation, and the new page stays interactive throughout the fade.
 
-The useful checks are practical: follow a case-study link, return with Back, jump to a section, navigate with the keyboard, and repeat with reduced motion enabled. Each should remain usable with the transition removed. I have not measured a performance improvement; the concrete change is the removal of the old navigation delay.
+The useful checks are practical: follow a case-study link, return with Back, jump to a section, navigate with the keyboard, and repeat with reduced motion enabled. Each should remain usable with the transition removed.
