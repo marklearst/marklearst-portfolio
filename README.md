@@ -23,7 +23,7 @@ pnpm install
 pnpm dev
 ```
 
-Licensed Wotfard webfont binaries are supplied separately in `public/fonts/wotfard/`. They are excluded from Git. The build checks for the original files; it does not convert or subset them. See the README in that directory for the required filenames.
+Licensed Wotfard webfont binaries live in `public/fonts/wotfard/` and are excluded from Git. Local builds use the originals in place. Vercel builds fetch them from private Blob storage using `BLOB_READ_WRITE_TOKEN`. The build then checks for the original files; it does not convert or subset them. See the README in that directory for the filenames and the one-time upload.
 
 ## Verification
 
