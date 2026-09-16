@@ -1,47 +1,357 @@
 {
   "color": {
     "base": {
-      "black": { "$type": "color", "$value": { "r": 11, "g": 11, "b": 14 } },
-      "white": { "$type": "color", "$value": { "r": 255, "g": 255, "b": 255 } },
-      "smoke": { "$type": "color", "$value": { "r": 20, "g": 20, "b": 24 } }
+      "black": {
+        "$type": "color",
+        "$value": {
+          "r": 8,
+          "g": 8,
+          "b": 8
+        }
+      },
+      "white": {
+        "$type": "color",
+        "$value": {
+          "r": 244,
+          "g": 244,
+          "b": 242
+        }
+      },
+      "smoke": {
+        "$type": "color",
+        "$value": {
+          "r": 20,
+          "g": 20,
+          "b": 20
+        }
+      },
+      "raised": {
+        "$type": "color",
+        "$value": {
+          "r": 33,
+          "g": 33,
+          "b": 32
+        }
+      },
+      "gray": {
+        "$type": "color",
+        "$value": {
+          "r": 227,
+          "g": 227,
+          "b": 223
+        }
+      },
+      "muted": {
+        "$type": "color",
+        "$value": {
+          "r": 170,
+          "g": 170,
+          "b": 164
+        }
+      },
+      "border": {
+        "$type": "color",
+        "$value": {
+          "r": 52,
+          "g": 52,
+          "b": 50
+        }
+      },
+      "orange": {
+        "$type": "color",
+        "$value": {
+          "r": 255,
+          "g": 88,
+          "b": 0
+        },
+        "$description": "Primary orange observed on https://devouringdetails.com/ on September 15, 2026. The light-mode text accent has a separate darker value for contrast."
+      }
     },
     "monokai": {
-      "pink": { "$type": "color", "$value": { "r": 255, "g": 97, "b": 136 } },
-      "orange": { "$type": "color", "$value": { "r": 251, "g": 152, "b": 102 } },
-      "yellow": { "$type": "color", "$value": { "r": 255, "g": 216, "b": 102 } },
-      "green": { "$type": "color", "$value": { "r": 169, "g": 220, "b": 117 } },
-      "cyan": { "$type": "color", "$value": { "r": 120, "g": 220, "b": 232 } },
-      "purple": { "$type": "color", "$value": { "r": 171, "g": 157, "b": 242 } },
-      "background": { "$type": "color", "$value": { "r": 35, "g": 31, "b": 34 } },
-      "background-alt": { "$type": "color", "$value": { "r": 46, "g": 42, "b": 46 } },
-      "foreground": { "$type": "color", "$value": { "r": 252, "g": 252, "b": 250 } }
+      "pink": {
+        "$type": "color",
+        "$value": "{color.base.gray}"
+      },
+      "orange": {
+        "$type": "color",
+        "$value": "{color.base.gray}"
+      },
+      "yellow": {
+        "$type": "color",
+        "$value": "{color.base.white}"
+      },
+      "green": {
+        "$type": "color",
+        "$value": "{color.base.gray}"
+      },
+      "cyan": {
+        "$type": "color",
+        "$value": "{color.base.white}"
+      },
+      "purple": {
+        "$type": "color",
+        "$value": "{color.base.gray}"
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{color.base.smoke}"
+      },
+      "background-alt": {
+        "$type": "color",
+        "$value": "{color.base.raised}"
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{color.base.white}"
+      }
+    },
+    "status": {
+      "success": {
+        "$type": "color",
+        "$value": {
+          "r": 146,
+          "g": 187,
+          "b": 138
+        }
+      },
+      "danger": {
+        "$type": "color",
+        "$value": {
+          "r": 238,
+          "g": 138,
+          "b": 128
+        }
+      },
+      "warning": {
+        "$type": "color",
+        "$value": {
+          "r": 229,
+          "g": 189,
+          "b": 100
+        }
+      }
     }
   },
   "font": {
     "mono": {
       "$type": "fontFamily",
-      "$value": ["MonoLisa", "SF Mono", "Consolas", "monospace"]
+      "$value": [
+        "MonoLisa",
+        "SF Mono",
+        "Consolas",
+        "monospace"
+      ],
+      "$description": "Existing MonoLisa for code and technical detail; unchanged font files."
     },
     "sans": {
       "$type": "fontFamily",
-      "$value": ["ui-sans-serif", "system-ui", "-apple-system", "sans-serif"]
+      "$value": [
+        "Wotfard",
+        "Arial",
+        "sans-serif"
+      ],
+      "$description": "Licensed Wotfard webfonts: Light, Regular, and Medium with matching italics. Font binaries are provisioned separately from the public repository."
     },
     "serif": {
       "$type": "fontFamily",
-      "$value": ["ui-serif", "Georgia", "serif"]
+      "$value": [
+        "ui-serif",
+        "Georgia",
+        "serif"
+      ]
     }
   },
   "space": {
-    "xs": { "$type": "dimension", "$value": { "value": 4, "unit": "px" } },
-    "sm": { "$type": "dimension", "$value": { "value": 8, "unit": "px" } },
-    "md": { "$type": "dimension", "$value": { "value": 16, "unit": "px" } },
-    "lg": { "$type": "dimension", "$value": { "value": 24, "unit": "px" } },
-    "xl": { "$type": "dimension", "$value": { "value": 32, "unit": "px" } },
-    "2xl": { "$type": "dimension", "$value": { "value": 48, "unit": "px" } }
+    "xs": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "2xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    }
   },
   "radius": {
-    "soft": { "$type": "dimension", "$value": { "value": 6, "unit": "px" } },
-    "card": { "$type": "dimension", "$value": { "value": 12, "unit": "px" } },
-    "pill": { "$type": "dimension", "$value": { "value": 999, "unit": "px" } }
+    "soft": {
+      "$type": "dimension",
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "card": {
+      "$type": "dimension",
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "pill": {
+      "$type": "dimension",
+      "$value": {
+        "value": 999,
+        "unit": "px"
+      }
+    }
+  },
+  "text": {
+    "display": {
+      "$type": "dimension",
+      "$value": {
+        "value": 5.5,
+        "unit": "rem"
+      }
+    },
+    "title": {
+      "$type": "dimension",
+      "$value": {
+        "value": 3.5,
+        "unit": "rem"
+      }
+    },
+    "heading": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2.5,
+        "unit": "rem"
+      }
+    },
+    "subheading": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      }
+    },
+    "body": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.25,
+        "unit": "rem"
+      }
+    },
+    "lead": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.25,
+        "unit": "rem"
+      }
+    },
+    "ui": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      }
+    },
+    "caption": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.875,
+        "unit": "rem"
+      }
+    }
+  },
+  "leading": {
+    "display": {
+      "$type": "number",
+      "$value": 1.05
+    },
+    "title": {
+      "$type": "number",
+      "$value": 1.15
+    },
+    "heading": {
+      "$type": "number",
+      "$value": 1.25
+    },
+    "subheading": {
+      "$type": "number",
+      "$value": 1.35
+    },
+    "body": {
+      "$type": "number",
+      "$value": 1.5
+    },
+    "lead": {
+      "$type": "number",
+      "$value": 1.5
+    },
+    "ui": {
+      "$type": "number",
+      "$value": 1.5
+    },
+    "caption": {
+      "$type": "number",
+      "$value": 1.5
+    },
+    "code": {
+      "$type": "number",
+      "$value": 1.6
+    }
+  },
+  "tracking": {
+    "display": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.015,
+        "unit": "em"
+      }
+    },
+    "title": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.015,
+        "unit": "em"
+      }
+    },
+    "heading": {
+      "$type": "dimension",
+      "$value": {
+        "value": -0.01,
+        "unit": "em"
+      }
+    },
+    "body": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0,
+        "unit": "em"
+      }
+    }
   }
 }

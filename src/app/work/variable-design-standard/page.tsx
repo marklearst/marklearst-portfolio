@@ -1,18 +1,9 @@
-import CaseStudyLayout from '@/components/CaseStudyLayout'
-import { createCaseStudyMdxComponents } from '@/components/mdx/CaseStudyMdxComponents'
-import { getCategoryColor } from '@/lib/project-categories'
-import { getCaseStudyBySlug } from '@/lib/content/case-studies'
-import { extractCaseStudySections } from '@/lib/content/case-study-sections'
+import CaseStudyPage, { getCaseStudyMetadata } from '@/components/case-study/CaseStudyPage'
 
-export default async function VariableDesignStandardPage() {
-  const { Content, links, ...frontmatter } = await getCaseStudyBySlug(
-    'variable-design-standard',
-  )
+export function generateMetadata() {
+  return getCaseStudyMetadata('variable-design-standard')
+}
 
-  const accent = getCategoryColor(frontmatter.categoryColor)
-  const mdxComponents = createCaseStudyMdxComponents(accent)
-  const content = Content({ components: mdxComponents })
-  const sections = extractCaseStudySections(content)
-
-  return <CaseStudyLayout {...frontmatter} links={links} sections={sections} />
+export default function VariableDesignStandardPage() {
+  return <CaseStudyPage slug='variable-design-standard' />
 }

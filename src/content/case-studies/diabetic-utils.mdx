@@ -22,7 +22,7 @@ links:
     icon: npm
 impact:
   - metric: '100%'
-    description: 'Test coverage with Vitest ensuring clinical calculation accuracy'
+    description: 'Vitest coverage for formulas, input validation, precision, and rounding'
   - metric: 'Google AI'
     description: 'Featured in Google AI Overview for diabetes developer tools'
   - metric: 'Production'
@@ -30,13 +30,15 @@ impact:
 gradient: from-orange-500/20 via-yellow-500/10 to-transparent
 ---
 
-<CaseStudySection title='The Problem'>
-  <div className='space-y-6'>
+<CaseStudySection title="Extract the calculations I kept rewriting">
+  <div className="space-y-6">
     <CaseStudyParagraph>
-      Developers building diabetes management apps face a critical challenge:
-      there is no standardized, tested library for glucose calculations. This
-      creates:
+      I built GlucoseIQ (Apple Watch app) and kept rewriting the same utility
+      functions. I wanted those calculations in one tested TypeScript library
+      that other diabetes developers could use.
     </CaseStudyParagraph>
+
+    <CaseStudyDetails summary="Calculation and data-handling problems">
     <CaseStudyMutedList className='space-y-3'>
       <li>
         Teams reinventing the same glucose conversion algorithms (mg/dL to
@@ -52,25 +54,32 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       <li>No type-safe APIs for glucose data structures</li>
       <li>Clinical calculation errors that could impact patient care</li>
     </CaseStudyMutedList>
-    <CaseStudyParagraph>
-      I built GlucoseIQ (Apple Watch app) and kept rewriting the same utility
-      functions. I realized the diabetes developer community needed a single,
-      tested, TypeScript library for these calculations.
-    </CaseStudyParagraph>
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="The Solution">
+<CaseStudySection title="Test calculations and edge cases">
   <div className="space-y-6">
     <CaseStudyParagraph>
       <strong>Diabetic Utils</strong> is a TypeScript library providing
-      clinical-grade calculations for glucose monitoring, A1C estimation, and
+      calculations for glucose monitoring, A1C estimation, and
       Time in Range metrics.
     </CaseStudyParagraph>
 
-    <CaseStudySubheading>Quick Start</CaseStudySubheading>
+    <CaseStudySubheading>100% test coverage</CaseStudySubheading>
     <CaseStudyMutedText>
-      Straight from the README. Short, copy-pasteable, and predictable:
+      The Vitest suite covers:
+    </CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>All calculation formulas against known medical values</li>
+      <li>Edge cases: boundary values, negative numbers, zero handling</li>
+      <li>Input validation and error handling</li>
+      <li>Precision and rounding behavior</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>One API for explicit units</CaseStudySubheading>
+    <CaseStudyMutedText>
+      Example from the README:
     </CaseStudyMutedText>
     <CodeBlock
       language="typescript"
@@ -97,6 +106,7 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       ].join('\n')}
     />
 
+    <CaseStudyDetails summary="Conversion, A1C, and Time in Range API reference">
     <CaseStudySubheading>Glucose Conversions</CaseStudySubheading>
     <CaseStudyMutedText>
       Type-safe functions for converting between mg/dL and mmol/L:
@@ -134,8 +144,8 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
 
     <CaseStudySubheading>Enhanced TIR (5-range)</CaseStudySubheading>
     <CaseStudyMutedText>
-      This is the feature most teams ask about. It mirrors clinical targets
-      while keeping the API dead simple.
+      Enhanced TIR mirrors clinical targets. It is the feature most teams ask
+      about.
     </CaseStudyMutedText>
     <CodeBlock
       language="typescript"
@@ -159,33 +169,13 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
         "console.log(result.meetsTargets.recommendations)",
       ].join('\n')}
     />
-
-    <CaseStudySubheading>100% Test Coverage</CaseStudySubheading>
-    <CaseStudyMutedText>
-      Comprehensive test suite with Vitest covering:
-    </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>All calculation formulas against known medical values</li>
-      <li>Edge cases: boundary values, negative numbers, zero handling</li>
-      <li>Input validation and error handling</li>
-      <li>Precision and rounding behavior</li>
-    </CaseStudyMutedList>
-
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Technical Implementation">
+<CaseStudySection title="Use published formulas and typed inputs">
   <div className="space-y-6">
-    <CaseStudySubheading className="mt-0">TypeScript-First Design</CaseStudySubheading>
-    <CaseStudyMutedText>Built with TypeScript for type safety:</CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Strongly typed glucose reading objects</li>
-      <li>Enum types for units (mg/dL, mmol/L)</li>
-      <li>Generic functions supporting both unit systems</li>
-      <li>Full IntelliSense support in IDEs</li>
-    </CaseStudyMutedList>
-
-    <CaseStudySubheading>Clinical Accuracy</CaseStudySubheading>
+    <CaseStudySubheading>Formula sources</CaseStudySubheading>
     <CaseStudyMutedText>Formulas validated against clinical sources:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>A1C calculation uses ADAG Study consensus formula</li>
@@ -194,7 +184,17 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       <li>Test cases derived from published medical examples</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Developer Experience</CaseStudySubheading>
+    <CaseStudyDetails summary="TypeScript contracts, package format, and integrations">
+    <CaseStudySubheading className="mt-0">TypeScript API</CaseStudySubheading>
+    <CaseStudyMutedText>Built with TypeScript for type safety:</CaseStudyMutedText>
+    <CaseStudyMutedList className="space-y-2">
+      <li>Strongly typed glucose reading objects</li>
+      <li>Enum types for units (mg/dL, mmol/L)</li>
+      <li>Generic functions supporting both unit systems</li>
+      <li>Full IntelliSense support in IDEs</li>
+    </CaseStudyMutedList>
+
+    <CaseStudySubheading>Package format</CaseStudySubheading>
     <CaseStudyMutedText>Designed for ease of use:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Zero dependencies - pure TypeScript implementation</li>
@@ -203,7 +203,7 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       <li>Published on npm with semantic versioning</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Use Cases</CaseStudySubheading>
+    <CaseStudySubheading>Use cases</CaseStudySubheading>
     <CaseStudyMutedText>Powers glucose monitoring features in:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>CGM (Continuous Glucose Monitor) companion apps</li>
@@ -212,40 +212,34 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       <li>HealthKit integration layers</li>
       <li>Clinical research data processing</li>
     </CaseStudyMutedList>
-
+    </CaseStudyDetails>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title='Impact & Recognition'>
-  <div className='space-y-6'>
-    <CaseStudyParagraph>
-      Diabetic Utils fills a critical gap in the health tech developer
-      ecosystem:
-    </CaseStudyParagraph>
+<CaseStudySection title="Adoption and maintenance">
+  <div className="space-y-6">
     <CaseStudyMutedList className='space-y-4'>
       <li>
         <strong>Featured in Google AI Overview</strong> for diabetes developer
-        tools--recognized as a go-to resource for glucose calculations
+        tools
       </li>
       <li>
         <strong>Adopted by health tech teams</strong> building production CGM
         apps and diabetes management platforms
       </li>
       <li>
-        <strong>100% test coverage</strong> ensures clinical calculation
-        accuracy, critical for patient-facing applications
+        <strong>100% test coverage</strong> for the calculation formulas and
+        their edge cases
       </li>
       <li>
-        <strong>Type-safe API</strong> prevents unit confusion bugs (mg/dL vs
-        mmol/L) that plague glucose apps
+        <strong>Type-safe API</strong> with explicit units for mg/dL and mmol/L
       </li>
       <li>
         <strong>Open-source contribution</strong> to the diabetes developer
         community, reducing duplicated effort
       </li>
       <li>
-        <strong>Zero dependencies</strong> makes it safe to adopt in production
-        health apps with strict security requirements
+        <strong>Zero dependencies</strong> in a pure TypeScript implementation
       </li>
     </CaseStudyMutedList>
     <CaseStudyParagraph className='mt-8'>

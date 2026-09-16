@@ -1,3 +1,4 @@
+import { colorWithAlpha } from '@/lib/color-alpha'
 import { ImageResponse } from 'next/og'
 import { getArtifactBySlug } from '@/lib/content/artifacts'
 import { MONOKAI } from '@/lib/monokai-colors'
@@ -78,7 +79,7 @@ export default async function Image({
           width: '800px',
           height: '800px',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${MONOKAI.cyan}40 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${colorWithAlpha(MONOKAI.cyan, 0x40 / 255)} 0%, transparent 70%)`,
           filter: 'blur(140px)',
         }}
       />
@@ -90,7 +91,7 @@ export default async function Image({
           width: '700px',
           height: '700px',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${MONOKAI.purple}40 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${colorWithAlpha(MONOKAI.purple, 0x40 / 255)} 0%, transparent 70%)`,
           filter: 'blur(130px)',
         }}
       />
@@ -102,7 +103,7 @@ export default async function Image({
           width: '500px',
           height: '500px',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${MONOKAI.pink}20 0%, transparent 65%)`,
+          background: `radial-gradient(circle, ${colorWithAlpha(MONOKAI.pink, 0x20 / 255)} 0%, transparent 65%)`,
           filter: 'blur(110px)',
         }}
       />
@@ -114,7 +115,6 @@ export default async function Image({
           justifyContent: 'space-between',
           alignItems: 'center',
           marginBottom: '50px',
-          zIndex: 10,
         }}
       >
         <div
@@ -160,7 +160,6 @@ export default async function Image({
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
-          zIndex: 10,
         }}
       >
         <div
@@ -228,8 +227,8 @@ export default async function Image({
         <img
           src={logoData}
           alt=''
-          width='80'
-          height='51'
+          width={80}
+          height={51}
           style={{
             borderRadius: '6px',
             position: 'absolute',

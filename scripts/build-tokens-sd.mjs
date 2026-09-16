@@ -1,116 +1,11 @@
 import StyleDictionary from "style-dictionary";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import { loadValidatedTokens, resolveTokenTree } from "./style-dictionary/tokens.mjs";
 import { isColor, isDimension } from "./style-dictionary/filter.mjs";
 import { rgbChannels, dimensionValue } from "./style-dictionary/transform.mjs";
-import { tailwindThemeCss } from "./style-dictionary/format.mjs";
-
-const isObject = (value) => value && typeof value === "object" && !Array.isArray(value);
-
-const modeKeys = new Set(
-  (process.env.VC_MODES ?? "dark,light")
-    .split(",")
-    .map((value) => value.trim())
-    .filter(Boolean),
-);
-
-const getActiveMode = () => process.env.VC_MODE || "dark";
-
-const isRefString = (value) =>
-  typeof value === "string" &&
-  ((value.startsWith("{") && value.endsWith("}")) || value.startsWith("#/"));
-
-const parseRefPath = (value) => {
-  if (value.startsWith("{")) {
-    return value.slice(1, -1).split(".");
-  }
-  if (value.startsWith("#/")) {
-    return value.slice(2).split("/");
-  }
-  return [];
-};
-
-const getTokenNode = (root, refPath) => {
-  let node = root;
-  for (const part of refPath) {
-    if (!isObject(node) || !(part in node)) {
-      return null;
-    }
-    node = node[part];
-  }
-  return node;
-};
-
-const isModeObject = (value) => {
-  if (!isObject(value)) {
-    return false;
-  }
-  const keys = Object.keys(value);
-  if (keys.length === 0) {
-    return false;
-  }
-  return keys.every((key) => modeKeys.has(key));
-};
-
-const pickModeValue = (value) => {
-  const mode = getActiveMode();
-  if (Object.prototype.hasOwnProperty.call(value, mode)) {
-    return value[mode];
-  }
-  if (Object.prototype.hasOwnProperty.call(value, "default")) {
-    return value.default;
-  }
-  if (Object.prototype.hasOwnProperty.call(value, "dark")) {
-    return value.dark;
-  }
-  const [firstKey] = Object.keys(value);
-  return value[firstKey];
-};
-
-const resolveValue = (value, root, stack = []) => {
-  if (isRefString(value)) {
-    const refKey = value;
-    if (stack.includes(refKey)) {
-      throw new Error(`Circular token reference: ${[...stack, refKey].join(" -> ")}`);
-    }
-    const refNode = getTokenNode(root, parseRefPath(refKey));
-    if (!refNode || !Object.prototype.hasOwnProperty.call(refNode, "$value")) {
-      throw new Error(`Missing token reference: ${refKey}`);
-    }
-    return resolveValue(refNode.$value, root, [...stack, refKey]);
-  }
-  if (Array.isArray(value)) {
-    return value.map((entry) => resolveValue(entry, root, stack));
-  }
-  if (isModeObject(value)) {
-    return resolveValue(pickModeValue(value), root, stack);
-  }
-  if (isObject(value)) {
-    const next = {};
-    for (const [key, entry] of Object.entries(value)) {
-      next[key] = resolveValue(entry, root, stack);
-    }
-    return next;
-  }
-  return value;
-};
-
-const resolveRefs = (node, root) => {
-  if (!isObject(node)) {
-    return node;
-  }
-  if (Object.prototype.hasOwnProperty.call(node, "$value")) {
-    return { ...node, $value: resolveValue(node.$value, root) };
-  }
-  const next = {};
-  for (const [key, value] of Object.entries(node)) {
-    next[key] = resolveRefs(value, root);
-  }
-  return next;
-};
-
-StyleDictionary.registerPreprocessor({
-  name: "vc-ref",
-  preprocessor: (tokens) => resolveRefs(tokens, tokens),
-});
+import { assertUniqueCssVariableNames, tailwindThemeCss } from "./style-dictionary/format.mjs";
 
 StyleDictionary.registerTransform({
   name: "color/rgb-channels",
@@ -152,58 +47,74 @@ StyleDictionary.registerFormat({
   format: tailwindThemeCss,
 });
 
-const tokenSources = [
-  "src/tokens/base.json",
-  "src/tokens/alias.json",
-  "src/tokens/component.json",
+const modes = [
+  { mode: "dark", selector: ":root", destination: "tokens.css", includeTheme: true },
+  { mode: "light", selector: ":root[data-theme='light']", destination: "tokens.light.css", includeTheme: false },
 ];
 
-const buildTokens = async ({ mode, selector, tokensDestination, includeTheme }) => {
-  process.env.VC_MODE = mode;
-  const files = [
-    {
-      destination: tokensDestination,
+export async function formatTokenFiles() {
+  const tokens = await loadValidatedTokens();
+  const outputs = [];
+  for (const { mode, selector, destination, includeTheme } of modes) {
+    const files = [{
+      destination,
       format: "css/variables",
-      options: {
-        selector,
-      },
-    },
-  ];
-  if (includeTheme) {
-    files.push({
-      destination: "theme.css",
-      format: "tailwind/theme-css",
-      options: {
-        prefix: "token",
+      options: { selector, formatting: { fileHeaderTimestamp: false } },
+    }];
+    if (includeTheme) {
+      files.push({ destination: "theme.css", format: "tailwind/theme-css", options: { prefix: "token" } });
+    }
+    const sd = new StyleDictionary({
+      tokens: resolveTokenTree(tokens, tokens, mode),
+      log: { verbosity: "silent" },
+      platforms: {
+        css: {
+          transformGroup: "tailwind-css",
+          prefix: "token",
+          buildPath: "src/styles/generated/",
+          files,
+        },
       },
     });
+    assertUniqueCssVariableNames(await sd.getPlatformTokens("css"));
+    const formatted = await sd.formatAllPlatforms();
+    outputs.push(...formatted.css);
   }
-  const config = {
-    source: tokenSources,
-    platforms: {
-      css: {
-        transformGroup: "tailwind-css",
-        preprocessors: ["vc-ref"],
-        prefix: "token",
-        buildPath: "src/app/",
-        files,
-      },
-    },
-  };
-  const sd = new StyleDictionary(config);
-  await sd.buildAllPlatforms();
-};
+  return outputs;
+}
 
-await buildTokens({
-  mode: "dark",
-  selector: ":root",
-  tokensDestination: "tokens.css",
-  includeTheme: true,
-});
+async function main() {
+  const args = process.argv.slice(2);
+  if (args.some((arg) => arg !== "--check")) throw new Error("Usage: node scripts/build-tokens-sd.mjs [--check]");
+  const check = args.includes("--check");
+  const files = await formatTokenFiles();
+  if (check) {
+    const stale = [];
+    for (const { destination, output } of files) {
+      let existing;
+      try {
+        existing = await readFile(destination, "utf8");
+      } catch (error) {
+        if (error.code !== "ENOENT") throw error;
+      }
+      if (existing !== output) stale.push(destination);
+    }
+    if (stale.length) throw new Error(`Generated token CSS is missing or stale:\n${stale.map((file) => `- ${file}`).join("\n")}\nRun pnpm tokens:build to update it.`);
+    console.log("Generated token CSS is current.");
+    return;
+  }
+  for (const { destination, output } of files) {
+    await mkdir(path.dirname(destination), { recursive: true });
+    await writeFile(destination, output);
+    console.log(`Generated ${destination}`);
+  }
+}
 
-await buildTokens({
-  mode: "light",
-  selector: ":root[data-theme='light']",
-  tokensDestination: "tokens.light.css",
-  includeTheme: false,
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try {
+    await main();
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
+  }
+}
