@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/check-webfonts.mjs && node scripts/build-tokens-sd.mjs --check && next build",
+    "build": "node scripts/fetch-webfonts.mjs && node scripts/check-webfonts.mjs && node scripts/build-tokens-sd.mjs --check && next build",
     "start": "next start",
     "lint": "eslint",
     "tokens:build": "node scripts/build-tokens-sd.mjs",
@@ -17,7 +17,8 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test \"src/**/*.test.mjs\" \"scripts/**/*.test.mjs\"",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check",
-    "tokens:check": "node scripts/build-tokens-sd.mjs --check"
+    "tokens:check": "node scripts/build-tokens-sd.mjs --check",
+    "fonts:upload": "node scripts/upload-webfonts.mjs"
   },
   "dependencies": {
     "@figma-vars/hooks": "^4.0.0",
@@ -44,6 +45,7 @@
     "@types/node": "^24.13.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@vercel/blob": "^2.8.0",
     "ajv": "^8.20.0",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.39.5",
