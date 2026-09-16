@@ -1,24 +1,13 @@
 import type { Metadata } from 'next'
-import Footer from '@/components/Footer'
-import WorkCatalog from '@/components/WorkCatalog'
+import Footer from '@/components/shell/Footer'
+import WorkCatalog from '@/components/work/WorkCatalog'
+import styles from '@/components/work/WorkCatalog.module.css'
 
 export const metadata: Metadata = {
   title: 'Work - Mark Learst',
-  description:
-    'Full catalog of case studies, open source, and design system work by Mark Learst.',
+  description: 'Full catalog of case studies, open source, and design system work by Mark Learst.',
 }
 
-export default async function WorkPage() {
-  return (
-    <main
-      className='min-h-screen pt-36'
-    >
-      <div className='px-6 pb-24'>
-        <div className='max-w-7xl mx-auto'>
-          <WorkCatalog />
-        </div>
-      </div>
-      <Footer />
-    </main>
-  )
+export default function WorkPage() {
+  return <main className={styles.page}><WorkCatalog /><Footer /></main>
 }

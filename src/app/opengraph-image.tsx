@@ -1,3 +1,4 @@
+import { colorWithAlpha } from '@/lib/color-alpha'
 import { ImageResponse } from 'next/og'
 import { MONOKAI } from '@/lib/monokai-colors'
 import fs from 'node:fs/promises'
@@ -58,7 +59,7 @@ export default async function Image() {
           width: '700px',
           height: '700px',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${MONOKAI.cyan}20 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${colorWithAlpha(MONOKAI.cyan, 0x20 / 255)} 0%, transparent 70%)`,
           filter: 'blur(120px)',
         }}
       />
@@ -70,7 +71,7 @@ export default async function Image() {
           width: '600px',
           height: '600px',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${MONOKAI.purple}20 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${colorWithAlpha(MONOKAI.purple, 0x20 / 255)} 0%, transparent 70%)`,
           filter: 'blur(120px)',
         }}
       />
@@ -82,7 +83,6 @@ export default async function Image() {
           flexDirection: 'column',
           justifyContent: 'center',
           flex: 1,
-          zIndex: 10,
         }}
       >
         <div
@@ -141,7 +141,6 @@ export default async function Image() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          zIndex: 10,
         }}
       >
         <div
@@ -177,8 +176,8 @@ export default async function Image() {
         <img
           src={logoData}
           alt=''
-          width='80'
-          height='51'
+          width={80}
+          height={51}
           style={{
             borderRadius: '6px',
             position: 'absolute',

@@ -1,0 +1,81 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root[data-theme='light'] {
+  --token-color-base-black: 8 8 8;
+  --token-color-base-white: 244 244 242;
+  --token-color-base-smoke: 20 20 20;
+  --token-color-base-raised: 33 33 32;
+  --token-color-base-gray: 227 227 223;
+  --token-color-base-muted: 170 170 164;
+  --token-color-base-border: 52 52 50;
+  --token-color-base-orange: 255 88 0; /** Primary orange observed on https://devouringdetails.com/ on September 15, 2026. The light-mode text accent has a separate darker value for contrast. */
+  --token-color-monokai-pink: 227 227 223;
+  --token-color-monokai-orange: 227 227 223;
+  --token-color-monokai-yellow: 244 244 242;
+  --token-color-monokai-green: 227 227 223;
+  --token-color-monokai-cyan: 244 244 242;
+  --token-color-monokai-purple: 227 227 223;
+  --token-color-monokai-background: 20 20 20;
+  --token-color-monokai-background-alt: 33 33 32;
+  --token-color-monokai-foreground: 244 244 242;
+  --token-color-status-success: 146 187 138;
+  --token-color-status-danger: 238 138 128;
+  --token-color-status-warning: 229 189 100;
+  --token-color-canvas: 247 247 243;
+  --token-color-surface: 255 255 255;
+  --token-color-surface-raised: 236 236 230;
+  --token-color-ink-primary: 17 17 16;
+  --token-color-ink-secondary: 71 71 67;
+  --token-color-ink-muted: 98 98 91;
+  --token-color-accent-primary: 185 68 9;
+  --token-color-accent-secondary: 71 71 67;
+  --token-color-accent-success: 60 108 52;
+  --token-color-accent-danger: 173 57 49;
+  --token-color-accent-warning: 118 81 9;
+  --token-color-border-subtle: 209 209 200;
+  --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace; /** Existing MonoLisa for code and technical detail; unchanged font files. */
+  --token-font-sans: Wotfard, Arial, sans-serif; /** Licensed Wotfard webfonts: Light, Regular, and Medium with matching italics. Font binaries are provisioned separately from the public repository. */
+  --token-font-serif: ui-serif, Georgia, serif;
+  --token-font-body: Wotfard, Arial, sans-serif;
+  --token-font-display: Wotfard, Arial, sans-serif;
+  --token-font-ui: Wotfard, Arial, sans-serif;
+  --token-space-xs: 4px;
+  --token-space-sm: 8px;
+  --token-space-md: 16px;
+  --token-space-lg: 24px;
+  --token-space-xl: 32px;
+  --token-space-2xl: 48px;
+  --token-radius-soft: 6px;
+  --token-radius-card: 12px;
+  --token-radius-pill: 999px;
+  --token-text-display: 5.5rem;
+  --token-text-title: 3.5rem;
+  --token-text-heading: 2.5rem;
+  --token-text-subheading: 1.5rem;
+  --token-text-body: 1.25rem;
+  --token-text-lead: 1.25rem;
+  --token-text-ui: 1rem;
+  --token-text-caption: 0.875rem;
+  --token-leading-display: 1.05;
+  --token-leading-title: 1.15;
+  --token-leading-heading: 1.25;
+  --token-leading-subheading: 1.35;
+  --token-leading-body: 1.5;
+  --token-leading-lead: 1.5;
+  --token-leading-ui: 1.5;
+  --token-leading-caption: 1.5;
+  --token-leading-code: 1.6;
+  --token-tracking-display: -0.015em;
+  --token-tracking-title: -0.015em;
+  --token-tracking-heading: -0.01em;
+  --token-tracking-body: 0em;
+  --token-component-terminal-background: 255 255 255;
+  --token-component-terminal-foreground: 17 17 16;
+  --token-component-terminal-accent: 185 68 9;
+  --token-component-terminal-success: 60 108 52;
+  --token-component-terminal-error: 173 57 49;
+  --token-component-card-border: 209 209 200;
+  --token-component-card-shadow: 0px 30px 80px 0px rgba(0, 0, 0, 0.45);
+}

@@ -1,0 +1,12 @@
+:root {
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --duration-feedback: 140ms;
+  --duration-reveal: 180ms;
+  --animation-panel-reveal: panel-reveal;
+}
+
+/* Bound to a changed inner panel. Never an initial page or scroll entrance. */
+@keyframes panel-reveal {
+  from { opacity: .5; transform: translateY(4px); filter: blur(1.5px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}

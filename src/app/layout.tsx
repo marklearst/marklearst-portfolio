@@ -1,25 +1,18 @@
 import type { Metadata } from 'next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import './globals.css'
-import TerminalNavigationProvider from '@/components/transitions/TerminalNavigationProvider'
-import ParticleHeader from '@/components/brand/ParticleHeader'
-import NeuralBackground from '@/components/brand/NeuralBackground'
-import PrimaryNav from '@/components/PrimaryNav'
-import CursorOrbs from '@/components/ui/CursorOrbs'
-import KonamiCode from '@/components/ui/KonamiCode'
-import ScrollProgress from '@/components/ui/ScrollProgress'
-import CommandPalette from '@/components/ui/CommandPalette'
-import FigmaVarsContextProvider from '@/components/providers/FigmaVarsProvider'
+import '../styles/globals.css'
+import SiteHeader from '@/components/shell/SiteHeader'
+import PageTransition from '@/components/transitions/PageTransition'
+import FigmaVarsContextProvider from '@/components/dev/FigmaVarsProvider'
 import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
-import AnalyticsManager from '@/components/AnalyticsManager'
-import NavigationHistoryTracker from '@/components/NavigationHistoryTracker'
+import AnalyticsManager from '@/components/analytics/AnalyticsManager'
+import NavigationHistoryTracker from '@/components/navigation/NavigationHistoryTracker'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marklearst.com'),
-  title:
-    'Mark Learst | Principal Design Engineer (Design Systems, React, Accessibility, DX + AI Agentic Workflow)',
+  title: 'Mark Learst | Design Engineer & UI Architect',
   description:
-    'Principal Design Engineer | Design Systems & Design Tokens | Frontend Platform & Architecture | React, TypeScript, Storybook & Component Libraries | Accessibility, Interaction Design & Motion',
+    'Design systems, React components, and developer tools by Mark Learst. Explore case studies and working examples.',
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -42,45 +35,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
+      <head>
+        <link rel='preload' href='/fonts/wotfard/wotfard-regular-webfont.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+        <link rel='preload' href='/fonts/wotfard/wotfard-medium-webfont.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
+      </head>
       <body>
-        <NeuralBackground />
+        <a className='skip-link' href='#page-content'>Skip to content</a>
 
-        {/* Global animated Monokai gradient line - appears on all pages */}
-        <div className='top-0 left-0 right-0 h-1 z-50'>
-          <div
-            className='w-full h-full animate-gradient-x'
-            style={{
-              background:
-                'linear-gradient(90deg, #ff6188, #fb9866, #ffd866, #a9dc75, #78dce8, #ab9df2, #ff6188)',
-              backgroundSize: '200% 100%',
-            }}
-          />
-        </div>
+        <SiteHeader />
 
-        {/* Scroll progress indicator - below the gradient line */}
-        <ScrollProgress />
-
-        {/* Header with ML logo - staggered entrance */}
-        <header className='site-header fixed top-0 inset-x-0 z-40 isolate flex flex-wrap items-center justify-between gap-2 px-4 pt-4 pb-3 sm:flex-nowrap sm:gap-4 sm:px-8 sm:pt-8'>
-          <div className='pointer-events-auto flex min-h-11 items-center opacity-0 animate-[fadeIn_0.5s_ease-out_0.8s_forwards]'>
-            <ParticleHeader />
-          </div>
-          <div className='pointer-events-auto w-full opacity-0 animate-[fadeIn_0.5s_ease-out_1s_forwards] sm:w-auto'>
-            <PrimaryNav />
-          </div>
-        </header>
-
-        {/* Monokai cursor orbs - premium cursor trail */}
-        <CursorOrbs />
-
-        {/* Easter egg - Konami code */}
-        <KonamiCode />
-
-        <FigmaVarsContextProvider>
-          <TerminalNavigationProvider>{children}</TerminalNavigationProvider>
-          <FigmaVarsDebug />
-        </FigmaVarsContextProvider>
-        <CommandPalette />
+        <PageTransition>{children}</PageTransition>
+        {process.env.NODE_ENV !== 'production' && (
+          <FigmaVarsContextProvider>
+            <FigmaVarsDebug />
+          </FigmaVarsContextProvider>
+        )}
         <AnalyticsManager />
         <NavigationHistoryTracker />
         <SpeedInsights />

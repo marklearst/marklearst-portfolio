@@ -1,0 +1,138 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-ink-secondary);
+}
+
+.container {
+  width: min(calc(100% - 48px), 54rem);
+  margin-inline: auto;
+  padding-block: 128px 80px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  margin-bottom: 24px;
+  color: var(--color-ink-muted);
+  font: 500 var(--text-ui)/1.5 var(--font-body);
+  text-decoration: none;
+}
+
+.backLink svg {
+  flex-shrink: 0;
+  color: var(--color-accent-primary);
+}
+
+.header {
+  margin-bottom: 48px;
+}
+
+.header h1 {
+  margin: 0 0 24px;
+  font-size: var(--text-title);
+}
+
+.header p {
+  margin: 0;
+  font: 400 var(--text-lead)/1.5 var(--font-body);
+  text-wrap: pretty;
+}
+
+.content {
+  display: grid;
+  gap: 40px;
+  font: 400 var(--text-body)/1.5 var(--font-body);
+}
+
+.content h2 {
+  margin: 0 0 16px;
+  font-size: var(--text-subheading);
+}
+
+.content p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.content ul {
+  margin: 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.content li {
+  position: relative;
+  padding-inline-start: 1.6em;
+}
+
+.content li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: calc((1lh - 1.2em) / 2);
+  width: 1.2em;
+  height: 1.2em;
+  background: var(--color-accent-primary);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h15m-6-6 6 6-6 6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  pointer-events: none;
+}
+
+.content li + li {
+  margin-block-start: 0.75em;
+}
+
+.content a {
+  color: var(--color-accent-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.control {
+  padding: 20px 24px;
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.control strong {
+  color: var(--color-ink-primary);
+  font-weight: 500;
+}
+
+.backLink:focus-visible, .content a:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .backLink:hover {
+    color: var(--color-ink-primary);
+  }
+}
+
+@media (max-width: 640px) {
+
+  .container {
+    width: calc(100% - 40px);
+    padding-block: 112px 64px;
+  }
+
+  .header {
+    margin-bottom: 36px;
+  }
+
+  .header p {
+    font-size: var(--text-body);
+  }
+
+  .content {
+    gap: 32px;
+  }
+
+  .control {
+    padding: 20px;
+  }
+}
