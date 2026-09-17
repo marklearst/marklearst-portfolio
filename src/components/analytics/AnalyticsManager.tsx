@@ -28,17 +28,23 @@ const redactUrlParams = (rawUrl: string) => {
   }
 }
 
+// Storage access throws when a browser blocks it. Treat that as not opted out
+// rather than letting the throw escape the analytics callback.
+function isOptedOut() {
+  if (typeof window === 'undefined') return false
+  try {
+    return Boolean(window.localStorage.getItem('va-disable'))
+  } catch {
+    return false
+  }
+}
+
 export default function AnalyticsManager() {
   useEngagementTracking({ thresholds: ENGAGEMENT_THRESHOLDS })
   return (
     <Analytics
       beforeSend={(event: BeforeSendEvent) => {
-        if (
-          typeof window !== 'undefined' &&
-          localStorage.getItem('va-disable')
-        ) {
-          return null
-        }
+        if (isOptedOut()) return null
 
         const sanitizedUrl = redactUrlParams(event.url)
         if (sanitizedUrl !== event.url) {
