@@ -13,9 +13,7 @@ export default function AnalyticsOptOutToggle() {
     <button
       type='button'
       onClick={toggleOptOut}
-      aria-label={
-        isOptedOut ? 'Enable anonymous analytics' : 'Disable analytics'
-      }
+      aria-pressed={!isOptedOut}
       title={hint}
       className='inline-flex min-h-11 touch-manipulation items-center gap-1.5 rounded-md border border-[var(--color-border-subtle)] bg-transparent px-3 py-1 font-body text-sm text-[var(--color-ink-muted)] hover:text-[var(--color-ink-primary)]'
     >
