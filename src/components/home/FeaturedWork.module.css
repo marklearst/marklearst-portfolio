@@ -18,6 +18,11 @@
   text-decoration: none;
 }
 
+.previewLink svg {
+  flex-shrink: 0;
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .work {
   position: relative;
   padding: 48px 40px 64px;
@@ -48,6 +53,12 @@
   color: var(--color-ink-secondary);
   font: 400 var(--text-ui)/1.5 var(--font-body);
   text-decoration: none;
+}
+
+.sectionHeading > a span {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .projectGrid {
@@ -149,6 +160,8 @@
 }
 
 .caseLink span {
+  display: inline-flex;
+  flex-shrink: 0;
   transition: transform var(--duration-exit) var(--ease-preview);
 }
 
@@ -158,7 +171,8 @@
 }
 
 .caseLink:active span {
-  transform: translateX(4px);
+  transform: translateX(6px);
+  transition-duration: var(--duration-reveal);
 }
 
 .figure {
@@ -201,6 +215,8 @@
 }
 
 .moreWork a span {
+  display: inline-flex;
+  flex-shrink: 0;
   transition: transform var(--duration-exit) var(--ease-preview);
 }
 
@@ -209,7 +225,8 @@
 }
 
 .moreWork a:active span {
-  transform: translateX(3px);
+  transform: translateX(6px);
+  transition-duration: var(--duration-reveal);
 }
 
 .work a:focus-visible {
@@ -225,14 +242,20 @@
   .moreWork a:hover,
   .sectionHeading > a:hover {
     color: var(--color-ink-primary);
-    text-decoration: underline;
   }
 
+  /* Arrow answers now; color is secondary. Exit ~100ms, enter ~180ms. */
   .caseLink:hover span,
   .moreWork a:hover span,
   .sectionHeading > a:hover span {
-    transform: translateX(3px);
-    transition-duration: var(--duration-preview);
+    transform: translateX(6px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .previewLink:hover svg {
+    transform: translate(3px, -3px);
+    transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
   }
 }
@@ -321,14 +344,20 @@
   .caseLink,
   .caseLink span,
   .moreWork a,
-  .moreWork a span {
+  .moreWork a span,
+  .sectionHeading > a span,
+  .previewLink svg {
     transition: none;
   }
 
   .caseLink:active,
   .caseLink:active span,
   .moreWork a:active,
-  .moreWork a:active span {
+  .moreWork a:active span,
+  .caseLink:hover span,
+  .moreWork a:hover span,
+  .sectionHeading > a:hover span,
+  .previewLink:hover svg {
     transform: none;
   }
 }
