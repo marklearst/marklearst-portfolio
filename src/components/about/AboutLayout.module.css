@@ -96,15 +96,18 @@
 
 .contactLabel {
   display: inline-block;
-  transition: transform var(--duration-preview) var(--ease-preview);
-  transition-delay: var(--duration-follow);
+  /* Label follows the arrow; leave uses the faster exit window. */
+  transition:
+    transform var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview);
+  filter: blur(0);
 }
 
 .contactArrow {
   display: inline-grid;
   place-items: center;
   color: var(--color-accent-primary, #e6aa79);
-  transition: transform var(--duration-preview) var(--ease-preview);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .contactAction:first-child {
@@ -274,10 +277,14 @@
 
 .contactAction:focus-visible .contactArrow {
   transform: translate(6px, -6px);
+  transition-duration: var(--duration-preview);
 }
 
 .contactAction:focus-visible .contactLabel {
   transform: translateX(4px);
+  filter: blur(0);
+  transition-duration: var(--duration-preview);
+  transition-delay: var(--duration-follow);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -299,10 +306,14 @@
   /* Arrow answers immediately; label follows ~60ms. */
   .contactAction:hover .contactArrow {
     transform: translate(6px, -6px);
+    transition-duration: var(--duration-preview);
   }
 
   .contactAction:hover .contactLabel {
     transform: translateX(4px);
+    filter: blur(0);
+    transition-duration: var(--duration-preview);
+    transition-delay: var(--duration-follow);
   }
 
   .content :global(.about-contact-links) > a:hover {

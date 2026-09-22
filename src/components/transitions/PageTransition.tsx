@@ -20,14 +20,14 @@ export default function PageTransition({ children }: { children: React.ReactNode
     if (!element || typeof element.animate !== 'function' || preference.matches) return
     if (document.documentElement.getAttribute('data-route-input') !== 'pointer') return
 
-    // Incoming page: opacity + a short settle so the route feels answered, not faded.
+    // Opacity + blur only — the pressed control already answered with translateY.
     const animation = element.animate(
       [
-        { opacity: 0.55, transform: 'translateY(8px)', filter: 'blur(2.5px)' },
-        { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
+        { opacity: 0.55, filter: 'blur(2.5px)' },
+        { opacity: 1, filter: 'blur(0)' },
       ],
       {
-        duration: 220,
+        duration: 200,
         easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
     )
