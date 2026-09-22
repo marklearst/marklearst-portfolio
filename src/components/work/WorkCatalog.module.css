@@ -36,6 +36,33 @@
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
+.filterStrip {
+  position: relative;
+}
+
+/* Scroll-strip transfer: soft edge fade when the chip row overflows. */
+.filterStrip::before,
+.filterStrip::after {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 1px;
+  width: 28px;
+  pointer-events: none;
+  opacity: 0;
+  content: '';
+}
+
+.filterStrip::before {
+  left: 0;
+  background: linear-gradient(to right, var(--color-canvas), transparent);
+}
+
+.filterStrip::after {
+  right: 0;
+  background: linear-gradient(to left, var(--color-canvas), transparent);
+}
+
 .filters button {
   position: relative;
   min-width: 44px;
@@ -60,7 +87,8 @@
   content: '';
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--duration-preview) var(--ease-preview);
+  /* Outgoing chip underline exits faster than the incoming one. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .filters button[aria-pressed='true'] {
@@ -69,6 +97,7 @@
 
 .filters button[aria-pressed='true']::after {
   transform: scaleX(1);
+  transition-duration: var(--duration-preview);
 }
 
 .resultCount {
@@ -81,6 +110,32 @@
 
 .resultCountMotion {
   animation: var(--animation-status-arrive) var(--duration-reveal) var(--ease-out) both;
+}
+
+.resultsShell {
+  position: relative;
+  isolation: isolate;
+}
+
+.results[data-exiting] {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+  animation: catalog-exit var(--duration-exit) var(--ease-preview) forwards;
+}
+
+@keyframes catalog-exit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
 }
 
 .project {
@@ -264,11 +319,19 @@
     margin-inline: -4px;
     padding: 4px;
     scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filterStrip::before,
+  .filterStrip::after {
+    opacity: 1;
   }
 
   .filters button {
     flex-shrink: 0;
     white-space: nowrap;
+    scroll-snap-align: start;
   }
 
   .filters button:focus-visible {
@@ -307,6 +370,12 @@
 
   .resultCountMotion {
     animation: none;
+  }
+
+  .results[data-exiting] {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
   }
 }
 

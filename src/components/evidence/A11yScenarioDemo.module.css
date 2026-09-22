@@ -105,6 +105,13 @@
   pointer-events: auto;
 }
 
+.panel[data-exiting] {
+  visibility: visible;
+  pointer-events: none;
+  z-index: 1;
+  animation: demo-panel-exit var(--duration-exit) var(--ease-preview) forwards;
+}
+
 .panel[data-status='review-remaining'] {
   --a11y-accent: var(--color-accent-warning);
 }
@@ -435,11 +442,29 @@
   .scenarios button:active {
     transform: none;
   }
+
+  .panel[data-exiting] {
+    animation: none;
+    visibility: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
 
   .panels[data-motion='true'] > .panel[data-active='true'] {
     animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out);
+  }
+}
+
+@keyframes demo-panel-exit {
+
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
   }
 }
