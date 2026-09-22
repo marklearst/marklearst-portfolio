@@ -144,6 +144,10 @@
   color: var(--color-ink-secondary, #cbc5bf);
   font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   overflow-wrap: anywhere;
+  /* Exit stays snappy; hover overrides to juice + reveal. */
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .content :global(.timeline-entries) {
@@ -318,8 +322,12 @@
     transition-delay: var(--duration-follow);
   }
 
+  /* Link itself is the secondary line — nudge a few px with the cards' juice. */
   .content :global(.about-contact-links) > a:hover {
     color: var(--color-ink-primary, #f3eee8);
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .content :global(.about-intro) > p a:hover,
@@ -383,7 +391,8 @@
   .contactAction:focus-visible .contactArrow,
   .contactAction:hover .contactLabel,
   .contactAction:focus-visible .contactLabel,
-  .contactAction:active .contactArrow {
+  .contactAction:active .contactArrow,
+  .content :global(.about-contact-links) > a:hover {
     transform: none;
   }
 }
