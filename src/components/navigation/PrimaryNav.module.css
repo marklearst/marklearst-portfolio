@@ -66,10 +66,20 @@
   font: 500 var(--text-ui)/1.4 var(--font-body);
   letter-spacing: -0.01em;
   text-decoration: none;
+  /* Default = exit: ink leaves fast so previewed labels do not stack. */
   transition:
-    color 80ms var(--ease-preview),
+    color var(--duration-exit) var(--ease-preview),
     background-color var(--duration-preview) var(--ease-preview),
     transform var(--duration-preview) var(--ease-preview);
+}
+
+.link > span {
+  display: inline-block;
+  /* Outgoing labels blur out on the exit window. */
+  transition:
+    filter var(--duration-exit) var(--ease-preview),
+    opacity var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .link[aria-current='page'] {
@@ -77,7 +87,6 @@
 }
 
 .link:focus-visible {
-  color: var(--color-ink-primary);
   outline: 2px solid var(--color-ink-primary);
   outline-offset: -2px;
 }
@@ -92,13 +101,52 @@
     transform var(--duration-preview) var(--ease-preview);
 }
 
-.nav:has(.link:focus-visible)::after {
-  opacity: 0;
+.link:active > span {
+  filter: none;
+  opacity: 1;
+  transform: none;
+  transition-delay: 0ms;
 }
 
-.nav:has(.link:focus-visible)::before,
-.nav:has(.link:focus-visible)::after {
-  transition: none;
+/*
+ * Keyboard and fine-pointer hover share one sequence:
+ * ring + label travel now, sibling labels exit with blur, ink follows ~60ms.
+ */
+.nav:has(.link:focus-visible) {
+  --indicator-visible: 1;
+}
+
+.nav:has(.link:nth-child(1):focus-visible) {
+  --preview-index: 0;
+}
+
+.nav:has(.link:nth-child(2):focus-visible) {
+  --preview-index: 1;
+}
+
+.nav:has(.link:nth-child(3):focus-visible) {
+  --preview-index: 2;
+}
+
+.nav:has(.link:focus-visible) .link:not(:focus-visible) > span {
+  filter: blur(2px);
+  opacity: 0.62;
+}
+
+.link:focus-visible > span {
+  filter: none;
+  opacity: 1;
+  transform: translateY(-1px);
+  transition-duration: var(--duration-preview);
+  transition-timing-function: var(--ease-juice);
+}
+
+.link:focus-visible {
+  color: var(--color-ink-primary);
+  transition:
+    color var(--duration-preview) var(--ease-juice) var(--duration-follow),
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -119,8 +167,25 @@
     --preview-index: 2;
   }
 
+  .nav:has(.link:hover) .link:not(:hover) > span {
+    filter: blur(2px);
+    opacity: 0.62;
+  }
+
+  .link:hover > span {
+    filter: none;
+    opacity: 1;
+    transform: translateY(-1px);
+    transition-duration: var(--duration-preview);
+    transition-timing-function: var(--ease-juice);
+  }
+
   .link:hover {
     color: var(--color-ink-primary);
+    transition:
+      color var(--duration-preview) var(--ease-juice) var(--duration-follow),
+      background-color var(--duration-preview) var(--ease-preview),
+      transform var(--duration-preview) var(--ease-preview);
   }
 }
 
@@ -144,11 +209,17 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .nav::before, .nav::after, .link {
+  .nav::before, .nav::after, .link, .link > span {
     transition: none;
   }
 
-  .link:active {
+  .link:active,
+  .link:hover > span,
+  .link:focus-visible > span,
+  .nav:has(.link:hover) .link:not(:hover) > span,
+  .nav:has(.link:focus-visible) .link:not(:focus-visible) > span {
     transform: none;
+    filter: none;
+    opacity: 1;
   }
 }
