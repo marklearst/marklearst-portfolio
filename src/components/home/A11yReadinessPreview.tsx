@@ -1,6 +1,6 @@
 'use client'
 
-import { useId } from 'react'
+import { useId, useRef } from 'react'
 import { A11Y_DEMO_SCENARIOS, buildA11yDemoScenario, type A11yDemoScenarioId } from '@/lib/a11y-demo'
 import { useAnimatedSelection } from '@/hooks/useAnimatedSelection'
 import { CircleCheckIcon, CircleXIcon, ArrowRightIcon } from '@/components/ui/Icon'
@@ -12,6 +12,7 @@ const examples = A11Y_DEMO_SCENARIOS
 
 export default function A11yReadinessPreview() {
   const id = useId()
+  const pointerIntent = useRef(false)
   const { value, motion, exitingId, select } = useAnimatedSelection<A11yDemoScenarioId>('ready-for-handoff')
   const selected = examples.find(example => example.scenario.id === value)!
 
@@ -21,13 +22,23 @@ export default function A11yReadinessPreview() {
       <p className={styles.intro}>A completed checklist is only part of the evidence.</p>
       <div className={styles.choices} role='group' aria-label='Choose a readiness scenario'>
         {examples.map(({ scenario }) => (
-          <button key={scenario.id} type='button' aria-pressed={value === scenario.id}
-            aria-controls={`${id}-result`} onClick={event => select(scenario.id, event.detail > 0)}>
+          <button
+            key={scenario.id}
+            type='button'
+            aria-pressed={value === scenario.id}
+            aria-controls={`${id}-result`}
+            onPointerDown={() => { pointerIntent.current = true }}
+            onClick={() => {
+              const pointer = pointerIntent.current
+              pointerIntent.current = false
+              select(scenario.id, pointer)
+            }}
+          >
             {scenario.label}
           </button>
         ))}
       </div>
-      <div id={`${id}-result`} className={styles.panels} data-motion={motion}>
+      <div id={`${id}-result`} className={styles.panels} data-motion={motion || undefined}>
         {examples.map(({ scenario, record, contrastRatio, contrast }) => {
           const active = value === scenario.id
           return <div key={scenario.id} className={styles.panel} data-active={active || undefined} data-exiting={exitingId === scenario.id || undefined} inert={!active || undefined} aria-hidden={!active}>

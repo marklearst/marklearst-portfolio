@@ -3,7 +3,7 @@
 import { ActivityIcon } from '@/components/ui/Icon'
 import DisclosureSummary from '@/components/ui/DisclosureSummary'
 
-import { useId, useMemo, useState, type PointerEvent } from 'react'
+import { useId, useMemo, useRef, useState, type PointerEvent } from 'react'
 import {
   getGlucoseDemoScenario,
   GLUCOSE_DEMO_END,
@@ -11,6 +11,7 @@ import {
   GLUCOSE_DEMO_TRACE_START,
   type GlucoseDemoScenario,
 } from '@/lib/glucose-demo'
+import { useAnimatedSelection } from '@/hooks/useAnimatedSelection'
 import styles from './GlucoseDemo.module.css'
 
 interface GlucoseDemoProps {
@@ -52,6 +53,7 @@ function GlucoseTrace({
 }) {
   const id = useId()
   const [selectedInterval, setSelectedInterval] = useState(traceIntervals)
+  const [scrubbing, setScrubbing] = useState(false)
   const height = compact ? 96 : plot.height
   const valid = demo.report.valid
   const readingsByTime = useMemo(
@@ -68,13 +70,31 @@ function GlucoseTrace({
   const selectedTime = `${inspectionTime.format(timestamp)} UTC`
   const selectedValue = selectedReading ? `${selectedReading.value} mg/dL` : 'No reading'
 
+  function intervalFromClientX(svg: SVGSVGElement, clientX: number) {
+    const bounds = svg.getBoundingClientRect()
+    if (!bounds.width) return selectedInterval
+    const x = ((clientX - bounds.left) / bounds.width) * 560
+    const interval = Math.round(((x - plot.left) / plot.width) * traceIntervals)
+    return Math.max(0, Math.min(traceIntervals, interval))
+  }
+
   function inspectPointer(event: PointerEvent<SVGSVGElement>) {
     if (!valid || event.pointerType !== 'mouse') return
-    const bounds = event.currentTarget.getBoundingClientRect()
-    if (!bounds.width) return
-    const x = ((event.clientX - bounds.left) / bounds.width) * 560
-    const interval = Math.round(((x - plot.left) / plot.width) * traceIntervals)
-    setSelectedInterval(Math.max(0, Math.min(traceIntervals, interval)))
+    setSelectedInterval(intervalFromClientX(event.currentTarget, event.clientX))
+  }
+
+  function beginScrub(event: PointerEvent<SVGSVGElement>) {
+    if (!valid || event.pointerType !== 'mouse') return
+    event.currentTarget.setPointerCapture(event.pointerId)
+    setScrubbing(true)
+    setSelectedInterval(intervalFromClientX(event.currentTarget, event.clientX))
+  }
+
+  function endScrub(event: PointerEvent<SVGSVGElement>) {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+    setScrubbing(false)
   }
 
   return (
@@ -87,7 +107,11 @@ function GlucoseTrace({
         viewBox={`0 0 560 ${height + 45}`}
         role="img"
         aria-labelledby={`${id}-chart-title ${id}-chart-desc`}
+        onPointerDown={beginScrub}
         onPointerMove={inspectPointer}
+        onPointerUp={endScrub}
+        onPointerCancel={endScrub}
+        data-scrubbing={scrubbing || undefined}
         className={valid ? styles.inspectableChart : undefined}
       >
         <title id={`${id}-chart-title`}>Synthetic glucose trace</title>
@@ -151,8 +175,8 @@ function GlucoseTrace({
 }
 
 export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProps) {
-  const [scenario, setScenario] = useState<GlucoseDemoScenario>('complete')
-  const [hasInteracted, setHasInteracted] = useState(false)
+  const pointerIntent = useRef(false)
+  const { value: scenario, motion, select } = useAnimatedSelection<GlucoseDemoScenario>('complete')
   const demo = useMemo(() => getGlucoseDemoScenario(scenario), [scenario])
   const { report } = demo
   const valid = report.valid
@@ -197,10 +221,11 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
             key={option.id}
             type="button"
             aria-pressed={scenario === option.id}
+            onPointerDown={() => { pointerIntent.current = true }}
             onClick={() => {
-              if (scenario === option.id) return
-              setHasInteracted(true)
-              setScenario(option.id)
+              const pointer = pointerIntent.current
+              pointerIntent.current = false
+              select(option.id, pointer)
             }}
           >
             {option.label}
@@ -208,7 +233,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
         ))}
       </div>
 
-      <div key={scenario} className={hasInteracted ? styles.changed : undefined}>
+      <div key={scenario} className={motion ? styles.changed : undefined}>
         <dl className={styles.metrics}>
           <div className={styles.primaryMetric}>
             <dt>Latest reading</dt>
@@ -242,7 +267,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
         </div>
       </div>
 
-      <div key={`status-${scenario}`} className={`${styles.status} ${hasInteracted ? styles.statusMotion : ''}`} role="status" aria-live="polite" aria-atomic="true">
+      <div key={`status-${scenario}`} className={`${styles.status} ${motion ? styles.statusMotion : ''}`} role="status" aria-live="polite" aria-atomic="true">
         <span className={styles.statusIcon} aria-hidden="true">{!valid ? '○' : report.dataSufficiency.meetsCGMStandard ? '✓' : '!'}</span>
         <div>
           <p>{statusTitle}</p>

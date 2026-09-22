@@ -39,10 +39,10 @@
   color: var(--color-ink-secondary);
   font: 400 var(--text-body)/var(--token-leading-body) var(--font-body);
   text-wrap: pretty;
+  /* Default = exit: faster leave so layers do not stack. */
   transition:
-    color var(--duration-preview) var(--ease-preview),
-    transform var(--duration-preview) var(--ease-preview),
-    filter var(--duration-preview) var(--ease-preview);
+    color var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview);
 }
 
 .words p {
@@ -65,9 +65,9 @@
   border: 1px solid var(--color-border-subtle);
   transform: scale(1);
   transition:
-    filter var(--duration-preview) var(--ease-preview),
-    transform var(--duration-preview) var(--ease-preview),
-    box-shadow var(--duration-preview) var(--ease-preview);
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview),
+    box-shadow var(--duration-exit) var(--ease-preview);
 }
 
 .name {
@@ -75,9 +75,8 @@
   color: var(--color-ink-primary);
   font: 500 var(--text-ui)/1.5 var(--font-body);
   transition:
-    color var(--duration-preview) var(--ease-preview),
-    transform var(--duration-commit) var(--ease-preview);
-  transition-delay: 0ms, var(--duration-follow);
+    color var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview);
 }
 
 .role {
@@ -85,10 +84,9 @@
   color: var(--color-ink-muted);
   font: 400 var(--text-caption)/1.5 var(--font-body);
   transition:
-    color var(--duration-preview) var(--ease-preview),
-    opacity var(--duration-preview) var(--ease-preview),
-    transform var(--duration-commit) var(--ease-preview);
-  transition-delay: 0ms, 0ms, calc(var(--duration-follow) + 20ms);
+    color var(--duration-exit) var(--ease-preview),
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview);
   opacity: 0.88;
 }
 
@@ -138,22 +136,28 @@
   .quote:focus .portrait,
   .quote:focus-visible .portrait {
     filter: grayscale(0);
-    transform: scale(1.08);
+    transform: scale(1.06);
     box-shadow: 0 8px 18px -12px rgb(0 0 0 / 55%);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .quote:hover .words,
   .quote:focus .words,
   .quote:focus-visible .words {
     color: var(--color-ink-primary);
-    transform: translateY(-2px);
-    filter: blur(0);
+    filter: none;
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .quote:hover .name,
   .quote:focus .name,
   .quote:focus-visible .name {
-    transform: translateX(3px);
+    filter: none;
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
   }
 
   .quote:hover .role,
@@ -161,7 +165,10 @@
   .quote:focus-visible .role {
     color: var(--color-ink-secondary);
     opacity: 1;
-    transform: translateX(3px);
+    filter: none;
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: calc(var(--duration-follow) + 20ms);
   }
 }
 
@@ -188,6 +195,7 @@
   .quote:focus-visible .portrait {
     transform: none;
     filter: none;
+    transition: none;
   }
 
   .quote:hover .portrait,
