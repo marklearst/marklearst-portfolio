@@ -124,7 +124,7 @@
 
 .copyright {
   color: var(--color-ink-muted);
-  font: 14px/1.6 var(--font-mono);
+  font: 14px/1.6 var(--font-body);
 }
 
 .controls {
