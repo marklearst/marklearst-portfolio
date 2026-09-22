@@ -276,6 +276,7 @@
 
   .projectBody h2 a:hover span {
     color: var(--color-ink-primary);
+    transform: translateX(3px);
   }
 }
 

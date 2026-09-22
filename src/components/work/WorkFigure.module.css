@@ -38,11 +38,6 @@
   display: block;
   width: 100%;
   height: auto;
-  transform: translate3d(var(--shift-x, 0), var(--shift-y, 0), 0);
-}
-
-.frameSettling .image {
-  transition: transform 220ms var(--ease-out);
 }
 
 .action {
@@ -75,14 +70,14 @@
 .actionIdle {
   opacity: 0.72;
   filter: blur(0);
-  transform: scale(1);
+  transform: translateX(0) scale(1);
 }
 
 .actionLive {
   color: var(--color-accent-primary);
   opacity: 0;
-  filter: blur(2.5px);
-  transform: scale(0.72);
+  filter: blur(2px);
+  transform: translateX(-3px) scale(0.88);
 }
 
 .frameCompact .action {
@@ -105,14 +100,14 @@
 .frame:focus-visible .actionIdle {
   opacity: 0;
   filter: blur(2px);
-  transform: scale(0.72);
+  transform: translateX(2px) scale(0.88);
   transition-duration: var(--duration-exit);
 }
 
 .frame:focus-visible .actionLive {
   opacity: 1;
   filter: blur(0);
-  transform: scale(1);
+  transform: translateX(0) scale(1);
   transition-duration: var(--duration-preview);
   transition-delay: var(--duration-follow);
 }
@@ -126,6 +121,12 @@
   transform: translateY(1px);
 }
 
+.frame:active .actionLive {
+  transform: translateX(3px) scale(1);
+  transition-duration: var(--duration-preview);
+  transition-delay: 0ms;
+}
+
 .caption {
   margin-top: 12px;
   color: var(--color-ink-muted);
@@ -133,23 +134,6 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-
-  .frame {
-    user-select: none;
-  }
-
-  /*
-   * Overscan so clamped ±14px shift stays inside the mask on both axes.
-   * Width-only +28px left vertical gaps; scale(1.07) bleeds ~3.5% each side.
-   */
-  .frame .image {
-    width: 100%;
-    max-width: none;
-    margin-inline: 0;
-    transform: translate3d(var(--shift-x, 0), var(--shift-y, 0), 0) scale(1.07);
-    transform-origin: center center;
-    will-change: transform;
-  }
 
   .frame:hover {
     background: var(--color-surface-raised);
@@ -160,18 +144,18 @@
     background: var(--color-surface);
   }
 
-  /* Outgoing idle exits faster with blur; live follows ~60ms. */
+  /* Outgoing idle exits faster with blur; live travels in ~60ms later. */
   .frame:hover .actionIdle {
     opacity: 0;
     filter: blur(2px);
-    transform: scale(0.72);
+    transform: translateX(2px) scale(0.88);
     transition-duration: var(--duration-exit);
   }
 
   .frame:hover .actionLive {
     opacity: 1;
     filter: blur(0);
-    transform: scale(1);
+    transform: translateX(0) scale(1);
     transition-duration: var(--duration-preview);
     transition-delay: var(--duration-follow);
   }
@@ -188,18 +172,10 @@
 @media (prefers-reduced-motion: reduce) {
 
   .frame,
-  .image,
   .action,
   .actionIdle,
   .actionLive {
     transition: none !important;
-  }
-
-  .frame .image {
-    width: 100%;
-    margin-inline: 0;
-    transform: none;
-    will-change: auto;
   }
 
   .frame:active {
