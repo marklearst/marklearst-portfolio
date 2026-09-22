@@ -13,7 +13,20 @@ export default function Hero() {
         <div className={styles.heroGrid}>
           <div className={styles.introduction}>
             <h1 id='hero-name' className={styles.name}>Principal design engineer.</h1>
-            <p className={styles.lead}>I set the system, the interface, and the motion between them.</p>
+            <p className={styles.lead}>
+              I set system direction in code—the tokens and governance that keep Figma and production React aligned, and the interfaces people actually use.
+            </p>
+            <div className={styles.support}>
+              <p>
+                I architect design systems end to end: token pipelines, UI architecture, React component libraries, and Storybook documentation that teams can ship against without guessing.
+              </p>
+              <p>
+                I also build interactive prototypes and the micro-interactions between them—motion that answers a click or a hover, not decoration that waits for applause.
+              </p>
+              <p>
+                When the same work keeps showing up, I turn it into an agent workflow with tests and human review before anything ships.
+              </p>
+            </div>
             <div className={styles.actions}>
               <TrackedLink className={styles.primaryLink} href='#work' event={{ type: 'hero', data: { action: 'view_work', location: 'hero' } }}>
                 Explore the work <ArrowDownIcon />
