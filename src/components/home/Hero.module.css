@@ -116,6 +116,10 @@
   margin-top: 8px;
 }
 
+:global([data-follow='true']) .previewLinks {
+  animation: panel-follow var(--duration-preview) var(--ease-out) var(--duration-follow) both;
+}
+
 .previewLink {
   display: inline-flex;
   align-items: center;
@@ -225,5 +229,9 @@
   .primaryLink:hover svg,
   .primaryLink:active svg {
     transform: none;
+  }
+
+  :global([data-follow='true']) .previewLinks {
+    animation: none;
   }
 }

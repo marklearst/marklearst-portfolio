@@ -1,0 +1,152 @@
+.figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 28px 28px 52px;
+  border-radius: 14px;
+  background: var(--color-surface);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 8%, transparent);
+  transition: background-color var(--duration-preview) var(--ease-out), box-shadow var(--duration-preview) var(--ease-out), transform var(--duration-preview) var(--ease-out);
+}
+
+.frameCompact {
+  padding: 14px 14px 44px;
+  border-radius: 10px;
+}
+
+.viewport {
+  display: block;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 14px 30px -16px var(--color-canvas);
+}
+
+.frameCompact .viewport {
+  border-radius: 4px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: translate(var(--shift-x, 0), var(--shift-y, 0));
+  will-change: transform;
+}
+
+.action {
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface-raised);
+  color: var(--color-ink-secondary);
+  transition:
+    background-color var(--duration-preview) var(--ease-out),
+    color var(--duration-preview) var(--ease-out),
+    opacity var(--duration-preview) var(--ease-out),
+    filter var(--duration-preview) var(--ease-out),
+    transform var(--duration-preview) var(--ease-out);
+}
+
+.frameCompact .action {
+  right: 12px;
+  bottom: 8px;
+  width: 28px;
+  height: 28px;
+}
+
+.frame:focus-visible {
+  background: var(--color-surface-raised);
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 5px;
+}
+
+.frame:focus-visible .action {
+  background: var(--color-surface);
+  color: var(--color-accent-primary);
+  opacity: 1;
+  filter: none;
+  transform: scale(1);
+}
+
+.frame:active {
+  transform: translateY(1px);
+}
+
+.frame:active .action {
+  background: var(--color-surface);
+  color: var(--color-accent-primary);
+  transform: translateY(1px) scale(1);
+}
+
+.caption {
+  margin-top: 12px;
+  color: var(--color-ink-muted);
+  font: 400 var(--text-caption)/1.5 var(--font-body);
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .frameShiftable {
+    user-select: none;
+  }
+
+  .frameShiftable .action {
+    opacity: 0.72;
+    filter: blur(2px);
+    transform: scale(0.92);
+  }
+
+  .frameShiftable:hover {
+    background: var(--color-surface-raised);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 10%, transparent), 0 20px 36px -28px var(--color-canvas);
+  }
+
+  .frameShiftable:hover .action {
+    background: var(--color-surface);
+    color: var(--color-accent-primary);
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 800px) {
+
+  .frame:not(.frameCompact) {
+    padding: 18px 18px 48px;
+    border-radius: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .frame,
+  .image,
+  .action {
+    transition: none;
+  }
+
+  .frameShiftable .action {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .frame:active {
+    transform: none;
+  }
+
+  .frame:active .action {
+    transform: none;
+  }
+}

@@ -104,7 +104,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
                 {!compact && <div className={styles.command}><code>primitree build</code><span>exit {scenario.build.exitCode}</span></div>}
                 <div className={styles.resultHeading}>
                   {blocked ? <CircleXIcon size={20} /> : <CircleCheckIcon size={20} />}
-                  <span>{blocked ? 'Build stopped' : 'Build passed'}</span>
+                  <span key={blocked ? 'stopped' : 'passed'}>{blocked ? 'Build stopped' : 'Build passed'}</span>
                   {compact && <span className={styles.exitCode}>exit {scenario.build.exitCode}</span>}
                 </div>
                 {blocked && finding ? (
@@ -153,7 +153,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
         </div>
       </details>
 
-      <p className={styles.liveStatus} role="status" aria-live="polite" aria-atomic="true">
+      <p key={selectedId} className={styles.liveStatus} role="status" aria-live="polite" aria-atomic="true">
         {labels[selectedId]}: {failed ? 'Build stopped. PT1003: semantic.action must use a reference. No generated files were written.' : 'Build passed. Generated CSS preserves the reference to color.cyan.'}
       </p>
       <footer className={styles.footer}>
