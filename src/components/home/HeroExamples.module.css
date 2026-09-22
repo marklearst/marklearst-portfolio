@@ -79,7 +79,8 @@
 
 /*
  * Grid stack: every panel shares one cell so height = max(of all).
- * No absolute/relative swap → no height jump on rapid flips.
+ * Transitions (not keyframes) so rapid flips reverse from current values.
+ * No sideways translate. Links under the panel follow via Hero.module.css.
  */
 .panels {
   display: grid;
@@ -93,6 +94,8 @@
   visibility: hidden;
   pointer-events: none;
   z-index: 0;
+  filter: none;
+  transform: scale(0.96);
 }
 
 .panel[data-active] {
@@ -100,45 +103,30 @@
   visibility: visible;
   pointer-events: auto;
   z-index: 0;
+  filter: none;
+  transform: scale(1);
 }
 
-/* Incoming: blur settle only — no sideways/vertical slide. */
+/* Incoming: juice ease + scale from rest — interruptible. */
 .panel[data-active][data-follow] {
-  animation: example-enter var(--duration-reveal) var(--ease-juice) both;
+  transition:
+    opacity var(--duration-reveal) var(--ease-juice),
+    filter var(--duration-reveal) var(--ease-juice),
+    transform var(--duration-reveal) var(--ease-juice);
 }
 
+/* Outgoing: ~100ms, 2px blur, no slide. Stays full scale. */
 .panel[data-exiting] {
-  opacity: 1;
+  opacity: 0;
   visibility: visible;
   pointer-events: none;
   z-index: 1;
-  animation: example-exit var(--duration-exit) var(--ease-preview) forwards;
-}
-
-@keyframes example-exit {
-  from {
-    opacity: 1;
-    filter: none;
-  }
-
-  to {
-    opacity: 0;
-    filter: blur(2px);
-  }
-}
-
-@keyframes example-enter {
-  from {
-    opacity: 0;
-    filter: blur(2px);
-    transform: scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    filter: none;
-    transform: scale(1);
-  }
+  filter: blur(2px);
+  transform: scale(1);
+  transition:
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -160,11 +148,16 @@
 
   .panel[data-active][data-follow],
   .panel[data-exiting] {
-    animation: none;
+    transition: none;
   }
 
   .panel[data-exiting] {
     opacity: 0;
     visibility: hidden;
+    filter: none;
+  }
+
+  .panel {
+    transform: none;
   }
 }
