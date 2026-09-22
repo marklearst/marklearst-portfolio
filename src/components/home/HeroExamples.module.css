@@ -41,8 +41,8 @@
   pointer-events: none;
 }
 
-.choices[data-motion='true'] .selection {
-  transition: transform var(--duration-commit) var(--ease-commit);
+.choices[data-motion] .selection {
+  transition: transform var(--duration-preview) var(--ease-preview);
 }
 
 .choices button {
@@ -58,7 +58,7 @@
   touch-action: manipulation;
 }
 
-.choices[data-motion='true'] button {
+.choices[data-motion] button {
   transition: color var(--duration-preview) var(--ease-preview);
 }
 
@@ -72,36 +72,63 @@
 }
 
 .choices button:active {
-  background: rgb(255 255 255 / 4%);
+  color: var(--color-ink-primary);
+  background: rgb(255 255 255 / 6%);
+  transform: translateY(1px);
+  transition:
+    color 0ms linear,
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
+/* Only the active panel sizes the shell. Inactive/exiting stay out of flow. */
 .panels {
   position: relative;
-}
-
-.panels[data-morphing] {
-  overflow: clip;
+  isolation: isolate;
 }
 
 .panel {
-  display: flow-root;
   min-width: 0;
-}
-
-.panel[hidden] {
-  display: none;
-}
-
-.panel[data-exiting='true'] {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  z-index: 0;
 }
 
-.panel[data-active='true']:not([data-exiting='true']) {
+.panel[data-active] {
   position: relative;
+  inset: auto;
+  width: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
   z-index: 0;
+}
+
+.panel[data-exiting] {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  z-index: 1;
+  animation: example-exit 100ms var(--ease-preview) forwards;
+}
+
+@keyframes example-exit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -113,8 +140,18 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .choices[data-motion='true'] button, .choices[data-motion='true'] .selection {
+  .choices[data-motion] button,
+  .choices[data-motion] .selection {
     transition: none;
   }
 
+  .choices button:active {
+    transform: none;
+  }
+
+  .panel[data-exiting] {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
 }
