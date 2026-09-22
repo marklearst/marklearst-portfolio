@@ -46,7 +46,7 @@ interface PrimitreeGuardrailDemoProps {
 
 export function PrimitreeGuardrailDemo({ className = '', compact = false }: PrimitreeGuardrailDemoProps) {
   const id = useId()
-  const { value: selectedId, motion, select } = useAnimatedSelection<ScenarioId>('literal')
+  const { value: selectedId, motion, exitingId, select } = useAnimatedSelection<ScenarioId>('literal')
   const selected = PRIMITREE_DEMO.scenarios.find((scenario) => scenario.id === selectedId)!
   const failed = selected.build.exitCode !== 0
 
@@ -90,7 +90,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
             : undefined
           const visibleCss = declaration?.replace(': ', ':\n  ') ?? cssExcerpt
           return (
-            <div className={styles.panel} key={scenario.id} data-active={active} data-blocked={blocked} inert={!active} aria-hidden={!active}>
+            <div className={styles.panel} key={scenario.id} data-active={active || undefined} data-exiting={exitingId === scenario.id || undefined} data-blocked={blocked || undefined} inert={!active || undefined} aria-hidden={!active}>
               <div className={styles.source}>
                 <div className={styles.sourceTitle}><span>Source token</span><span>tokens.json</span></div>
                 {!compact && <>

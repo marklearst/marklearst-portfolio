@@ -25,10 +25,14 @@
   color: var(--color-ink-muted, #a59d95);
   font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-mono);
   text-decoration: none;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .backLink svg {
   color: var(--case-accent);
+  transition: transform var(--duration-commit) var(--ease-preview);
 }
 
 .hero .backLink {
@@ -271,6 +275,10 @@
     text-decoration: underline;
     text-underline-offset: 4px;
   }
+
+  .backLink:hover svg {
+    transform: translateX(-3px);
+  }
 }
 
 @media (max-width: 640px) {
@@ -317,12 +325,15 @@
 @media (prefers-reduced-motion: reduce) {
 
   .links .projectLink,
-  .externalArrow {
+  .externalArrow,
+  .backLink,
+  .backLink svg {
     transition: none;
   }
 
   .links .projectLink:active,
-  .links .projectLink:active .externalArrow {
+  .links .projectLink:active .externalArrow,
+  .backLink:hover svg {
     transform: none;
   }
 }

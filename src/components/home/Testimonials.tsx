@@ -55,6 +55,7 @@ export default function Testimonials() {
             <figure
               key={testimonial.author}
               className={styles.quote}
+              tabIndex={0}
             >
               <blockquote className={styles.words}>
                 <p>“{testimonial.quote}”</p>

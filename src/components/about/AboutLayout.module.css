@@ -92,6 +92,11 @@
     transform var(--duration-preview) var(--ease-preview);
 }
 
+.contactAction :global(svg) {
+  transition: transform var(--duration-commit) var(--ease-preview);
+  transition-delay: var(--duration-follow);
+}
+
 .contactAction:first-child {
   --color-action-icon: var(--color-canvas);
   border-color: var(--color-ink-primary, #f3eee8);
@@ -241,11 +246,16 @@
   .contactAction:hover {
     border-color: var(--color-accent-primary, #e6aa79);
     color: var(--color-ink-primary);
+    transform: translateY(-1px);
   }
 
   .contactAction:first-child:hover {
     background: var(--color-accent-primary, #e6aa79);
     color: var(--color-canvas, #171615);
+  }
+
+  .contactAction:hover :global(svg) {
+    transform: translateX(3px);
   }
 
   .content :global(.about-contact-links) > a:hover {
@@ -300,11 +310,13 @@
 @media (prefers-reduced-motion: reduce) {
 
   .contactAction,
+  .contactAction :global(svg),
   .content :global(.about-contact-links) > a {
     transition: none;
   }
 
-  .contactAction:active {
+  .contactAction:active,
+  .contactAction:hover :global(svg) {
     transform: none;
   }
 }

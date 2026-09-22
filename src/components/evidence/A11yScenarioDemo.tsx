@@ -23,7 +23,7 @@ interface A11yScenarioDemoProps {
 
 export function A11yScenarioDemo({ className = '' }: A11yScenarioDemoProps) {
   const id = useId()
-  const { value: selectedId, motion, select } = useAnimatedSelection<A11yDemoScenarioId>('ready-for-handoff')
+  const { value: selectedId, motion, exitingId, select } = useAnimatedSelection<A11yDemoScenarioId>('ready-for-handoff')
   const selected = demos.find((demo) => demo.scenario.id === selectedId)!
 
   return (
@@ -55,7 +55,8 @@ export function A11yScenarioDemo({ className = '' }: A11yScenarioDemoProps) {
             <div
               key={scenario.id}
               className={styles.panel}
-              data-active={active}
+              data-active={active || undefined}
+              data-exiting={exitingId === scenario.id || undefined}
               data-status={record.status}
               aria-hidden={!active}
               inert={!active}
