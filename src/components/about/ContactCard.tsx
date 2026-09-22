@@ -21,8 +21,8 @@ export default function ContactCard({
       href={href}
       aria-label={`${title}: ${cta}. ${description}`}
     >
-      <span>{title}</span>
-      <span aria-hidden='true'><ArrowUpRightIcon size={20} /></span>
+      <span className={styles.contactLabel}>{title}</span>
+      <span className={styles.contactArrow} aria-hidden='true'><ArrowUpRightIcon size={20} /></span>
     </a>
   )
 }

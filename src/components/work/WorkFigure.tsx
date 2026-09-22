@@ -48,8 +48,8 @@ export default function WorkFigure({
 }: WorkFigureProps) {
   const viewportRef = useRef<HTMLSpanElement>(null)
   const settleTimer = useRef<number | null>(null)
+  const shiftableRef = useRef(false)
   const [shift, setShift] = useState({ x: 0, y: 0 })
-  const [shiftable, setShiftable] = useState(false)
   const [settling, setSettling] = useState(false)
 
   const clearSettle = useCallback(() => {
@@ -59,32 +59,39 @@ export default function WorkFigure({
     }
   }, [])
 
+  const applyShift = useCallback((clientX: number, clientY: number) => {
+    if (!shiftableRef.current || !viewportRef.current) return
+    const rect = viewportRef.current.getBoundingClientRect()
+    if (rect.width === 0 || rect.height === 0) return
+    const x = Math.max(-1, Math.min(1, ((clientX - rect.left) / rect.width - 0.5) * 2))
+    const y = Math.max(-1, Math.min(1, ((clientY - rect.top) / rect.height - 0.5) * 2))
+    setShift({ x: shiftFromPointer(x), y: shiftFromPointer(y) })
+  }, [])
+
   const resetShift = useCallback(() => {
     clearSettle()
+    shiftableRef.current = false
     setSettling(true)
     setShift({ x: 0, y: 0 })
-    setShiftable(false)
     settleTimer.current = window.setTimeout(() => {
       settleTimer.current = null
       setSettling(false)
     }, 220)
   }, [clearSettle])
 
-  const handlePointerEnter = useCallback(() => {
+  const handlePointerEnter = useCallback((event: React.PointerEvent<HTMLAnchorElement>) => {
     clearSettle()
     setSettling(false)
     const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setShiftable(fine && !reduced)
-  }, [clearSettle])
+    // Ref so the first pointermove in this frame can shift (state alone races).
+    shiftableRef.current = fine && !reduced
+    if (shiftableRef.current) applyShift(event.clientX, event.clientY)
+  }, [applyShift, clearSettle])
 
   const handlePointerMove = useCallback((event: React.PointerEvent<HTMLAnchorElement>) => {
-    if (!shiftable || !viewportRef.current) return
-    const rect = viewportRef.current.getBoundingClientRect()
-    const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2))
-    const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2))
-    setShift({ x: shiftFromPointer(x), y: shiftFromPointer(y) })
-  }, [shiftable])
+    applyShift(event.clientX, event.clientY)
+  }, [applyShift])
 
   const frameClass = [
     styles.frame,

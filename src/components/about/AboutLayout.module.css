@@ -78,10 +78,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 48px;
-  padding: 12px 18px;
+  min-height: 52px;
+  padding: 14px 20px;
   border: 1px solid var(--color-border-subtle, #3b3530);
   border-radius: 6px;
+  background: var(--color-surface);
   color: var(--color-ink-primary, #f3eee8);
   font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   text-decoration: none;
@@ -89,12 +90,21 @@
     color var(--duration-preview) var(--ease-preview),
     border-color var(--duration-preview) var(--ease-preview),
     background-color var(--duration-preview) var(--ease-preview),
+    box-shadow var(--duration-preview) var(--ease-preview),
     transform var(--duration-preview) var(--ease-preview);
 }
 
-.contactAction :global(svg) {
-  transition: transform var(--duration-commit) var(--ease-preview);
+.contactLabel {
+  display: inline-block;
+  transition: transform var(--duration-preview) var(--ease-preview);
   transition-delay: var(--duration-follow);
+}
+
+.contactArrow {
+  display: inline-grid;
+  place-items: center;
+  color: var(--color-accent-primary, #e6aa79);
+  transition: transform var(--duration-preview) var(--ease-preview);
 }
 
 .contactAction:first-child {
@@ -104,8 +114,16 @@
   color: var(--color-canvas, #171615);
 }
 
+.contactAction:first-child .contactArrow {
+  color: inherit;
+}
+
 .contactAction:active {
   transform: translateY(1px) scale(0.98);
+}
+
+.contactAction:active .contactArrow {
+  transform: translate(2px, -2px);
 }
 
 .content :global(.about-contact-links) {
@@ -241,21 +259,50 @@
   outline-offset: 5px;
 }
 
+.contactAction:focus-visible {
+  border-color: var(--color-accent-primary, #e6aa79);
+  background: var(--color-surface-raised);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 6%), 0 10px 24px -18px rgb(0 0 0 / 55%);
+  transform: translateY(-2px);
+}
+
+.contactAction:first-child:focus-visible {
+  background: var(--color-accent-primary, #e6aa79);
+  border-color: var(--color-accent-primary, #e6aa79);
+  color: var(--color-canvas, #171615);
+}
+
+.contactAction:focus-visible .contactArrow {
+  transform: translate(6px, -6px);
+}
+
+.contactAction:focus-visible .contactLabel {
+  transform: translateX(4px);
+}
+
 @media (hover: hover) and (pointer: fine) {
 
   .contactAction:hover {
     border-color: var(--color-accent-primary, #e6aa79);
-    color: var(--color-ink-primary);
-    transform: translateY(-1px);
+    background: var(--color-surface-raised);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 6%), 0 10px 24px -18px rgb(0 0 0 / 55%);
+    transform: translateY(-2px);
   }
 
   .contactAction:first-child:hover {
     background: var(--color-accent-primary, #e6aa79);
+    border-color: var(--color-accent-primary, #e6aa79);
     color: var(--color-canvas, #171615);
+    box-shadow: 0 12px 28px -16px color-mix(in srgb, var(--color-accent-primary) 55%, transparent);
   }
 
-  .contactAction:hover :global(svg) {
-    transform: translateX(3px);
+  /* Arrow answers immediately; label follows ~60ms. */
+  .contactAction:hover .contactArrow {
+    transform: translate(6px, -6px);
+  }
+
+  .contactAction:hover .contactLabel {
+    transform: translateX(4px);
   }
 
   .content :global(.about-contact-links) > a:hover {
@@ -310,13 +357,20 @@
 @media (prefers-reduced-motion: reduce) {
 
   .contactAction,
-  .contactAction :global(svg),
+  .contactLabel,
+  .contactArrow,
   .content :global(.about-contact-links) > a {
     transition: none;
   }
 
   .contactAction:active,
-  .contactAction:hover :global(svg) {
+  .contactAction:hover,
+  .contactAction:focus-visible,
+  .contactAction:hover .contactArrow,
+  .contactAction:focus-visible .contactArrow,
+  .contactAction:hover .contactLabel,
+  .contactAction:focus-visible .contactLabel,
+  .contactAction:active .contactArrow {
     transform: none;
   }
 }
