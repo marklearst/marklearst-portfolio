@@ -138,11 +138,16 @@
     user-select: none;
   }
 
-  /* Overscan so clamped ±14px shift stays inside the mask. */
+  /*
+   * Overscan so clamped ±14px shift stays inside the mask on both axes.
+   * Width-only +28px left vertical gaps; scale(1.07) bleeds ~3.5% each side.
+   */
   .frame .image {
-    width: calc(100% + 28px);
+    width: 100%;
     max-width: none;
-    margin-inline: -14px;
+    margin-inline: 0;
+    transform: translate3d(var(--shift-x, 0), var(--shift-y, 0), 0) scale(1.07);
+    transform-origin: center center;
     will-change: transform;
   }
 
@@ -193,6 +198,7 @@
   .frame .image {
     width: 100%;
     margin-inline: 0;
+    transform: none;
     will-change: auto;
   }
 
