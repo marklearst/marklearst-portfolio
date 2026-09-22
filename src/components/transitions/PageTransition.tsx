@@ -20,12 +20,17 @@ export default function PageTransition({ children }: { children: React.ReactNode
     if (!element || typeof element.animate !== 'function' || preference.matches) return
     if (document.documentElement.getAttribute('data-route-input') !== 'pointer') return
 
-    // Animate only the committed page. Keeping an outgoing document snapshot
-    // breaks continuity when the two routes have different scroll positions.
-    const animation = element.animate([{ opacity: 0.72 }, { opacity: 1 }], {
-      duration: 180,
-      easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-    })
+    // Incoming page: opacity + a short settle so the route feels answered, not faded.
+    const animation = element.animate(
+      [
+        { opacity: 0.55, transform: 'translateY(8px)', filter: 'blur(2.5px)' },
+        { opacity: 1, transform: 'translateY(0)', filter: 'blur(0)' },
+      ],
+      {
+        duration: 220,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
+    )
     const stop = () => animation.cancel()
     preference.addEventListener('change', stop)
     return () => {

@@ -10,6 +10,7 @@
   cursor: pointer;
   list-style: none;
   touch-action: manipulation;
+  transition: color var(--duration-preview) var(--ease-preview), transform var(--duration-preview) var(--ease-preview);
 }
 
 .summary::-webkit-details-marker {
@@ -26,7 +27,7 @@
 
 .caret {
   color: var(--color-accent-primary);
-  transition: transform 180ms var(--ease-out);
+  transition: transform var(--duration-preview) var(--ease-preview);
 }
 
 :global(details[open]) > .summary > .caret {
@@ -43,10 +44,14 @@
   transition: none;
 }
 
+.summary:active {
+  transform: translateY(1px);
+}
+
 @media (prefers-reduced-motion: no-preference) {
 
   :global(details[open][data-disclosure-motion='pointer']) > .summary ~ * {
-    animation: disclosure-reveal 180ms var(--ease-out);
+    animation: disclosure-reveal var(--duration-reveal) var(--ease-out);
   }
 }
 
@@ -55,11 +60,13 @@
   from {
     opacity: .65;
     transform: translateY(3px);
+    filter: blur(1.5px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -72,7 +79,12 @@
 
 @media (prefers-reduced-motion: reduce) {
 
+  .summary,
   .caret {
     transition: none;
+  }
+
+  .summary:active {
+    transform: none;
   }
 }

@@ -352,6 +352,10 @@
   background: color-mix(in srgb, var(--color-accent-success) 4%, var(--color-surface));
 }
 
+.statusMotion {
+  animation: var(--animation-status-arrive) var(--duration-feedback) var(--ease-preview) both;
+}
+
 .statusIcon {
   display: grid;
   place-items: center;
@@ -685,6 +689,14 @@
   }
 
   .changed {
+    animation: none;
+  }
+
+  .demo[data-motion='true'] .status {
+    animation: none;
+  }
+
+  .statusMotion {
     animation: none;
   }
 }

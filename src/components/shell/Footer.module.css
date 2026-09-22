@@ -187,7 +187,10 @@
     transition: none;
   }
 
-  .contactHeading a:hover span {
+  .contactHeading a:hover span,
+  .contactHeading a:active,
+  .contactHeading a:active span,
+  .socialLink:active {
     transform: none;
   }
 }
