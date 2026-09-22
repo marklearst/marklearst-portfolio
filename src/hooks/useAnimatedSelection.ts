@@ -9,7 +9,6 @@ export function useAnimatedSelection<T extends string>(initialValue: T) {
   const [selection, setSelection] = useState({ value: initialValue, motion: false })
   const [exitingId, setExitingId] = useState<T | null>(null)
   const exitTimer = useRef<number | null>(null)
-  const lastChange = useRef(-Infinity)
 
   const stopExit = useCallback(() => {
     if (exitTimer.current !== null) {
@@ -21,10 +20,8 @@ export function useAnimatedSelection<T extends string>(initialValue: T) {
 
   function select(value: T, pointer: boolean) {
     if (value === selection.value) return
-    const now = performance.now()
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const motion = pointer && now - lastChange.current > 80 && !reduced
-    lastChange.current = now
+    const motion = pointer && !reduced
 
     stopExit()
     if (motion) {

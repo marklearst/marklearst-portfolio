@@ -134,6 +134,10 @@
   text-decoration: none;
 }
 
+.previewLink svg {
+  transition: transform var(--duration-preview) var(--ease-preview);
+}
+
 .hero a:focus-visible {
   outline: 2px solid var(--color-ink-primary);
   outline-offset: 5px;
@@ -164,6 +168,14 @@
   .available a:hover {
     color: var(--color-ink-primary);
     text-decoration: underline;
+  }
+
+  .previewLink:hover svg {
+    transform: translateX(3px);
+  }
+
+  .available a:hover svg {
+    transform: translate(2px, -2px);
   }
 }
 

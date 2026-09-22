@@ -158,7 +158,7 @@
 }
 
 .caseLink:active span {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .figure {
@@ -226,6 +226,12 @@
   .sectionHeading > a:hover {
     color: var(--color-ink-primary);
     text-decoration: underline;
+  }
+
+  .caseLink:hover span,
+  .moreWork a:hover span,
+  .sectionHeading > a:hover span {
+    transform: translateX(3px);
   }
 }
 

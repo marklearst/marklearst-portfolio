@@ -304,7 +304,7 @@
 
 .controls span {
   color: var(--color-ink-muted);
-  font: var(--text-caption)/1.5 var(--font-mono);
+  font: var(--text-caption)/1.5 var(--font-body);
   font-variant-numeric: tabular-nums;
 }
 

@@ -246,6 +246,26 @@
   stroke-dashoffset: 0;
 }
 
+.traceSeg {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.traceArrow {
+  opacity: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.traceRelation {
+  position: relative;
+  display: grid;
+}
+
+.traceRelation > span {
+  grid-area: 1 / 1;
+}
+
 .traceNodes {
   display: grid;
   grid-template-rows: repeat(3, 44px);
@@ -652,31 +672,62 @@
     animation: none;
     visibility: hidden;
   }
+
+  .traceSeg,
+  .traceArrow,
+  .traceRelation > span {
+    animation: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
 
-  .panels[data-motion='true'] > .panel[data-active='true'] .traceConnector {
-    animation: trace-reference 180ms var(--ease-out);
+  /* Outgoing relation clears first — faster exit, 2px blur, no slide. */
+  .panel[data-exiting] .traceRelation > span {
+    animation: relation-exit var(--duration-exit) var(--ease-preview) forwards;
   }
 
-  .panels[data-motion='true'] > .panel[data-active='true'] .resultHeading {
+  .panel[data-exiting] .traceSeg,
+  .panel[data-exiting] .traceArrow {
+    animation: relation-exit var(--duration-exit) var(--ease-preview) forwards;
+  }
+
+  /*
+   * Incoming chain: first segment draws immediately; each following piece
+   * staggers ~50ms. Relation label arrives after the first stroke starts.
+   */
+  .panels[data-motion] > .panel[data-active='true'] .traceSeg {
+    animation: trace-draw 160ms var(--ease-juice) both;
+    animation-delay: calc(var(--trace-i, 0) * 50ms);
+  }
+
+  .panels[data-motion] > .panel[data-active='true'] .traceArrow {
+    animation: trace-arrow 150ms var(--ease-juice) both;
+    animation-delay: calc(var(--trace-i, 0) * 50ms);
+  }
+
+  .panels[data-motion] > .panel[data-active='true'] .traceRelation > span {
+    animation: relation-enter 150ms var(--ease-juice) both;
+    animation-delay: 50ms;
+  }
+
+  .panels[data-motion] > .panel[data-active='true'] .resultHeading {
     animation: var(--animation-status-arrive) var(--duration-feedback) var(--ease-preview) both;
   }
 
-  .panels[data-motion='true'] > .panel[data-active='true'] .finding,
-  .panels[data-motion='true'] > .panel[data-active='true'] .outputTitle,
-  .panels[data-motion='true'] > .panel[data-active='true'] .cssOutput,
-  .panels[data-motion='true'] > .panel[data-active='true'] .consequence {
+  .panels[data-motion] > .panel[data-active='true'] .finding,
+  .panels[data-motion] > .panel[data-active='true'] .outputTitle,
+  .panels[data-motion] > .panel[data-active='true'] .cssOutput,
+  .panels[data-motion] > .panel[data-active='true'] .consequence {
     animation: trace-result var(--duration-reveal) var(--ease-out) var(--duration-follow) both;
   }
 
-  .panels[data-motion='true'] > .panel[data-active='true'] .result {
+  .panels[data-motion] > .panel[data-active='true'] .result {
     animation: none;
   }
 }
 
-@keyframes trace-reference {
+@keyframes trace-draw {
 
   from {
     stroke-dashoffset: 1;
@@ -684,6 +735,47 @@
 
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes trace-arrow {
+
+  from {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateX(-3px) scale(0.88);
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes relation-exit {
+
+  from {
+    opacity: 1;
+    filter: none;
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+@keyframes relation-enter {
+
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
   }
 }
 

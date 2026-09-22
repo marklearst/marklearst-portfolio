@@ -23,7 +23,7 @@
   min-height: 44px;
   gap: 10px;
   color: var(--color-ink-muted, #a59d95);
-  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-mono);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   text-decoration: none;
   transition:
     color var(--duration-preview) var(--ease-preview),
