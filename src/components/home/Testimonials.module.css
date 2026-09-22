@@ -56,6 +56,7 @@
   object-fit: cover;
   filter: grayscale(1);
   border: 1px solid var(--color-border-subtle);
+  transition: filter var(--duration-commit) var(--ease-preview);
 }
 
 .name {
@@ -102,5 +103,19 @@
 
   .heading {
     margin-bottom: 28px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .quote:hover .portrait {
+    filter: grayscale(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .portrait {
+    transition: none;
   }
 }
