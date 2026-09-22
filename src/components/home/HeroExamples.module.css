@@ -108,6 +108,11 @@
   z-index: 0;
 }
 
+/* Incoming layer: soft blur settle. Secondary links follow via panel-follow. */
+.panel[data-active][data-follow] {
+  animation: example-enter var(--duration-reveal) var(--ease-preview) both;
+}
+
 .panel[data-exiting] {
   position: absolute;
   inset: 0 auto auto 0;
@@ -116,7 +121,8 @@
   visibility: visible;
   pointer-events: none;
   z-index: 1;
-  animation: example-exit 100ms var(--ease-preview) forwards;
+  /* Faster exit than enter — clears stale text before the next layer reads. */
+  animation: example-exit var(--duration-exit) var(--ease-preview) forwards;
 }
 
 @keyframes example-exit {
@@ -128,6 +134,18 @@
   to {
     opacity: 0;
     filter: blur(2px);
+  }
+}
+
+@keyframes example-enter {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
   }
 }
 
@@ -149,8 +167,12 @@
     transform: none;
   }
 
+  .panel[data-active][data-follow],
   .panel[data-exiting] {
     animation: none;
+  }
+
+  .panel[data-exiting] {
     opacity: 0;
     visibility: hidden;
   }

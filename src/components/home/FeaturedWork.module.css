@@ -195,6 +195,21 @@
   min-height: 44px;
   color: var(--color-ink-secondary);
   text-decoration: none;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
+}
+
+.moreWork a span {
+  transition: transform var(--duration-preview) var(--ease-preview);
+}
+
+.moreWork a:active {
+  transform: translateY(1px);
+}
+
+.moreWork a:active span {
+  transform: translateX(3px);
 }
 
 .work a:focus-visible {
@@ -296,12 +311,16 @@
 @media (prefers-reduced-motion: reduce) {
 
   .caseLink,
-  .caseLink span {
+  .caseLink span,
+  .moreWork a,
+  .moreWork a span {
     transition: none;
   }
 
   .caseLink:active,
-  .caseLink:active span {
+  .caseLink:active span,
+  .moreWork a:active,
+  .moreWork a:active span {
     transform: none;
   }
 }
