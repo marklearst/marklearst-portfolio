@@ -307,12 +307,14 @@
   .contactAction:hover .contactArrow {
     transform: translate(6px, -6px);
     transition-duration: var(--duration-preview);
+    transition-timing-function: var(--ease-juice);
   }
 
   .contactAction:hover .contactLabel {
     transform: translateX(4px);
     filter: blur(0);
-    transition-duration: var(--duration-preview);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
     transition-delay: var(--duration-follow);
   }
 

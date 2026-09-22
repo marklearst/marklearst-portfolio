@@ -16,8 +16,8 @@
 
 /* Bound to a changed inner panel. Never an initial page or scroll entrance. */
 @keyframes panel-reveal {
-  from { opacity: .55; transform: translateY(3px); filter: blur(1.5px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  from { opacity: .55; filter: blur(1.5px); }
+  to { opacity: 1; filter: none; }
 }
 
 @keyframes panel-follow {
@@ -28,5 +28,5 @@
 /* Status clears first; the next line arrives after the clear window. */
 @keyframes status-arrive {
   0%, 32% { opacity: 0; filter: blur(1.5px); }
-  100% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; filter: none; }
 }

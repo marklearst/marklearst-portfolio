@@ -67,8 +67,13 @@
 }
 
 .choices button:active {
+  color: var(--color-ink-primary);
   background: var(--color-surface-raised);
   transform: scale(0.97);
+  transition:
+    color 0ms linear,
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .panels {
@@ -183,15 +188,15 @@
 
 @media (prefers-reduced-motion: no-preference) {
 
-  .panels[data-motion='true'] > .panel[data-active='true'] .evidence {
-    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out) var(--duration-follow) both;
+  .panels[data-motion] > .panel[data-active='true'] .evidence {
+    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-juice) both;
   }
 
-  .panels[data-motion='true'] > .panel[data-active='true'] .result h3 {
-    animation: var(--animation-status-arrive) var(--duration-feedback) var(--ease-preview) both;
+  .panels[data-motion] > .panel[data-active='true'] .result h3 {
+    animation: var(--animation-status-arrive) var(--duration-feedback) var(--ease-juice) both;
   }
 
-  .panels[data-motion='true'] > .panel[data-active='true'] .result p {
+  .panels[data-motion] > .panel[data-active='true'] .result p {
     animation: panel-follow var(--duration-preview) var(--ease-preview) var(--duration-follow) both;
   }
 }
