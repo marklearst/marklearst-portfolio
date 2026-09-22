@@ -10,7 +10,7 @@ import NavigationHistoryTracker from '@/components/navigation/NavigationHistoryT
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marklearst.com'),
-  title: 'Mark Learst | Design Engineer & UI Architect',
+  title: 'Mark Learst | Principal Design Engineer',
   description:
     'Design systems, React components, and developer tools by Mark Learst. Explore case studies and working examples.',
   icons: {

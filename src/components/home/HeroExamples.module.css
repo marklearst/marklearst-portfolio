@@ -42,7 +42,7 @@
 }
 
 .choices[data-motion='true'] .selection {
-  transition: transform 280ms var(--ease-out);
+  transition: transform var(--duration-commit) var(--ease-out);
 }
 
 .choices button {
@@ -59,7 +59,7 @@
 }
 
 .choices[data-motion='true'] button {
-  transition: color var(--duration-feedback) ease-out;
+  transition: color var(--duration-preview) var(--ease-out);
 }
 
 .choices button[aria-pressed='true'] {
@@ -92,6 +92,12 @@
   display: none;
 }
 
+.panel[data-exiting='true'] {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
 
   .choices button:hover {
@@ -104,4 +110,5 @@
   .choices[data-motion='true'] button, .choices[data-motion='true'] .selection {
     transition: none;
   }
+
 }

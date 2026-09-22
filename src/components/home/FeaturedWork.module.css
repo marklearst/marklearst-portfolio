@@ -141,79 +141,24 @@
   color: var(--color-ink-primary);
   font: 500 var(--text-ui)/1.5 var(--font-body);
   text-decoration: none;
+  transition: color var(--duration-preview) var(--ease-out), transform var(--duration-preview) var(--ease-out);
+}
+
+.caseLink span {
+  transition: transform var(--duration-preview) var(--ease-out);
+}
+
+.caseLink:active {
+  transform: translateY(1px);
+}
+
+.caseLink:active span {
+  transform: translateY(1px);
 }
 
 .figure {
   min-width: 0;
   margin: 0;
-}
-
-.imageLink {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding: 28px 28px 52px;
-  border-radius: 14px;
-  background: var(--color-surface);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 8%, transparent);
-  transition: background-color 180ms ease-out, box-shadow 240ms ease-out;
-}
-
-.imageViewport {
-  display: block;
-  overflow: hidden;
-  border-radius: 6px;
-  box-shadow: 0 14px 30px -16px var(--color-canvas);
-}
-
-.imageLink img {
-  display: block;
-  width: 100%;
-  height: auto;
-  transform-origin: 50% 45%;
-  transition: transform 240ms var(--ease-out);
-}
-
-.imageAction {
-  position: absolute;
-  right: 18px;
-  bottom: 10px;
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--color-surface-raised);
-  color: var(--color-ink-secondary);
-  transition: background-color 180ms ease-out, color 180ms ease-out;
-}
-
-.imageLink:focus-visible {
-  background: var(--color-surface-raised);
-}
-
-.imageLink:focus-visible img {
-  transform: scale(1.025) translateY(-2px);
-}
-
-.imageLink:focus-visible .imageAction {
-  background: var(--color-surface);
-  color: var(--color-accent-primary);
-}
-
-.imageLink:active img {
-  transform: scale(1.008);
-}
-
-.imageLink:active .imageAction {
-  background: var(--color-surface);
-  color: var(--color-accent-primary);
-}
-
-.caption {
-  margin-top: 12px;
-  color: var(--color-ink-muted);
-  font: 400 var(--text-caption)/1.5 var(--font-body);
 }
 
 .eyebrow {
@@ -261,24 +206,6 @@
   .sectionHeading > a:hover {
     color: var(--color-ink-primary);
     text-decoration: underline;
-  }
-
-  .imageLink:hover {
-    background: var(--color-surface-raised);
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 10%, transparent), 0 20px 36px -28px var(--color-canvas);
-  }
-
-  .imageLink:hover img {
-    transform: scale(1.025) translateY(-2px);
-  }
-
-  .imageLink:hover .imageAction {
-    background: var(--color-surface);
-    color: var(--color-accent-primary);
-  }
-
-  .imageLink:active img {
-    transform: scale(1.008);
   }
 }
 
@@ -359,24 +286,17 @@
   .projectNote {
     margin-bottom: 8px;
   }
-
-  .imageLink {
-    padding: 18px 18px 48px;
-    border-radius: 12px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-  .imageLink,
-  .imageLink img,
-  .imageAction {
+  .caseLink,
+  .caseLink span {
     transition: none;
   }
 
-  .imageLink:hover img,
-  .imageLink:focus-visible img,
-  .imageLink:active img {
+  .caseLink:active,
+  .caseLink:active span {
     transform: none;
   }
 }

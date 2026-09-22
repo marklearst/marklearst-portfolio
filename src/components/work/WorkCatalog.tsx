@@ -3,10 +3,10 @@
 import { ArrowRightIcon } from '@/components/ui/Icon'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { PROJECTS_IN_DISPLAY_ORDER, type ProjectMeta } from '@/data/projects'
 import { trackCaseStudyClick, trackProjectCardHover, trackProjectCardImpression } from '@/lib/analytics'
+import WorkFigure from '@/components/work/WorkFigure'
 import styles from './WorkCatalog.module.css'
 
 const FILTERS = [
@@ -55,13 +55,22 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
       </div>
       <div className={styles.projectBody}>
         <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>{project.cardTitle}<span aria-hidden='true'><ArrowRightIcon size={20} /></span></Link></h2>
-        {preview && <figure className={styles.preview}>
-          <Link className={styles.previewLink} href={project.route} aria-label={`${project.cardTitle} case study preview`} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>
-            <span className={styles.previewViewport}><Image src={preview.src} alt={preview.alt} width={1280} height={720} sizes='(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px' /></span>
-            <span className={styles.previewAction} aria-hidden='true'><ArrowRightIcon size={18} /></span>
-          </Link>
-          <figcaption>{preview.caption}</figcaption>
-        </figure>}
+        {preview && <div className={styles.preview}>
+          <WorkFigure
+            compact
+            href={project.route}
+            ariaLabel={`${project.cardTitle} case study preview`}
+            image={{
+              src: preview.src,
+              alt: preview.alt,
+              width: 1280,
+              height: 720,
+              sizes: '(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px',
+            }}
+            caption={preview.caption}
+            onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}
+          />
+        </div>}
         <p className={styles.summary}>{project.summary}</p>
         <p className={styles.role}>{project.role}</p>
         <ul className={styles.technologies} aria-label={`${project.cardTitle} technologies`}>

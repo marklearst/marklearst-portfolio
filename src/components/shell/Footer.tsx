@@ -24,7 +24,7 @@ export default function Footer({ showPrivacyLink = true }: { showPrivacyLink?: b
                 Have a role in mind? <span aria-hidden='true'><ArrowUpRightIcon /></span>
               </TrackedLink>
             </h2>
-            <p className={styles.availability}>Open to design engineering roles.</p>
+            <p className={styles.availability}>Open to Principal Design Engineer roles.</p>
           </div>
           <nav className={styles.socialLinks} aria-label='Contact and profiles'>
             {socialLinks.map(({ name, href, platform, icon: Icon }) => (

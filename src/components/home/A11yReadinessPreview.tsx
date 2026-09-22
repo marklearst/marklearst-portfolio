@@ -43,7 +43,7 @@ export default function A11yReadinessPreview() {
           </div>
         })}
       </div>
-      <p className={styles.status} role='status' aria-atomic='true'>{selected.scenario.label}: {selected.record.label}. {selected.scenario.explanation}</p>
+      <p key={value} className={styles.status} role='status' aria-atomic='true'>{selected.scenario.label}: {selected.record.label}. {selected.scenario.explanation}</p>
       <footer className={styles.footer}>The widget’s readiness rules, running here with sample data.</footer>
     </section>
   )
