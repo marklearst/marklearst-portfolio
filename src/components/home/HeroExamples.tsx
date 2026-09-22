@@ -10,7 +10,7 @@ interface HeroExample {
 }
 
 const morphTiming = { duration: 280, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-const exitTiming = { duration: 140, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+const exitTiming = { duration: 110, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' }
 const maximumMorphDistance = 320
 
 export default function HeroExamples({ examples }: { examples: readonly HeroExample[] }) {
