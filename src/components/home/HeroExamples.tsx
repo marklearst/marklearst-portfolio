@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import styles from './HeroExamples.module.css'
 
 interface HeroExample {
@@ -11,11 +11,48 @@ interface HeroExample {
 
 const EXIT_MS = 100
 
+/** Stiff + damped, clamped — same family as the primary nav pill. */
+function springIndex(from: number, to: number, onUpdate: (value: number) => void) {
+  const stiffness = 320
+  const damping = 38
+  let position = from
+  let velocity = 0
+  let frame = 0
+  let previous = performance.now()
+
+  const tick = (now: number) => {
+    const dt = Math.min(0.032, (now - previous) / 1000)
+    previous = now
+    velocity += (-stiffness * (position - to) - damping * velocity) * dt
+    position += velocity * dt
+
+    if ((to >= from && position > to) || (to <= from && position < to)) {
+      position = to
+      velocity = 0
+    }
+
+    onUpdate(position)
+
+    if (Math.abs(position - to) < 0.0008 && Math.abs(velocity) < 0.02) {
+      onUpdate(to)
+      return
+    }
+
+    frame = requestAnimationFrame(tick)
+  }
+
+  frame = requestAnimationFrame(tick)
+  return () => cancelAnimationFrame(frame)
+}
+
 export default function HeroExamples({ examples }: { examples: readonly HeroExample[] }) {
   const id = useId()
   const [{ value, motion }, setSelection] = useState({ value: examples[0]?.id, motion: false })
   const [exitingId, setExitingId] = useState<string | null>(null)
   const exitTimer = useRef<number | null>(null)
+  const choicesRef = useRef<HTMLDivElement>(null)
+  const pillIndex = useRef(0)
+  const stopSpring = useRef<(() => void) | null>(null)
   const activeIndex = Math.max(0, examples.findIndex(example => example.id === value))
 
   const stopExit = useCallback(() => {
@@ -49,6 +86,32 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
     setSelection({ value: nextValue, motion: shouldAnimate })
   }
 
+  useLayoutEffect(() => {
+    const choices = choicesRef.current
+    if (!choices) return
+
+    const from = pillIndex.current
+    const to = activeIndex
+    stopSpring.current?.()
+    stopSpring.current = null
+
+    const setPill = (next: number) => {
+      pillIndex.current = next
+      choices.style.setProperty('--pill-index', String(next))
+    }
+
+    if (!motion || from === to) {
+      setPill(to)
+      return
+    }
+
+    stopSpring.current = springIndex(from, to, setPill)
+    return () => {
+      stopSpring.current?.()
+      stopSpring.current = null
+    }
+  }, [activeIndex, motion])
+
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const onChange = () => { if (preference.matches) stopExit() }
@@ -56,6 +119,7 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
     return () => {
       preference.removeEventListener('change', onChange)
       stopExit()
+      stopSpring.current?.()
     }
   }, [stopExit])
 
@@ -66,11 +130,16 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
       <div className={styles.heading}>
         <h2>Explore the implementation</h2>
         <div
+          ref={choicesRef}
           className={styles.choices}
           role='group'
           aria-label='Choose a working example'
           data-motion={motion || undefined}
-          style={{ '--example-count': examples.length, '--example-index': activeIndex } as CSSProperties}
+          style={{
+            '--example-count': examples.length,
+            '--example-index': activeIndex,
+            '--pill-index': pillIndex.current,
+          } as CSSProperties}
         >
           <span className={styles.selection} aria-hidden='true' />
           {examples.map(example => (
