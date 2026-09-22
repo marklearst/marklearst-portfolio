@@ -12,7 +12,7 @@ const examples = A11Y_DEMO_SCENARIOS
 
 export default function A11yReadinessPreview() {
   const id = useId()
-  const { value, motion, select } = useAnimatedSelection<A11yDemoScenarioId>('ready-for-handoff')
+  const { value, motion, exitingId, select } = useAnimatedSelection<A11yDemoScenarioId>('ready-for-handoff')
   const selected = examples.find(example => example.scenario.id === value)!
 
   return (
@@ -30,7 +30,7 @@ export default function A11yReadinessPreview() {
       <div id={`${id}-result`} className={styles.panels} data-motion={motion}>
         {examples.map(({ scenario, record, contrastRatio, contrast }) => {
           const active = value === scenario.id
-          return <div key={scenario.id} className={styles.panel} data-active={active} inert={!active} aria-hidden={!active}>
+          return <div key={scenario.id} className={styles.panel} data-active={active || undefined} data-exiting={exitingId === scenario.id || undefined} inert={!active || undefined} aria-hidden={!active}>
             <dl className={styles.evidence}>
               <div><dt>Checklist</dt><dd>{scenario.widget.completedChecks} / {scenario.widget.totalChecks}</dd></div>
               <div><dt>Sign-offs</dt><dd>{scenario.widget.signedSections} / {scenario.widget.totalSections}{scenario.widget.staleSignoffs > 0 && <span>{scenario.widget.staleSignoffs} stale</span>}</dd></div>

@@ -153,6 +153,13 @@
   pointer-events: auto;
 }
 
+.panel[data-exiting] {
+  visibility: visible;
+  pointer-events: none;
+  z-index: 1;
+  animation: demo-panel-exit var(--duration-exit) var(--ease-preview) forwards;
+}
+
 .panel[data-blocked='true'] {
   --pt-result: var(--color-accent-danger);
 }
@@ -640,6 +647,11 @@
   .controls button:active {
     transform: none;
   }
+
+  .panel[data-exiting] {
+    animation: none;
+    visibility: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -683,5 +695,18 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes demo-panel-exit {
+
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
   }
 }

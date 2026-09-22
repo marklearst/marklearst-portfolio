@@ -8,12 +8,12 @@ import { ArrowRightIcon } from '@/components/ui/Icon'
 import type { ComponentProps } from 'react'
 import styles from './WorkFigure.module.css'
 
-const MAX_SHIFT = 10
+const MAX_SHIFT = 14
 
 /** Early pointer travel maps louder; still clamped at MAX_SHIFT. */
 function shiftFromPointer(normalized: number) {
   const magnitude = Math.min(1, Math.abs(normalized))
-  const curved = 1 - (1 - magnitude) ** 1.55
+  const curved = 1 - (1 - magnitude) ** 1.45
   return Math.sign(normalized) * curved * MAX_SHIFT
 }
 
@@ -47,18 +47,36 @@ export default function WorkFigure({
   trackEvent,
 }: WorkFigureProps) {
   const viewportRef = useRef<HTMLSpanElement>(null)
+  const settleTimer = useRef<number | null>(null)
   const [shift, setShift] = useState({ x: 0, y: 0 })
   const [shiftable, setShiftable] = useState(false)
+  const [settling, setSettling] = useState(false)
+
+  const clearSettle = useCallback(() => {
+    if (settleTimer.current !== null) {
+      window.clearTimeout(settleTimer.current)
+      settleTimer.current = null
+    }
+  }, [])
 
   const resetShift = useCallback(() => {
+    clearSettle()
+    setSettling(true)
     setShift({ x: 0, y: 0 })
     setShiftable(false)
-  }, [])
+    settleTimer.current = window.setTimeout(() => {
+      settleTimer.current = null
+      setSettling(false)
+    }, 220)
+  }, [clearSettle])
 
-  const handlePointerEnter = useCallback((event: React.PointerEvent<HTMLAnchorElement>) => {
-    const finePointer = event.pointerType === 'mouse' || event.pointerType === 'pen'
-    setShiftable(finePointer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-  }, [])
+  const handlePointerEnter = useCallback(() => {
+    clearSettle()
+    setSettling(false)
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setShiftable(fine && !reduced)
+  }, [clearSettle])
 
   const handlePointerMove = useCallback((event: React.PointerEvent<HTMLAnchorElement>) => {
     if (!shiftable || !viewportRef.current) return
@@ -68,8 +86,13 @@ export default function WorkFigure({
     setShift({ x: shiftFromPointer(x), y: shiftFromPointer(y) })
   }, [shiftable])
 
-  const frameClass = `${styles.frame} ${compact ? styles.frameCompact : ''} ${shiftable ? styles.frameShiftable : ''}`
+  const frameClass = [
+    styles.frame,
+    compact ? styles.frameCompact : '',
+    settling ? styles.frameSettling : '',
+  ].filter(Boolean).join(' ')
   const frameStyle = { '--shift-x': `${shift.x}px`, '--shift-y': `${shift.y}px` } as React.CSSProperties
+  const iconSize = compact ? 18 : 20
   const frameChildren = (
     <>
       <span ref={viewportRef} className={styles.viewport}>
@@ -82,7 +105,10 @@ export default function WorkFigure({
           sizes={image.sizes}
         />
       </span>
-      <span className={styles.action} aria-hidden='true'><ArrowRightIcon size={compact ? 18 : 20} /></span>
+      <span className={styles.action} aria-hidden='true'>
+        <span className={styles.actionIdle}><ArrowRightIcon size={iconSize} /></span>
+        <span className={styles.actionLive}><ArrowRightIcon size={iconSize} /></span>
+      </span>
     </>
   )
 
