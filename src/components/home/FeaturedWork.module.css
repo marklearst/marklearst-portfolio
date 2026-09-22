@@ -149,7 +149,7 @@
 }
 
 .caseLink span {
-  transition: transform var(--duration-preview) var(--ease-preview);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .caseLink:active {
@@ -201,7 +201,7 @@
 }
 
 .moreWork a span {
-  transition: transform var(--duration-preview) var(--ease-preview);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .moreWork a:active {
@@ -232,6 +232,8 @@
   .moreWork a:hover span,
   .sectionHeading > a:hover span {
     transform: translateX(3px);
+    transition-duration: var(--duration-preview);
+    transition-timing-function: var(--ease-juice);
   }
 }
 

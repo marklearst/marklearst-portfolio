@@ -77,54 +77,48 @@
     transform var(--duration-preview) var(--ease-preview);
 }
 
-/* Only the active panel sizes the shell. Inactive/exiting stay out of flow. */
+/*
+ * Grid stack: every panel shares one cell so height = max(of all).
+ * No absolute/relative swap → no height jump on rapid flips.
+ */
 .panels {
-  position: relative;
+  display: grid;
   isolation: isolate;
 }
 
 .panel {
+  grid-area: 1 / 1;
   min-width: 0;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  position: absolute;
-  inset: 0 auto auto 0;
-  width: 100%;
   z-index: 0;
 }
 
 .panel[data-active] {
-  position: relative;
-  inset: auto;
-  width: auto;
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   z-index: 0;
 }
 
-/* Incoming layer: soft blur settle. Secondary links follow via panel-follow. */
+/* Incoming: blur settle only — no sideways/vertical slide. */
 .panel[data-active][data-follow] {
-  animation: example-enter var(--duration-reveal) var(--ease-preview) both;
+  animation: example-enter var(--duration-reveal) var(--ease-juice) both;
 }
 
 .panel[data-exiting] {
-  position: absolute;
-  inset: 0 auto auto 0;
-  width: 100%;
   opacity: 1;
   visibility: visible;
   pointer-events: none;
   z-index: 1;
-  /* Faster exit than enter — clears stale text before the next layer reads. */
   animation: example-exit var(--duration-exit) var(--ease-preview) forwards;
 }
 
 @keyframes example-exit {
   from {
     opacity: 1;
-    filter: blur(0);
+    filter: none;
   }
 
   to {
@@ -137,11 +131,13 @@
   from {
     opacity: 0;
     filter: blur(2px);
+    transform: scale(0.96);
   }
 
   to {
     opacity: 1;
-    filter: blur(0);
+    filter: none;
+    transform: scale(1);
   }
 }
 

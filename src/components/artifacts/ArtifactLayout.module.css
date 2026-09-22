@@ -111,8 +111,8 @@
   place-items: center;
   color: var(--color-accent-primary);
   font-size: 1em;
-  /* Arrow answers immediately; summary follows via --duration-follow. */
-  transition: transform var(--duration-preview) var(--ease-preview);
+  /* Arrow answers immediately; leave uses the faster exit window. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .entryBody p {
@@ -153,6 +153,8 @@
 .entry:hover .entryBody h2 a span,
 .entry:focus-within .entryBody h2 a span {
   transform: translateX(5px);
+  transition-duration: var(--duration-preview);
+  transition-timing-function: var(--ease-juice);
 }
 
 .entry:hover .entryBody p,

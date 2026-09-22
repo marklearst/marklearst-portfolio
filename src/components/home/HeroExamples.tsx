@@ -53,6 +53,7 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
   const choicesRef = useRef<HTMLDivElement>(null)
   const pillIndex = useRef(0)
   const stopSpring = useRef<(() => void) | null>(null)
+  const pointerIntent = useRef(false)
   const activeIndex = Math.max(0, examples.findIndex(example => example.id === value))
 
   const stopExit = useCallback(() => {
@@ -149,7 +150,12 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
               type='button'
               aria-pressed={value === example.id}
               aria-controls={`${id}-${example.id}`}
-              onClick={event => select(example.id, event.detail > 0)}
+              onPointerDown={() => { pointerIntent.current = true }}
+              onClick={() => {
+                const pointer = pointerIntent.current
+                pointerIntent.current = false
+                select(example.id, pointer)
+              }}
             >
               {example.label}
             </button>
