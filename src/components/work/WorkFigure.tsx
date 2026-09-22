@@ -10,6 +10,13 @@ import styles from './WorkFigure.module.css'
 
 const MAX_SHIFT = 10
 
+/** Early pointer travel maps louder; still clamped at MAX_SHIFT. */
+function shiftFromPointer(normalized: number) {
+  const magnitude = Math.min(1, Math.abs(normalized))
+  const curved = 1 - (1 - magnitude) ** 1.55
+  return Math.sign(normalized) * curved * MAX_SHIFT
+}
+
 type TrackEvent = ComponentProps<typeof TrackedLink>['event']
 
 type WorkFigureProps = {
@@ -43,7 +50,10 @@ export default function WorkFigure({
   const [shift, setShift] = useState({ x: 0, y: 0 })
   const [shiftable, setShiftable] = useState(false)
 
-  const resetShift = useCallback(() => setShift({ x: 0, y: 0 }), [])
+  const resetShift = useCallback(() => {
+    setShift({ x: 0, y: 0 })
+    setShiftable(false)
+  }, [])
 
   const handlePointerEnter = useCallback((event: React.PointerEvent<HTMLAnchorElement>) => {
     const finePointer = event.pointerType === 'mouse' || event.pointerType === 'pen'
@@ -55,7 +65,7 @@ export default function WorkFigure({
     const rect = viewportRef.current.getBoundingClientRect()
     const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2))
     const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2))
-    setShift({ x: x * MAX_SHIFT, y: y * MAX_SHIFT })
+    setShift({ x: shiftFromPointer(x), y: shiftFromPointer(y) })
   }, [shiftable])
 
   const frameClass = `${styles.frame} ${compact ? styles.frameCompact : ''} ${shiftable ? styles.frameShiftable : ''}`
