@@ -12,8 +12,8 @@ export default function Hero() {
       <div className={styles.container}>
         <div className={styles.heroGrid}>
           <div className={styles.introduction}>
-            <h1 id='hero-name' className={styles.name}>I build the tools design engineers use.</h1>
-            <p className={styles.lead}>Principal design engineer. I set system direction in code.</p>
+            <h1 id='hero-name' className={styles.name}>Principal design engineer.</h1>
+            <p className={styles.lead}>I set the system, the interface, and the motion between them.</p>
             <div className={styles.actions}>
               <TrackedLink className={styles.primaryLink} href='#work' event={{ type: 'hero', data: { action: 'view_work', location: 'hero' } }}>
                 Explore the work <ArrowDownIcon />
