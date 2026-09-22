@@ -25,14 +25,15 @@
   color: var(--color-ink-muted, #a59d95);
   font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   text-decoration: none;
+  /* Default = exit: faster leave so layers do not stack. */
   transition:
-    color var(--duration-preview) var(--ease-preview),
-    transform var(--duration-preview) var(--ease-preview);
+    color var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .backLink svg {
   color: var(--case-accent);
-  transition: transform var(--duration-commit) var(--ease-preview);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .hero .backLink {
@@ -102,10 +103,11 @@
   background: var(--color-surface);
   text-decoration: none;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
+  /* Default = exit: faster leave so layers do not stack. */
   transition:
-    color var(--duration-preview) var(--ease-preview),
-    background-color var(--duration-preview) var(--ease-preview),
-    transform var(--duration-preview) var(--ease-preview);
+    color var(--duration-exit) var(--ease-preview),
+    background-color var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .projectLink,
@@ -141,7 +143,7 @@
 .externalArrow {
   margin-left: 2px;
   color: var(--case-accent);
-  transition: transform var(--duration-preview) var(--ease-preview);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .links .projectLink:active {
@@ -263,10 +265,19 @@
 
   .links .projectLink:hover {
     background: var(--color-surface-raised);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .projectLink:hover {
     text-decoration-color: var(--case-accent);
+  }
+
+  /* Arrow answers now; color/bg are secondary. Exit ~100ms, enter ~180ms. */
+  .projectLink:hover .externalArrow {
+    transform: translate(3px, -3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .backLink:hover,
@@ -274,10 +285,14 @@
     color: var(--color-ink-primary, #f3eee8);
     text-decoration: underline;
     text-underline-offset: 4px;
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .backLink:hover svg {
     transform: translateX(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 }
 
@@ -333,6 +348,7 @@
 
   .links .projectLink:active,
   .links .projectLink:active .externalArrow,
+  .projectLink:hover .externalArrow,
   .backLink:hover svg {
     transform: none;
   }
