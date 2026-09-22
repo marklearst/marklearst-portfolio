@@ -83,7 +83,15 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
 
 export default function WorkCatalog() {
   const [activeFilter, setActiveFilter] = useState('all')
+  const [listMotion, setListMotion] = useState(false)
   const filteredProjects = useMemo(() => PROJECTS_IN_DISPLAY_ORDER.filter((project) => FILTERS.find((filter) => filter.id === activeFilter)!.matches(project)), [activeFilter])
+
+  function selectFilter(id: string, pointer: boolean) {
+    if (id === activeFilter) return
+    const shouldAnimate = pointer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setListMotion(shouldAnimate)
+    setActiveFilter(id)
+  }
 
   return (
     <section className={styles.catalog} aria-labelledby='work-title'>
@@ -92,10 +100,19 @@ export default function WorkCatalog() {
         <p>Design systems and developer tools. The constraints, the implementation, and what I learned building them.</p>
       </header>
       <div className={styles.filters} role='group' aria-label='Filter work by focus'>
-        {FILTERS.map((filter) => <button key={filter.id} type='button' aria-pressed={activeFilter === filter.id} onClick={() => setActiveFilter(filter.id)}>{filter.label}</button>)}
+        {FILTERS.map((filter) => (
+          <button
+            key={filter.id}
+            type='button'
+            aria-pressed={activeFilter === filter.id}
+            onClick={event => selectFilter(filter.id, event.detail > 0)}
+          >
+            {filter.label}
+          </button>
+        ))}
       </div>
-      <p className={styles.resultCount} role='status'>{filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}{activeFilter !== 'all' && ` · ${FILTERS.find((filter) => filter.id === activeFilter)?.label}`}</p>
-      <div>
+      <p key={`count-${activeFilter}`} className={`${styles.resultCount}${listMotion ? ` ${styles.resultCountMotion}` : ''}`} role='status'>{filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}{activeFilter !== 'all' && ` · ${FILTERS.find((filter) => filter.id === activeFilter)?.label}`}</p>
+      <div key={`list-${activeFilter}`} className={styles.results} data-motion={listMotion || undefined}>
         {filteredProjects.map((project, index) => <ProjectRow key={project.slug} project={project} index={index} />)}
       </div>
     </section>

@@ -242,7 +242,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
         </div>
       </div>
 
-      <div className={styles.status} role="status" aria-live="polite" aria-atomic="true">
+      <div key={`status-${scenario}`} className={`${styles.status} ${hasInteracted ? styles.statusMotion : ''}`} role="status" aria-live="polite" aria-atomic="true">
         <span className={styles.statusIcon} aria-hidden="true">{!valid ? '○' : report.dataSufficiency.meetsCGMStandard ? '✓' : '!'}</span>
         <div>
           <p>{statusTitle}</p>

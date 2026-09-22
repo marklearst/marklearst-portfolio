@@ -10,6 +10,11 @@
   font: 500 18px/1 var(--font-mono);
   letter-spacing: -.045em;
   text-decoration: none;
+  transition: transform var(--duration-preview) var(--ease-preview);
+}
+
+.link:active {
+  transform: translateY(1px);
 }
 
 /* Braces remain still while the letter layers share one fixed frame. */
@@ -122,6 +127,14 @@
 
   .front, .back {
     transition: none;
+  }
+
+  .link {
+    transition: none;
+  }
+
+  .link:active {
+    transform: none;
   }
 
   .link:hover .front {

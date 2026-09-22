@@ -62,7 +62,10 @@
   line-height: 1.3;
   cursor: pointer;
   touch-action: manipulation;
-  transition: background-color 150ms ease, color 150ms ease;
+  transition:
+    background-color var(--duration-preview) var(--ease-preview),
+    color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .scenarios button[aria-pressed='true'] {
@@ -78,6 +81,7 @@
 
 .scenarios button:active {
   background: var(--color-surface-raised);
+  transform: scale(0.97);
 }
 
 /* Every scenario occupies the same grid cell, so the tallest sets the height. */
@@ -426,6 +430,10 @@
 
   .scenarios button {
     transition: none;
+  }
+
+  .scenarios button:active {
+    transform: none;
   }
 }
 

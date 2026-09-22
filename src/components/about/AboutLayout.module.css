@@ -85,7 +85,11 @@
   color: var(--color-ink-primary, #f3eee8);
   font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   text-decoration: none;
-  transition: color 180ms ease-out, border-color 180ms ease-out, background-color 180ms ease-out;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    border-color var(--duration-preview) var(--ease-preview),
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .contactAction:first-child {
@@ -93,6 +97,10 @@
   border-color: var(--color-ink-primary, #f3eee8);
   background: var(--color-ink-primary, #f3eee8);
   color: var(--color-canvas, #171615);
+}
+
+.contactAction:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 .content :global(.about-contact-links) {
@@ -294,6 +302,10 @@
   .contactAction,
   .content :global(.about-contact-links) > a {
     transition: none;
+  }
+
+  .contactAction:active {
+    transform: none;
   }
 }
 
