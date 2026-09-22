@@ -172,8 +172,16 @@
 
 @media (prefers-reduced-motion: no-preference) {
 
-  .panels[data-motion='true'] > .panel[data-active='true'] {
-    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out);
+  .panels[data-motion='true'] > .panel[data-active='true'] .evidence {
+    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out) var(--duration-follow) both;
+  }
+
+  .panels[data-motion='true'] > .panel[data-active='true'] .result h3 {
+    animation: var(--animation-status-arrive) var(--duration-feedback) var(--ease-preview) both;
+  }
+
+  .panels[data-motion='true'] > .panel[data-active='true'] .result p {
+    animation: panel-follow var(--duration-preview) var(--ease-preview) var(--duration-follow) both;
   }
 }
 

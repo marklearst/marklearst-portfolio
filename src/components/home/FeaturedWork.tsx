@@ -95,7 +95,7 @@ export default function FeaturedWork() {
             <p className={styles.eyebrow}>My library, running here</p>
             <h3 id='glucose-sample-heading'>GlucoseIQ</h3>
             <p className={styles.projectSummary}>Headless TypeScript library for CGM and glucose data. 17 clinical metrics, device connectors, FHIR interop, and SVG rendering over a zero-dependency core.</p>
-            <TrackedLink href='/work/glucoseiq' className={styles.caseLink} event={projectClickEvent('glucoseiq')}>GlucoseIQ case study <ArrowRightIcon /></TrackedLink>
+            <TrackedLink href='/work/glucoseiq' className={styles.caseLink} event={projectClickEvent('glucoseiq')}>GlucoseIQ case study <span aria-hidden='true'><ArrowRightIcon /></span></TrackedLink>
           </div>
           <div className={styles.livePreview}>
             <GlucoseDemo compact />

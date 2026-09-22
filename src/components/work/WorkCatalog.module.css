@@ -47,7 +47,7 @@
   font: 500 var(--text-ui)/1.5 var(--font-body);
   cursor: pointer;
   touch-action: manipulation;
-  transition: color var(--duration-preview) var(--ease-out);
+  transition: color var(--duration-preview) var(--ease-preview);
 }
 
 .filters button::after {
@@ -58,7 +58,7 @@
   content: '';
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--duration-preview) var(--ease-out);
+  transition: transform var(--duration-preview) var(--ease-preview);
 }
 
 .filters button[aria-pressed='true'] {
@@ -133,24 +133,33 @@
   gap: 12px;
   min-height: 44px;
   padding-block: 6px;
+  padding-inline: 4px;
+  margin-inline: -4px;
+  border-radius: 4px;
   color: var(--color-ink-primary);
   text-decoration: none;
-  transition: color var(--duration-preview) var(--ease-out), transform var(--duration-preview) var(--ease-out);
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .projectBody h2 a span {
   flex-shrink: 0;
   color: var(--color-ink-muted);
-  transition: color var(--duration-preview) var(--ease-out), transform var(--duration-preview) var(--ease-out);
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .projectBody h2 a:active {
+  background: color-mix(in srgb, var(--color-ink-primary) 7%, transparent);
   transform: translateY(1px);
 }
 
 .projectBody h2 a:active span {
   color: var(--color-ink-primary);
-  transform: translateY(1px);
+  transform: translateX(3px);
 }
 
 .summary {

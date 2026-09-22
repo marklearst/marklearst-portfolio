@@ -75,11 +75,11 @@
   border-radius: 6px;
   background: var(--color-ink-primary);
   color: var(--color-canvas);
-  transition: background-color 160ms ease-out, box-shadow 160ms ease-out;
+  transition: background-color var(--duration-preview) var(--ease-preview), box-shadow var(--duration-preview) var(--ease-preview);
 }
 
 .primaryLink svg {
-  transition: transform 160ms var(--ease-out);
+  transition: transform var(--duration-preview) var(--ease-preview);
 }
 
 .textLink {
@@ -117,7 +117,7 @@
 }
 
 :global([data-follow='true']) .previewLinks {
-  animation: panel-follow var(--duration-preview) var(--ease-out) var(--duration-follow) both;
+  animation: panel-follow var(--duration-preview) var(--ease-preview) var(--duration-follow) both;
 }
 
 .previewLink {

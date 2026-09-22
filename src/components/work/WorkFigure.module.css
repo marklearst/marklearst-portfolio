@@ -11,7 +11,11 @@
   border-radius: 14px;
   background: var(--color-surface);
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 8%, transparent);
-  transition: background-color var(--duration-preview) var(--ease-out), box-shadow var(--duration-preview) var(--ease-out), transform var(--duration-preview) var(--ease-out);
+  touch-action: manipulation;
+  transition:
+    background-color var(--duration-preview) var(--ease-preview),
+    box-shadow var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .frameCompact {
@@ -34,8 +38,7 @@
   display: block;
   width: 100%;
   height: auto;
-  transform: translate(var(--shift-x, 0), var(--shift-y, 0));
-  will-change: transform;
+  transform: translate3d(var(--shift-x, 0), var(--shift-y, 0), 0);
 }
 
 .action {
@@ -50,11 +53,11 @@
   background: var(--color-surface-raised);
   color: var(--color-ink-secondary);
   transition:
-    background-color var(--duration-preview) var(--ease-out),
-    color var(--duration-preview) var(--ease-out),
-    opacity var(--duration-preview) var(--ease-out),
-    filter var(--duration-preview) var(--ease-out),
-    transform var(--duration-preview) var(--ease-out);
+    background-color var(--duration-preview) var(--ease-preview),
+    color var(--duration-preview) var(--ease-preview),
+    opacity var(--duration-preview) var(--ease-preview),
+    filter var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .frameCompact .action {
@@ -100,10 +103,11 @@
     user-select: none;
   }
 
-  .frameShiftable .action {
-    opacity: 0.72;
-    filter: blur(2px);
-    transform: scale(0.92);
+  .frameShiftable .image {
+    width: calc(100% + 20px);
+    max-width: none;
+    margin-inline: -10px;
+    will-change: transform;
   }
 
   .frameShiftable:hover {
@@ -114,6 +118,18 @@
   .frameShiftable:hover .action {
     background: var(--color-surface);
     color: var(--color-accent-primary);
+    animation: figure-action-arrive var(--duration-preview) var(--ease-preview) both;
+  }
+}
+
+@keyframes figure-action-arrive {
+  from {
+    opacity: 0;
+    filter: blur(2.5px);
+    transform: scale(0.88);
+  }
+
+  to {
     opacity: 1;
     filter: blur(0);
     transform: scale(1);
@@ -136,10 +152,14 @@
     transition: none;
   }
 
-  .frameShiftable .action {
-    opacity: 1;
-    filter: none;
-    transform: none;
+  .frameShiftable .image {
+    width: 100%;
+    margin-inline: 0;
+    will-change: auto;
+  }
+
+  .frameShiftable:hover .action {
+    animation: none;
   }
 
   .frame:active {

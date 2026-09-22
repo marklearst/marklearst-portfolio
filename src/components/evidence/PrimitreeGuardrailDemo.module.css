@@ -640,8 +640,19 @@
     animation: trace-reference 180ms var(--ease-out);
   }
 
+  .panels[data-motion='true'] > .panel[data-active='true'] .resultHeading {
+    animation: var(--animation-status-arrive) var(--duration-feedback) var(--ease-preview) both;
+  }
+
+  .panels[data-motion='true'] > .panel[data-active='true'] .finding,
+  .panels[data-motion='true'] > .panel[data-active='true'] .outputTitle,
+  .panels[data-motion='true'] > .panel[data-active='true'] .cssOutput,
+  .panels[data-motion='true'] > .panel[data-active='true'] .consequence {
+    animation: trace-result var(--duration-reveal) var(--ease-out) var(--duration-follow) both;
+  }
+
   .panels[data-motion='true'] > .panel[data-active='true'] .result {
-    animation: trace-result 160ms ease-out;
+    animation: none;
   }
 }
 
