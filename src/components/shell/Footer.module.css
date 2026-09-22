@@ -33,12 +33,21 @@
   min-height: 44px;
   color: var(--color-ink-primary);
   text-decoration: none;
+  transition: transform var(--duration-preview) var(--ease-out);
 }
 
 .contactHeading a span {
   display: inline-flex;
   flex-shrink: 0;
-  transition: transform 180ms var(--ease-out);
+  transition: transform var(--duration-preview) var(--ease-out);
+}
+
+.contactHeading a:active {
+  transform: translateY(1px);
+}
+
+.contactHeading a:active span {
+  transform: translate(2px, -1px);
 }
 
 .availability {
@@ -60,6 +69,11 @@
   gap: 9px;
   color: var(--color-ink-secondary);
   font-size: 16px;
+  transition: color var(--duration-preview) var(--ease-out), transform var(--duration-preview) var(--ease-out);
+}
+
+.socialLink:active {
+  transform: translateY(1px);
 }
 
 .icon {

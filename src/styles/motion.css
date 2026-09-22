@@ -1,5 +1,9 @@
 :root {
   --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --duration-preview: 120ms;
+  --duration-exit: 140ms;
+  --duration-commit: 380ms;
+  --duration-follow: 80ms;
   --duration-feedback: 140ms;
   --duration-reveal: 180ms;
   --animation-panel-reveal: panel-reveal;
@@ -9,4 +13,9 @@
 @keyframes panel-reveal {
   from { opacity: .5; transform: translateY(4px); filter: blur(1.5px); }
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes panel-follow {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

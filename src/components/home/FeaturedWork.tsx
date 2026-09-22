@@ -1,12 +1,12 @@
 import { ArrowRightIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import GlucoseDemo from '@/components/glucose/GlucoseDemo'
 import { PROJECTS } from '@/data/projects'
 import TrackedLink from '@/components/analytics/TrackedLink'
 import SectionViewTracker from '@/components/analytics/SectionViewTracker'
 import AuroraArchitecture from '@/components/evidence/AuroraArchitecture'
+import WorkFigure from '@/components/work/WorkFigure'
 import styles from '@/components/home/FeaturedWork.module.css'
 
 const SHOWCASES = [
@@ -60,15 +60,20 @@ export default function FeaturedWork() {
         {SHOWCASES.map((project, index) => (
           <article key={project.slug} className={`${styles.project} ${index === 0 ? styles.projectFeatured : ''}`}>
             <h3 className={styles.projectTitle}>{project.title}</h3>
-            <figure className={styles.figure}>
-              <TrackedLink className={styles.imageLink} href={`/work/${project.slug}`} aria-label={`Explore ${project.title}`} event={projectClickEvent(project.slug)}>
-                <span className={styles.imageViewport}>
-                  <Image src={project.image} alt={project.alt} width={1280} height={720} sizes={index === 0 ? '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 60vw, 770px' : '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 45vw, 600px'} />
-                </span>
-                <span className={styles.imageAction} aria-hidden='true'><ArrowRightIcon size={20} /></span>
-              </TrackedLink>
-              <figcaption className={styles.caption}>{project.caption}</figcaption>
-            </figure>
+            <WorkFigure
+              className={styles.figure}
+              href={`/work/${project.slug}`}
+              ariaLabel={`Explore ${project.title}`}
+              image={{
+                src: project.image,
+                alt: project.alt,
+                width: 1280,
+                height: 720,
+                sizes: index === 0 ? '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 60vw, 770px' : '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 45vw, 600px',
+              }}
+              caption={project.caption}
+              trackEvent={projectClickEvent(project.slug)}
+            />
             <div className={styles.projectContent}>
               <p className={styles.projectSummary}>{project.summary}</p>
               <p className={styles.projectNote}>{project.note}</p>
