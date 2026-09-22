@@ -44,7 +44,8 @@
 .contactHeading a span {
   display: inline-flex;
   flex-shrink: 0;
-  transition: transform var(--duration-preview) var(--ease-preview);
+  /* Arrow answers immediately; exit is still the faster window. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .contactHeading a:active {
@@ -54,12 +55,19 @@
 
 .contactHeading a:active span {
   transform: translate(3px, -1px);
+  transition-duration: var(--duration-preview);
 }
 
 .availability {
   margin: 0;
   color: var(--color-ink-muted);
   font: 400 var(--text-ui)/1.5 var(--font-body);
+  /* Default = exit: faster leave with a little blur so layers do not stack. */
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .socialLinks {
@@ -76,7 +84,7 @@
   color: var(--color-ink-secondary);
   font-size: 16px;
   transition:
-    color var(--duration-preview) var(--ease-preview),
+    color var(--duration-exit) var(--ease-preview),
     background-color var(--duration-preview) var(--ease-preview),
     transform var(--duration-preview) var(--ease-preview);
 }
@@ -93,6 +101,15 @@
   width: 18px;
   height: 18px;
   color: var(--color-accent-primary);
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
+.socialLink > span:last-child {
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+  filter: blur(0);
 }
 
 .bottom {
@@ -148,8 +165,33 @@
     text-underline-offset: 4px;
   }
 
+  /* Arrow now; availability follows ~60ms. */
   .contactHeading a:hover span {
     transform: translate(2px, -2px);
+    transition-duration: var(--duration-preview);
+  }
+
+  .contactHeading:has(a:hover) + .availability,
+  .contactHeading:has(a:focus-visible) + .availability {
+    color: var(--color-ink-secondary);
+    transform: translateX(2px);
+    filter: blur(0);
+    transition-duration: var(--duration-preview);
+    transition-delay: var(--duration-follow);
+  }
+
+  /* Icon answers now; label follows with a soft settle. */
+  .socialLink:hover .icon {
+    transform: translateY(-1px);
+    transition-duration: var(--duration-preview);
+  }
+
+  .socialLink:hover > span:last-child {
+    color: var(--color-ink-primary);
+    transform: translateX(2px);
+    filter: blur(0);
+    transition-duration: var(--duration-preview);
+    transition-delay: var(--duration-follow);
   }
 }
 
@@ -183,14 +225,19 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .footer a, .footer button, .contactHeading a span {
+  .footer a, .footer button, .contactHeading a span, .availability, .icon, .socialLink > span:last-child {
     transition: none;
   }
 
   .contactHeading a:hover span,
   .contactHeading a:active,
   .contactHeading a:active span,
-  .socialLink:active {
+  .contactHeading:has(a:hover) + .availability,
+  .contactHeading:has(a:focus-visible) + .availability,
+  .socialLink:active,
+  .socialLink:hover .icon,
+  .socialLink:hover > span:last-child {
     transform: none;
+    filter: none;
   }
 }

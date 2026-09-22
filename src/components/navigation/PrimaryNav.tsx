@@ -52,6 +52,7 @@ export default function PrimaryNav() {
   const resolvedIndex = Math.max(0, activeIndex)
   const navRef = useRef<HTMLElement>(null)
   const pillIndex = useRef(resolvedIndex)
+  const hadActive = useRef(activeIndex >= 0)
   const stopSpring = useRef<(() => void) | null>(null)
 
   useLayoutEffect(() => {
@@ -60,6 +61,8 @@ export default function PrimaryNav() {
 
     const from = pillIndex.current
     const to = resolvedIndex
+    const previouslyActive = hadActive.current
+    hadActive.current = activeIndex >= 0
     stopSpring.current?.()
     stopSpring.current = null
 
@@ -70,7 +73,8 @@ export default function PrimaryNav() {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const pointer = document.documentElement.getAttribute('data-route-input') === 'pointer'
-    const shouldSpring = !reduced && pointer && from !== to && activeIndex >= 0
+    // Spring only between real destinations — never from a home phantom Work slot.
+    const shouldSpring = !reduced && pointer && from !== to && activeIndex >= 0 && previouslyActive
 
     if (!shouldSpring) {
       setPill(to)
