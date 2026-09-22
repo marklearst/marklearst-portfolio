@@ -74,9 +74,11 @@
   margin: 0 0 6px;
   color: var(--color-ink-primary);
   font: 500 var(--text-ui)/1.5 var(--font-body);
+  /* Exit stays snappy; hover overrides to juice + reveal. */
   transition:
     color var(--duration-exit) var(--ease-preview),
-    filter var(--duration-exit) var(--ease-preview);
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .role {
@@ -151,10 +153,12 @@
     transition-timing-function: var(--ease-juice);
   }
 
+  /* Name is the secondary line — nudge a few px after the quote colors up. */
   .quote:hover .name,
   .quote:focus .name,
   .quote:focus-visible .name {
     filter: none;
+    transform: translateX(3px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
     transition-delay: var(--duration-follow);
