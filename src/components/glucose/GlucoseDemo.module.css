@@ -170,7 +170,7 @@
 .chart svg text {
   fill: var(--demo-muted);
   font-size: 10px;
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
 }
 
 .chart svg .chartAnnotation {
