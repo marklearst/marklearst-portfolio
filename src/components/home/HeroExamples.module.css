@@ -143,6 +143,8 @@
   }
 
   .choices button:active {
+    animation: none;
+    transition: none;
     transform: none;
   }
 
