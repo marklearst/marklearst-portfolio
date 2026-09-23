@@ -91,8 +91,12 @@
 
 @media (hover: hover) and (pointer: fine) and (min-width: 480px) {
 
+  /* Exit ~100ms; hover .back enter overrides to juice reveal. */
   .front, .back {
-    transition: opacity 160ms ease-out, transform 220ms var(--ease-out), filter 160ms ease-out;
+    transition:
+      opacity var(--duration-exit) var(--ease-preview),
+      transform var(--duration-exit) var(--ease-preview),
+      filter var(--duration-exit) var(--ease-preview);
   }
 
   .link:hover .front {
@@ -106,7 +110,8 @@
     opacity: 1;
     transform: translateY(0) rotateX(0);
     filter: blur(0);
-    transition-duration: 160ms, 220ms, 160ms;
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
     transition-delay: calc(20ms + var(--letter-index) * 12ms);
   }
 
