@@ -55,6 +55,12 @@
   transition-timing-function: var(--ease-juice);
 }
 
+.toggle:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .toggle:hover {
     color: var(--color-ink-primary);
