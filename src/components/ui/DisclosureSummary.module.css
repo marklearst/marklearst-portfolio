@@ -92,6 +92,7 @@
   }
 
   .summary:active {
+    transition: none;
     transform: none;
   }
 
