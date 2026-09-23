@@ -78,9 +78,9 @@
 }
 
 /*
- * Grid stack: every panel shares one cell so height = max(of all).
- * Transitions (not keyframes) so rapid flips reverse from current values.
- * No sideways translate. Links under the panel follow via Hero.module.css.
+ * Grid stack: panels share one cell. align-self:start so each keeps its
+ * content height (shell morph reads the active panel). No sideways translate.
+ * Links under the panel follow via Hero.module.css.
  */
 .panels {
   display: grid;
@@ -89,6 +89,8 @@
 
 .panel {
   grid-area: 1 / 1;
+  align-self: start;
+  width: 100%;
   min-width: 0;
   opacity: 0;
   visibility: hidden;
