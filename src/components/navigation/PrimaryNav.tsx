@@ -110,18 +110,24 @@ export default function PrimaryNav() {
   }, [resolvedIndex, activeIndex])
 
   // Hover/focus springs --pill-index. Leave returns to aria-current without a snap.
+  // With no current page, leave only clears hover — do not park on a phantom Work slot.
   // Polling also picks up CSS.forcePseudoState (no mouseenter).
   useEffect(() => {
     const nav = navRef.current
     if (!nav) return
 
     const links = () => Array.from(nav.querySelectorAll<HTMLAnchorElement>(`.${styles.link}`))
+    const restIndex = activeIndex >= 0 ? activeIndex : null
 
     const go = (index: number | null) => {
       if (hoverIndex.current === index) return
       hoverIndex.current = index
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      animatePill(index === null ? resolvedIndex : index, !reduced)
+      if (index === null) {
+        if (restIndex !== null) animatePill(restIndex, !reduced)
+        return
+      }
+      animatePill(index, !reduced)
     }
 
     const syncPreview = () => {
@@ -172,7 +178,7 @@ export default function PrimaryNav() {
       nav.removeEventListener('focusout', onFocusOut)
       window.clearInterval(poll)
     }
-  }, [resolvedIndex])
+  }, [activeIndex, resolvedIndex])
 
   return (
     <nav

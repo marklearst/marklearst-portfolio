@@ -30,7 +30,9 @@
   transition: opacity var(--duration-reveal) var(--ease-juice);
 }
 
-.nav[data-active]::before {
+.nav[data-active]::before,
+.nav:has(.link:hover)::before,
+.nav:has(.link:focus-visible)::before {
   opacity: 1;
 }
 
