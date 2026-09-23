@@ -41,7 +41,12 @@
     transform var(--duration-preview) var(--ease-preview);
 }
 
-.contactHeading a span {
+.contactLabel {
+  /* Label follows the arrow; leave uses the faster exit window. */
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
+.contactArrow {
   display: inline-flex;
   flex-shrink: 0;
   /* Arrow answers immediately; exit is still the faster window. */
@@ -53,9 +58,23 @@
   transform: translateY(1px);
 }
 
-.contactHeading a:active span {
+.contactHeading a:active .contactArrow {
   transform: translate(3px, -1px);
   transition-duration: var(--duration-preview);
+}
+
+/* Keyboard: arrow now; label follows ~60ms with juice enter. */
+.contactHeading a:focus-visible .contactArrow {
+  transform: translate(2px, -2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.contactHeading a:focus-visible .contactLabel {
+  transform: translateX(2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+  transition-delay: var(--duration-follow);
 }
 
 .availability {
@@ -165,10 +184,18 @@
     text-underline-offset: 4px;
   }
 
-  /* Arrow now; availability follows ~60ms. */
-  .contactHeading a:hover span {
+  /* Arrow now; label follows ~60ms with juice enter. */
+  .contactHeading a:hover .contactArrow {
     transform: translate(2px, -2px);
-    transition-duration: var(--duration-preview);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .contactHeading a:hover .contactLabel {
+    transform: translateX(2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
   }
 
   .contactHeading:has(a:hover) + .availability,
@@ -225,13 +252,16 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .footer a, .footer button, .contactHeading a span, .availability, .icon, .socialLink > span:last-child {
+  .footer a, .footer button, .contactLabel, .contactArrow, .availability, .icon, .socialLink > span:last-child {
     transition: none;
   }
 
-  .contactHeading a:hover span,
+  .contactHeading a:hover .contactArrow,
+  .contactHeading a:hover .contactLabel,
+  .contactHeading a:focus-visible .contactArrow,
+  .contactHeading a:focus-visible .contactLabel,
   .contactHeading a:active,
-  .contactHeading a:active span,
+  .contactHeading a:active .contactArrow,
   .contactHeading:has(a:hover) + .availability,
   .contactHeading:has(a:focus-visible) + .availability,
   .socialLink:active,
