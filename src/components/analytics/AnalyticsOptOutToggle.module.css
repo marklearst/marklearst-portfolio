@@ -1,0 +1,69 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 12px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-ink-muted);
+  font: 400 var(--text-caption) / 1.5 var(--font-body);
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.face {
+  display: inline-grid;
+  align-items: center;
+  justify-items: start;
+}
+
+.onLabel,
+.offLabel {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* Rest = snappy exit (~100ms). Active enter overrides to juice. */
+  transition:
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview);
+}
+
+.offLabel {
+  opacity: 0;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.toggle[data-opted-out] .onLabel {
+  opacity: 0;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.toggle[data-opted-out] .offLabel {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.toggle:not([data-opted-out]) .onLabel {
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toggle:hover {
+    color: var(--color-ink-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onLabel,
+  .offLabel {
+    transition: none;
+  }
+}
