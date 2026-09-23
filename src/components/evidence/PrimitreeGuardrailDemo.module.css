@@ -753,7 +753,7 @@
 @keyframes relation-enter {
 
   from {
-    opacity: 0;
+    opacity: 1;
     filter: blur(2px);
   }
 
