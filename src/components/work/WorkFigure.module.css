@@ -108,7 +108,8 @@
   opacity: 1;
   filter: blur(0);
   transform: translateX(0) scale(1);
-  transition-duration: var(--duration-preview);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
   transition-delay: var(--duration-follow);
 }
 
