@@ -110,7 +110,6 @@
   height: calc(100% - var(--evidence-padding) * 2);
   object-fit: contain;
   border-radius: 3px;
-  transition: transform 180ms var(--ease-out);
 }
 
 .enlarge {
@@ -334,10 +333,6 @@
 
 @media (hover: hover) and (pointer: fine) {
 
-  .stage:hover img {
-    transform: scale(1.008);
-  }
-
   .choices button:hover {
     color: var(--color-ink-primary);
   }
@@ -391,11 +386,11 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .stage img, .viewer button, .prev svg, .next svg, .caption a, .viewerContext a, .caption a svg, .viewerContext a svg {
+  .viewer button, .prev svg, .next svg, .caption a, .viewerContext a, .caption a svg, .viewerContext a svg {
     transition: none;
   }
 
-  .stage:hover img, .viewer button:active, .prev:hover svg, .next:hover svg, .caption a:hover svg, .viewerContext a:hover svg {
+  .viewer button:active, .prev:hover svg, .next:hover svg, .caption a:hover svg, .viewerContext a:hover svg {
     transform: none;
     transition: none;
   }
