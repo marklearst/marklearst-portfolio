@@ -350,6 +350,8 @@
   .links .projectLink:active .externalArrow,
   .projectLink:hover .externalArrow,
   .backLink:hover svg {
+    /* Same selector as hover enter so transition-duration cannot revive motion. */
+    transition: none;
     transform: none;
   }
 }
