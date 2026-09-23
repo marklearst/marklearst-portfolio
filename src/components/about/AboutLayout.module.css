@@ -281,13 +281,15 @@
 
 .contactAction:focus-visible .contactArrow {
   transform: translate(6px, -6px);
-  transition-duration: var(--duration-preview);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
 }
 
 .contactAction:focus-visible .contactLabel {
   transform: translateX(4px);
   filter: blur(0);
-  transition-duration: var(--duration-preview);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
   transition-delay: var(--duration-follow);
 }
 
@@ -307,10 +309,10 @@
     box-shadow: 0 12px 28px -16px color-mix(in srgb, var(--color-accent-primary) 55%, transparent);
   }
 
-  /* Arrow answers immediately; label follows ~60ms. */
+  /* Arrow + label juice enter; rest/exit stay on --duration-exit. */
   .contactAction:hover .contactArrow {
     transform: translate(6px, -6px);
-    transition-duration: var(--duration-preview);
+    transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
   }
 
@@ -393,7 +395,9 @@
   .contactAction:focus-visible .contactLabel,
   .contactAction:active .contactArrow,
   .content :global(.about-contact-links) > a:hover {
+    /* Same selectors as hover enter so transition-duration cannot revive motion. */
     transform: none;
+    transition: none;
   }
 }
 
