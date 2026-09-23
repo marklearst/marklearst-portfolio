@@ -192,12 +192,13 @@
     animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-juice) both;
   }
 
+  /* Hold through the ~100ms panel exit, then settle — juice enter, no slide. */
   .panels[data-motion] > .panel[data-active='true'] .result h3 {
-    animation: var(--animation-status-arrive) var(--duration-feedback) var(--ease-juice) both;
+    animation: readiness-status-arrive var(--duration-reveal) var(--ease-juice) both;
   }
 
   .panels[data-motion] > .panel[data-active='true'] .result p {
-    animation: panel-follow var(--duration-preview) var(--ease-preview) var(--duration-follow) both;
+    animation: panel-follow var(--duration-preview) var(--ease-preview) 50ms both;
   }
 }
 
@@ -227,5 +228,19 @@
   to {
     opacity: 0;
     filter: blur(2px);
+  }
+}
+
+/* ~55% of 180ms ≈ 100ms exit window before the readiness line lands. */
+@keyframes readiness-status-arrive {
+
+  0%, 55% {
+    opacity: 0;
+    filter: blur(1.5px);
+  }
+
+  100% {
+    opacity: 1;
+    filter: none;
   }
 }
