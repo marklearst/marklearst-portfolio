@@ -102,7 +102,7 @@
   transition:
     color var(--duration-preview) var(--ease-preview),
     background-color var(--duration-preview) var(--ease-preview),
-    transform var(--duration-preview) var(--ease-preview);
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .entryBody h2 a span {
@@ -150,6 +150,8 @@
 .entry:focus-within .entryBody h2 a {
   color: var(--color-ink-primary);
   transform: translateX(2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
 }
 
 .entry:hover .entryBody h2 a span,
@@ -163,7 +165,8 @@
 .entry:focus-within .entryBody p {
   color: var(--color-ink-primary, #f3eee8);
   transform: translateX(2px);
-  transition-duration: var(--duration-preview);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
   transition-delay: var(--duration-follow);
 }
 
