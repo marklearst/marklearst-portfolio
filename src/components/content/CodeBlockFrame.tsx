@@ -74,9 +74,22 @@ export default function CodeBlockFrame({ code, language, analyticsLabel, childre
     <div ref={blockRef} className={styles.block}>
       <div className={styles.header}>
         <span>{language}</span>
-        <button type='button' onClick={copyCode} aria-label='Copy code'>
-          {copyState === 'copied' ? <CheckIcon /> : <CopyIcon />}
-          <span>{copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy code'}</span>
+        <button
+          type='button'
+          onClick={copyCode}
+          aria-label='Copy code'
+          data-copied={copyState === 'copied' ? '' : undefined}
+        >
+          <span className={styles.face}>
+            <span className={styles.idleLabel} aria-hidden={copyState === 'copied'}>
+              <CopyIcon />
+              <span>{copyState === 'failed' ? 'Copy failed' : 'Copy code'}</span>
+            </span>
+            <span className={styles.copiedLabel} aria-hidden={copyState !== 'copied'}>
+              <CheckIcon />
+              <span>Copied</span>
+            </span>
+          </span>
         </button>
       </div>
       <span className={styles.status} role='status'>
