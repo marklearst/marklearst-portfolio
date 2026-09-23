@@ -664,6 +664,7 @@
   }
 
   .controls button:active {
+    transition: none;
     transform: none;
   }
 

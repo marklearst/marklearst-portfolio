@@ -166,6 +166,7 @@
   }
 
   .link:active {
+    transition: none;
     transform: none;
   }
 
