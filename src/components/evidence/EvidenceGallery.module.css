@@ -230,6 +230,11 @@
   transition: background-color 150ms ease-out, transform 150ms ease-out;
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. Close icon stays put. */
+.prev svg, .next svg {
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .viewer button:active {
   background: color-mix(in srgb, var(--color-surface-raised), var(--color-ink-primary) 10%);
   transform: scale(.96);
@@ -341,6 +346,18 @@
     background: color-mix(in srgb, var(--color-surface-raised), var(--color-ink-primary) 6%);
   }
 
+  .prev:hover svg {
+    transform: translateX(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .next:hover svg {
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
   .caption a:hover, .viewerContext a:hover {
     color: var(--color-ink-primary);
   }
@@ -374,11 +391,11 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .stage img, .viewer button, .caption a, .viewerContext a, .caption a svg, .viewerContext a svg {
+  .stage img, .viewer button, .prev svg, .next svg, .caption a, .viewerContext a, .caption a svg, .viewerContext a svg {
     transition: none;
   }
 
-  .stage:hover img, .viewer button:active, .caption a:hover svg, .viewerContext a:hover svg {
+  .stage:hover img, .viewer button:active, .prev:hover svg, .next:hover svg, .caption a:hover svg, .viewerContext a:hover svg {
     transform: none;
     transition: none;
   }

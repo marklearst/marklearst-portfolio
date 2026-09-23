@@ -183,9 +183,9 @@ export default function EvidenceGallery({ items, label = 'Project evidence' }: {
               {current.sourceUrl && <a href={current.sourceUrl} target='_blank' rel='noopener noreferrer'>View original <ArrowUpRightIcon /></a>}
             </div>
             {items.length > 1 && <div className={styles.controls}>
-              <button type='button' aria-label='Previous image' onClick={event => stepImage(-1, event.detail > 0)}><ArrowLeftIcon /></button>
+              <button type='button' className={styles.prev} aria-label='Previous image' onClick={event => stepImage(-1, event.detail > 0)}><ArrowLeftIcon /></button>
               <span>{selection.index + 1} / {items.length}</span>
-              <button ref={nextButton} type='button' aria-label='Next image' onClick={event => stepImage(1, event.detail > 0)}><ArrowRightIcon /></button>
+              <button ref={nextButton} type='button' className={styles.next} aria-label='Next image' onClick={event => stepImage(1, event.detail > 0)}><ArrowRightIcon /></button>
             </div>}
           </div>
         </div>
