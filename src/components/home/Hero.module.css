@@ -270,6 +270,7 @@
   }
 
   .primaryLink:active {
+    transition: none;
     transform: none;
   }
 
