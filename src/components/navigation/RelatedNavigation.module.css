@@ -64,7 +64,8 @@
 
 .arrow svg {
   grid-area: 1 / 1;
-  transition: transform var(--duration-commit) var(--ease-preview), opacity var(--duration-preview) var(--ease-preview);
+  /* Exit ~100ms; hover enter overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview), opacity var(--duration-preview) var(--ease-preview);
 }
 
 .arrowBack {
@@ -76,7 +77,8 @@
   font: 500 var(--text-lead) / var(--leading-subheading, 1.35) var(--font-body);
   text-wrap: balance;
   overflow-wrap: anywhere;
-  transition: transform var(--duration-commit) var(--ease-preview);
+  /* Exit ~100ms; hover enter overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .link:focus-visible {
@@ -103,20 +105,28 @@
 
   .link:hover .title {
     transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .link.next:hover .title {
     transform: translateX(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .link:hover .arrowFront {
     opacity: 0;
     transform: translateX(calc(var(--direction) * 28px));
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .link:hover .arrowBack {
     opacity: 1;
     transform: translateX(0);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
     transition-delay: 35ms;
   }
 
