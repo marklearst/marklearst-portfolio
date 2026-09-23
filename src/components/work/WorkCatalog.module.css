@@ -246,7 +246,7 @@
   margin: 12px 0 0;
   list-style: none;
   color: var(--color-ink-muted);
-  font: 400 var(--text-caption)/1.5 var(--font-mono);
+  font: 400 var(--text-caption)/1.5 var(--font-body);
 }
 
 .preview {

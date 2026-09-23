@@ -87,7 +87,7 @@
 }
 
 .technologies span {
-  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-mono);
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-body);
 }
 
 .links {
