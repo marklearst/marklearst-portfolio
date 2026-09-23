@@ -94,13 +94,13 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 @media (hover: hover) and (pointer: fine) {
   a:hover [data-action-icon='external'] .icon-arrow,
   button:hover [data-action-icon='external'] .icon-arrow {
-    transform: translate(1.5px, -1.5px);
+    transform: translate(3px, -3px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
   }
   a:hover [data-action-icon='forward'] .icon-arrow,
   button:hover [data-action-icon='forward'] .icon-arrow {
-    transform: translateX(2px);
+    transform: translateX(4px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
   }

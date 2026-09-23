@@ -173,6 +173,12 @@
     animation-delay: 0s;
   }
 
+  .link:hover .arrowBack {
+    /* Same selector as hover enter so transition-duration cannot revive motion. */
+    transform: none;
+    transition: none;
+  }
+
   .link:active {
     transition: none;
     transform: none;

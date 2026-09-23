@@ -55,17 +55,27 @@
 
 .letter {
   display: inline-grid;
+  perspective: 120px;
 }
 
 .front, .back {
   grid-area: 1 / 1;
   transform-origin: 50% 75%;
+  backface-visibility: hidden;
+}
+
+/*
+ * Resting: front sharp, back pre-blurred so leave softens the departing face.
+ * Enter/leave share the same flip; only duration and filter timing flip.
+ */
+.front {
+  filter: none;
 }
 
 .back {
   opacity: 0;
   transform: translateY(8px) rotateX(-65deg);
-  filter: none;
+  filter: blur(2px);
 }
 
 @media (min-width: 480px) {
@@ -91,28 +101,48 @@
 
 @media (hover: hover) and (pointer: fine) and (min-width: 480px) {
 
-  /* Exit ~100ms; hover .back enter overrides to juice reveal. */
-  .front, .back {
+  /*
+   * Leave (~100ms): same flip backward, properties reverse together (no stagger).
+   * Filter: front snaps sharp on arrive; back blurs while departing.
+   */
+  .front {
+    transition:
+      opacity var(--duration-exit) var(--ease-preview),
+      transform var(--duration-exit) var(--ease-preview),
+      filter 0ms linear;
+  }
+
+  .back {
     transition:
       opacity var(--duration-exit) var(--ease-preview),
       transform var(--duration-exit) var(--ease-preview),
       filter var(--duration-exit) var(--ease-preview);
   }
 
+  /* Enter (~180ms juice): front blurs while leaving; back arrives sharp. */
   .link:hover .front {
     opacity: 0;
     transform: translateY(-6px) rotateX(65deg);
     filter: blur(2px);
+    transition:
+      opacity var(--duration-reveal) var(--ease-juice),
+      transform var(--duration-reveal) var(--ease-juice),
+      filter var(--duration-reveal) var(--ease-juice);
     transition-delay: calc(var(--letter-index) * 12ms);
   }
 
   .link:hover .back {
     opacity: 1;
     transform: translateY(0) rotateX(0);
-    filter: blur(0);
-    transition-duration: var(--duration-reveal);
-    transition-timing-function: var(--ease-juice);
-    transition-delay: calc(20ms + var(--letter-index) * 12ms);
+    filter: none;
+    transition:
+      opacity var(--duration-reveal) var(--ease-juice),
+      transform var(--duration-reveal) var(--ease-juice),
+      filter 0ms linear;
+    transition-delay:
+      calc(20ms + var(--letter-index) * 12ms),
+      calc(20ms + var(--letter-index) * 12ms),
+      0ms;
   }
 
   .link:focus-visible .front {
@@ -124,6 +154,8 @@
 
   .link:focus-visible .back {
     opacity: 0;
+    transform: translateY(8px) rotateX(-65deg);
+    filter: blur(2px);
     transition: none;
   }
 }
@@ -132,6 +164,8 @@
 
   .front, .back {
     transition: none;
+    transform: none;
+    filter: none;
   }
 
   .link {
@@ -143,15 +177,16 @@
     transform: none;
   }
 
-  .link:hover .front {
-    /* Same selectors as hover enter so transition-delay cannot revive blur. */
+  .link:hover .front,
+  .link:focus-visible .front {
     opacity: 1;
     transform: none;
     filter: none;
     transition: none;
   }
 
-  .link:hover .back {
+  .link:hover .back,
+  .link:focus-visible .back {
     opacity: 0;
     transform: none;
     filter: none;
