@@ -389,7 +389,7 @@
 @media (prefers-reduced-motion: no-preference) {
 
   .results[data-motion] .project {
-    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out) both;
+    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-juice) both;
   }
 
   .results[data-motion] .project:nth-child(1) { animation-delay: 0ms; }
