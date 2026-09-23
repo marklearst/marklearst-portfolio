@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useLayoutEffect, useRef, type CSSProperties } from 'react'
+import { useEffect, useLayoutEffect, useRef, type CSSProperties } from 'react'
 import { trackNavigationClick } from '@/lib/analytics'
 import styles from './PrimaryNav.module.css'
 
@@ -53,11 +53,36 @@ export default function PrimaryNav() {
   const navRef = useRef<HTMLElement>(null)
   const pillIndex = useRef(resolvedIndex)
   const hadActive = useRef(activeIndex >= 0)
+  const hoverIndex = useRef<number | null>(null)
   const stopSpring = useRef<(() => void) | null>(null)
+
+  const setPill = (value: number) => {
+    const nav = navRef.current
+    if (!nav) return
+    pillIndex.current = value
+    nav.style.setProperty('--pill-index', String(value))
+  }
+
+  const animatePill = (to: number, soft: boolean) => {
+    const from = pillIndex.current
+    stopSpring.current?.()
+    stopSpring.current = null
+
+    if (from === to || !soft) {
+      setPill(to)
+      return
+    }
+
+    setPill(from)
+    stopSpring.current = springIndex(from, to, setPill)
+  }
 
   useLayoutEffect(() => {
     const nav = navRef.current
     if (!nav) return
+
+    // Hover preview owns the pill while a link is hovered.
+    if (hoverIndex.current !== null) return
 
     const from = pillIndex.current
     const to = resolvedIndex
@@ -65,11 +90,6 @@ export default function PrimaryNav() {
     hadActive.current = activeIndex >= 0
     stopSpring.current?.()
     stopSpring.current = null
-
-    const setPill = (value: number) => {
-      pillIndex.current = value
-      nav.style.setProperty('--pill-index', String(value))
-    }
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const pointer = document.documentElement.getAttribute('data-route-input') === 'pointer'
@@ -88,6 +108,46 @@ export default function PrimaryNav() {
       stopSpring.current = null
     }
   }, [resolvedIndex, activeIndex])
+
+  // Hover springs --pill-index. Pointer events cover real input; :hover polling
+  // also picks up CSS.forcePseudoState (no mouseenter).
+  useEffect(() => {
+    const nav = navRef.current
+    if (!nav) return
+
+    const links = () => Array.from(nav.querySelectorAll<HTMLAnchorElement>(`.${styles.link}`))
+
+    const go = (index: number | null) => {
+      if (hoverIndex.current === index) return
+      hoverIndex.current = index
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      animatePill(index === null ? resolvedIndex : index, !reduced)
+    }
+
+    const syncHover = () => {
+      const index = links().findIndex(link => link.matches(':hover'))
+      go(index >= 0 ? index : null)
+    }
+
+    const onPointerOver = (event: PointerEvent) => {
+      const link = (event.target as Element | null)?.closest?.('a')
+      if (!link || !nav.contains(link)) return
+      const index = links().indexOf(link as HTMLAnchorElement)
+      if (index >= 0) go(index)
+    }
+
+    const onPointerLeave = () => go(null)
+
+    nav.addEventListener('pointerover', onPointerOver)
+    nav.addEventListener('pointerleave', onPointerLeave)
+    const poll = window.setInterval(syncHover, 32)
+
+    return () => {
+      nav.removeEventListener('pointerover', onPointerOver)
+      nav.removeEventListener('pointerleave', onPointerLeave)
+      window.clearInterval(poll)
+    }
+  }, [resolvedIndex])
 
   return (
     <nav
