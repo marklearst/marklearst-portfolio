@@ -603,7 +603,7 @@
 
 @keyframes status-icon-arrive {
   from {
-    opacity: 0;
+    opacity: 1;
     filter: blur(2px);
     transform: scale(0.88);
   }
@@ -618,7 +618,7 @@
 /* Hold through the ~100ms exit window, then settle from near-scale — never from 0. */
 @keyframes status-title-arrive {
   0%, 55% {
-    opacity: 0;
+    opacity: 1;
     filter: blur(1.5px);
     transform: scale(0.88);
   }

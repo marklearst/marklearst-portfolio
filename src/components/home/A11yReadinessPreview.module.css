@@ -218,6 +218,10 @@
     animation: none;
     visibility: hidden;
   }
+
+  .panels[data-motion] > .panel[data-active='true'] .result h3 {
+    animation: none;
+  }
 }
 
 @keyframes demo-panel-exit {
@@ -237,7 +241,7 @@
 @keyframes readiness-status-arrive {
 
   0%, 55% {
-    opacity: 0;
+    opacity: 1;
     filter: blur(1.5px);
   }
 
