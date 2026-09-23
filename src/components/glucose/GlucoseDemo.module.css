@@ -39,7 +39,7 @@
   border-radius: 5px;
   padding: 4px 7px;
   color: var(--demo-muted);
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
   font-size: var(--text-caption);
   line-height: 1.3;
 }
