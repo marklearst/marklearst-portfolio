@@ -84,20 +84,36 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 :where(a, button, summary) [data-action-icon] {
   color: var(--color-action-icon, var(--color-accent-primary));
 }
+/* Exit ~100ms preview; hover enter overrides to juice reveal. */
 [data-action-icon] .icon-arrow {
   transform-origin: center;
-  transition: transform 180ms var(--ease-out);
+  transition: transform var(--duration-exit) var(--ease-preview);
+  transition-delay: 0s;
 }
 :where(a, button):focus-visible [data-action-icon] .icon-arrow { transition: none; }
 @media (hover: hover) and (pointer: fine) {
   a:hover [data-action-icon='external'] .icon-arrow,
-  button:hover [data-action-icon='external'] .icon-arrow { transform: translate(1.5px, -1.5px); }
+  button:hover [data-action-icon='external'] .icon-arrow {
+    transform: translate(1.5px, -1.5px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
   a:hover [data-action-icon='forward'] .icon-arrow,
-  button:hover [data-action-icon='forward'] .icon-arrow { transform: translateX(2px); }
+  button:hover [data-action-icon='forward'] .icon-arrow {
+    transform: translateX(2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
 }
 :where(a, button):active [data-action-icon] .icon-arrow { transform: translate(0); transition-duration: 80ms; }
 @media (prefers-reduced-motion: reduce) {
   [data-action-icon] .icon-arrow { transition: none; transform: none !important; }
+  a:hover [data-action-icon] .icon-arrow,
+  button:hover [data-action-icon] .icon-arrow,
+  :where(a, button):focus-visible [data-action-icon] .icon-arrow {
+    transition: none;
+    transform: none;
+  }
   :where(a, button):active [data-action-icon] .icon-arrow {
     transition: none;
     transform: none;
