@@ -106,6 +106,7 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
       return
     }
 
+    setPill(from)
     stopSpring.current = springIndex(from, to, setPill)
     return () => {
       stopSpring.current?.()
@@ -139,7 +140,6 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
           style={{
             '--example-count': examples.length,
             '--example-index': activeIndex,
-            '--pill-index': pillIndex.current,
           } as CSSProperties}
         >
           <span className={styles.selection} aria-hidden='true' />
