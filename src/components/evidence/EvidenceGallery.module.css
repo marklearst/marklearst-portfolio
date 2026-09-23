@@ -246,23 +246,26 @@
 }
 
 .incoming {
-  animation: evidence-in 170ms var(--ease-out);
+  animation: evidence-in var(--duration-reveal) var(--ease-juice) both;
 }
 
 .outgoing {
   pointer-events: none;
   opacity: 0;
-  animation: evidence-out 170ms var(--ease-out);
+  filter: blur(2px);
+  animation: evidence-out var(--duration-exit) var(--ease-preview) forwards;
 }
 
 @keyframes evidence-in {
 
   from {
     opacity: 0;
+    filter: blur(2px);
   }
 
   to {
     opacity: 1;
+    filter: none;
   }
 }
 
@@ -270,10 +273,12 @@
 
   from {
     opacity: 1;
+    filter: blur(0);
   }
 
   to {
     opacity: 0;
+    filter: blur(2px);
   }
 }
 
