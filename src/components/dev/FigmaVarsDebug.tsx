@@ -29,7 +29,7 @@ export default function FigmaVarsDebug() {
   if (!isDev) return null
 
   return (
-    <div className='fixed bottom-4 left-4 z-50 rounded-md border border-white/10 bg-black/60 px-3 py-2 text-[11px] font-mono text-white/60 backdrop-blur'>
+    <div className='fixed bottom-4 left-4 z-50 rounded-md border border-white/10 bg-black/60 px-3 py-2 text-[11px] font-body text-white/60 backdrop-blur'>
       Figma vars: {status}
     </div>
   )
