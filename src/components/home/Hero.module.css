@@ -81,8 +81,9 @@
     transform var(--duration-preview) var(--ease-preview);
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. */
 .primaryLink svg {
-  transition: transform var(--duration-preview) var(--ease-preview);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .textLink {
@@ -139,8 +140,9 @@
   text-decoration: none;
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. */
 .previewLink svg {
-  transition: transform var(--duration-preview) var(--ease-preview);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .hero a:focus-visible {
@@ -166,6 +168,8 @@
 
   .primaryLink:hover svg {
     transform: translateY(2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .textLink:hover,
@@ -183,6 +187,8 @@
 
   .previewLink:hover svg {
     transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .available a:hover svg {
@@ -250,13 +256,16 @@
 
   .primaryLink,
   .primaryLink svg,
-  .textLink > svg:last-of-type {
+  .textLink > svg:last-of-type,
+  .previewLink svg {
     transition: none;
   }
 
   .primaryLink:hover svg,
   .primaryLink:active svg,
-  .textLink:hover > svg:last-of-type {
+  .textLink:hover > svg:last-of-type,
+  .previewLink:hover svg {
+    transition: none;
     transform: none;
   }
 
