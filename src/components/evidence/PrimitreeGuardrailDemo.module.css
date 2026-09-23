@@ -719,7 +719,7 @@
   .panels[data-motion] > .panel[data-active='true'] .outputTitle,
   .panels[data-motion] > .panel[data-active='true'] .cssOutput,
   .panels[data-motion] > .panel[data-active='true'] .consequence {
-    animation: trace-result var(--duration-reveal) var(--ease-out) var(--duration-follow) both;
+    animation: trace-result var(--duration-reveal) var(--ease-juice) var(--duration-follow) both;
   }
 
   .panels[data-motion] > .panel[data-active='true'] .result {
