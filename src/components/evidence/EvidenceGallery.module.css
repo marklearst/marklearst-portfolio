@@ -367,7 +367,10 @@
     transform: none;
   }
 
-  .dialog[open]::backdrop, .incoming, .outgoing {
+  .dialog[open]::backdrop,
+  .dialog[open][data-origin-motion]::backdrop,
+  .incoming,
+  .outgoing {
     animation: none;
   }
 
