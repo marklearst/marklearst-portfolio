@@ -21,7 +21,8 @@ export default function Footer({ showPrivacyLink = true }: { showPrivacyLink?: b
           <div>
             <h2 className={styles.contactHeading}>
               <TrackedLink href={roleEmail} event={{ type: 'social', data: { platform: 'email', href: roleEmail } }}>
-                Have a role in mind? <span aria-hidden='true'><ArrowUpRightIcon /></span>
+                <span className={styles.contactLabel}>Have a role in mind?</span>
+                <span className={styles.contactArrow} aria-hidden='true'><ArrowUpRightIcon /></span>
               </TrackedLink>
             </h2>
             <p className={styles.availability}>Open to Principal Design Engineer roles.</p>
