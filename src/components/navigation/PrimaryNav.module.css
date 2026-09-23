@@ -223,8 +223,10 @@
   .link:focus-visible > span,
   .nav:has(.link:hover) .link:not(:hover) > span,
   .nav:has(.link:focus-visible) .link:not(:focus-visible) > span {
+    /* Same selectors as hover enter so transition-duration cannot revive blur. */
     transform: none;
     filter: none;
     opacity: 1;
+    transition: none;
   }
 }
