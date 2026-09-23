@@ -20,7 +20,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   min-height: 44px;
   min-width: 112px;
   padding: 8px 12px;
@@ -29,6 +28,49 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 140ms ease, color 140ms ease;
+}
+
+.face {
+  display: inline-grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.idleLabel,
+.copiedLabel {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Rest = snappy exit (~100ms). Copied enter overrides to juice. */
+  transition:
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview);
+}
+
+.copiedLabel {
+  opacity: 0;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.header button[data-copied] .idleLabel {
+  opacity: 0;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.header button[data-copied] .copiedLabel {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.header button:not([data-copied]) .idleLabel {
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
 }
 
 .header button:active {
@@ -71,7 +113,9 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .header button {
+  .header button,
+  .idleLabel,
+  .copiedLabel {
     transition: none;
   }
 }
