@@ -292,7 +292,7 @@
 
 .distributionTitle span:last-child {
   font-size: var(--text-caption);
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
 }
 
 .rangeBar {
