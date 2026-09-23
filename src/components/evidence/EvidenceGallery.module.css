@@ -187,7 +187,7 @@
 /* Only a measured pointer opening moves the image; the viewer chrome stays put. */
 
 .dialog[open][data-origin-motion]::backdrop {
-  animation: backdrop-reveal 220ms var(--ease-out);
+  animation: backdrop-reveal 220ms var(--ease-juice);
 }
 
 @keyframes backdrop-reveal {
