@@ -84,7 +84,7 @@ function GlucoseTrace({
   }
 
   function beginScrub(event: PointerEvent<SVGSVGElement>) {
-    if (!valid || event.pointerType !== 'mouse') return
+    if (!valid) return
     event.currentTarget.setPointerCapture(event.pointerId)
     setScrubbing(true)
     setSelectedInterval(intervalFromClientX(event.currentTarget, event.clientX))
