@@ -143,8 +143,12 @@
     transition: none;
   }
 
+  .backLink:hover,
+  .backLink:focus-visible,
   .backLink:hover svg,
   .backLink:focus-visible svg {
+    /* Same selectors as hover enter so transition-duration cannot revive motion. */
+    transition: none;
     transform: none;
   }
 }
