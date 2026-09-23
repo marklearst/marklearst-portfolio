@@ -119,7 +119,7 @@
       filter var(--duration-exit) var(--ease-preview);
   }
 
-  /* Enter (~180ms juice): front blurs while leaving; back arrives sharp. */
+  /* Enter (~180ms juice): whole mark flips together; front blurs while leaving; back arrives sharp. */
   .link:hover .front {
     opacity: 0;
     transform: translateY(-6px) rotateX(65deg);
@@ -128,7 +128,6 @@
       opacity var(--duration-reveal) var(--ease-juice),
       transform var(--duration-reveal) var(--ease-juice),
       filter var(--duration-reveal) var(--ease-juice);
-    transition-delay: calc(var(--letter-index) * 12ms);
   }
 
   .link:hover .back {
@@ -139,10 +138,6 @@
       opacity var(--duration-reveal) var(--ease-juice),
       transform var(--duration-reveal) var(--ease-juice),
       filter 0ms linear;
-    transition-delay:
-      calc(20ms + var(--letter-index) * 12ms),
-      calc(20ms + var(--letter-index) * 12ms),
-      0ms;
   }
 
   .link:focus-visible .front {
