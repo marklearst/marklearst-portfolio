@@ -110,7 +110,7 @@
 
 /*
  * Keyboard and fine-pointer hover share one sequence:
- * ring + label travel now, sibling labels exit with blur, ink follows ~60ms.
+ * ring + ink + label travel now, sibling labels exit with blur.
  */
 .nav:has(.link:focus-visible) {
   --indicator-visible: 1;
@@ -144,7 +144,7 @@
 .link:focus-visible {
   color: var(--color-ink-primary);
   transition:
-    color var(--duration-preview) var(--ease-juice) var(--duration-follow),
+    color var(--duration-preview) var(--ease-juice) 0s,
     background-color var(--duration-preview) var(--ease-preview),
     transform var(--duration-preview) var(--ease-preview);
 }
@@ -183,7 +183,7 @@
   .link:hover {
     color: var(--color-ink-primary);
     transition:
-      color var(--duration-preview) var(--ease-juice) var(--duration-follow),
+      color var(--duration-preview) var(--ease-juice) 0s,
       background-color var(--duration-preview) var(--ease-preview),
       transform var(--duration-preview) var(--ease-preview);
   }
@@ -217,6 +217,14 @@
     animation: none;
     transition: none;
     transform: none;
+  }
+
+  /* Clear hover/focus transition overrides so reduced motion stays none. */
+  .link:hover,
+  .link:focus-visible {
+    transition: none;
+    transform: none;
+    filter: none;
   }
 
   .link:hover > span,
