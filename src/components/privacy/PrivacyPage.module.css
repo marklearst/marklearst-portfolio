@@ -19,11 +19,14 @@
   color: var(--color-ink-muted);
   font: 500 var(--text-ui)/1.5 var(--font-body);
   text-decoration: none;
+  /* Default = exit: faster leave so layers do not stack. */
+  transition: color var(--duration-exit) var(--ease-preview);
 }
 
 .backLink svg {
   flex-shrink: 0;
   color: var(--color-accent-primary);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .header {
@@ -106,10 +109,43 @@
   outline-offset: 4px;
 }
 
+.backLink:focus-visible {
+  color: var(--color-ink-primary);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.backLink:focus-visible svg {
+  transform: translateX(-3px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
 @media (hover: hover) and (pointer: fine) {
 
   .backLink:hover {
     color: var(--color-ink-primary);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .backLink:hover svg {
+    transform: translateX(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .backLink,
+  .backLink svg {
+    transition: none;
+  }
+
+  .backLink:hover svg,
+  .backLink:focus-visible svg {
+    transform: none;
   }
 }
 
