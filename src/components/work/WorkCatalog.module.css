@@ -371,6 +371,7 @@
   .projectBody h2 a:active,
   .projectBody h2 a:active span,
   .projectBody h2 a:hover span {
+    transition: none;
     transform: none;
   }
 
