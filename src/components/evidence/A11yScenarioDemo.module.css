@@ -453,7 +453,7 @@
 @media (prefers-reduced-motion: no-preference) {
 
   .panels[data-motion='true'] > .panel[data-active='true'] {
-    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out);
+    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-juice);
   }
 }
 
