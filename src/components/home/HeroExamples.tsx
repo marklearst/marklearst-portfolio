@@ -166,6 +166,7 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
         {examples.map(example => {
           const isActive = value === example.id
           const isExiting = exitingId === example.id
+          const isShown = isActive || isExiting
           return (
             <div
               key={example.id}
@@ -176,6 +177,7 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
               data-active={isActive || undefined}
               data-follow={(isActive && motion) || undefined}
               data-exiting={isExiting || undefined}
+              hidden={!isShown}
               inert={!isActive || undefined}
               aria-hidden={!isActive}
             >
