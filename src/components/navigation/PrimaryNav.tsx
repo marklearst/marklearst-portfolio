@@ -109,8 +109,8 @@ export default function PrimaryNav() {
     }
   }, [resolvedIndex, activeIndex])
 
-  // Hover springs --pill-index. Pointer events cover real input; :hover polling
-  // also picks up CSS.forcePseudoState (no mouseenter).
+  // Hover/focus springs --pill-index. Leave returns to aria-current without a snap.
+  // Polling also picks up CSS.forcePseudoState (no mouseenter).
   useEffect(() => {
     const nav = navRef.current
     if (!nav) return
@@ -124,9 +124,15 @@ export default function PrimaryNav() {
       animatePill(index === null ? resolvedIndex : index, !reduced)
     }
 
-    const syncHover = () => {
-      const index = links().findIndex(link => link.matches(':hover'))
-      go(index >= 0 ? index : null)
+    const syncPreview = () => {
+      const list = links()
+      const hovered = list.findIndex(link => link.matches(':hover'))
+      if (hovered >= 0) {
+        go(hovered)
+        return
+      }
+      const focused = list.findIndex(link => link.matches(':focus-visible'))
+      go(focused >= 0 ? focused : null)
     }
 
     const onPointerOver = (event: PointerEvent) => {
@@ -138,13 +144,32 @@ export default function PrimaryNav() {
 
     const onPointerLeave = () => go(null)
 
+    const onFocusIn = (event: FocusEvent) => {
+      const link = (event.target as Element | null)?.closest?.('a')
+      if (!link || !nav.contains(link)) return
+      const index = links().indexOf(link as HTMLAnchorElement)
+      if (index >= 0) go(index)
+    }
+
+    const onFocusOut = (event: FocusEvent) => {
+      const next = event.relatedTarget as Node | null
+      if (next && nav.contains(next)) return
+      // Hover still owns the pill if the pointer is over a link.
+      if (links().some(link => link.matches(':hover'))) return
+      go(null)
+    }
+
     nav.addEventListener('pointerover', onPointerOver)
     nav.addEventListener('pointerleave', onPointerLeave)
-    const poll = window.setInterval(syncHover, 32)
+    nav.addEventListener('focusin', onFocusIn)
+    nav.addEventListener('focusout', onFocusOut)
+    const poll = window.setInterval(syncPreview, 32)
 
     return () => {
       nav.removeEventListener('pointerover', onPointerOver)
       nav.removeEventListener('pointerleave', onPointerLeave)
+      nav.removeEventListener('focusin', onFocusIn)
+      nav.removeEventListener('focusout', onFocusOut)
       window.clearInterval(poll)
     }
   }, [resolvedIndex])
