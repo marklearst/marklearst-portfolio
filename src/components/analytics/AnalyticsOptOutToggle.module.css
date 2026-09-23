@@ -32,7 +32,7 @@
 
 .offLabel {
   opacity: 0;
-  filter: blur(1.5px);
+  filter: none;
   pointer-events: none;
 }
 
@@ -70,6 +70,16 @@
 @media (prefers-reduced-motion: reduce) {
   .onLabel,
   .offLabel {
+    transition: none;
+  }
+
+  .toggle[data-opted-out] .onLabel,
+  .offLabel,
+  .toggle[data-opted-out] .offLabel,
+  .toggle:not([data-opted-out]) .onLabel {
+    /* Same selectors as enter so transition-duration cannot revive blur. */
+    filter: none;
+    transform: none;
     transition: none;
   }
 }
