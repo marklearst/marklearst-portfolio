@@ -339,7 +339,7 @@
 }
 
 .command > span {
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
   font-size: var(--text-caption);
 }
 
