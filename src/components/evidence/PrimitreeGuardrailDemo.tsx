@@ -24,14 +24,14 @@ function TokenTrace({ scenario }: { scenario: (typeof PRIMITREE_DEMO.scenarios)[
         {reference ? (
           <>
             <path className={styles.traceSeg} style={{ '--trace-i': 0 } as CSSProperties} pathLength={1} d='M28 14H24Q16 14 16 22V58Q16 66 24 66H28' />
-            <path className={styles.traceArrow} style={{ '--trace-i': 1 } as CSSProperties} d='m24 62 4 4-4 4' />
+            <path className={styles.traceArrow} style={{ '--trace-i': 1 } as CSSProperties} pathLength={1} d='m24 62 4 4-4 4' />
             <path className={styles.traceSeg} style={{ '--trace-i': 2 } as CSSProperties} pathLength={1} d='M16 66V110Q16 118 24 118H28' />
-            <path className={styles.traceArrow} style={{ '--trace-i': 3 } as CSSProperties} d='m24 114 4 4-4 4' />
+            <path className={styles.traceArrow} style={{ '--trace-i': 3 } as CSSProperties} pathLength={1} d='m24 114 4 4-4 4' />
           </>
         ) : (
           <>
             <path className={styles.traceSeg} style={{ '--trace-i': 0 } as CSSProperties} pathLength={1} d='M28 14H12Q4 14 4 22V110Q4 118 12 118H28' />
-            <path className={styles.traceArrow} style={{ '--trace-i': 1 } as CSSProperties} d='m24 114 4 4-4 4' />
+            <path className={styles.traceArrow} style={{ '--trace-i': 1 } as CSSProperties} pathLength={1} d='m24 114 4 4-4 4' />
           </>
         )}
       </svg>
