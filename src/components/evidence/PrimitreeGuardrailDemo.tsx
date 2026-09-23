@@ -172,7 +172,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
         </div>
       </details>
 
-      <p key={selectedId} className={styles.liveStatus} role="status" aria-live="polite" aria-atomic="true">
+      <p className={styles.liveStatus} role="status" aria-live="polite" aria-atomic="true">
         {labels[selectedId]}: {failed ? 'Build stopped. PT1003: semantic.action must use a reference. No generated files were written.' : 'Build passed. Generated CSS preserves the reference to color.cyan.'}
       </p>
       <footer className={styles.footer}>
