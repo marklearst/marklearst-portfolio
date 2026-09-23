@@ -109,7 +109,7 @@
 }
 
 .resultCountMotion {
-  animation: var(--animation-status-arrive) var(--duration-reveal) var(--ease-out) both;
+  animation: var(--animation-status-arrive) var(--duration-reveal) var(--ease-juice) both;
 }
 
 .resultsShell {
