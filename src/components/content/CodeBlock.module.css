@@ -51,7 +51,7 @@
 
 .copiedLabel {
   opacity: 0;
-  filter: blur(1.5px);
+  filter: none;
   pointer-events: none;
 }
 
@@ -134,10 +134,16 @@
     transition: none;
   }
 
+  .header button[data-copied] .idleLabel,
+  .copiedLabel {
+    filter: none;
+  }
+
   .header button:hover .idleLabel,
   .header button:hover .copiedLabel {
     /* Same selectors as hover enter so transition-duration cannot revive motion. */
     transform: none;
+    filter: none;
     transition: none;
   }
 }
