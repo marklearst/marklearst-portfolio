@@ -42,7 +42,8 @@
   /* Default = exit: faster leave so layers do not stack. */
   transition:
     color var(--duration-exit) var(--ease-preview),
-    filter var(--duration-exit) var(--ease-preview);
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .words p {
@@ -88,7 +89,8 @@
   transition:
     color var(--duration-exit) var(--ease-preview),
     opacity var(--duration-exit) var(--ease-preview),
-    filter var(--duration-exit) var(--ease-preview);
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
   opacity: 0.88;
 }
 
@@ -144,16 +146,17 @@
     transition-timing-function: var(--ease-juice);
   }
 
+  /* Quote answers first; name/role follow ~50ms later (not a card scale). */
   .quote:hover .words,
   .quote:focus .words,
   .quote:focus-visible .words {
     color: var(--color-ink-primary);
     filter: none;
+    transform: translateY(-3px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
   }
 
-  /* Name is the secondary line — nudge a few px after the quote colors up. */
   .quote:hover .name,
   .quote:focus .name,
   .quote:focus-visible .name {
@@ -170,9 +173,10 @@
     color: var(--color-ink-secondary);
     opacity: 1;
     filter: none;
+    transform: translateX(3px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
-    transition-delay: calc(var(--duration-follow) + 20ms);
+    transition-delay: var(--duration-follow);
   }
 }
 
