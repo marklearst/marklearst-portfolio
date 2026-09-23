@@ -27,21 +27,19 @@
 
 .caret {
   color: var(--color-accent-primary);
-  transition: transform var(--duration-preview) var(--ease-preview);
+  /* Close: snappy exit. Open overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 :global(details[open]) > .summary > .caret {
   transform: rotate(90deg);
+  transition: transform var(--duration-reveal) var(--ease-juice);
 }
 
 .summary:focus-visible {
   outline: 2px solid var(--color-ink-primary);
   outline-offset: 4px;
   border-radius: 4px;
-}
-
-.summary:focus-visible > .caret {
-  transition: none;
 }
 
 .summary:active {
