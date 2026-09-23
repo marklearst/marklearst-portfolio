@@ -133,6 +133,8 @@
 
 .entryBody h2 a:active span {
   transform: translateX(4px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
   transition-delay: 0ms;
 }
 
@@ -153,7 +155,7 @@
 .entry:hover .entryBody h2 a span,
 .entry:focus-within .entryBody h2 a span {
   transform: translateX(5px);
-  transition-duration: var(--duration-preview);
+  transition-duration: var(--duration-reveal);
   transition-timing-function: var(--ease-juice);
 }
 
