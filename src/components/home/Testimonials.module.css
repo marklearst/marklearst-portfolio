@@ -64,10 +64,8 @@
   object-fit: cover;
   filter: grayscale(1);
   border: 1px solid var(--color-border-subtle);
-  transform: scale(1);
   transition:
     filter var(--duration-exit) var(--ease-preview),
-    transform var(--duration-exit) var(--ease-preview),
     box-shadow var(--duration-exit) var(--ease-preview);
 }
 
@@ -140,7 +138,6 @@
   .quote:focus .portrait,
   .quote:focus-visible .portrait {
     filter: grayscale(0);
-    transform: scale(1.06);
     box-shadow: 0 8px 18px -12px rgb(0 0 0 / 55%);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
