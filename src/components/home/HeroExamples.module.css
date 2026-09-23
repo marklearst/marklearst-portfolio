@@ -117,18 +117,25 @@
     transform var(--duration-reveal) var(--ease-juice);
 }
 
-/* Outgoing: ~100ms, 2px blur, no slide. Stays full scale. */
+/* Outgoing: ~100ms, 2px blur, no slide. Forwards holds opacity 0 until unmount. */
 .panel[data-exiting] {
-  opacity: 0;
   visibility: visible;
   pointer-events: none;
   z-index: 1;
-  filter: blur(2px);
   transform: scale(1);
-  transition:
-    opacity var(--duration-exit) var(--ease-preview),
-    filter var(--duration-exit) var(--ease-preview),
-    transform var(--duration-exit) var(--ease-preview);
+  animation: hero-panel-exit var(--duration-exit) var(--ease-preview) forwards;
+}
+
+@keyframes hero-panel-exit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -150,12 +157,12 @@
     transform: none;
   }
 
-  .panel[data-active][data-follow],
-  .panel[data-exiting] {
+  .panel[data-active][data-follow] {
     transition: none;
   }
 
   .panel[data-exiting] {
+    animation: none;
     opacity: 0;
     visibility: hidden;
     filter: none;
