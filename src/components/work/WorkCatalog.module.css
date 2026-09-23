@@ -222,7 +222,8 @@
 .projectBody h2 a:active span {
   color: var(--color-ink-primary);
   transform: translateX(6px);
-  transition-duration: var(--duration-reveal);
+  transition-duration: var(--duration-exit);
+  transition-timing-function: var(--ease-preview);
 }
 
 .summary {
