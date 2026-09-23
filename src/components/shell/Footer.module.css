@@ -210,14 +210,16 @@
   /* Icon answers now; label follows with a soft settle. */
   .socialLink:hover .icon {
     transform: translateY(-1px);
-    transition-duration: var(--duration-preview);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .socialLink:hover > span:last-child {
     color: var(--color-ink-primary);
     transform: translateX(2px);
     filter: blur(0);
-    transition-duration: var(--duration-preview);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
     transition-delay: var(--duration-follow);
   }
 }
@@ -267,7 +269,9 @@
   .socialLink:active,
   .socialLink:hover .icon,
   .socialLink:hover > span:last-child {
+    /* Same selectors as hover enter so transition-duration cannot revive motion. */
     transform: none;
     filter: none;
+    transition: none;
   }
 }
