@@ -512,6 +512,8 @@
   .entryBody h2 a:active span {
     transform: none;
     filter: none;
+    /* Same selector as hover enter so transition-duration cannot revive motion. */
+    transition: none;
   }
 
   .entry:hover .entryMeta,
