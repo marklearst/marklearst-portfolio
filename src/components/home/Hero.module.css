@@ -117,6 +117,11 @@
   text-decoration: underline;
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. */
+.available a svg {
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .previewLinks {
   display: flex;
   flex-wrap: wrap;
@@ -193,6 +198,8 @@
 
   .available a:hover svg {
     transform: translate(2px, -2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 }
 
@@ -257,14 +264,16 @@
   .primaryLink,
   .primaryLink svg,
   .textLink > svg:last-of-type,
-  .previewLink svg {
+  .previewLink svg,
+  .available a svg {
     transition: none;
   }
 
   .primaryLink:hover svg,
   .primaryLink:active svg,
   .textLink:hover > svg:last-of-type,
-  .previewLink:hover svg {
+  .previewLink:hover svg,
+  .available a:hover svg {
     transition: none;
     transform: none;
   }
