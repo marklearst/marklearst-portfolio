@@ -133,8 +133,8 @@
 
 .entryBody h2 a:active span {
   transform: translateX(4px);
-  transition-duration: var(--duration-reveal);
-  transition-timing-function: var(--ease-juice);
+  transition-duration: var(--duration-exit);
+  transition-timing-function: var(--ease-preview);
   transition-delay: 0ms;
 }
 
