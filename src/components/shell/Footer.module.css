@@ -210,7 +210,7 @@
 
   /* Icon answers now; label follows with a soft settle. */
   .socialLink:hover .icon {
-    transform: translateY(-1px);
+    transform: translateY(-3px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
   }
