@@ -252,9 +252,8 @@
 }
 
 .traceArrow {
-  opacity: 1;
-  transform-box: fill-box;
-  transform-origin: center;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
 }
 
 .traceRelation {
@@ -697,12 +696,12 @@
    * staggers ~50ms. Relation label arrives after the first stroke starts.
    */
   .panels[data-motion] > .panel[data-active='true'] .traceSeg {
-    animation: trace-draw 160ms var(--ease-juice) both;
+    animation: trace-draw 180ms var(--ease-juice) both;
     animation-delay: calc(var(--trace-i, 0) * 50ms);
   }
 
   .panels[data-motion] > .panel[data-active='true'] .traceArrow {
-    animation: trace-arrow 150ms var(--ease-juice) both;
+    animation: trace-draw 180ms var(--ease-juice) both;
     animation-delay: calc(var(--trace-i, 0) * 50ms);
   }
 
@@ -735,21 +734,6 @@
 
   to {
     stroke-dashoffset: 0;
-  }
-}
-
-@keyframes trace-arrow {
-
-  from {
-    opacity: 0;
-    filter: blur(2px);
-    transform: translateX(-3px) scale(0.88);
-  }
-
-  to {
-    opacity: 1;
-    filter: none;
-    transform: translateX(0) scale(1);
   }
 }
 
