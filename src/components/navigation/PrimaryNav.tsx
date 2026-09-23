@@ -81,6 +81,7 @@ export default function PrimaryNav() {
       return
     }
 
+    setPill(from)
     stopSpring.current = springIndex(from, to, setPill)
     return () => {
       stopSpring.current?.()
@@ -96,7 +97,6 @@ export default function PrimaryNav() {
       data-active={activeIndex >= 0 || undefined}
       style={{
         '--active-index': resolvedIndex,
-        '--pill-index': pillIndex.current,
       } as CSSProperties}
     >
       {items.map(({ label, href }, index) => (
