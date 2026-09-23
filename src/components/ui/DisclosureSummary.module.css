@@ -51,7 +51,7 @@
 @media (prefers-reduced-motion: no-preference) {
 
   :global(details[open][data-disclosure-motion='pointer']) > .summary ~ * {
-    animation: disclosure-reveal var(--duration-reveal) var(--ease-out);
+    animation: disclosure-reveal var(--duration-reveal) var(--ease-juice);
   }
 }
 
