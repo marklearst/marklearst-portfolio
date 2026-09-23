@@ -91,6 +91,11 @@
   color: var(--color-ink-primary);
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. */
+.textLink > svg:last-of-type {
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .brandIcon {
   color: var(--color-accent-primary);
 }
@@ -170,6 +175,12 @@
     text-decoration: underline;
   }
 
+  .textLink:hover > svg:last-of-type {
+    transform: translate(2px, -2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
   .previewLink:hover svg {
     transform: translateX(3px);
   }
@@ -238,12 +249,14 @@
 @media (prefers-reduced-motion: reduce) {
 
   .primaryLink,
-  .primaryLink svg {
+  .primaryLink svg,
+  .textLink > svg:last-of-type {
     transition: none;
   }
 
   .primaryLink:hover svg,
-  .primaryLink:active svg {
+  .primaryLink:active svg,
+  .textLink:hover > svg:last-of-type {
     transform: none;
   }
 
