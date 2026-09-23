@@ -144,7 +144,7 @@
     background: var(--color-surface);
   }
 
-  /* Outgoing idle exits faster with blur; live travels in ~60ms later. */
+  /* Outgoing idle exits faster (~100ms); live enters slower (~180ms juice). */
   .frame:hover .actionIdle {
     opacity: 0;
     filter: blur(2px);
@@ -156,7 +156,8 @@
     opacity: 1;
     filter: blur(0);
     transform: translateX(0) scale(1);
-    transition-duration: var(--duration-preview);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
     transition-delay: var(--duration-follow);
   }
 }
