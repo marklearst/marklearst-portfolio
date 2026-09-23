@@ -151,6 +151,11 @@
   gap: 6px;
   color: var(--color-ink-secondary);
   text-underline-offset: 4px;
+  transition: color var(--duration-preview) var(--ease-preview);
+}
+
+.caption a svg, .viewerContext a svg {
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .dialog {
@@ -336,6 +341,16 @@
     background: color-mix(in srgb, var(--color-surface-raised), var(--color-ink-primary) 6%);
   }
 
+  .caption a:hover, .viewerContext a:hover {
+    color: var(--color-ink-primary);
+  }
+
+  .caption a:hover svg, .viewerContext a:hover svg {
+    transform: translate(2px, -2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
   .viewer button:active {
     background: color-mix(in srgb, var(--color-surface-raised), var(--color-ink-primary) 10%);
   }
@@ -359,12 +374,13 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .stage img, .viewer button {
+  .stage img, .viewer button, .caption a, .viewerContext a, .caption a svg, .viewerContext a svg {
     transition: none;
   }
 
-  .stage:hover img, .viewer button:active {
+  .stage:hover img, .viewer button:active, .caption a:hover svg, .viewerContext a:hover svg {
     transform: none;
+    transition: none;
   }
 
   .dialog[open]::backdrop,
