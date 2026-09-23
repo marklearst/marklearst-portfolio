@@ -203,7 +203,8 @@
     color: var(--color-ink-secondary);
     transform: translateX(2px);
     filter: blur(0);
-    transition-duration: var(--duration-preview);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
     transition-delay: var(--duration-follow);
   }
 
