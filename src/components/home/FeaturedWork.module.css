@@ -358,6 +358,7 @@
   .moreWork a:hover span,
   .sectionHeading > a:hover span,
   .previewLink:hover svg {
+    transition: none;
     transform: none;
   }
 }
