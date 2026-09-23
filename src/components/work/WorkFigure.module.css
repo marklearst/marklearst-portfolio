@@ -180,10 +180,17 @@
   }
 
   .frame:active {
+    transition: none;
     transform: none;
   }
 
   .frame:active .action {
+    transition: none;
+    transform: none;
+  }
+
+  .frame:active .actionLive {
+    transition: none;
     transform: none;
   }
 
