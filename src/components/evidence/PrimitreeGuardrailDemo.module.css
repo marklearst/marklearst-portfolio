@@ -613,7 +613,7 @@
 .exitCode {
   margin-left: auto;
   color: var(--pt-muted);
-  font: var(--text-caption)/1.5 var(--token-font-mono);
+  font: var(--text-caption)/1.5 var(--token-font-body);
   white-space: nowrap;
   letter-spacing: 0;
 }
