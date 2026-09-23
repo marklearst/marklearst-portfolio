@@ -213,7 +213,12 @@
     transition: none;
   }
 
-  .link:active,
+  .link:active {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+
   .link:hover > span,
   .link:focus-visible > span,
   .nav:has(.link:hover) .link:not(:hover) > span,
