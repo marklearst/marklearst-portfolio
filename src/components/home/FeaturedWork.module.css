@@ -172,7 +172,8 @@
 
 .caseLink:active span {
   transform: translateX(6px);
-  transition-duration: var(--duration-reveal);
+  transition-duration: var(--duration-exit);
+  transition-timing-function: var(--ease-preview);
 }
 
 .figure {
