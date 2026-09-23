@@ -196,9 +196,11 @@
 
   .frame:focus-visible .actionLive,
   .frame:hover .actionLive {
+    /* Same selectors as hover enter so transition-duration cannot revive blur. */
     opacity: 1;
     filter: none;
     transform: none;
+    transition: none;
   }
 
   .frame:focus-visible .actionIdle,
@@ -206,5 +208,6 @@
     opacity: 0;
     filter: none;
     transform: none;
+    transition: none;
   }
 }

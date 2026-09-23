@@ -144,9 +144,18 @@
   }
 
   .link:hover .front {
+    /* Same selectors as hover enter so transition-delay cannot revive blur. */
     opacity: 1;
     transform: none;
     filter: none;
+    transition: none;
+  }
+
+  .link:hover .back {
+    opacity: 0;
+    transform: none;
+    filter: none;
+    transition: none;
   }
 
   .back {
