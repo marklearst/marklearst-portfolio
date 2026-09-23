@@ -1,7 +1,5 @@
 .nav {
   --nav-padding: 4px;
-  --preview-index: var(--active-index);
-  --indicator-visible: 0;
   position: relative;
   isolation: isolate;
   display: grid;
@@ -14,10 +12,9 @@
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), inset 0 -1px 0 rgb(255 255 255 / 3%), 0 3px 12px rgb(0 0 0 / 24%);
 }
 
-/* Equal tracks let both layers travel without measuring or animating layout. */
+/* One indicator: the pill. Spring writes --pill-index only. */
 
-.nav::before,
-.nav::after {
+.nav::before {
   position: absolute;
   z-index: -1;
   inset-block: var(--nav-padding);
@@ -26,29 +23,11 @@
   border-radius: 10px;
   pointer-events: none;
   content: '';
-}
-
-.nav::before {
   background: var(--color-surface-raised);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 1px 3px rgb(0 0 0 / 20%);
   transform: translateX(calc(var(--pill-index, var(--active-index)) * 100%));
   opacity: 0;
-  /* Heavier settle when the pill arrives on a destination. */
   transition: opacity var(--duration-reveal) var(--ease-juice);
-}
-
-.nav::after {
-  box-shadow: inset 0 0 0 2px var(--color-accent-primary);
-  transform: translateX(calc(var(--preview-index) * 100%));
-  opacity: var(--indicator-visible);
-  /* Light, fast preview ring — not a page transition. */
-  transition:
-    transform 80ms var(--ease-preview),
-    opacity 80ms linear;
-}
-
-.nav[data-active] {
-  --indicator-visible: 1;
 }
 
 .nav[data-active]::before {
@@ -66,20 +45,8 @@
   font: 500 var(--text-ui)/1.4 var(--font-body);
   letter-spacing: -0.01em;
   text-decoration: none;
-  /* Default = exit: ink leaves fast so previewed labels do not stack. */
-  transition:
-    color var(--duration-exit) var(--ease-preview),
-    background-color var(--duration-preview) var(--ease-preview),
-    transform var(--duration-preview) var(--ease-preview);
-}
-
-.link > span {
-  display: inline-block;
-  /* Outgoing labels blur out on the exit window. */
-  transition:
-    filter var(--duration-exit) var(--ease-preview),
-    opacity var(--duration-exit) var(--ease-preview),
-    transform var(--duration-exit) var(--ease-preview);
+  /* Ink answers immediately; no label travel, no delayed color. */
+  transition: color 0ms linear;
 }
 
 .link[aria-current='page'] {
@@ -89,6 +56,7 @@
 .link:focus-visible {
   outline: 2px solid var(--color-ink-primary);
   outline-offset: -2px;
+  color: var(--color-ink-primary);
 }
 
 .link:active {
@@ -101,91 +69,10 @@
     transform var(--duration-preview) var(--ease-preview);
 }
 
-.link:active > span {
-  filter: none;
-  opacity: 1;
-  transform: none;
-  transition-delay: 0ms;
-}
-
-/*
- * Keyboard and fine-pointer hover share one sequence:
- * ring + ink + label travel now, sibling labels exit with blur.
- */
-.nav:has(.link:focus-visible) {
-  --indicator-visible: 1;
-}
-
-.nav:has(.link:nth-child(1):focus-visible) {
-  --preview-index: 0;
-}
-
-.nav:has(.link:nth-child(2):focus-visible) {
-  --preview-index: 1;
-}
-
-.nav:has(.link:nth-child(3):focus-visible) {
-  --preview-index: 2;
-}
-
-.nav:has(.link:focus-visible) .link:not(:focus-visible) > span {
-  filter: blur(2px);
-  opacity: 0.62;
-}
-
-.link:focus-visible > span {
-  filter: none;
-  opacity: 1;
-  transform: translateY(-1px);
-  transition-duration: var(--duration-reveal);
-  transition-timing-function: var(--ease-juice);
-}
-
-.link:focus-visible {
-  color: var(--color-ink-primary);
-  transition:
-    color var(--duration-preview) var(--ease-juice) 0s,
-    background-color var(--duration-preview) var(--ease-preview),
-    transform var(--duration-preview) var(--ease-preview);
-}
-
 @media (hover: hover) and (pointer: fine) {
-
-  .nav:has(.link:hover) {
-    --indicator-visible: 1;
-  }
-
-  .nav:has(.link:nth-child(1):hover) {
-    --preview-index: 0;
-  }
-
-  .nav:has(.link:nth-child(2):hover) {
-    --preview-index: 1;
-  }
-
-  .nav:has(.link:nth-child(3):hover) {
-    --preview-index: 2;
-  }
-
-  .nav:has(.link:hover) .link:not(:hover) > span {
-    filter: blur(2px);
-    opacity: 0.62;
-  }
-
-  .link:hover > span {
-    filter: none;
-    opacity: 1;
-    transform: translateY(-1px);
-    transition-duration: var(--duration-reveal);
-    transition-timing-function: var(--ease-juice);
-  }
 
   .link:hover {
     color: var(--color-ink-primary);
-    transition:
-      color var(--duration-preview) var(--ease-juice) 0s,
-      background-color var(--duration-preview) var(--ease-preview),
-      transform var(--duration-preview) var(--ease-preview);
   }
 }
 
@@ -197,7 +84,7 @@
     border-radius: 12px;
   }
 
-  .nav::before, .nav::after, .link {
+  .nav::before, .link {
     border-radius: 9px;
   }
 
@@ -209,32 +96,19 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .nav::before, .nav::after, .link, .link > span {
+  .nav::before, .link {
     transition: none;
   }
 
   .link:active {
-    animation: none;
     transition: none;
     transform: none;
   }
 
-  /* Clear hover/focus transition overrides so reduced motion stays none. */
   .link:hover,
   .link:focus-visible {
     transition: none;
     transform: none;
     filter: none;
-  }
-
-  .link:hover > span,
-  .link:focus-visible > span,
-  .nav:has(.link:hover) .link:not(:hover) > span,
-  .nav:has(.link:focus-visible) .link:not(:focus-visible) > span {
-    /* Same selectors as hover enter so transition-duration cannot revive blur. */
-    transform: none;
-    filter: none;
-    opacity: 1;
-    transition: none;
   }
 }
