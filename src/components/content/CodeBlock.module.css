@@ -45,7 +45,8 @@
   /* Rest = snappy exit (~100ms). Copied enter overrides to juice. */
   transition:
     opacity var(--duration-exit) var(--ease-preview),
-    filter var(--duration-exit) var(--ease-preview);
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .copiedLabel {
@@ -64,13 +65,14 @@
   opacity: 1;
   filter: none;
   pointer-events: auto;
-  transition-duration: var(--duration-reveal);
-  transition-timing-function: var(--ease-juice);
+  /* opacity/filter enter juice; transform stays on exit so hover travel leaves snappy */
+  transition-duration: var(--duration-reveal), var(--duration-reveal), var(--duration-exit);
+  transition-timing-function: var(--ease-juice), var(--ease-juice), var(--ease-preview);
 }
 
 .header button:not([data-copied]) .idleLabel {
-  transition-duration: var(--duration-reveal);
-  transition-timing-function: var(--ease-juice);
+  transition-duration: var(--duration-reveal), var(--duration-reveal), var(--duration-exit);
+  transition-timing-function: var(--ease-juice), var(--ease-juice), var(--ease-preview);
 }
 
 .header button:active {
@@ -102,6 +104,13 @@
     color: var(--color-ink-primary);
     background: var(--color-surface-raised);
   }
+
+  .header button:hover .idleLabel,
+  .header button:hover .copiedLabel {
+    transform: translateY(-1px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
 }
 
 @media (max-width: 480px) {
@@ -116,6 +125,13 @@
   .header button,
   .idleLabel,
   .copiedLabel {
+    transition: none;
+  }
+
+  .header button:hover .idleLabel,
+  .header button:hover .copiedLabel {
+    /* Same selectors as hover enter so transition-duration cannot revive motion. */
+    transform: none;
     transition: none;
   }
 }
