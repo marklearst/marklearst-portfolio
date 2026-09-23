@@ -79,6 +79,12 @@
   background: var(--color-surface-raised);
 }
 
+.header button:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .source {
   padding: 20px;
   overflow-x: auto;
