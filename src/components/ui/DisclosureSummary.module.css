@@ -58,7 +58,7 @@
 @keyframes disclosure-reveal {
 
   from {
-    opacity: .65;
+    opacity: 1;
     transform: translateY(3px);
     filter: blur(1.5px);
   }
