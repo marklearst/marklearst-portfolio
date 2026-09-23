@@ -76,7 +76,7 @@
 .actionLive {
   color: var(--color-accent-primary);
   opacity: 0;
-  filter: blur(2px);
+  filter: none;
   transform: translateX(-3px) scale(0.88);
 }
 
