@@ -119,7 +119,7 @@
   margin-top: 8px;
 }
 
-:global([data-follow='true']) .previewLinks {
+:global([data-follow]) .previewLinks {
   animation: panel-follow var(--duration-preview) var(--ease-preview) var(--duration-follow) both;
 }
 
@@ -251,7 +251,7 @@
     transform: none;
   }
 
-  :global([data-follow='true']) .previewLinks {
+  :global([data-follow]) .previewLinks {
     animation: none;
   }
 }
