@@ -268,7 +268,7 @@ export default function HeroExamples({ examples }: { examples: readonly HeroExam
               data-exiting={isExiting || undefined}
               hidden={!isShown}
               inert={!isActive || undefined}
-              aria-hidden={!isActive}
+              aria-hidden={isActive ? undefined : true}
             >
               {example.children}
             </div>
