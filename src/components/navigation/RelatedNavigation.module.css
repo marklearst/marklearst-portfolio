@@ -103,16 +103,19 @@
     background: var(--color-surface-raised);
   }
 
+  /* Arrow answers now; title follows ~60ms with juice enter. */
   .link:hover .title {
     transform: translateX(3px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
   }
 
   .link.next:hover .title {
     transform: translateX(-3px);
     transition-duration: var(--duration-reveal);
     transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
   }
 
   .link:hover .arrowFront {
@@ -160,9 +163,14 @@
     transition: none;
   }
 
-  .link:hover .title, .link.next:hover .title, .link:hover .arrowFront {
+  .link:hover .title,
+  .link.next:hover .title,
+  .link:hover .arrowFront {
     transform: none;
     opacity: 1;
+    transition: none;
+    transition-delay: 0s;
+    animation-delay: 0s;
   }
 
   .link:active {
