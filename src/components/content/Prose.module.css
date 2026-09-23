@@ -78,6 +78,11 @@
   text-underline-offset: 4px;
 }
 
+.content :where(p, li, .mutedText) a:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 4px;
+}
+
 .content blockquote {
   margin-block: 32px;
   padding-left: 24px;
