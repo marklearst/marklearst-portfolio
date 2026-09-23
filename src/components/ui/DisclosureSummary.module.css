@@ -23,6 +23,8 @@
 
 .label {
   min-width: 0;
+  /* Exit ~100ms; hover enter overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .caret {
@@ -73,16 +75,27 @@
   .summary:hover {
     color: var(--color-ink-primary);
   }
+
+  .summary:hover .label {
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
   .summary,
+  .label,
   .caret {
     transition: none;
   }
 
   .summary:active {
+    transform: none;
+  }
+
+  .summary:hover .label {
     transform: none;
   }
 }
