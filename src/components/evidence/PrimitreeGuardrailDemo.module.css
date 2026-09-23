@@ -767,7 +767,7 @@
 @keyframes trace-result {
 
   from {
-    opacity: .65;
+    opacity: 1;
   }
 
   to {
