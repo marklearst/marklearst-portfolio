@@ -1,6 +1,8 @@
 .nav {
   --nav-padding: 4px;
-  --tick-visible: 0;
+  --tick-rest: 32px;
+  --tick-active: 50px;
+  --tick-muted: rgb(80 80 80);
   position: relative;
   isolation: isolate;
   display: grid;
@@ -14,43 +16,10 @@
 }
 
 /*
- * One orange tick (Devouring Details width language + WHAM asymmetry).
- * Spring writes --pill-index (translation). Width/opacity answer on CSS.
- * Leave uses exit window; hover enter overrides to juice reveal.
+ * Per-link tick (Devouring Details): width answers, not translation.
+ * Leave ~100ms; hover/focus enter overrides to juice reveal (~180ms).
+ * Color uses the short exit window either way.
  */
-
-.nav::before {
-  position: absolute;
-  z-index: 0;
-  inset-block: auto var(--nav-padding);
-  inset-inline-start: var(--nav-padding);
-  width: calc((100% - 2 * var(--nav-padding)) / 3);
-  height: 2px;
-  margin-block-end: 6px;
-  border-radius: 1px;
-  pointer-events: none;
-  content: '';
-  background: linear-gradient(
-      var(--color-accent-primary),
-      var(--color-accent-primary)
-    )
-    no-repeat center / 32px 100%;
-  transform: translateX(calc(var(--pill-index, var(--active-index)) * 100%));
-  opacity: var(--tick-visible);
-  transition:
-    opacity var(--duration-exit) var(--ease-preview),
-    background-size var(--duration-exit) var(--ease-preview);
-}
-
-.nav[data-active],
-.nav:has(.link:focus-visible) {
-  --tick-visible: 1;
-}
-
-.nav[data-active]::before,
-.nav:has(.link:focus-visible)::before {
-  background-size: 48px 100%;
-}
 
 .link {
   position: relative;
@@ -68,6 +37,34 @@
   transition: color 0ms linear;
 }
 
+.tick {
+  position: absolute;
+  z-index: 0;
+  inset-inline: 0;
+  inset-block-end: 6px;
+  width: var(--tick-rest);
+  height: 2px;
+  margin-inline: auto;
+  border-radius: 1px;
+  pointer-events: none;
+  background: var(--tick-muted);
+  opacity: 0;
+  transition:
+    width var(--duration-exit) var(--ease-preview),
+    opacity var(--duration-exit) var(--ease-preview),
+    background-color var(--duration-exit) var(--ease-preview);
+}
+
+/* Committed page: every tick visible; current stays wide + orange. */
+.nav[data-active] .tick {
+  opacity: 1;
+}
+
+.link[aria-current='page'] .tick {
+  width: var(--tick-active);
+  background: var(--color-accent-primary);
+}
+
 .link[aria-current='page'] {
   color: var(--color-ink-primary);
 }
@@ -76,6 +73,14 @@
   outline: 2px solid var(--color-ink-primary);
   outline-offset: -2px;
   color: var(--color-ink-primary);
+}
+
+.link:focus-visible .tick {
+  width: var(--tick-active);
+  opacity: 1;
+  background: var(--color-accent-primary);
+  transition-duration: var(--duration-reveal), var(--duration-reveal), var(--duration-exit);
+  transition-timing-function: var(--ease-juice), var(--ease-juice), var(--ease-preview);
 }
 
 .link:active {
@@ -90,18 +95,16 @@
 
 @media (hover: hover) and (pointer: fine) {
 
-  .nav:has(.link:hover) {
-    --tick-visible: 1;
-  }
-
-  .nav:has(.link:hover)::before {
-    background-size: 48px 100%;
-    transition-duration: var(--duration-reveal);
-    transition-timing-function: var(--ease-juice);
-  }
-
   .link:hover {
     color: var(--color-ink-primary);
+  }
+
+  .link:hover .tick {
+    width: var(--tick-active);
+    opacity: 1;
+    background: var(--color-accent-primary);
+    transition-duration: var(--duration-reveal), var(--duration-reveal), var(--duration-exit);
+    transition-timing-function: var(--ease-juice), var(--ease-juice), var(--ease-preview);
   }
 }
 
@@ -113,11 +116,8 @@
     border-radius: 12px;
   }
 
-  .nav::before, .link {
-    border-radius: 9px;
-  }
-
   .link {
+    border-radius: 9px;
     padding-inline: 8px;
     font-size: 14px;
   }
@@ -125,7 +125,9 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .nav::before, .link {
+  .tick,
+  .link:hover .tick,
+  .link:focus-visible .tick {
     transition: none;
   }
 
@@ -139,9 +141,5 @@
     transition: none;
     transform: none;
     filter: none;
-  }
-
-  .nav:has(.link:hover)::before {
-    transition: none;
   }
 }
