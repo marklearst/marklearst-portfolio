@@ -4,7 +4,7 @@ import styles from './SiteHeader.module.css'
 
 export default function SiteHeader() {
   return (
-    <header className={styles.header}>
+    <header className={styles.header} style={{ viewTransitionName: 'site-header' }}>
       <div className={styles.inner}>
         <Wordmark />
         <PrimaryNav />
@@ -12,3 +12,4 @@ export default function SiteHeader() {
     </header>
   )
 }
+
