@@ -1,5 +1,6 @@
 .nav {
   --nav-padding: 4px;
+  --tick-visible: 0;
   position: relative;
   isolation: isolate;
   display: grid;
@@ -12,31 +13,48 @@
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), inset 0 -1px 0 rgb(255 255 255 / 3%), 0 3px 12px rgb(0 0 0 / 24%);
 }
 
-/* One indicator: the pill. Spring writes --pill-index only. */
+/*
+ * One orange tick (Devouring Details width language + WHAM asymmetry).
+ * Spring writes --pill-index (translation). Width/opacity answer on CSS.
+ * Leave uses exit window; hover enter overrides to juice reveal.
+ */
 
 .nav::before {
   position: absolute;
-  z-index: -1;
-  inset-block: var(--nav-padding);
+  z-index: 0;
+  inset-block: auto var(--nav-padding);
   inset-inline-start: var(--nav-padding);
   width: calc((100% - 2 * var(--nav-padding)) / 3);
-  border-radius: 10px;
+  height: 2px;
+  margin-block-end: 6px;
+  border-radius: 1px;
   pointer-events: none;
   content: '';
-  background: var(--color-surface-raised);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 1px 3px rgb(0 0 0 / 20%);
+  background: linear-gradient(
+      var(--color-accent-primary),
+      var(--color-accent-primary)
+    )
+    no-repeat center / 32px 100%;
   transform: translateX(calc(var(--pill-index, var(--active-index)) * 100%));
-  opacity: 0;
-  transition: opacity var(--duration-reveal) var(--ease-juice);
+  opacity: var(--tick-visible);
+  transition:
+    opacity var(--duration-exit) var(--ease-preview),
+    background-size var(--duration-exit) var(--ease-preview);
+}
+
+.nav[data-active],
+.nav:has(.link:focus-visible) {
+  --tick-visible: 1;
 }
 
 .nav[data-active]::before,
-.nav:has(.link:hover)::before,
 .nav:has(.link:focus-visible)::before {
-  opacity: 1;
+  background-size: 48px 100%;
 }
 
 .link {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +65,6 @@
   font: 500 var(--text-ui)/1.4 var(--font-body);
   letter-spacing: -0.01em;
   text-decoration: none;
-  /* Ink answers immediately; no label travel, no delayed color. */
   transition: color 0ms linear;
 }
 
@@ -72,6 +89,16 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+
+  .nav:has(.link:hover) {
+    --tick-visible: 1;
+  }
+
+  .nav:has(.link:hover)::before {
+    background-size: 48px 100%;
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
 
   .link:hover {
     color: var(--color-ink-primary);
@@ -112,5 +139,9 @@
     transition: none;
     transform: none;
     filter: none;
+  }
+
+  .nav:has(.link:hover)::before {
+    transition: none;
   }
 }
