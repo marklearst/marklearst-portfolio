@@ -8,7 +8,7 @@ import styles from './PageTransition.module.css'
 /**
  * Route content swaps through the View Transitions API (WHAM / Next pattern).
  * Header keeps its own view-transition-name and does not cross-fade.
- * useRouteInput still tags pointer vs keyboard for nav spring commits.
+ * useRouteInput tags pointer vs keyboard for route-aware motion.
  */
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   useRouteInput()
