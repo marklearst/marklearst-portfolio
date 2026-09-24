@@ -18,6 +18,11 @@
   text-decoration: none;
 }
 
+.previewLink svg {
+  flex-shrink: 0;
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .work {
   position: relative;
   padding: 48px 40px 64px;
@@ -48,6 +53,12 @@
   color: var(--color-ink-secondary);
   font: 400 var(--text-ui)/1.5 var(--font-body);
   text-decoration: none;
+}
+
+.sectionHeading > a span {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .projectGrid {
@@ -141,79 +152,33 @@
   color: var(--color-ink-primary);
   font: 500 var(--text-ui)/1.5 var(--font-body);
   text-decoration: none;
+  border-radius: 4px;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
+}
+
+.caseLink span {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
+.caseLink:active {
+  background: color-mix(in srgb, var(--color-ink-primary) 7%, transparent);
+  transform: translateY(1px);
+}
+
+.caseLink:active span {
+  transform: translateX(6px);
+  transition-duration: var(--duration-exit);
+  transition-timing-function: var(--ease-preview);
 }
 
 .figure {
   min-width: 0;
   margin: 0;
-}
-
-.imageLink {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding: 28px 28px 52px;
-  border-radius: 14px;
-  background: var(--color-surface);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 8%, transparent);
-  transition: background-color 180ms ease-out, box-shadow 240ms ease-out;
-}
-
-.imageViewport {
-  display: block;
-  overflow: hidden;
-  border-radius: 6px;
-  box-shadow: 0 14px 30px -16px var(--color-canvas);
-}
-
-.imageLink img {
-  display: block;
-  width: 100%;
-  height: auto;
-  transform-origin: 50% 45%;
-  transition: transform 240ms var(--ease-out);
-}
-
-.imageAction {
-  position: absolute;
-  right: 18px;
-  bottom: 10px;
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--color-surface-raised);
-  color: var(--color-ink-secondary);
-  transition: background-color 180ms ease-out, color 180ms ease-out;
-}
-
-.imageLink:focus-visible {
-  background: var(--color-surface-raised);
-}
-
-.imageLink:focus-visible img {
-  transform: scale(1.025) translateY(-2px);
-}
-
-.imageLink:focus-visible .imageAction {
-  background: var(--color-surface);
-  color: var(--color-accent-primary);
-}
-
-.imageLink:active img {
-  transform: scale(1.008);
-}
-
-.imageLink:active .imageAction {
-  background: var(--color-surface);
-  color: var(--color-accent-primary);
-}
-
-.caption {
-  margin-top: 12px;
-  color: var(--color-ink-muted);
-  font: 400 var(--text-caption)/1.5 var(--font-body);
 }
 
 .eyebrow {
@@ -245,6 +210,25 @@
   min-height: 44px;
   color: var(--color-ink-secondary);
   text-decoration: none;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
+}
+
+.moreWork a span {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
+.moreWork a:active {
+  transform: translateY(1px);
+}
+
+.moreWork a:active span {
+  transform: translateX(6px);
+  transition-duration: var(--duration-exit);
+  transition-timing-function: var(--ease-preview);
 }
 
 .work a:focus-visible {
@@ -260,25 +244,21 @@
   .moreWork a:hover,
   .sectionHeading > a:hover {
     color: var(--color-ink-primary);
-    text-decoration: underline;
   }
 
-  .imageLink:hover {
-    background: var(--color-surface-raised);
-    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 10%, transparent), 0 20px 36px -28px var(--color-canvas);
+  /* Arrow answers now; color is secondary. Exit ~100ms, enter ~180ms. */
+  .caseLink:hover span,
+  .moreWork a:hover span,
+  .sectionHeading > a:hover span {
+    transform: translateX(6px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
-  .imageLink:hover img {
-    transform: scale(1.025) translateY(-2px);
-  }
-
-  .imageLink:hover .imageAction {
-    background: var(--color-surface);
-    color: var(--color-accent-primary);
-  }
-
-  .imageLink:active img {
-    transform: scale(1.008);
+  .previewLink:hover svg {
+    transform: translate(3px, -3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 }
 
@@ -359,24 +339,28 @@
   .projectNote {
     margin-bottom: 8px;
   }
-
-  .imageLink {
-    padding: 18px 18px 48px;
-    border-radius: 12px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-  .imageLink,
-  .imageLink img,
-  .imageAction {
+  .caseLink,
+  .caseLink span,
+  .moreWork a,
+  .moreWork a span,
+  .sectionHeading > a span,
+  .previewLink svg {
     transition: none;
   }
 
-  .imageLink:hover img,
-  .imageLink:focus-visible img,
-  .imageLink:active img {
+  .caseLink:active,
+  .caseLink:active span,
+  .moreWork a:active,
+  .moreWork a:active span,
+  .caseLink:hover span,
+  .moreWork a:hover span,
+  .sectionHeading > a:hover span,
+  .previewLink:hover svg {
+    transition: none;
     transform: none;
   }
 }

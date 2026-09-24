@@ -19,7 +19,7 @@
 
 .quotes {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 1fr));
   column-gap: 36px;
   row-gap: 28px;
 }
@@ -28,7 +28,10 @@
   display: grid;
   grid-row: span 2;
   grid-template-rows: subgrid;
-  margin: 0;
+  margin: -4px;
+  padding: 4px;
+  border-radius: 8px;
+  outline: none;
 }
 
 .words {
@@ -36,6 +39,11 @@
   color: var(--color-ink-secondary);
   font: 400 var(--text-body)/var(--token-leading-body) var(--font-body);
   text-wrap: pretty;
+  /* Default = exit: faster leave so layers do not stack. */
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .words p {
@@ -56,18 +64,37 @@
   object-fit: cover;
   filter: grayscale(1);
   border: 1px solid var(--color-border-subtle);
+  transition:
+    filter var(--duration-exit) var(--ease-preview),
+    box-shadow var(--duration-exit) var(--ease-preview);
 }
 
 .name {
   margin: 0 0 6px;
   color: var(--color-ink-primary);
   font: 500 var(--text-ui)/1.5 var(--font-body);
+  /* Exit stays snappy; hover overrides to juice + reveal. */
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .role {
   margin: 0;
   color: var(--color-ink-muted);
   font: 400 var(--text-caption)/1.5 var(--font-body);
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+  opacity: 0.88;
+}
+
+.quote:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 4px;
 }
 
 @supports not (grid-template-rows: subgrid) {
@@ -102,5 +129,83 @@
 
   .heading {
     margin-bottom: 28px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .quote:hover .portrait,
+  .quote:focus .portrait,
+  .quote:focus-visible .portrait {
+    filter: grayscale(0);
+    box-shadow: 0 8px 18px -12px rgb(0 0 0 / 55%);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  /* Quote answers first; name/role follow ~50ms later (not a card scale). */
+  .quote:hover .words,
+  .quote:focus .words,
+  .quote:focus-visible .words {
+    color: var(--color-ink-primary);
+    filter: none;
+    transform: translateY(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .quote:hover .name,
+  .quote:focus .name,
+  .quote:focus-visible .name {
+    filter: none;
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
+  }
+
+  .quote:hover .role,
+  .quote:focus .role,
+  .quote:focus-visible .role {
+    color: var(--color-ink-secondary);
+    opacity: 1;
+    filter: none;
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .words,
+  .portrait,
+  .name,
+  .role {
+    transition: none;
+  }
+
+  .quote:hover .words,
+  .quote:focus .words,
+  .quote:focus-visible .words,
+  .quote:hover .name,
+  .quote:focus .name,
+  .quote:focus-visible .name,
+  .quote:hover .role,
+  .quote:focus .role,
+  .quote:focus-visible .role,
+  .quote:hover .portrait,
+  .quote:focus .portrait,
+  .quote:focus-visible .portrait {
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .quote:hover .portrait,
+  .quote:focus .portrait,
+  .quote:focus-visible .portrait {
+    filter: grayscale(0);
   }
 }

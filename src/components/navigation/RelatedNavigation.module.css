@@ -24,7 +24,10 @@
   color: var(--color-ink-primary);
   text-decoration: none;
   box-shadow: inset 0 1px 0 var(--color-border-subtle);
-  transition: background-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
+  transition:
+    background-color var(--duration-preview) var(--ease-preview),
+    box-shadow var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .next {
@@ -61,7 +64,8 @@
 
 .arrow svg {
   grid-area: 1 / 1;
-  transition: transform 280ms var(--ease-out), opacity 180ms var(--ease-out);
+  /* Exit ~100ms; hover enter overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview), opacity var(--duration-preview) var(--ease-preview);
 }
 
 .arrowBack {
@@ -73,7 +77,8 @@
   font: 500 var(--text-lead) / var(--leading-subheading, 1.35) var(--font-body);
   text-wrap: balance;
   overflow-wrap: anywhere;
-  transition: transform 280ms var(--ease-out);
+  /* Exit ~100ms; hover enter overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .link:focus-visible {
@@ -89,6 +94,7 @@
 .link:active {
   background: var(--color-surface-raised);
   box-shadow: inset 0 0 0 1px var(--color-border-subtle);
+  transform: translateY(1px);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -97,22 +103,33 @@
     background: var(--color-surface-raised);
   }
 
+  /* Arrow answers now; title follows ~60ms with juice enter. */
   .link:hover .title {
     transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
   }
 
   .link.next:hover .title {
     transform: translateX(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
   }
 
   .link:hover .arrowFront {
     opacity: 0;
     transform: translateX(calc(var(--direction) * 28px));
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .link:hover .arrowBack {
     opacity: 1;
     transform: translateX(0);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
     transition-delay: 35ms;
   }
 
@@ -146,9 +163,25 @@
     transition: none;
   }
 
-  .link:hover .title, .link.next:hover .title, .link:hover .arrowFront {
+  .link:hover .title,
+  .link.next:hover .title,
+  .link:hover .arrowFront {
     transform: none;
     opacity: 1;
+    transition: none;
+    transition-delay: 0s;
+    animation-delay: 0s;
+  }
+
+  .link:hover .arrowBack {
+    /* Same selector as hover enter so transition-duration cannot revive motion. */
+    transform: none;
+    transition: none;
+  }
+
+  .link:active {
+    transition: none;
+    transform: none;
   }
 
   .arrowBack {

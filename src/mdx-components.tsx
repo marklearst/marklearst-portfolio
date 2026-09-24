@@ -7,7 +7,7 @@ export function useMDXComponents(components: MDXComponents = {}) {
     table: ({ children, ...props }: ComponentPropsWithoutRef<'table'>) => (
       <div className="my-8 overflow-x-auto rounded-lg border border-white/8 bg-surface">
         <table
-          className="w-full border-collapse text-sm font-mono"
+          className="w-full border-collapse text-sm font-body"
           {...props}
         >
           {children}
@@ -42,7 +42,7 @@ export function useMDXComponents(components: MDXComponents = {}) {
     // Table header cell - left-aligned, monokai cyan accent
     th: ({ children, ...props }: ComponentPropsWithoutRef<'th'>) => (
       <th
-        className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-monokai-cyan/80"
+        className="px-4 py-3 text-left text-xs font-medium text-monokai-cyan/80"
         {...props}
       >
         {children}

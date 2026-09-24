@@ -110,7 +110,6 @@
   height: calc(100% - var(--evidence-padding) * 2);
   object-fit: contain;
   border-radius: 3px;
-  transition: transform 180ms var(--ease-out);
 }
 
 .enlarge {
@@ -151,6 +150,11 @@
   gap: 6px;
   color: var(--color-ink-secondary);
   text-underline-offset: 4px;
+  transition: color var(--duration-preview) var(--ease-preview);
+}
+
+.caption a svg, .viewerContext a svg {
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .dialog {
@@ -183,7 +187,7 @@
 /* Only a measured pointer opening moves the image; the viewer chrome stays put. */
 
 .dialog[open][data-origin-motion]::backdrop {
-  animation: backdrop-reveal 220ms var(--ease-out);
+  animation: backdrop-reveal 220ms var(--ease-juice);
 }
 
 @keyframes backdrop-reveal {
@@ -225,6 +229,11 @@
   transition: background-color 150ms ease-out, transform 150ms ease-out;
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. Close icon stays put. */
+.prev svg, .next svg {
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .viewer button:active {
   background: color-mix(in srgb, var(--color-surface-raised), var(--color-ink-primary) 10%);
   transform: scale(.96);
@@ -246,23 +255,26 @@
 }
 
 .incoming {
-  animation: evidence-in 170ms var(--ease-out);
+  animation: evidence-in var(--duration-reveal) var(--ease-juice) both;
 }
 
 .outgoing {
   pointer-events: none;
   opacity: 0;
-  animation: evidence-out 170ms var(--ease-out);
+  filter: blur(2px);
+  animation: evidence-out var(--duration-exit) var(--ease-preview) forwards;
 }
 
 @keyframes evidence-in {
 
   from {
-    opacity: 0;
+    opacity: 1;
+    filter: blur(2px);
   }
 
   to {
     opacity: 1;
+    filter: none;
   }
 }
 
@@ -270,10 +282,12 @@
 
   from {
     opacity: 1;
+    filter: blur(0);
   }
 
   to {
     opacity: 0;
+    filter: blur(2px);
   }
 }
 
@@ -304,7 +318,7 @@
 
 .controls span {
   color: var(--color-ink-muted);
-  font: var(--text-caption)/1.5 var(--font-mono);
+  font: var(--text-caption)/1.5 var(--font-body);
   font-variant-numeric: tabular-nums;
 }
 
@@ -319,16 +333,34 @@
 
 @media (hover: hover) and (pointer: fine) {
 
-  .stage:hover img {
-    transform: scale(1.008);
-  }
-
   .choices button:hover {
     color: var(--color-ink-primary);
   }
 
   .viewer button:hover {
     background: color-mix(in srgb, var(--color-surface-raised), var(--color-ink-primary) 6%);
+  }
+
+  .prev:hover svg {
+    transform: translateX(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .next:hover svg {
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .caption a:hover, .viewerContext a:hover {
+    color: var(--color-ink-primary);
+  }
+
+  .caption a:hover svg, .viewerContext a:hover svg {
+    transform: translate(2px, -2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .viewer button:active {
@@ -354,15 +386,19 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .stage img, .viewer button {
+  .viewer button, .prev svg, .next svg, .caption a, .viewerContext a, .caption a svg, .viewerContext a svg {
     transition: none;
   }
 
-  .stage:hover img, .viewer button:active {
+  .viewer button:active, .prev:hover svg, .next:hover svg, .caption a:hover svg, .viewerContext a:hover svg {
     transform: none;
+    transition: none;
   }
 
-  .dialog[open]::backdrop, .incoming, .outgoing {
+  .dialog[open]::backdrop,
+  .dialog[open][data-origin-motion]::backdrop,
+  .incoming,
+  .outgoing {
     animation: none;
   }
 

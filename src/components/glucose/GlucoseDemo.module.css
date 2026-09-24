@@ -39,7 +39,7 @@
   border-radius: 5px;
   padding: 4px 7px;
   color: var(--demo-muted);
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
   font-size: var(--text-caption);
   line-height: 1.3;
 }
@@ -67,7 +67,11 @@
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  touch-action: manipulation;
+  transition:
+    background-color var(--duration-feedback) var(--ease-preview),
+    color var(--duration-feedback) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .controls button[aria-pressed='true'] {
@@ -77,7 +81,13 @@
 }
 
 .controls button:active {
+  color: var(--color-ink-primary);
+  background: var(--color-surface-raised);
   transform: scale(0.97);
+  transition:
+    color 0ms linear,
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .controls button:focus-visible, .report summary:focus-visible, .report pre:focus-visible {
@@ -145,7 +155,7 @@
 }
 
 .chartLabel span:last-child {
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
   font-size: var(--text-caption);
 }
 
@@ -160,7 +170,7 @@
 .chart svg text {
   fill: var(--demo-muted);
   font-size: 10px;
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
 }
 
 .chart svg .chartAnnotation {
@@ -200,7 +210,7 @@
   align-items: baseline;
   gap: 12px;
   color: var(--color-ink-secondary);
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
   font-size: var(--text-caption);
   line-height: 1.5;
   font-variant-numeric: tabular-nums;
@@ -282,7 +292,7 @@
 
 .distributionTitle span:last-child {
   font-size: var(--text-caption);
-  font-family: var(--token-font-mono);
+  font-family: var(--token-font-body);
 }
 
 .rangeBar {
@@ -342,14 +352,38 @@
   border-left: 1px solid var(--color-border-subtle);
 }
 
+.statusStack {
+  display: grid;
+  isolation: isolate;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
 .status {
+  grid-area: 1 / 1;
   display: flex;
   align-items: center;
   gap: 10px;
   min-height: 72px;
   padding: 14px 26px;
-  border-top: 1px solid var(--color-border-subtle);
   background: color-mix(in srgb, var(--color-accent-success) 4%, var(--color-surface));
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.status[data-active],
+.status[data-phase='exit'] {
+  visibility: visible;
+}
+
+.status[data-active] {
+  pointer-events: auto;
+}
+
+.status[data-phase='exit'] {
+  pointer-events: none;
+  z-index: 1;
+  animation: status-exit var(--duration-exit) var(--ease-preview) forwards;
 }
 
 .statusIcon {
@@ -360,26 +394,27 @@
   flex-shrink: 0;
   border: 1px solid var(--color-accent-success);
   border-radius: 50%;
-  font-family: var(--token-font-mono);
-  font-size: var(--text-caption);
+  font: 500 var(--text-caption)/1 var(--font-body);
   color: var(--color-accent-success);
 }
 
-.status > div {
+.statusCopy {
   flex: 1;
+  min-width: 0;
 }
 
-.status p {
+.statusTitle {
   margin: 0;
   font-size: var(--text-caption);
   line-height: 1.5;
   color: var(--color-ink-primary);
 }
 
-.status p.statusDetail {
-  margin-top: 3px;
+.statusDetail {
+  margin: 3px 0 0;
   color: var(--demo-muted);
   font-size: var(--text-caption);
+  line-height: 1.5;
 }
 
 .coverage {
@@ -397,34 +432,43 @@
 .coverage span {
   margin-top: 3px;
   color: var(--demo-muted);
-  font-size: var(--text-caption);
-  font-family: var(--token-font-mono);
+  font: 400 var(--text-caption)/1.5 var(--font-body);
   letter-spacing: 0;
 }
 
-.demo[data-scenario='missing'] .status {
+.status[data-scenario='missing'],
+.status[data-kind='warning'] {
   background: color-mix(in srgb, var(--color-accent-warning) 4%, var(--color-surface));
 }
 
-.demo[data-scenario='missing'] .statusIcon {
+.status[data-scenario='missing'] .statusIcon,
+.status[data-kind='warning'] .statusIcon {
   border-color: var(--color-accent-warning);
   color: var(--color-accent-warning);
 }
 
-.demo[data-scenario='missing'] .status p, .demo[data-scenario='missing'] .coverage {
+.status[data-scenario='missing'] .statusTitle,
+.status[data-scenario='missing'] .coverage,
+.status[data-kind='warning'] .statusTitle,
+.status[data-kind='warning'] .coverage {
   color: var(--color-accent-warning);
 }
 
-.demo[data-scenario='empty'] .status {
+.status[data-scenario='empty'],
+.status[data-kind='empty'] {
   background: var(--color-surface);
 }
 
-.demo[data-scenario='empty'] .statusIcon {
+.status[data-scenario='empty'] .statusIcon,
+.status[data-kind='empty'] .statusIcon {
   border-color: var(--color-border-subtle);
   color: var(--demo-muted);
 }
 
-.demo[data-scenario='empty'] .status p, .demo[data-scenario='empty'] .coverage {
+.status[data-scenario='empty'] .statusTitle,
+.status[data-scenario='empty'] .coverage,
+.status[data-kind='empty'] .statusTitle,
+.status[data-kind='empty'] .coverage {
   color: var(--color-ink-muted);
 }
 
@@ -476,8 +520,24 @@
   font-size: inherit;
 }
 
-.changed {
-  animation: report-change 220ms var(--ease-out) both;
+.demo[data-motion] .reportBodyMotion .metrics dd {
+  animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-juice) both;
+}
+
+.status[data-phase='enter'] .statusIcon {
+  animation: status-icon-arrive var(--duration-reveal) var(--ease-juice) both;
+}
+
+.status[data-phase='enter'] .statusTitle {
+  animation: status-title-arrive var(--duration-reveal) var(--ease-juice) both;
+}
+
+.status[data-phase='enter'] .statusDetail {
+  animation: panel-follow var(--duration-preview) var(--ease-preview) 50ms both;
+}
+
+.status[data-phase='enter'] .coverage {
+  animation: panel-follow var(--duration-preview) var(--ease-preview) 50ms both;
 }
 
 .compact .heading {
@@ -521,7 +581,7 @@
   padding: 10px 20px;
 }
 
-.compact .status p {
+.compact .statusTitle {
   font-size: var(--text-caption);
 }
 
@@ -529,16 +589,44 @@
   font-size: var(--text-caption);
 }
 
-@keyframes report-change {
-
+@keyframes status-exit {
   from {
-    opacity: 0.55;
-    transform: translateY(3px);
+    opacity: 1;
+    filter: none;
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+@keyframes status-icon-arrive {
+  from {
+    opacity: 1;
+    filter: blur(2px);
+    transform: scale(0.88);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    filter: none;
+    transform: scale(1);
+  }
+}
+
+/* Hold through the ~100ms exit window, then settle from near-scale — never from 0. */
+@keyframes status-title-arrive {
+  0%, 55% {
+    opacity: 1;
+    filter: blur(1.5px);
+    transform: scale(0.88);
+  }
+
+  100% {
+    opacity: 1;
+    filter: none;
+    transform: scale(1);
   }
 }
 
@@ -546,6 +634,16 @@
 
   .inspectableChart {
     cursor: crosshair;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .inspectableChart[data-scrubbing] {
+    cursor: grabbing;
+  }
+
+  .inspectableChart[data-scrubbing] * {
+    pointer-events: none;
   }
 
   .controls button:hover {
@@ -653,7 +751,7 @@
     gap: 8px;
   }
 
-  .status p {
+  .statusTitle {
     font-size: var(--text-caption);
   }
 
@@ -681,10 +779,23 @@
   }
 
   .controls button:active {
+    animation: none;
+    transition: none;
     transform: none;
   }
 
-  .changed {
+  .demo[data-motion] .reportBodyMotion .metrics dd,
+  .status[data-phase='enter'] .statusIcon,
+  .status[data-phase='enter'] .statusTitle,
+  .status[data-phase='enter'] .statusDetail,
+  .status[data-phase='enter'] .coverage,
+  .status[data-phase='exit'] {
     animation: none;
+    filter: none;
+    transform: none;
+  }
+
+  .status[data-phase='exit'] {
+    visibility: hidden;
   }
 }

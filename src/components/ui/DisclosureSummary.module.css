@@ -10,6 +10,7 @@
   cursor: pointer;
   list-style: none;
   touch-action: manipulation;
+  transition: color var(--duration-preview) var(--ease-preview), transform var(--duration-preview) var(--ease-preview);
 }
 
 .summary::-webkit-details-marker {
@@ -22,15 +23,19 @@
 
 .label {
   min-width: 0;
+  /* Exit ~100ms; hover enter overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .caret {
   color: var(--color-accent-primary);
-  transition: transform 180ms var(--ease-out);
+  /* Close: snappy exit. Open overrides to juice reveal. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 :global(details[open]) > .summary > .caret {
   transform: rotate(90deg);
+  transition: transform var(--duration-reveal) var(--ease-juice);
 }
 
 .summary:focus-visible {
@@ -39,27 +44,29 @@
   border-radius: 4px;
 }
 
-.summary:focus-visible > .caret {
-  transition: none;
+.summary:active {
+  transform: translateY(1px);
 }
 
 @media (prefers-reduced-motion: no-preference) {
 
   :global(details[open][data-disclosure-motion='pointer']) > .summary ~ * {
-    animation: disclosure-reveal 180ms var(--ease-out);
+    animation: disclosure-reveal var(--duration-reveal) var(--ease-juice);
   }
 }
 
 @keyframes disclosure-reveal {
 
   from {
-    opacity: .65;
+    opacity: 1;
     transform: translateY(3px);
+    filter: blur(1.5px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -68,11 +75,28 @@
   .summary:hover {
     color: var(--color-ink-primary);
   }
+
+  .summary:hover .label {
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
 
+  .summary,
+  .label,
   .caret {
     transition: none;
+  }
+
+  .summary:active {
+    transition: none;
+    transform: none;
+  }
+
+  .summary:hover .label {
+    transform: none;
   }
 }

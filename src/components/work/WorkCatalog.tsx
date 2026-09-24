@@ -2,11 +2,11 @@
 
 import { ArrowRightIcon } from '@/components/ui/Icon'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-import Image from 'next/image'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { PROJECTS_IN_DISPLAY_ORDER, type ProjectMeta } from '@/data/projects'
 import { trackCaseStudyClick, trackProjectCardHover, trackProjectCardImpression } from '@/lib/analytics'
+import WorkFigure from '@/components/work/WorkFigure'
 import styles from './WorkCatalog.module.css'
 
 const FILTERS = [
@@ -25,6 +25,8 @@ const PREVIEWS: Record<string, { src: string; alt: string; caption: string }> = 
   'a11y-companion': { src: '/images/a11y-audit-browser-demo.jpg', alt: 'a11y Companion browser demonstration with token audit results and Canvas Record.', caption: 'Token audit and Canvas Record · browser demo' },
   skydio: { src: '/images/skydio-orbit-story.jpg', alt: 'Skydio Autonomy Widget Orbit Mode in Storybook.', caption: 'Orbit Mode · Storybook' },
 }
+
+const EXIT_MS = 100
 
 function ProjectRow({ project, index }: { project: ProjectMeta; index: number }) {
   const rowRef = useRef<HTMLElement>(null)
@@ -55,13 +57,22 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
       </div>
       <div className={styles.projectBody}>
         <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>{project.cardTitle}<span aria-hidden='true'><ArrowRightIcon size={20} /></span></Link></h2>
-        {preview && <figure className={styles.preview}>
-          <Link className={styles.previewLink} href={project.route} aria-label={`${project.cardTitle} case study preview`} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>
-            <span className={styles.previewViewport}><Image src={preview.src} alt={preview.alt} width={1280} height={720} sizes='(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px' /></span>
-            <span className={styles.previewAction} aria-hidden='true'><ArrowRightIcon size={18} /></span>
-          </Link>
-          <figcaption>{preview.caption}</figcaption>
-        </figure>}
+        {preview && <div className={styles.preview}>
+          <WorkFigure
+            compact
+            href={project.route}
+            ariaLabel={`${project.cardTitle} case study preview`}
+            image={{
+              src: preview.src,
+              alt: preview.alt,
+              width: 1280,
+              height: 720,
+              sizes: '(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px',
+            }}
+            caption={preview.caption}
+            onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}
+          />
+        </div>}
         <p className={styles.summary}>{project.summary}</p>
         <p className={styles.role}>{project.role}</p>
         <ul className={styles.technologies} aria-label={`${project.cardTitle} technologies`}>
@@ -74,7 +85,35 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
 
 export default function WorkCatalog() {
   const [activeFilter, setActiveFilter] = useState('all')
+  const [listMotion, setListMotion] = useState(false)
+  const [exiting, setExiting] = useState<{ id: string; projects: ProjectMeta[] } | null>(null)
+  const exitTimer = useRef<number | null>(null)
   const filteredProjects = useMemo(() => PROJECTS_IN_DISPLAY_ORDER.filter((project) => FILTERS.find((filter) => filter.id === activeFilter)!.matches(project)), [activeFilter])
+
+  const stopExit = useCallback(() => {
+    if (exitTimer.current !== null) {
+      window.clearTimeout(exitTimer.current)
+      exitTimer.current = null
+    }
+    setExiting(null)
+  }, [])
+
+  function selectFilter(id: string, pointer: boolean) {
+    if (id === activeFilter) return
+    const shouldAnimate = pointer && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    stopExit()
+    if (shouldAnimate) {
+      setExiting({ id: activeFilter, projects: filteredProjects })
+      exitTimer.current = window.setTimeout(() => {
+        exitTimer.current = null
+        setExiting(null)
+      }, EXIT_MS)
+    }
+    setListMotion(shouldAnimate)
+    setActiveFilter(id)
+  }
+
+  useEffect(() => () => stopExit(), [stopExit])
 
   return (
     <section className={styles.catalog} aria-labelledby='work-title'>
@@ -82,12 +121,30 @@ export default function WorkCatalog() {
         <h1 id='work-title'>Work</h1>
         <p>Design systems and developer tools. The constraints, the implementation, and what I learned building them.</p>
       </header>
-      <div className={styles.filters} role='group' aria-label='Filter work by focus'>
-        {FILTERS.map((filter) => <button key={filter.id} type='button' aria-pressed={activeFilter === filter.id} onClick={() => setActiveFilter(filter.id)}>{filter.label}</button>)}
+      <div className={styles.filterStrip}>
+        <div className={styles.filters} role='group' aria-label='Filter work by focus'>
+          {FILTERS.map((filter) => (
+            <button
+              key={filter.id}
+              type='button'
+              aria-pressed={activeFilter === filter.id}
+              onClick={event => selectFilter(filter.id, event.detail > 0)}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
       </div>
-      <p className={styles.resultCount} role='status'>{filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}{activeFilter !== 'all' && ` · ${FILTERS.find((filter) => filter.id === activeFilter)?.label}`}</p>
-      <div>
-        {filteredProjects.map((project, index) => <ProjectRow key={project.slug} project={project} index={index} />)}
+      <p key={`count-${activeFilter}`} className={`${styles.resultCount}${listMotion ? ` ${styles.resultCountMotion}` : ''}`} role='status'>{filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}{activeFilter !== 'all' && ` · ${FILTERS.find((filter) => filter.id === activeFilter)?.label}`}</p>
+      <div className={styles.resultsShell}>
+        {exiting && (
+          <div className={styles.results} data-exiting aria-hidden='true'>
+            {exiting.projects.map((project, index) => <ProjectRow key={`exit-${exiting.id}-${project.slug}`} project={project} index={index} />)}
+          </div>
+        )}
+        <div key={`list-${activeFilter}`} className={styles.results} data-motion={listMotion || undefined}>
+          {filteredProjects.map((project, index) => <ProjectRow key={project.slug} project={project} index={index} />)}
+        </div>
       </div>
     </section>
   )

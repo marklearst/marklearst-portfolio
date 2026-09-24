@@ -36,6 +36,33 @@
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
+.filterStrip {
+  position: relative;
+}
+
+/* Scroll-strip transfer: soft edge fade when the chip row overflows. */
+.filterStrip::before,
+.filterStrip::after {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 1px;
+  width: 28px;
+  pointer-events: none;
+  opacity: 0;
+  content: '';
+}
+
+.filterStrip::before {
+  left: 0;
+  background: linear-gradient(to right, var(--color-canvas), transparent);
+}
+
+.filterStrip::after {
+  right: 0;
+  background: linear-gradient(to left, var(--color-canvas), transparent);
+}
+
 .filters button {
   position: relative;
   min-width: 44px;
@@ -47,7 +74,9 @@
   font: 500 var(--text-ui)/1.5 var(--font-body);
   cursor: pointer;
   touch-action: manipulation;
-  transition: color 150ms ease-out;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .filters button::after {
@@ -58,7 +87,8 @@
   content: '';
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 160ms var(--ease-out);
+  /* Outgoing chip underline exits faster than the incoming one. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .filters button[aria-pressed='true'] {
@@ -67,6 +97,7 @@
 
 .filters button[aria-pressed='true']::after {
   transform: scaleX(1);
+  transition-duration: var(--duration-preview);
 }
 
 .resultCount {
@@ -75,6 +106,36 @@
   color: var(--color-ink-muted);
   font: 400 var(--text-caption)/1.5 var(--font-body);
   font-variant-numeric: tabular-nums;
+}
+
+.resultCountMotion {
+  animation: var(--animation-status-arrive) var(--duration-reveal) var(--ease-juice) both;
+}
+
+.resultsShell {
+  position: relative;
+  isolation: isolate;
+}
+
+.results[data-exiting] {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+  animation: catalog-exit var(--duration-exit) var(--ease-preview) forwards;
+}
+
+@keyframes catalog-exit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
 }
 
 .project {
@@ -133,13 +194,36 @@
   gap: 12px;
   min-height: 44px;
   padding-block: 6px;
+  padding-inline: 4px;
+  margin-inline: -4px;
+  border-radius: 4px;
   color: var(--color-ink-primary);
   text-decoration: none;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
 .projectBody h2 a span {
   flex-shrink: 0;
   color: var(--color-ink-muted);
+  /* Arrow leaves on the faster exit window; hover overrides to juice enter. */
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+}
+
+.projectBody h2 a:active {
+  background: color-mix(in srgb, var(--color-ink-primary) 7%, transparent);
+  transform: translateY(1px);
+}
+
+.projectBody h2 a:active span {
+  color: var(--color-ink-primary);
+  transform: translateX(6px);
+  transition-duration: var(--duration-exit);
+  transition-timing-function: var(--ease-preview);
 }
 
 .summary {
@@ -163,79 +247,13 @@
   margin: 12px 0 0;
   list-style: none;
   color: var(--color-ink-muted);
-  font: 400 var(--text-caption)/1.5 var(--font-mono);
+  font: 400 var(--text-caption)/1.5 var(--font-body);
 }
 
 .preview {
   align-self: center;
   min-width: 0;
   margin: 0;
-}
-
-.previewLink {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  padding: 14px 14px 44px;
-  border-radius: 10px;
-  background: var(--color-surface);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 8%, transparent);
-  transition: background-color 180ms ease-out;
-}
-
-.previewViewport {
-  display: block;
-  overflow: hidden;
-  border-radius: 4px;
-}
-
-.preview img {
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: transform 240ms var(--ease-out);
-}
-
-.previewAction {
-  position: absolute;
-  right: 12px;
-  bottom: 8px;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--color-surface-raised);
-  color: var(--color-ink-secondary);
-  transition: color 180ms ease-out, background-color 180ms ease-out;
-}
-
-.previewLink:focus-visible {
-  background: var(--color-surface-raised);
-}
-
-.previewLink:focus-visible img {
-  transform: scale(1.025);
-}
-
-.previewLink:focus-visible .previewAction {
-  background: var(--color-surface);
-  color: var(--color-accent-primary);
-}
-
-.previewLink:active img {
-  transform: scale(1.008);
-}
-
-.previewLink:active .previewAction {
-  background: var(--color-surface);
-  color: var(--color-accent-primary);
-}
-
-.preview figcaption {
-  margin-top: 12px;
-  color: var(--color-ink-muted);
-  font: 400 var(--text-caption)/1.5 var(--font-body);
 }
 
 .filters button:focus-visible, .project a:focus-visible {
@@ -246,6 +264,7 @@
 
 .filters button:active {
   color: var(--color-ink-primary);
+  transform: translateY(1px);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -260,23 +279,9 @@
 
   .projectBody h2 a:hover span {
     color: var(--color-ink-primary);
-  }
-
-  .previewLink:hover {
-    background: var(--color-surface-raised);
-  }
-
-  .previewLink:hover img {
-    transform: scale(1.025);
-  }
-
-  .previewLink:hover .previewAction {
-    background: var(--color-surface);
-    color: var(--color-accent-primary);
-  }
-
-  .previewLink:active img {
-    transform: scale(1.008);
+    transform: translateX(6px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 }
 
@@ -320,11 +325,19 @@
     margin-inline: -4px;
     padding: 4px;
     scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filterStrip::before,
+  .filterStrip::after {
+    opacity: 1;
   }
 
   .filters button {
     flex-shrink: 0;
     white-space: nowrap;
+    scroll-snap-align: start;
   }
 
   .filters button:focus-visible {
@@ -351,11 +364,38 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .filters button, .filters button::after, .previewLink, .preview img, .previewAction {
+  .filters button, .filters button::after, .projectBody h2 a, .projectBody h2 a span {
     transition: none;
   }
 
-  .previewLink:hover img, .previewLink:focus-visible img, .previewLink:active img {
+  .filters button:active,
+  .projectBody h2 a:active,
+  .projectBody h2 a:active span,
+  .projectBody h2 a:hover span {
+    transition: none;
     transform: none;
   }
+
+  .resultCountMotion {
+    animation: none;
+  }
+
+  .results[data-exiting] {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+  .results[data-motion] .project {
+    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-juice) both;
+  }
+
+  .results[data-motion] .project:nth-child(1) { animation-delay: 0ms; }
+  .results[data-motion] .project:nth-child(2) { animation-delay: 30ms; }
+  .results[data-motion] .project:nth-child(3) { animation-delay: 60ms; }
+  .results[data-motion] .project:nth-child(4) { animation-delay: 90ms; }
+  .results[data-motion] .project:nth-child(n+5) { animation-delay: 110ms; }
 }

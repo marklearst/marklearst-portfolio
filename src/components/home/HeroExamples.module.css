@@ -37,12 +37,8 @@
   border-radius: 7px;
   background: var(--color-surface-raised);
   box-shadow: inset 0 1px 0 var(--color-border-subtle), 0 2px 4px rgb(0 0 0 / 18%);
-  transform: translateX(calc(var(--example-index) * (100% + 4px)));
+  transform: translateX(calc(var(--pill-index, var(--example-index)) * (100% + 4px)));
   pointer-events: none;
-}
-
-.choices[data-motion='true'] .selection {
-  transition: transform 280ms var(--ease-out);
 }
 
 .choices button {
@@ -58,8 +54,8 @@
   touch-action: manipulation;
 }
 
-.choices[data-motion='true'] button {
-  transition: color var(--duration-feedback) ease-out;
+.choices[data-motion] button {
+  transition: color var(--duration-preview) var(--ease-preview);
 }
 
 .choices button[aria-pressed='true'] {
@@ -72,24 +68,74 @@
 }
 
 .choices button:active {
-  background: rgb(255 255 255 / 4%);
+  color: var(--color-ink-primary);
+  background: rgb(255 255 255 / 6%);
+  transform: translateY(1px);
+  transition:
+    color 0ms linear,
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
+/*
+ * Grid stack: panels share one cell. align-self:start so each keeps its
+ * content height (shell morph reads the active panel). No sideways translate.
+ * Links under the panel follow via Hero.module.css.
+ */
 .panels {
-  position: relative;
-}
-
-.panels[data-morphing] {
-  overflow: clip;
+  display: grid;
+  isolation: isolate;
 }
 
 .panel {
-  display: flow-root;
+  grid-area: 1 / 1;
+  align-self: start;
+  width: 100%;
   min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 0;
+  filter: none;
+  transform: scale(0.96);
 }
 
-.panel[hidden] {
-  display: none;
+.panel[data-active] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  z-index: 0;
+  filter: none;
+  transform: scale(1);
+}
+
+/* Incoming: juice ease + scale from rest — interruptible. */
+.panel[data-active][data-follow] {
+  transition:
+    opacity var(--duration-reveal) var(--ease-juice),
+    filter var(--duration-reveal) var(--ease-juice),
+    transform var(--duration-reveal) var(--ease-juice);
+}
+
+/* Outgoing: ~100ms, 2px blur, no slide. Forwards holds opacity 0 until unmount. */
+.panel[data-exiting] {
+  visibility: visible;
+  pointer-events: none;
+  z-index: 1;
+  transform: scale(1);
+  animation: hero-panel-exit var(--duration-exit) var(--ease-preview) forwards;
+}
+
+@keyframes hero-panel-exit {
+  from {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    filter: blur(2px);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -101,7 +147,28 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .choices[data-motion='true'] button, .choices[data-motion='true'] .selection {
+  .choices[data-motion] button {
     transition: none;
+  }
+
+  .choices button:active {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+
+  .panel[data-active][data-follow] {
+    transition: none;
+  }
+
+  .panel[data-exiting] {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+    filter: none;
+  }
+
+  .panel {
+    transform: none;
   }
 }

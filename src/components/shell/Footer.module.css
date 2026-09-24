@@ -31,20 +31,62 @@
   align-items: center;
   gap: 12px;
   min-height: 44px;
+  padding-inline: 4px;
+  margin-inline: -4px;
+  border-radius: 4px;
   color: var(--color-ink-primary);
   text-decoration: none;
+  transition:
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
-.contactHeading a span {
+.contactLabel {
+  /* Label follows the arrow; leave uses the faster exit window. */
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
+.contactArrow {
   display: inline-flex;
   flex-shrink: 0;
-  transition: transform 180ms var(--ease-out);
+  /* Arrow answers immediately; exit is still the faster window. */
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
+.contactHeading a:active {
+  background: color-mix(in srgb, var(--color-ink-primary) 7%, transparent);
+  transform: translateY(1px);
+}
+
+.contactHeading a:active .contactArrow {
+  transform: translate(3px, -1px);
+  transition-duration: var(--duration-preview);
+}
+
+/* Keyboard: arrow now; label follows ~60ms with juice enter. */
+.contactHeading a:focus-visible .contactArrow {
+  transform: translate(2px, -2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.contactHeading a:focus-visible .contactLabel {
+  transform: translateX(2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+  transition-delay: var(--duration-follow);
 }
 
 .availability {
   margin: 0;
   color: var(--color-ink-muted);
   font: 400 var(--text-ui)/1.5 var(--font-body);
+  /* Default = exit: faster leave with a little blur so layers do not stack. */
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .socialLinks {
@@ -60,6 +102,14 @@
   gap: 9px;
   color: var(--color-ink-secondary);
   font-size: 16px;
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
+}
+
+.socialLink:active {
+  transform: translateY(1px);
 }
 
 .icon {
@@ -70,6 +120,15 @@
   width: 18px;
   height: 18px;
   color: var(--color-accent-primary);
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
+.socialLink > span:last-child {
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+  filter: blur(0);
 }
 
 .bottom {
@@ -84,7 +143,7 @@
 
 .copyright {
   color: var(--color-ink-muted);
-  font: 14px/1.6 var(--font-mono);
+  font: 14px/1.6 var(--font-body);
 }
 
 .controls {
@@ -125,8 +184,44 @@
     text-underline-offset: 4px;
   }
 
-  .contactHeading a:hover span {
+  /* Arrow now; label follows ~60ms with juice enter. */
+  .contactHeading a:hover .contactArrow {
     transform: translate(2px, -2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .contactHeading a:hover .contactLabel {
+    transform: translateX(2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
+  }
+
+  .contactHeading:has(a:hover) + .availability,
+  .contactHeading:has(a:focus-visible) + .availability {
+    color: var(--color-ink-secondary);
+    transform: translateX(2px);
+    filter: blur(0);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
+  }
+
+  /* Icon answers now; label follows with a soft settle. */
+  .socialLink:hover .icon {
+    transform: translateY(-3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .socialLink:hover > span:last-child {
+    color: var(--color-ink-primary);
+    transform: translateX(2px);
+    filter: blur(0);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
   }
 }
 
@@ -160,11 +255,24 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .footer a, .footer button, .contactHeading a span {
+  .footer a, .footer button, .contactLabel, .contactArrow, .availability, .icon, .socialLink > span:last-child {
     transition: none;
   }
 
-  .contactHeading a:hover span {
+  .contactHeading a:hover .contactArrow,
+  .contactHeading a:hover .contactLabel,
+  .contactHeading a:focus-visible .contactArrow,
+  .contactHeading a:focus-visible .contactLabel,
+  .contactHeading a:active,
+  .contactHeading a:active .contactArrow,
+  .contactHeading:has(a:hover) + .availability,
+  .contactHeading:has(a:focus-visible) + .availability,
+  .socialLink:active,
+  .socialLink:hover .icon,
+  .socialLink:hover > span:last-child {
+    /* Same selectors as hover enter so transition-duration cannot revive motion. */
     transform: none;
+    filter: none;
+    transition: none;
   }
 }

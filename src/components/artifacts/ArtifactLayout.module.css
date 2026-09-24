@@ -50,6 +50,7 @@
   grid-template-columns: 140px minmax(0, 1fr);
   gap: 28px;
   padding-block: 32px;
+  border-radius: 4px;
 }
 
 .entry + .entry {
@@ -62,8 +63,13 @@
   gap: 6px;
   padding-top: 8px;
   color: var(--color-ink-muted, #a59d95);
-  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-mono);
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-body);
   font-variant-numeric: tabular-nums;
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .pinned {
@@ -88,20 +94,85 @@
   gap: 14px;
   min-height: 44px;
   padding-block: 6px;
+  padding-inline: 4px;
+  margin-inline: -4px;
+  border-radius: 4px;
   color: inherit;
   text-decoration: none;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .entryBody h2 a span {
   flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
   color: var(--color-accent-primary);
   font-size: 1em;
+  /* Arrow answers immediately; leave uses the faster exit window. */
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .entryBody p {
   margin: 0;
+  color: var(--color-ink-secondary, #cbc5bf);
   font: 400 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
   text-wrap: pretty;
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+}
+
+.entryBody h2 a:active {
+  background: color-mix(in srgb, var(--color-ink-primary) 7%, transparent);
+  transform: translateY(1px);
+}
+
+.entryBody h2 a:active span {
+  transform: translateX(4px);
+  transition-duration: var(--duration-exit);
+  transition-timing-function: var(--ease-preview);
+  transition-delay: 0ms;
+}
+
+/* Date blurs out; arrow + title move now; summary follows ~60ms. */
+.entry:hover .entryMeta,
+.entry:focus-within .entryMeta {
+  opacity: 0.62;
+  filter: blur(2px);
+  transform: translateY(-2px);
+}
+
+.entry:hover .entryBody h2 a,
+.entry:focus-within .entryBody h2 a {
+  color: var(--color-ink-primary);
+  transform: translateX(2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.entry:hover .entryBody h2 a span,
+.entry:focus-within .entryBody h2 a span {
+  transform: translateX(5px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.entry:hover .entryBody p,
+.entry:focus-within .entryBody p {
+  color: var(--color-ink-primary, #f3eee8);
+  transform: translateX(2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+  transition-delay: var(--duration-follow);
+}
+
+.entryBody h2 a:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 5px;
 }
 
 .tags {
@@ -126,7 +197,7 @@
   min-height: 44px;
   margin-bottom: 24px;
   color: var(--color-ink-muted, #a59d95);
-  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-mono);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   text-decoration: none;
 }
 
@@ -154,7 +225,7 @@
   gap: 8px 20px;
   margin-bottom: 20px;
   color: var(--color-ink-muted, #a59d95);
-  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-mono);
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-body);
   font-variant-numeric: tabular-nums;
 }
 
@@ -377,7 +448,7 @@
 
 @media (hover: hover) and (pointer: fine) {
 
-  .entryBody h2 a:hover, .outline a:hover, .backLink:hover, .articleEnd a:hover {
+  .outline a:hover, .backLink:hover, .articleEnd a:hover {
     color: var(--color-ink-primary);
     text-decoration: underline;
     text-decoration-color: var(--color-accent-primary);
@@ -422,5 +493,36 @@
 
   .summary, .indexHeader > p {
     font-size: var(--text-body, 1.125rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .entryMeta,
+  .entryBody h2 a,
+  .entryBody h2 a span,
+  .entryBody p {
+    transition: none;
+  }
+
+  .entry:hover .entryMeta,
+  .entry:focus-within .entryMeta,
+  .entry:hover .entryBody h2 a,
+  .entry:focus-within .entryBody h2 a,
+  .entry:hover .entryBody h2 a span,
+  .entry:focus-within .entryBody h2 a span,
+  .entry:hover .entryBody p,
+  .entry:focus-within .entryBody p,
+  .entryBody h2 a:active,
+  .entryBody h2 a:active span {
+    transform: none;
+    filter: none;
+    /* Same selector as hover enter so transition-duration cannot revive motion. */
+    transition: none;
+  }
+
+  .entry:hover .entryMeta,
+  .entry:focus-within .entryMeta {
+    opacity: 0.72;
   }
 }

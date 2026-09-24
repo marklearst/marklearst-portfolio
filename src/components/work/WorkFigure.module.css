@@ -1,0 +1,214 @@
+.figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 28px 28px 52px;
+  border-radius: 14px;
+  background: var(--color-surface);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 8%, transparent);
+  touch-action: manipulation;
+  transition:
+    background-color var(--duration-preview) var(--ease-preview),
+    box-shadow var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
+}
+
+.frameCompact {
+  padding: 14px 14px 44px;
+  border-radius: 10px;
+}
+
+.viewport {
+  display: block;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 14px 30px -16px var(--color-canvas);
+}
+
+.frameCompact .viewport {
+  border-radius: 4px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.action {
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface-raised);
+  color: var(--color-ink-secondary);
+  transition:
+    background-color var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
+}
+
+.actionIdle,
+.actionLive {
+  grid-area: 1 / 1;
+  display: grid;
+  place-items: center;
+  transition:
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+}
+
+.actionIdle {
+  opacity: 0.72;
+  filter: blur(0);
+  transform: translateX(0) scale(1);
+}
+
+.actionLive {
+  color: var(--color-accent-primary);
+  opacity: 0;
+  filter: none;
+  transform: translateX(-3px) scale(0.88);
+}
+
+.frameCompact .action {
+  right: 12px;
+  bottom: 8px;
+  width: 28px;
+  height: 28px;
+}
+
+.frame:focus-visible {
+  background: var(--color-surface-raised);
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 5px;
+}
+
+.frame:focus-visible .action {
+  background: var(--color-surface);
+}
+
+.frame:focus-visible .actionIdle {
+  opacity: 0;
+  filter: blur(2px);
+  transform: translateX(2px) scale(0.88);
+  transition-duration: var(--duration-exit);
+}
+
+.frame:focus-visible .actionLive {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0) scale(1);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+  transition-delay: var(--duration-follow);
+}
+
+.frame:active {
+  transform: translateY(1px);
+}
+
+.frame:active .action {
+  background: var(--color-surface);
+  transform: translateY(1px);
+}
+
+.frame:active .actionLive {
+  transform: translateX(3px) scale(1);
+  transition-duration: var(--duration-preview);
+  transition-delay: 0ms;
+}
+
+.caption {
+  margin-top: 12px;
+  color: var(--color-ink-muted);
+  font: 400 var(--text-caption)/1.5 var(--font-body);
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .frame:hover {
+    background: var(--color-surface-raised);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 10%, transparent), 0 20px 36px -28px var(--color-canvas);
+  }
+
+  .frame:hover .action {
+    background: var(--color-surface);
+  }
+
+  /* Outgoing idle exits faster (~100ms); live enters slower (~180ms juice). */
+  .frame:hover .actionIdle {
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateX(2px) scale(0.88);
+    transition-duration: var(--duration-exit);
+  }
+
+  .frame:hover .actionLive {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) scale(1);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
+  }
+}
+
+@media (max-width: 800px) {
+
+  .frame:not(.frameCompact) {
+    padding: 18px 18px 48px;
+    border-radius: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .frame,
+  .action,
+  .actionIdle,
+  .actionLive {
+    transition: none !important;
+  }
+
+  .frame:active {
+    transition: none;
+    transform: none;
+  }
+
+  .frame:active .action {
+    transition: none;
+    transform: none;
+  }
+
+  .frame:active .actionLive {
+    transition: none;
+    transform: none;
+  }
+
+  .frame:focus-visible .actionLive,
+  .frame:hover .actionLive {
+    /* Same selectors as hover enter so transition-duration cannot revive blur. */
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .frame:focus-visible .actionIdle,
+  .frame:hover .actionIdle {
+    opacity: 0;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}

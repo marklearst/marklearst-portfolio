@@ -30,7 +30,7 @@
 }
 
 .lead {
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   color: var(--color-ink-primary);
   font: 400 var(--text-subheading)/1.35 var(--font-body);
   letter-spacing: var(--token-tracking-heading);
@@ -39,7 +39,7 @@
 
 .support {
   display: grid;
-  gap: 16px;
+  gap: 14px;
   color: var(--color-ink-secondary);
   font: 400 var(--text-body)/var(--token-leading-body) var(--font-body);
   text-wrap: pretty;
@@ -54,7 +54,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 20px;
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 .primaryLink,
@@ -75,17 +75,26 @@
   border-radius: 6px;
   background: var(--color-ink-primary);
   color: var(--color-canvas);
-  transition: background-color 160ms ease-out, box-shadow 160ms ease-out;
+  transition:
+    background-color var(--duration-preview) var(--ease-preview),
+    box-shadow var(--duration-preview) var(--ease-preview),
+    transform var(--duration-preview) var(--ease-preview);
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. */
 .primaryLink svg {
-  transition: transform 160ms var(--ease-out);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .textLink {
   gap: 10px;
   padding-block: 12px;
   color: var(--color-ink-primary);
+}
+
+/* Exit ~100ms; hover enter overrides to juice reveal. */
+.textLink > svg:last-of-type {
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .brandIcon {
@@ -108,12 +117,21 @@
   text-decoration: underline;
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. */
+.available a svg {
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .previewLinks {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0 24px;
   margin-top: 8px;
+}
+
+:global([data-follow]) .previewLinks {
+  animation: panel-follow var(--duration-preview) var(--ease-preview) var(--duration-follow) both;
 }
 
 .previewLink {
@@ -127,6 +145,11 @@
   text-decoration: none;
 }
 
+/* Exit ~100ms; hover enter overrides to juice reveal. */
+.previewLink svg {
+  transition: transform var(--duration-exit) var(--ease-preview);
+}
+
 .hero a:focus-visible {
   outline: 2px solid var(--color-ink-primary);
   outline-offset: 5px;
@@ -135,6 +158,7 @@
 
 .primaryLink:active {
   background: var(--color-ink-secondary);
+  transform: scale(0.97) translateY(1px);
 }
 
 .primaryLink:active svg {
@@ -149,6 +173,8 @@
 
   .primaryLink:hover svg {
     transform: translateY(2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .textLink:hover,
@@ -156,6 +182,24 @@
   .available a:hover {
     color: var(--color-ink-primary);
     text-decoration: underline;
+  }
+
+  .textLink:hover > svg:last-of-type {
+    transform: translate(2px, -2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .previewLink:hover svg {
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .available a:hover svg {
+    transform: translate(2px, -2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 }
 
@@ -218,12 +262,28 @@
 @media (prefers-reduced-motion: reduce) {
 
   .primaryLink,
-  .primaryLink svg {
+  .primaryLink svg,
+  .textLink > svg:last-of-type,
+  .previewLink svg,
+  .available a svg {
     transition: none;
   }
 
   .primaryLink:hover svg,
-  .primaryLink:active svg {
+  .primaryLink:active svg,
+  .textLink:hover > svg:last-of-type,
+  .previewLink:hover svg,
+  .available a:hover svg {
+    transition: none;
     transform: none;
+  }
+
+  .primaryLink:active {
+    transition: none;
+    transform: none;
+  }
+
+  :global([data-follow]) .previewLinks {
+    animation: none;
   }
 }

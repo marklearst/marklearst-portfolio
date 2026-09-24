@@ -13,14 +13,13 @@
   padding-inline: 20px 8px;
   border-bottom: 1px solid var(--color-border-subtle);
   color: var(--color-ink-muted);
-  font: 14px/1.5 var(--font-mono);
+  font: 14px/1.5 var(--font-body);
 }
 
 .header button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   min-height: 44px;
   min-width: 112px;
   padding: 8px 12px;
@@ -31,8 +30,59 @@
   transition: background-color 140ms ease, color 140ms ease;
 }
 
+.face {
+  display: inline-grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.idleLabel,
+.copiedLabel {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Rest = snappy exit (~100ms). Copied enter overrides to juice. */
+  transition:
+    opacity var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+}
+
+.copiedLabel {
+  opacity: 0;
+  filter: none;
+  pointer-events: none;
+}
+
+.header button[data-copied] .idleLabel {
+  opacity: 0;
+  filter: blur(1.5px);
+  pointer-events: none;
+}
+
+.header button[data-copied] .copiedLabel {
+  opacity: 1;
+  filter: none;
+  pointer-events: auto;
+  /* opacity/filter enter juice; transform stays on exit so hover travel leaves snappy */
+  transition-duration: var(--duration-reveal), var(--duration-reveal), var(--duration-exit);
+  transition-timing-function: var(--ease-juice), var(--ease-juice), var(--ease-preview);
+}
+
+.header button:not([data-copied]) .idleLabel {
+  transition-duration: var(--duration-reveal), var(--duration-reveal), var(--duration-exit);
+  transition-timing-function: var(--ease-juice), var(--ease-juice), var(--ease-preview);
+}
+
 .header button:active {
   background: var(--color-surface-raised);
+}
+
+.header button:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .source {
@@ -60,6 +110,13 @@
     color: var(--color-ink-primary);
     background: var(--color-surface-raised);
   }
+
+  .header button:hover .idleLabel,
+  .header button:hover .copiedLabel {
+    transform: translateY(-1px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
 }
 
 @media (max-width: 480px) {
@@ -71,7 +128,22 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .header button {
+  .header button,
+  .idleLabel,
+  .copiedLabel {
+    transition: none;
+  }
+
+  .header button[data-copied] .idleLabel,
+  .copiedLabel {
+    filter: none;
+  }
+
+  .header button:hover .idleLabel,
+  .header button:hover .copiedLabel {
+    /* Same selectors as hover enter so transition-duration cannot revive motion. */
+    transform: none;
+    filter: none;
     transition: none;
   }
 }

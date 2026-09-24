@@ -1,6 +1,6 @@
 'use client'
 
-import { useId } from 'react'
+import { useId, useRef, type CSSProperties } from 'react'
 import { useAnimatedSelection } from '@/hooks/useAnimatedSelection'
 import { PRIMITREE_DEMO } from '@/lib/primitree-demo'
 import { getPrimitreeCssExcerpt } from '@/lib/primitree-demo-display'
@@ -16,20 +16,33 @@ function TokenTrace({ scenario }: { scenario: (typeof PRIMITREE_DEMO.scenarios)[
   const value = scenario.tokens.semantic.action.$value
   const reference = typeof value === 'string' ? value.slice(1, -1) : null
   const color = typeof value === 'string' ? scenario.tokens.color.cyan.$value.hex : value.hex
+  const relation = reference ? 'Referenced' : 'Not referenced'
 
   return (
     <figure className={styles.trace} data-reference={Boolean(reference)}>
       <svg className={styles.traceLines} width='32' height='148' viewBox='0 0 32 148' fill='none' aria-hidden='true'>
-        <path className={styles.traceConnector} pathLength={1}
-          d={reference
-            ? 'M28 14H24Q16 14 16 22V58Q16 66 24 66H28M16 66V110Q16 118 24 118H28'
-            : 'M28 14H12Q4 14 4 22V110Q4 118 12 118H28'} />
-        {reference && <path d='m24 62 4 4-4 4' />}
-        <path d='m24 114 4 4-4 4' />
+        {reference ? (
+          <>
+            <path className={styles.traceSeg} style={{ '--trace-i': 0 } as CSSProperties} pathLength={1} d='M28 14H24Q16 14 16 22V58Q16 66 24 66H28' />
+            <path className={styles.traceArrow} style={{ '--trace-i': 1 } as CSSProperties} pathLength={1} d='m24 62 4 4-4 4' />
+            <path className={styles.traceSeg} style={{ '--trace-i': 2 } as CSSProperties} pathLength={1} d='M16 66V110Q16 118 24 118H28' />
+            <path className={styles.traceArrow} style={{ '--trace-i': 3 } as CSSProperties} pathLength={1} d='m24 114 4 4-4 4' />
+          </>
+        ) : (
+          <>
+            <path className={styles.traceSeg} style={{ '--trace-i': 0 } as CSSProperties} pathLength={1} d='M28 14H12Q4 14 4 22V110Q4 118 12 118H28' />
+            <path className={styles.traceArrow} style={{ '--trace-i': 1 } as CSSProperties} pathLength={1} d='m24 114 4 4-4 4' />
+          </>
+        )}
       </svg>
       <dl className={styles.traceNodes}>
         <div><dt className={styles.liveStatus}>Semantic token</dt><dd><code>semantic.action</code></dd></div>
-        <div className={styles.traceBase}><dt>{reference ? 'Referenced' : 'Not referenced'}</dt><dd><code>{reference ?? 'color.cyan'}</code></dd></div>
+        <div className={styles.traceBase}>
+          <dt className={styles.traceRelation}>
+            <span key={relation}>{relation}</span>
+          </dt>
+          <dd><code>{reference ?? 'color.cyan'}</code></dd>
+        </div>
         <div><dt className={styles.liveStatus}>Color value</dt><dd className={styles.traceColor}><span aria-hidden='true' style={{ backgroundColor: color }} /><code>{color}</code></dd></div>
       </dl>
       <figcaption className={styles.liveStatus}>
@@ -46,7 +59,8 @@ interface PrimitreeGuardrailDemoProps {
 
 export function PrimitreeGuardrailDemo({ className = '', compact = false }: PrimitreeGuardrailDemoProps) {
   const id = useId()
-  const { value: selectedId, motion, select } = useAnimatedSelection<ScenarioId>('literal')
+  const pointerIntent = useRef(false)
+  const { value: selectedId, motion, exitingId, select } = useAnimatedSelection<ScenarioId>('literal')
   const selected = PRIMITREE_DEMO.scenarios.find((scenario) => scenario.id === selectedId)!
   const failed = selected.build.exitCode !== 0
 
@@ -72,14 +86,19 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
             type="button"
             aria-pressed={selectedId === scenario.id}
             aria-controls={`${id}-result`}
-            onClick={event => select(scenario.id, event.detail > 0)}
+            onPointerDown={() => { pointerIntent.current = true }}
+            onClick={() => {
+              const pointer = pointerIntent.current
+              pointerIntent.current = false
+              select(scenario.id, pointer)
+            }}
           >
             {labels[scenario.id]}
           </button>
         ))}
       </div>
 
-      <div className={styles.panels} id={`${id}-result`} data-motion={motion}>
+      <div className={styles.panels} id={`${id}-result`} data-motion={motion || undefined}>
         {PRIMITREE_DEMO.scenarios.map((scenario) => {
           const active = scenario.id === selectedId
           const blocked = scenario.build.exitCode !== 0
@@ -90,7 +109,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
             : undefined
           const visibleCss = declaration?.replace(': ', ':\n  ') ?? cssExcerpt
           return (
-            <div className={styles.panel} key={scenario.id} data-active={active} data-blocked={blocked} inert={!active} aria-hidden={!active}>
+            <div className={styles.panel} key={scenario.id} data-active={active || undefined} data-exiting={exitingId === scenario.id || undefined} data-blocked={blocked || undefined} inert={!active || undefined} aria-hidden={!active}>
               <div className={styles.source}>
                 <div className={styles.sourceTitle}><span>Source token</span><span>tokens.json</span></div>
                 {!compact && <>
@@ -104,7 +123,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
                 {!compact && <div className={styles.command}><code>primitree build</code><span>exit {scenario.build.exitCode}</span></div>}
                 <div className={styles.resultHeading}>
                   {blocked ? <CircleXIcon size={20} /> : <CircleCheckIcon size={20} />}
-                  <span>{blocked ? 'Build stopped' : 'Build passed'}</span>
+                  <span key={blocked ? 'stopped' : 'passed'}>{blocked ? 'Build stopped' : 'Build passed'}</span>
                   {compact && <span className={styles.exitCode}>exit {scenario.build.exitCode}</span>}
                 </div>
                 {blocked && finding ? (

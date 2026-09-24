@@ -10,6 +10,11 @@
   font: 500 18px/1 var(--font-mono);
   letter-spacing: -.045em;
   text-decoration: none;
+  transition: transform var(--duration-preview) var(--ease-preview);
+}
+
+.link:active {
+  transform: translateY(1px);
 }
 
 /* Braces remain still while the letter layers share one fixed frame. */
@@ -50,11 +55,21 @@
 
 .letter {
   display: inline-grid;
+  perspective: 120px;
 }
 
 .front, .back {
   grid-area: 1 / 1;
   transform-origin: 50% 75%;
+  backface-visibility: hidden;
+}
+
+/*
+ * Resting: front sharp, back pre-blurred so leave softens the departing face.
+ * Enter/leave share the same flip; only duration and filter timing flip.
+ */
+.front {
+  filter: none;
 }
 
 .back {
@@ -86,23 +101,50 @@
 
 @media (hover: hover) and (pointer: fine) and (min-width: 480px) {
 
-  .front, .back {
-    transition: opacity 160ms ease-out, transform 220ms var(--ease-out), filter 160ms ease-out;
+  /*
+   * Leave (~100ms): same flip backward, properties reverse together (no stagger).
+   * Filter: front snaps sharp on arrive; back blurs while departing.
+   */
+  .front {
+    transition:
+      opacity var(--duration-exit) var(--ease-preview),
+      transform var(--duration-exit) var(--ease-preview),
+      filter 0ms linear;
+    transition-delay: 0ms;
   }
 
+  .back {
+    transition:
+      opacity var(--duration-exit) var(--ease-preview),
+      transform var(--duration-exit) var(--ease-preview),
+      filter var(--duration-exit) var(--ease-preview);
+    transition-delay: 0ms;
+  }
+
+  /* Enter (~180ms juice): letter stagger 0→~108ms; front blurs while leaving; back arrives sharp. */
   .link:hover .front {
     opacity: 0;
     transform: translateY(-6px) rotateX(65deg);
     filter: blur(2px);
+    transition:
+      opacity var(--duration-reveal) var(--ease-juice),
+      transform var(--duration-reveal) var(--ease-juice),
+      filter var(--duration-reveal) var(--ease-juice);
     transition-delay: calc(var(--letter-index) * 12ms);
   }
 
   .link:hover .back {
     opacity: 1;
     transform: translateY(0) rotateX(0);
-    filter: blur(0);
-    transition-duration: 160ms, 220ms, 160ms;
-    transition-delay: calc(20ms + var(--letter-index) * 12ms);
+    filter: none;
+    transition:
+      opacity var(--duration-reveal) var(--ease-juice),
+      transform var(--duration-reveal) var(--ease-juice),
+      filter 0ms linear;
+    transition-delay:
+      calc(20ms + var(--letter-index) * 12ms),
+      calc(20ms + var(--letter-index) * 12ms),
+      0ms;
   }
 
   .link:focus-visible .front {
@@ -114,6 +156,8 @@
 
   .link:focus-visible .back {
     opacity: 0;
+    transform: translateY(8px) rotateX(-65deg);
+    filter: blur(2px);
     transition: none;
   }
 }
@@ -122,12 +166,33 @@
 
   .front, .back {
     transition: none;
+    transform: none;
+    filter: none;
   }
 
-  .link:hover .front {
+  .link {
+    transition: none;
+  }
+
+  .link:active {
+    transition: none;
+    transform: none;
+  }
+
+  .link:hover .front,
+  .link:focus-visible .front {
     opacity: 1;
     transform: none;
     filter: none;
+    transition: none;
+  }
+
+  .link:hover .back,
+  .link:focus-visible .back {
+    opacity: 0;
+    transform: none;
+    filter: none;
+    transition: none;
   }
 
   .back {

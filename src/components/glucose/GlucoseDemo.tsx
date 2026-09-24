@@ -3,7 +3,7 @@
 import { ActivityIcon } from '@/components/ui/Icon'
 import DisclosureSummary from '@/components/ui/DisclosureSummary'
 
-import { useId, useMemo, useState, type PointerEvent } from 'react'
+import { useId, useMemo, useRef, useState, type PointerEvent } from 'react'
 import {
   getGlucoseDemoScenario,
   GLUCOSE_DEMO_END,
@@ -11,6 +11,7 @@ import {
   GLUCOSE_DEMO_TRACE_START,
   type GlucoseDemoScenario,
 } from '@/lib/glucose-demo'
+import { useAnimatedSelection } from '@/hooks/useAnimatedSelection'
 import styles from './GlucoseDemo.module.css'
 
 interface GlucoseDemoProps {
@@ -52,6 +53,7 @@ function GlucoseTrace({
 }) {
   const id = useId()
   const [selectedInterval, setSelectedInterval] = useState(traceIntervals)
+  const [scrubbing, setScrubbing] = useState(false)
   const height = compact ? 96 : plot.height
   const valid = demo.report.valid
   const readingsByTime = useMemo(
@@ -68,13 +70,31 @@ function GlucoseTrace({
   const selectedTime = `${inspectionTime.format(timestamp)} UTC`
   const selectedValue = selectedReading ? `${selectedReading.value} mg/dL` : 'No reading'
 
+  function intervalFromClientX(svg: SVGSVGElement, clientX: number) {
+    const bounds = svg.getBoundingClientRect()
+    if (!bounds.width) return selectedInterval
+    const x = ((clientX - bounds.left) / bounds.width) * 560
+    const interval = Math.round(((x - plot.left) / plot.width) * traceIntervals)
+    return Math.max(0, Math.min(traceIntervals, interval))
+  }
+
   function inspectPointer(event: PointerEvent<SVGSVGElement>) {
     if (!valid || event.pointerType !== 'mouse') return
-    const bounds = event.currentTarget.getBoundingClientRect()
-    if (!bounds.width) return
-    const x = ((event.clientX - bounds.left) / bounds.width) * 560
-    const interval = Math.round(((x - plot.left) / plot.width) * traceIntervals)
-    setSelectedInterval(Math.max(0, Math.min(traceIntervals, interval)))
+    setSelectedInterval(intervalFromClientX(event.currentTarget, event.clientX))
+  }
+
+  function beginScrub(event: PointerEvent<SVGSVGElement>) {
+    if (!valid) return
+    event.currentTarget.setPointerCapture(event.pointerId)
+    setScrubbing(true)
+    setSelectedInterval(intervalFromClientX(event.currentTarget, event.clientX))
+  }
+
+  function endScrub(event: PointerEvent<SVGSVGElement>) {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+    setScrubbing(false)
   }
 
   return (
@@ -87,7 +107,11 @@ function GlucoseTrace({
         viewBox={`0 0 560 ${height + 45}`}
         role="img"
         aria-labelledby={`${id}-chart-title ${id}-chart-desc`}
+        onPointerDown={beginScrub}
         onPointerMove={inspectPointer}
+        onPointerUp={endScrub}
+        onPointerCancel={endScrub}
+        data-scrubbing={scrubbing || undefined}
         className={valid ? styles.inspectableChart : undefined}
       >
         <title id={`${id}-chart-title`}>Synthetic glucose trace</title>
@@ -151,37 +175,56 @@ function GlucoseTrace({
 }
 
 export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProps) {
-  const [scenario, setScenario] = useState<GlucoseDemoScenario>('complete')
-  const [hasInteracted, setHasInteracted] = useState(false)
-  const demo = useMemo(() => getGlucoseDemoScenario(scenario), [scenario])
+  const pointerIntent = useRef(false)
+  const { value: scenario, motion, exitingId, select } = useAnimatedSelection<GlucoseDemoScenario>('complete')
+  const presentations = useMemo(() => {
+    const entries = scenarios.map(({ id }) => {
+      const demo = getGlucoseDemoScenario(id)
+      const { report } = demo
+      const valid = report.valid
+      const range = report.timeInRange
+      return {
+        id,
+        demo,
+        valid,
+        coverage: valid ? report.dataSufficiency.activePercent : 0,
+        bands: [
+          { label: 'Below 70', value: range ? range.veryLow.percentage + range.low.percentage : 0, color: '#ff6188' },
+          { label: '70–180', value: range?.inRange.percentage ?? 0, color: '#a9dc76' },
+          { label: 'Above 180', value: range ? range.high.percentage + range.veryHigh.percentage : 0, color: '#ffd866' },
+        ],
+        statusTitle: !valid
+          ? 'No readings to analyze'
+          : report.dataSufficiency.meetsCGMStandard
+            ? 'Enough data for a 14-day report'
+            : 'Usable readings. Incomplete coverage.',
+        statusDetail: !valid
+          ? 'Values stay empty until readings are available.'
+          : id === 'missing'
+            ? 'Eight hours are missing each day. The trace keeps those gaps.'
+            : 'All expected readings are present in this synthetic sample.',
+        statusKind: (!valid
+          ? 'empty'
+          : report.dataSufficiency.meetsCGMStandard
+            ? 'ready'
+            : 'warning') as 'empty' | 'ready' | 'warning',
+        chartSummary: !valid
+          ? 'No glucose readings are available. The chart is empty.'
+          : `The final 24 hours of a 14-day synthetic sample, in mg/dL. ${demo.traceReadings.length} readings are shown. ${id === 'missing' ? 'The line is interrupted from 06:00 to 14:00 UTC because readings are missing.' : 'The line contains no missing intervals.'} The latest reading is ${demo.latest} mg/dL.`,
+      }
+    })
+    return Object.fromEntries(entries.map((entry) => [entry.id, entry])) as Record<GlucoseDemoScenario, (typeof entries)[number]>
+  }, [])
+  const active = presentations[scenario]
+  const { demo } = active
   const { report } = demo
-  const valid = report.valid
-  const coverage = valid ? report.dataSufficiency.activePercent : 0
-  const range = report.timeInRange
-  const bands = [
-    { label: 'Below 70', value: range ? range.veryLow.percentage + range.low.percentage : 0, color: '#ff6188' },
-    { label: '70–180', value: range?.inRange.percentage ?? 0, color: '#a9dc76' },
-    { label: 'Above 180', value: range ? range.high.percentage + range.veryHigh.percentage : 0, color: '#ffd866' },
-  ]
-  const statusTitle = !valid
-    ? 'No readings to analyze'
-    : report.dataSufficiency.meetsCGMStandard
-      ? 'Enough data for a 14-day report'
-      : 'Usable readings. Incomplete coverage.'
-  const statusDetail = !valid
-    ? 'Values stay empty until readings are available.'
-    : scenario === 'missing'
-      ? 'Eight hours are missing each day. The trace keeps those gaps.'
-      : 'All expected readings are present in this synthetic sample.'
-  const chartSummary = !valid
-    ? 'No glucose readings are available. The chart is empty.'
-    : `The final 24 hours of a 14-day synthetic sample, in mg/dL. ${demo.traceReadings.length} readings are shown. ${scenario === 'missing' ? 'The line is interrupted from 06:00 to 14:00 UTC because readings are missing.' : 'The line contains no missing intervals.'} The latest reading is ${demo.latest} mg/dL.`
 
   return (
     <section
       className={`${styles.demo} ${compact ? styles.compact : ''} ${className}`}
       aria-label="Interactive GlucoseIQ example"
       data-scenario={scenario}
+      data-motion={motion || undefined}
     >
       <div className={styles.heading}>
         <div className={styles.headingLabel}>
@@ -197,10 +240,11 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
             key={option.id}
             type="button"
             aria-pressed={scenario === option.id}
+            onPointerDown={() => { pointerIntent.current = true }}
             onClick={() => {
-              if (scenario === option.id) return
-              setHasInteracted(true)
-              setScenario(option.id)
+              const pointer = pointerIntent.current
+              pointerIntent.current = false
+              select(option.id, pointer)
             }}
           >
             {option.label}
@@ -208,7 +252,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
         ))}
       </div>
 
-      <div key={scenario} className={hasInteracted ? styles.changed : undefined}>
+      <div className={styles.reportBodyMotion}>
         <dl className={styles.metrics}>
           <div className={styles.primaryMetric}>
             <dt>Latest reading</dt>
@@ -224,31 +268,55 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
           </div>
         </dl>
 
-        <GlucoseTrace demo={demo} compact={compact} scenario={scenario} summary={chartSummary} />
+        <GlucoseTrace demo={demo} compact={compact} scenario={scenario} summary={active.chartSummary} />
 
         <div className={styles.distribution}>
           <div className={styles.distributionTitle}><span>Reading distribution</span><span>mg/dL</span></div>
           <div className={styles.rangeBar} aria-hidden="true">
-            {bands.map((band) => <span key={band.label} style={{ width: `${band.value}%`, backgroundColor: band.color }} />)}
+            {active.bands.map((band) => <span key={band.label} style={{ width: `${band.value}%`, backgroundColor: band.color }} />)}
           </div>
           <dl className={styles.rangeLegend}>
-            {bands.map((band) => (
+            {active.bands.map((band) => (
               <div key={band.label}>
                 <dt><i aria-hidden="true" style={{ backgroundColor: band.color }} />{band.label}</dt>
-                <dd>{valid ? `${formatNumber(band.value, 1)}%` : '—'}</dd>
+                <dd>{active.valid ? `${formatNumber(band.value, 1)}%` : '—'}</dd>
               </div>
             ))}
           </dl>
         </div>
       </div>
 
-      <div className={styles.status} role="status" aria-live="polite" aria-atomic="true">
-        <span className={styles.statusIcon} aria-hidden="true">{!valid ? '○' : report.dataSufficiency.meetsCGMStandard ? '✓' : '!'}</span>
-        <div>
-          <p>{statusTitle}</p>
-          {!compact && <p className={styles.statusDetail}>{statusDetail}</p>}
-        </div>
-        <span className={styles.coverage}>{coverage}%<span>coverage</span></span>
+      <div className={styles.statusStack}>
+        {scenarios.map(({ id }) => {
+          const item = presentations[id]
+          const isActive = scenario === id
+          const isExiting = exitingId === id
+          const phase = isExiting ? 'exit' : isActive && motion ? 'enter' : undefined
+          return (
+            <div
+              key={id}
+              className={styles.status}
+              data-scenario={id}
+              data-kind={item.statusKind}
+              data-active={isActive || undefined}
+              data-phase={phase}
+              inert={!isActive || undefined}
+              aria-hidden={!isActive}
+              role={isActive ? 'status' : undefined}
+              aria-live={isActive ? 'polite' : undefined}
+              aria-atomic={isActive ? 'true' : undefined}
+            >
+              <span className={styles.statusIcon} aria-hidden="true">
+                {item.statusKind === 'empty' ? '○' : item.statusKind === 'ready' ? '✓' : '!'}
+              </span>
+              <div className={styles.statusCopy}>
+                <p key={`${id}-title`} className={styles.statusTitle}>{item.statusTitle}</p>
+                {!compact && <p key={`${id}-detail`} className={styles.statusDetail}>{item.statusDetail}</p>}
+              </div>
+              <span className={styles.coverage}>{item.coverage}%<span>coverage</span></span>
+            </div>
+          )
+        })}
       </div>
 
       {!compact && (

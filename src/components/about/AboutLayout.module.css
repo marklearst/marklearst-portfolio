@@ -78,14 +78,36 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 48px;
-  padding: 12px 18px;
+  min-height: 52px;
+  padding: 14px 20px;
   border: 1px solid var(--color-border-subtle, #3b3530);
   border-radius: 6px;
+  background: var(--color-surface);
   color: var(--color-ink-primary, #f3eee8);
   font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   text-decoration: none;
-  transition: color 180ms ease-out, border-color 180ms ease-out, background-color 180ms ease-out;
+  transition:
+    color var(--duration-preview) var(--ease-preview),
+    border-color var(--duration-preview) var(--ease-preview),
+    background-color var(--duration-preview) var(--ease-preview),
+    box-shadow var(--duration-preview) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
+}
+
+.contactLabel {
+  display: inline-block;
+  /* Label follows the arrow; leave uses the faster exit window. */
+  transition:
+    transform var(--duration-exit) var(--ease-preview),
+    filter var(--duration-exit) var(--ease-preview);
+  filter: blur(0);
+}
+
+.contactArrow {
+  display: inline-grid;
+  place-items: center;
+  color: var(--color-accent-primary, #e6aa79);
+  transition: transform var(--duration-exit) var(--ease-preview);
 }
 
 .contactAction:first-child {
@@ -93,6 +115,18 @@
   border-color: var(--color-ink-primary, #f3eee8);
   background: var(--color-ink-primary, #f3eee8);
   color: var(--color-canvas, #171615);
+}
+
+.contactAction:first-child .contactArrow {
+  color: inherit;
+}
+
+.contactAction:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.contactAction:active .contactArrow {
+  transform: translate(2px, -2px);
 }
 
 .content :global(.about-contact-links) {
@@ -110,6 +144,10 @@
   color: var(--color-ink-secondary, #cbc5bf);
   font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
   overflow-wrap: anywhere;
+  /* Exit stays snappy; hover overrides to juice + reveal. */
+  transition:
+    color var(--duration-exit) var(--ease-preview),
+    transform var(--duration-exit) var(--ease-preview);
 }
 
 .content :global(.timeline-entries) {
@@ -139,7 +177,7 @@
   grid-column: 1;
   grid-row: 1 / 3;
   color: var(--color-ink-muted, #a59d95);
-  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-mono);
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-body);
   font-variant-numeric: tabular-nums;
 }
 
@@ -228,20 +266,74 @@
   outline-offset: 5px;
 }
 
+.contactAction:focus-visible {
+  border-color: var(--color-accent-primary, #e6aa79);
+  background: var(--color-surface-raised);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 6%), 0 10px 24px -18px rgb(0 0 0 / 55%);
+  transform: translateY(-2px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.contactAction:first-child:focus-visible {
+  background: var(--color-accent-primary, #e6aa79);
+  border-color: var(--color-accent-primary, #e6aa79);
+  color: var(--color-canvas, #171615);
+}
+
+.contactAction:focus-visible .contactArrow {
+  transform: translate(6px, -6px);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+}
+
+.contactAction:focus-visible .contactLabel {
+  transform: translateX(4px);
+  filter: blur(0);
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-juice);
+  transition-delay: var(--duration-follow);
+}
+
 @media (hover: hover) and (pointer: fine) {
 
   .contactAction:hover {
     border-color: var(--color-accent-primary, #e6aa79);
-    color: var(--color-ink-primary);
+    background: var(--color-surface-raised);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 6%), 0 10px 24px -18px rgb(0 0 0 / 55%);
+    transform: translateY(-2px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .contactAction:first-child:hover {
     background: var(--color-accent-primary, #e6aa79);
+    border-color: var(--color-accent-primary, #e6aa79);
     color: var(--color-canvas, #171615);
+    box-shadow: 0 12px 28px -16px color-mix(in srgb, var(--color-accent-primary) 55%, transparent);
   }
 
+  /* Arrow + label juice enter; rest/exit stay on --duration-exit. */
+  .contactAction:hover .contactArrow {
+    transform: translate(6px, -6px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
+
+  .contactAction:hover .contactLabel {
+    transform: translateX(4px);
+    filter: blur(0);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+    transition-delay: var(--duration-follow);
+  }
+
+  /* Link itself is the secondary line — nudge a few px with the cards' juice. */
   .content :global(.about-contact-links) > a:hover {
     color: var(--color-ink-primary, #f3eee8);
+    transform: translateX(3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
   }
 
   .content :global(.about-intro) > p a:hover,
@@ -292,7 +384,24 @@
 @media (prefers-reduced-motion: reduce) {
 
   .contactAction,
+  .contactLabel,
+  .contactArrow,
   .content :global(.about-contact-links) > a {
+    transition: none;
+  }
+
+  .contactAction:active,
+  .contactAction:hover,
+  .contactAction:focus-visible,
+  .contactAction:hover .contactArrow,
+  .contactAction:focus-visible .contactArrow,
+  .contactAction:hover .contactLabel,
+  .contactAction:focus-visible .contactLabel,
+  .contactAction:active .contactArrow,
+  .content :global(.about-contact-links) > a:hover {
+    /* Same selectors as hover enter so transition-duration cannot revive motion. */
+    transform: none;
+    filter: none;
     transition: none;
   }
 }

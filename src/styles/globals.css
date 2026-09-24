@@ -84,20 +84,40 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 :where(a, button, summary) [data-action-icon] {
   color: var(--color-action-icon, var(--color-accent-primary));
 }
+/* Exit ~100ms preview; hover enter overrides to juice reveal. */
 [data-action-icon] .icon-arrow {
   transform-origin: center;
-  transition: transform 180ms var(--ease-out);
+  transition: transform var(--duration-exit) var(--ease-preview);
+  transition-delay: 0s;
 }
 :where(a, button):focus-visible [data-action-icon] .icon-arrow { transition: none; }
 @media (hover: hover) and (pointer: fine) {
   a:hover [data-action-icon='external'] .icon-arrow,
-  button:hover [data-action-icon='external'] .icon-arrow { transform: translate(1.5px, -1.5px); }
+  button:hover [data-action-icon='external'] .icon-arrow {
+    transform: translate(3px, -3px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
   a:hover [data-action-icon='forward'] .icon-arrow,
-  button:hover [data-action-icon='forward'] .icon-arrow { transform: translateX(2px); }
+  button:hover [data-action-icon='forward'] .icon-arrow {
+    transform: translateX(4px);
+    transition-duration: var(--duration-reveal);
+    transition-timing-function: var(--ease-juice);
+  }
 }
 :where(a, button):active [data-action-icon] .icon-arrow { transform: translate(0); transition-duration: 80ms; }
 @media (prefers-reduced-motion: reduce) {
   [data-action-icon] .icon-arrow { transition: none; transform: none !important; }
+  a:hover [data-action-icon] .icon-arrow,
+  button:hover [data-action-icon] .icon-arrow,
+  :where(a, button):focus-visible [data-action-icon] .icon-arrow {
+    transition: none;
+    transform: none;
+  }
+  :where(a, button):active [data-action-icon] .icon-arrow {
+    transition: none;
+    transform: none;
+  }
 }
 
 html, body { scroll-behavior: auto; }
@@ -105,6 +125,70 @@ html, body { scroll-behavior: auto; }
 ::selection {
   background: color-mix(in srgb, var(--color-ink-primary) 24%, var(--color-canvas));
   color: var(--color-ink-primary);
+}
+
+/*
+ * Route view transitions (WHAM Basic Syntax + Next header anchor).
+ * Root and site-header stay put; only page-enter/page-exit content moves.
+ * Exit faster than enter. pointer-events none keeps navigations interruptible.
+ */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition-old(.page-exit) {
+  animation: page-content-exit var(--duration-exit) var(--ease-preview) both;
+}
+
+::view-transition-new(.page-enter) {
+  animation: page-content-enter var(--duration-reveal) var(--ease-juice) both;
+}
+
+@keyframes page-content-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+    filter: blur(2px);
+  }
+}
+
+@keyframes page-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation: none !important;
+  }
 }
 
 /* Source line wrapping in MDX must not change a list item's type size. */
