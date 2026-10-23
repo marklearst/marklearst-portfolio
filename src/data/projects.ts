@@ -46,8 +46,8 @@ export const PROJECTS: ProjectMeta[] = [
       "Shared React components and brand-specific token themes for Chevrolet, Buick, GMC, and Cadillac, with a WCAG 2.1 AA accessibility target.",
     description:
       "Led design and implementation of GM's cross-brand React design system, with shared components, brand-specific token themes, and a WCAG 2.1 AA accessibility target.",
-    role: 'Senior Design Engineer, Lead - Authored Design Token Governance Document',
-    timeline: 'Jun 2021 - Sep 2024 (3+ years)',
+    role: 'Senior Design Engineer and Lead, author of the Design Token Governance Document',
+    timeline: 'Jun 2021 to Sep 2024 (3+ years)',
     publishedAt: '2024-09-01',
     pinned: true,
     featured: true,
@@ -76,7 +76,7 @@ export const PROJECTS: ProjectMeta[] = [
     description:
       'Modernized Abusix design system into a React 19 component library with token-driven styling, Storybook 10 docs, and automated QA.',
     role: 'Design Systems Engineer, Modernization Lead',
-    timeline: '2025 - Present',
+    timeline: '2025 to present',
     publishedAt: '2025-11-01',
     technologies: [
       'React 19',
@@ -103,7 +103,7 @@ export const PROJECTS: ProjectMeta[] = [
     description:
       'React 19 hooks library and CLI for the official Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage.',
     role: 'Creator & Maintainer',
-    timeline: '2024 - Present',
+    timeline: '2024 to present',
     publishedAt: '2024-12-01',
     pinned: true,
     openSource: true,
@@ -130,7 +130,7 @@ export const PROJECTS: ProjectMeta[] = [
     description:
       'DTCG token pipeline that turns design system architecture into a checkable contract. Six packages covering a CLI, token graph, emitters for CSS, Tailwind and TypeScript, React hooks, and an MCP server.',
     role: 'Creator & Maintainer',
-    timeline: '2025 - Present',
+    timeline: '2025 to present',
     publishedAt: '2026-08-25',
     featured: true,
     openSource: true,
@@ -157,7 +157,7 @@ export const PROJECTS: ProjectMeta[] = [
     description:
       'Headless TypeScript library for CGM and glucose data. Five packages covering 17 clinical metrics, device connectors, FHIR and Open mHealth interop, SVG rendering, React bindings, and seeded test fixtures.',
     role: 'Creator & Maintainer',
-    timeline: '2025 - Present',
+    timeline: '2025 to present',
     publishedAt: '2026-07-28',
     featured: true,
     openSource: true,
@@ -184,7 +184,7 @@ export const PROJECTS: ProjectMeta[] = [
     description:
       'Canvas-native accessibility review workflow for Figma and FigJam. v3.0.0 pairs The A11Y Project Checklist with live contrast inspection, three on-canvas audits, native Dev Mode annotations, evidence-bound sign-off, and a canonical Canvas Record.',
     role: 'Creator & Maintainer',
-    timeline: '2023 - Present',
+    timeline: '2023 to present',
     publishedAt: '2026-07-12',
     featured: true,
     openSource: true,
@@ -210,7 +210,7 @@ export const PROJECTS: ProjectMeta[] = [
     description:
       'TypeScript library for glucose, A1C, and Time in Range (TIR) calculations. Featured in Google AI Overview for diabetes developer tools with 100% test coverage and adopted by health tech teams.',
     role: 'Creator & Maintainer',
-    timeline: '2023 - Present',
+    timeline: '2023 to present',
     publishedAt: '2023-10-01',
     openSource: true,
     technologies: [
@@ -235,7 +235,7 @@ export const PROJECTS: ProjectMeta[] = [
     description:
       'Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, addressing tool lock-in and broken design-code handoff workflows affecting design systems teams globally.',
     role: 'Specification Author & W3C Community Contributor',
-    timeline: '2024 - Present',
+    timeline: '2024 to present',
     publishedAt: '2024-10-01',
     featured: true,
     openSource: true,
@@ -260,7 +260,7 @@ export const PROJECTS: ProjectMeta[] = [
       'Built React/Storybook component library and onboarded product and engineering teams on adoption patterns for autonomous drone platform.',
     description:
       "Built a React mission-control widget implementing Skydio's Rivit design language, with configurable actions, shared state, and Storybook documentation.",
-    role: 'Frontend Consultant - Component Architecture & Storybook',
+    role: 'Frontend Consultant · Component Architecture & Storybook',
     timeline: '2024 (Contract)',
     publishedAt: '2024-05-01',
     featured: true,
