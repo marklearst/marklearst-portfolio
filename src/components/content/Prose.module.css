@@ -3,9 +3,9 @@
 .paragraph,
 .mutedText,
 .list {
-  color: var(--color-ink-secondary, #cbc5bf);
-  font: 400 var(--text-body, 1.125rem) / var(--leading-body, 1.5) var(--font-body);
-  letter-spacing: var(--tracking-body, 0);
+  color: var(--color-ink-secondary);
+  font: 400 var(--text-body) / var(--leading-body) var(--font-body);
+  letter-spacing: var(--tracking-body);
 }
 
 .content {
@@ -40,27 +40,27 @@
 }
 
 .content :where(strong, b) {
-  color: var(--color-ink-primary, #f3eee8);
+  color: var(--color-ink-primary);
   font-weight: 500;
 }
 
 .content :where(h4, h5, h6) {
   margin-block: 32px 16px;
-  color: var(--color-ink-primary, #f3eee8);
+  color: var(--color-ink-primary);
   font-family: var(--font-body);
   font-weight: 500;
-  line-height: var(--leading-subheading, 1.35);
+  line-height: var(--leading-subheading);
   text-transform: none;
   text-wrap: balance;
 }
 
 .content h4 {
-  font-size: var(--text-lead, 1.25rem);
+  font-size: var(--text-lead);
 }
 
 .content h5,
 .content h6 {
-  font-size: var(--text-body, 1.125rem);
+  font-size: var(--text-body);
 }
 
 .content :where(p, li) > code {
@@ -68,7 +68,7 @@
   font-size: 0.9em;
   font-weight: 400;
   line-height: inherit;
-  letter-spacing: var(--tracking-body, 0);
+  letter-spacing: var(--tracking-body);
 }
 
 .content :where(p, li, .mutedText) a {
@@ -81,7 +81,7 @@
 .content blockquote {
   margin-block: 32px;
   padding-left: 24px;
-  border-left: 2px solid var(--color-border-subtle, #3b3530);
+  border-left: 2px solid var(--color-border-subtle);
 }
 
 .content table {
@@ -89,18 +89,18 @@
   max-width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
-  font: 400 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-body);
+  font: 400 var(--text-ui) / var(--leading-ui) var(--font-body);
 }
 
 .content th,
 .content td {
   padding: 12px 16px;
-  border-bottom: 1px solid var(--color-border-subtle, #3b3530);
+  border-bottom: 1px solid var(--color-border-subtle);
   text-align: left;
 }
 
 .content th {
-  color: var(--color-ink-primary, #f3eee8);
+  color: var(--color-ink-primary);
   font-weight: 500;
 }
 
@@ -109,14 +109,14 @@
 }
 
 .content figcaption {
-  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-body);
+  font: 400 var(--text-caption) / var(--leading-caption) var(--font-body);
 }
 
 .subheading {
   margin-block: 36px 16px;
-  color: var(--color-ink-primary, #f3eee8);
-  font: 500 var(--text-subheading, 1.5rem) / var(--leading-subheading, 1.35) var(--font-body);
-  letter-spacing: var(--tracking-heading, -0.01em);
+  color: var(--color-ink-primary);
+  font: 500 var(--text-subheading) / var(--leading-subheading) var(--font-body);
+  letter-spacing: var(--tracking-heading);
   text-transform: none;
   text-wrap: balance;
 }
@@ -155,7 +155,7 @@
 }
 
 .list strong {
-  color: var(--color-ink-primary, #f3eee8);
+  color: var(--color-ink-primary);
   font-weight: 500;
 }
 
