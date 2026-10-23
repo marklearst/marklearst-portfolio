@@ -1,11 +1,11 @@
 .details {
-  border-block: 1px solid var(--color-border-subtle, #3b3530);
+  border-block: 1px solid var(--color-border-subtle);
   margin-block: 24px;
 }
 
 .content {
   padding: 12px 0 28px;
-  font: 400 var(--text-body, 1.125rem) / 1.5 var(--font-body);
+  font: 400 var(--text-body) / 1.5 var(--font-body);
 }
 
 .content > :first-child {

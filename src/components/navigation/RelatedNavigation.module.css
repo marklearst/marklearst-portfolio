@@ -37,7 +37,7 @@
   align-items: center;
   gap: 10px;
   color: var(--color-ink-muted);
-  font: 400 var(--text-ui) / var(--leading-ui, 1.5) var(--font-body);
+  font: 400 var(--text-ui) / var(--leading-ui) var(--font-body);
 }
 
 .direction svg {
@@ -70,7 +70,7 @@
 }
 
 .title {
-  font: 500 var(--text-lead) / var(--leading-subheading, 1.35) var(--font-body);
+  font: 500 var(--text-lead) / var(--leading-subheading) var(--font-body);
   text-wrap: balance;
   overflow-wrap: anywhere;
   transition: transform 280ms var(--ease-out);
