@@ -23,7 +23,7 @@
   min-height: 44px;
   gap: 10px;
   color: var(--color-ink-muted, #a59d95);
-  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-mono);
+  font: 500 var(--text-ui, 1rem) / var(--leading-ui, 1.5) var(--font-ui);
   text-decoration: none;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .technologies span {
-  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-mono);
+  font: 400 var(--text-caption, 0.875rem) / var(--leading-caption, 1.5) var(--font-ui);
 }
 
 .links {

@@ -84,7 +84,7 @@
 
 .copyright {
   color: var(--color-ink-muted);
-  font: 14px/1.6 var(--font-mono);
+  font: var(--text-caption)/var(--leading-caption) var(--font-ui);
 }
 
 .controls {
