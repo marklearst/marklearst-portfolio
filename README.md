@@ -1,6 +1,6 @@
 # Mark Learst Portfolio
 
-Coder to the core, think like a designer.
+Design engineer and UI architect who sets system direction in code.
 
 Design systems, React component libraries, developer tools, and working interface examples. Case studies and articles are authored in MDX.
 
@@ -8,7 +8,7 @@ Design systems, React component libraries, developer tools, and working interfac
 
 - Next.js 16 App Router, React 19, and TypeScript
 - CSS Modules for component styles, Tailwind CSS 4 for existing utilities
-- Style Dictionary for generated token CSS
+- Style Dictionary for generated token CSS, with a Primitree migration of the tokens staged in `src/tokens/next`
 - Wotfard for reading and MonoLisa for code
 - GlucoseIQ for the interactive glucose example
 
@@ -51,3 +51,7 @@ Case studies use explicit `/work/<slug>` routes with a shared server composition
 
 - github@marklearst.com
 - https://marklearst.com
+
+---
+
+*Coder to the core, think like a designer.*
