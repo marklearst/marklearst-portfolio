@@ -146,8 +146,14 @@ test('CSS raw: covers its own line, or the next line when it stands alone; blank
     /* raw: the whole media block */
     @media (min-width: 700px) { .a { padding: 6px; } @supports (display: grid) { .b { gap: 3px; } } }
     .after { padding: 9px; }
+    .opener { /* raw: opens the block, so it covers nothing inside */
+      padding: 11px;
+    }
+    @media (min-width: 720px) { /* raw: covers the breakpoint only */
+      .c { padding: 13px; }
+    }
   `)
-  assert.deepEqual(hits.map((h) => h.text), ['gap: 10px', 'row-gap: 7px', '@media (min-width: 640px)', '@apply text-xs', 'padding: 9px'])
+  assert.deepEqual(hits.map((h) => h.text), ['gap: 10px', 'row-gap: 7px', '@media (min-width: 640px)', '@apply text-xs', 'padding: 9px', 'padding: 11px', 'padding: 13px'])
 })
 
 // Tailwind classes
