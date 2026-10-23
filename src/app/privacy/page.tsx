@@ -5,7 +5,7 @@ import PrivacyBackLink from '@/components/privacy/PrivacyBackLink'
 import Footer from '@/components/shell/Footer'
 
 export const metadata: Metadata = {
-  title: 'Privacy - Mark Learst',
+  title: 'Privacy | Mark Learst',
   description:
     'Privacy details for marklearst.com, including anonymous analytics and opt-out controls.',
 }
