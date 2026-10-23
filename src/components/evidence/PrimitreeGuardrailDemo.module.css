@@ -368,6 +368,10 @@
   overflow-wrap: anywhere;
 }
 
+.compact .outputTitle {
+  font-family: var(--font-ui);
+}
+
 .demo .cssOutput {
   margin-top: 14px;
   font-size: var(--text-caption);
@@ -415,10 +419,14 @@
   padding: 12px 16px;
   border-bottom: 1px solid var(--pt-border);
   color: var(--pt-muted);
-  font-family: var(--token-font-mono);
+  font-family: var(--font-ui);
   font-size: var(--text-caption);
   line-height: 1.5;
   overflow-wrap: anywhere;
+}
+
+.inspectFile > span code {
+  font-family: var(--token-font-mono);
 }
 
 .inspectFile pre {
@@ -446,7 +454,7 @@
 
 .footer > span {
   color: var(--pt-muted);
-  font-family: var(--token-font-mono);
+  font-family: var(--font-ui);
   font-size: var(--text-caption);
 }
 

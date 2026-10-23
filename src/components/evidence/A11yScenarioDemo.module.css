@@ -126,8 +126,9 @@
 .sectionHeading > span:last-child {
   color: var(--a11y-muted);
   font-size: var(--text-caption);
-  font-family: var(--token-font-mono);
+  font-family: var(--font-ui);
   font-weight: 400;
+  font-variant-numeric: tabular-nums;
 }
 
 .evidence {
@@ -267,7 +268,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  font-family: var(--token-font-mono);
+  font-family: var(--font-ui);
   font-size: var(--text-caption);
 }
 
@@ -355,7 +356,8 @@
 .footer time {
   color: var(--a11y-muted);
   font-size: var(--text-caption);
-  font-family: var(--token-font-mono);
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums;
 }
 
 .liveStatus {
