@@ -118,8 +118,9 @@ test('breakpoints and @apply count', () => {
   assert.deepEqual(css(`
     @media (min-width: 640px) { .a { display: grid; } }
     @container (min-width: 30rem) { .b { display: grid; } }
+    @custom-media --wide (min-width: 1060px);
     code { @apply font-mono text-sm bg-white/5 px-2 py-1 rounded; }
-  `), { breakpoint: 2, 'tailwind-type': 1, 'tailwind-color': 1, 'tailwind-scale': 1 })
+  `), { breakpoint: 3, 'tailwind-type': 1, 'tailwind-color': 1, 'tailwind-scale': 1 })
 })
 
 test('CSS raw: covers its own line, or the next line when it stands alone; blank lines break the link', () => {
@@ -140,8 +141,13 @@ test('CSS raw: covers its own line, or the next line when it stands alone; blank
     @media (min-width: 640px) { .c { display: grid; } }
     code { @apply text-sm; /* raw: intentional */ }
     pre { @apply text-xs; }
+    /* raw: the whole legacy block, migrating in phase 4 */
+    .legacy { padding: 18px; gap: 4px; .nested { margin: 2px; } }
+    /* raw: the whole media block */
+    @media (min-width: 700px) { .a { padding: 6px; } @supports (display: grid) { .b { gap: 3px; } } }
+    .after { padding: 9px; }
   `)
-  assert.deepEqual(hits.map((h) => h.text), ['gap: 10px', 'row-gap: 7px', '@media (min-width: 640px)', '@apply text-xs'])
+  assert.deepEqual(hits.map((h) => h.text), ['gap: 10px', 'row-gap: 7px', '@media (min-width: 640px)', '@apply text-xs', 'padding: 9px'])
 })
 
 // Tailwind classes
@@ -313,7 +319,10 @@ test('TypeScript: style assignments, setProperty, class fields, and timing const
     const items = 3
     const rooms = 12
     const fadeDuration = 240
-  `), { spacing: 2, duration: 3 })
+    const pause = setTimeout(fn, 60 * 1000)
+    const later = setTimeout(fn, base * 2)
+    const d = <div style={{ padding: 8 * 2, margin: -(4 + 4) }} />
+  `), { spacing: 4, duration: 4 })
 })
 
 test('TypeScript: JSX color attributes count; other attributes and non style keys do not', () => {
@@ -396,6 +405,22 @@ test('MDX: JSX attributes count like TSX; prose, inline code, and fenced code ar
     '',
     '<svg fill="#fff"><path d="M0 0" /></svg>',
   ]), { 'tailwind-color': 1, 'tailwind-scale': 1, 'tailwind-type': 4, spacing: 1, color: 1 })
+})
+
+test('MDX: spreads, expressions, and export blocks are JavaScript and count like TSX', () => {
+  const hits = scanMdx([
+    'export const panel = { padding: 12, label: "Panel" }',
+    '',
+    '<div {...{ style: { padding: 12 }, className: "text-sm" }} {...rest} />',
+    '',
+    '{cond && <p className="text-lg">x</p>}',
+    '',
+    'Text {value} and {"#fff"} here, but `{"#000"}` is code.',
+    '',
+    '{/* raw: brand artwork */}',
+    '{<path fill="#123456" />}',
+  ].join('\n'))
+  assert.deepEqual(hits.map((h) => [h.category, h.line]), [['spacing', 1], ['spacing', 3], ['tailwind-type', 3], ['tailwind-type', 5], ['color', 7]])
 })
 
 test('MDX: frontmatter is content, and line numbers survive it', () => {

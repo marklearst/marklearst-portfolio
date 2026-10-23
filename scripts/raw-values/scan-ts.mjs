@@ -71,13 +71,27 @@ function staticText(node) {
   return null
 }
 
+const ARITHMETIC = new Map([
+  [ts.SyntaxKind.PlusToken, (a, b) => a + b],
+  [ts.SyntaxKind.MinusToken, (a, b) => a - b],
+  [ts.SyntaxKind.AsteriskToken, (a, b) => a * b],
+  [ts.SyntaxKind.SlashToken, (a, b) => a / b],
+])
+
+/** A number written out, including -4, 1_800, and arithmetic on literals like 60 * 1000. */
 function numericValue(node) {
   node = unwrap(node)
   if (!node) return null
   if (ts.isNumericLiteral(node)) return Number(node.text.replace(/_/g, ''))
-  if (ts.isPrefixUnaryExpression(node) && ts.isNumericLiteral(unwrap(node.operand))) {
-    const n = Number(unwrap(node.operand).text.replace(/_/g, ''))
+  if (ts.isPrefixUnaryExpression(node)) {
+    const n = numericValue(node.operand)
+    if (n === null) return null
     return node.operator === ts.SyntaxKind.MinusToken ? -n : node.operator === ts.SyntaxKind.PlusToken ? n : null
+  }
+  if (ts.isBinaryExpression(node) && ARITHMETIC.has(node.operatorToken.kind)) {
+    const a = numericValue(node.left)
+    const b = numericValue(node.right)
+    return a === null || b === null ? null : ARITHMETIC.get(node.operatorToken.kind)(a, b)
   }
   return null
 }
