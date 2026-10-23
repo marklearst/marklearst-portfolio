@@ -1,27 +1,27 @@
-// Downloads the licensed Wotfard files from private Vercel Blob storage when a
+// Downloads the licensed webfont files from private Vercel Blob storage when a
 // checkout does not already have them. Local checkouts keep the originals in
-// public/fonts/wotfard and never touch the network. Vercel builds start from a
+// public/fonts/wotfard and public/fonts/monolisa and never touch the network. Vercel builds start from a
 // clone without the binaries, so this runs before the font check.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { get } from '@vercel/blob'
-import { blobPathname, isWoff2, publicFile, wotfardPaths } from './webfont-paths.mjs'
+import { blobPathname, isWoff2, publicFile, licensedFontPaths } from './webfont-paths.mjs'
 
-const paths = await wotfardPaths()
+const paths = await licensedFontPaths()
 const missing = []
 for (const path of paths) {
   if (!(await isWoff2(publicFile(path)))) missing.push(path)
 }
 
 if (missing.length === 0) {
-  console.log(`Wotfard webfonts present locally (${paths.length} files); nothing to fetch.`)
+  console.log(`Licensed webfonts present locally (${paths.length} files); nothing to fetch.`)
   process.exit(0)
 }
 
 if (!process.env.BLOB_READ_WRITE_TOKEN) {
-  console.error(`${missing.length} Wotfard webfont files are missing and BLOB_READ_WRITE_TOKEN is not set.`)
-  console.error('Set the token to fetch them from private Blob storage, or place the originals in public/fonts/wotfard.')
+  console.error(`${missing.length} licensed webfont files are missing and BLOB_READ_WRITE_TOKEN is not set.`)
+  console.error('Set the token to fetch them from private Blob storage, or place the originals in public/fonts/wotfard and public/fonts/monolisa.')
   process.exit(1)
 }
 
@@ -48,7 +48,7 @@ for (const path of missing) {
 }
 
 if (failures.length > 0) {
-  console.error('Could not fetch every Wotfard webfont file.')
+  console.error('Could not fetch every licensed webfont file.')
   failures.forEach((failure) => console.error(`  ${failure}`))
   process.exit(1)
 }
