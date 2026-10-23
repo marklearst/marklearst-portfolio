@@ -51,3 +51,7 @@ Case studies use explicit `/work/<slug>` routes with a shared server composition
 
 - github@marklearst.com
 - https://marklearst.com
+
+---
+
+*Coder to the core, think like a designer.*
