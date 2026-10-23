@@ -10,10 +10,9 @@ const RAW_COMMENT = /\{\s*\/\*[\s\S]*?\*\/\s*\}|<!--[\s\S]*?-->/g
 export function scanMdx(source) {
   const blank = (match) => match.replace(/[^\n]/g, ' ')
   const text = source.replace(/^(```|~~~)[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, blank)
-  // Inline code in the writing, but not a template literal in className={`...`}.
-  const inlineCode = [...text.matchAll(/`[^`\n]*`/g)]
-    .filter((m) => !/\{\s*$/.test(text.slice(Math.max(0, m.index - 20), m.index)))
-    .map((m) => [m.index, m.index + m[0].length])
+  // A class attribute that starts inside a backtick span is quoted in the writing or in a code prop.
+  // className={`...`} starts before its template, so it still counts.
+  const inlineCode = [...text.matchAll(/`[^`\n]*`/g)].map((m) => [m.index, m.index + m[0].length])
   const inCode = (index) => inlineCode.some(([start, end]) => index >= start && index < end)
   const lineAt = (index) => text.slice(0, index).split('\n').length
   const lines = source.split('\n')

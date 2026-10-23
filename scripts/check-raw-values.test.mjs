@@ -223,6 +223,7 @@ test('MDX: class attributes count across lines; colors in the writing and in cod
     "<img className='rounded-lg' />",
     '<span className={`text-xs`}>new</span>',
     'Write `className="text-lg"` on the wrapper.',
+    '<CodeBlock code={`<div className="text-white/60" />`} />',
   ].join('\n'))
   assert.deepEqual(tally(hits), { 'tailwind-color': 1, 'tailwind-scale': 1, 'tailwind-type': 2 })
 })
