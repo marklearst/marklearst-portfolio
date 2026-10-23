@@ -79,6 +79,8 @@ Component CSS Modules sit beside their owner. `globals.css` contains document de
 
 Token JSON is the source of generated values, and Style Dictionary builds it. The generator and validator consume the same explicit source list, validate both supported modes and resolve references before emitting CSS. `pnpm tokens:check` compares output without overwriting it. `pnpm build` rejects stale output.
 
+`pnpm tokens:raw` counts the design values components still write as literals, per file and category, against a ratcheting baseline in `scripts/raw-values.baseline.json`. A file can lose raw values but not gain them. `src/tokens/README.md` lists what counts and how to exempt geometry.
+
 Fluid typography is an authored adapter over the token values. Motion is not tokenized. `motion.css` holds the shared easing curve and two shared durations, but most timings live elsewhere: literals in component CSS Modules and `globals.css`, Tailwind duration classes, and durations and curves passed to `animate()` and timers in TypeScript. Spacing and radius tokens exist, but no component reads them yet: component CSS still writes geometry as literals.
 
 Most component color reads the semantic `--color-*` names. Color still bypasses them through several paths:
@@ -88,7 +90,6 @@ Most component color reads the semantic `--color-*` names. Color still bypasses 
 - `src/lib/monokai-colors.ts`, which imports `src/tokens/base.json` directly and feeds code block syntax colors and the Open Graph images; those images also write literal colors inline
 - Hardcoded hex in the GlucoseIQ chart's SVG
 - The evidence gallery's direct read of `--token-color-canvas`
-- Hex fallbacks inside `var()` in several CSS Modules, which never apply while the variables are defined but no longer match the tokens
 
 The component token layer has no consumers. Colors inside the demo data modules are demo content, not interface color. The local schema validates this repository's format; it is not a Primitree or DTCG certification.
 
