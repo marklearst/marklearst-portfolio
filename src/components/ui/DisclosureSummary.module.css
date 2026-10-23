@@ -6,7 +6,7 @@
   min-height: 56px;
   padding-block: 16px;
   color: var(--color-ink-secondary);
-  font: 500 var(--text-ui, 1rem) / 1.5 var(--font-body);
+  font: 500 var(--text-ui) / 1.5 var(--font-body);
   cursor: pointer;
   list-style: none;
   touch-action: manipulation;
