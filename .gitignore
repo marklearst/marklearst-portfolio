@@ -29,6 +29,7 @@
 
 # Licensed webfont binaries are supplied separately for builds.
 /public/fonts/wotfard/*.woff2
+/public/fonts/monolisa/*.woff2
 
 # debug
 npm-debug.log*

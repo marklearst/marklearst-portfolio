@@ -1,6 +1,6 @@
-import { isWoff2, publicFile, wotfardPaths } from './webfont-paths.mjs'
+import { isWoff2, publicFile, licensedFontPaths } from './webfont-paths.mjs'
 
-const paths = await wotfardPaths()
+const paths = await licensedFontPaths()
 const failures = []
 
 for (const path of paths) {
@@ -10,10 +10,10 @@ for (const path of paths) {
 }
 
 if (paths.length === 0 || failures.length > 0) {
-  console.error('Wotfard assets are required before building this site.')
+  console.error('Licensed webfonts are required before building this site.')
   failures.forEach((failure) => console.error(`  ${failure}`))
-  console.error('See public/fonts/wotfard/README.md for setup.')
+  console.error('See the README in public/fonts/wotfard or public/fonts/monolisa for setup.')
   process.exitCode = 1
 } else {
-  console.log(`Verified ${paths.length} Wotfard webfont files.`)
+  console.log(`Verified ${paths.length} licensed webfont files.`)
 }
