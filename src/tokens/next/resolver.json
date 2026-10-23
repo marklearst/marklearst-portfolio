@@ -1,0 +1,41 @@
+{
+  "version": "2025.10",
+  "name": "marklearst",
+  "sets": {
+    "foundation": {
+      "sources": [
+        {
+          "$ref": "base.tokens.json"
+        },
+        {
+          "$ref": "component.tokens.json"
+        }
+      ]
+    }
+  },
+  "modifiers": {
+    "theme": {
+      "default": "dark",
+      "contexts": {
+        "dark": [
+          {
+            "$ref": "semantic.dark.tokens.json"
+          }
+        ],
+        "light": [
+          {
+            "$ref": "semantic.light.tokens.json"
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/foundation"
+    },
+    {
+      "$ref": "#/modifiers/theme"
+    }
+  ]
+}

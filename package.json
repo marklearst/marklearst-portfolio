@@ -40,6 +40,8 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@primitree/core": "1.0.0-next.1",
+    "@primitree/dtcg": "1.0.0-next.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/mdx": "^2.0.14",
     "@types/node": "^24.13.5",

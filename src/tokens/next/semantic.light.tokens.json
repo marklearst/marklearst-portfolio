@@ -1,0 +1,74 @@
+{
+  "semantic": {
+    "color": {
+      "canvas": {
+        "$type": "color",
+        "$value": "{color.light.canvas}"
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.light.surface}"
+      },
+      "surfaceRaised": {
+        "$type": "color",
+        "$value": "{color.light.surfaceRaised}"
+      },
+      "ink": {
+        "primary": {
+          "$type": "color",
+          "$value": "{color.light.ink.primary}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{color.light.ink.secondary}"
+        },
+        "muted": {
+          "$type": "color",
+          "$value": "{color.light.ink.muted}"
+        }
+      },
+      "accent": {
+        "primary": {
+          "$type": "color",
+          "$value": "{color.light.accent.primary}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{color.light.accent.secondary}"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "{color.light.accent.success}"
+        },
+        "danger": {
+          "$type": "color",
+          "$value": "{color.light.accent.danger}"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "{color.light.accent.warning}"
+        }
+      },
+      "border": {
+        "subtle": {
+          "$type": "color",
+          "$value": "{color.light.border.subtle}"
+        }
+      }
+    },
+    "font": {
+      "body": {
+        "$type": "fontFamily",
+        "$value": "{font.sans}"
+      },
+      "display": {
+        "$type": "fontFamily",
+        "$value": "{font.sans}"
+      },
+      "ui": {
+        "$type": "fontFamily",
+        "$value": "{font.sans}"
+      }
+    }
+  }
+}
