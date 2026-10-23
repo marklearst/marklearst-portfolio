@@ -30,9 +30,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: ArtifactPageProps): Promise<Metadata> {
   const { slug } = await params
-  if (!slug) return { title: 'Artifacts - Mark Learst' }
+  if (!slug) return { title: 'Artifacts | Mark Learst' }
   const artifact = await getArtifactBySlug(slug)
-  return { title: `${artifact.title} - Mark Learst`, description: artifact.summary }
+  return { title: `${artifact.title} | Mark Learst`, description: artifact.summary }
 }
 
 export default async function ArtifactPage({ params }: ArtifactPageProps) {
