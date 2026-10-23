@@ -17,7 +17,7 @@
 //
 // What counts and what doesn't is the contract in src/tokens/README.md. The
 // parsers live in scripts/raw-values: postcss and postcss-value-parser for CSS,
-// the TypeScript compiler for TS and TSX, and class attributes for MDX.
+// the TypeScript compiler for TS and TSX, and remark-mdx for MDX.
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
