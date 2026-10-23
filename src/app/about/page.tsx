@@ -8,9 +8,9 @@ import { caseStudyMdxComponents } from '@/components/mdx/CaseStudyMdxComponents'
 import AboutContent from '@/content/about.mdx'
 
 export const metadata: Metadata = {
-  title: 'About - Mark Learst',
+  title: 'About | Mark Learst',
   description:
-    'Principal design engineer Mark Learst — design systems, design tokens, React and TypeScript component libraries, frontend architecture, and accessibility.',
+    'Principal design engineer Mark Learst: design systems, design tokens, React and TypeScript component libraries, frontend architecture, and accessibility.',
 }
 
 // Hardcoded frontmatter - keeps MDX file clean (no YAML frontmatter = no HR rendering bug)

@@ -5,7 +5,7 @@ import { getArtifacts } from '@/lib/content/artifacts'
 import styles from '@/components/artifacts/ArtifactLayout.module.css'
 
 export const metadata: Metadata = {
-  title: 'Artifacts - Mark Learst',
+  title: 'Artifacts | Mark Learst',
   description: 'Technical writeups and experiments across design systems, motion, frontend, design engineering, and tooling.',
 }
 
