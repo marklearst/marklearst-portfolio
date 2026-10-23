@@ -18,7 +18,7 @@
     "test": "node --test \"src/**/*.test.mjs\" \"scripts/**/*.test.mjs\"",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check",
     "tokens:check": "node scripts/build-tokens-sd.mjs --check",
-    "fonts:upload": "node scripts/upload-webfonts.mjs"
+    "fonts:upload": "node --env-file-if-exists=.env.local scripts/upload-webfonts.mjs"
   },
   "dependencies": {
     "@figma-vars/hooks": "^4.0.0",
