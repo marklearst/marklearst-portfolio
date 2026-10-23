@@ -1,12 +1,17 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import '../styles/globals.css'
 import SiteHeader from '@/components/shell/SiteHeader'
 import PageTransition from '@/components/transitions/PageTransition'
-import FigmaVarsContextProvider from '@/components/dev/FigmaVarsProvider'
-import FigmaVarsDebug from '@/components/dev/FigmaVarsDebug'
 import AnalyticsManager from '@/components/analytics/AnalyticsManager'
 import NavigationHistoryTracker from '@/components/navigation/NavigationHistoryTracker'
+
+// Production builds replace NODE_ENV, so these imports and the inspector's
+// dependencies drop out of the production bundle.
+const isDev = process.env.NODE_ENV !== 'production'
+const FigmaVarsContextProvider = isDev ? dynamic(() => import('@/components/dev/FigmaVarsProvider')) : null
+const FigmaVarsDebug = isDev ? dynamic(() => import('@/components/dev/FigmaVarsDebug')) : null
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marklearst.com'),
@@ -45,7 +50,7 @@ export default function RootLayout({
         <SiteHeader />
 
         <PageTransition>{children}</PageTransition>
-        {process.env.NODE_ENV !== 'production' && (
+        {FigmaVarsContextProvider && FigmaVarsDebug && (
           <FigmaVarsContextProvider>
             <FigmaVarsDebug />
           </FigmaVarsContextProvider>
