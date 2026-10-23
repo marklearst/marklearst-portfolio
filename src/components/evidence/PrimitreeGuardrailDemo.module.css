@@ -429,6 +429,12 @@
   font-family: var(--token-font-mono);
 }
 
+/* A Wotfard space is about half a MonoLisa space, so a plain " · " between two
+   code runs closes up. The margin brings each side to one mono space. */
+.inspectFile .separator {
+  margin-inline: 0.35em;
+}
+
 .inspectFile pre {
   max-height: 360px;
   padding: 16px;
