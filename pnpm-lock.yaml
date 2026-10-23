@@ -221,6 +221,12 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1(supports-color@7.2.0)
     devDependencies:
+      '@primitree/core':
+        specifier: 1.0.0-next.1
+        version: 1.0.0-next.1
+      '@primitree/dtcg':
+        specifier: 1.0.0-next.1
+        version: 1.0.0-next.1
       '@tailwindcss/postcss':
         specifier: ^4.3.3
         version: 4.3.3
@@ -849,6 +855,14 @@ packages:
   '@nolyfill/is-core-module@1.0.39':
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
+
+  '@primitree/core@1.0.0-next.1':
+    resolution: {integrity: sha512-OXK6lrrtE0gcBHEVMP2L5NYukHqHeU2U+UjHW5DsoeLGRHktfqlXQQQ5RFQ4duOlPL3gkvTgoPNORSh5rUr1IA==}
+    engines: {node: '>=24.0.0'}
+
+  '@primitree/dtcg@1.0.0-next.1':
+    resolution: {integrity: sha512-IFUOn+xXSs5Zxzaew3SOjSkpOmXqmldv60rzCHPX57y4f1DY2h88OiEcGau2g+dmTVX6fD1TaMyR0v1WcY+dUQ==}
+    engines: {node: '>=24.0.0'}
 
   '@resvg/resvg-wasm@2.4.0':
     resolution: {integrity: sha512-C7c51Nn4yTxXFKvgh2txJFNweaVcfUPQxwEUFw4aWsCmfiBDJsTSwviIF8EcwjQ6k8bPyMWCl1vw4BdxE569Cg==}
@@ -3868,6 +3882,12 @@ snapshots:
       fastq: 1.20.3
 
   '@nolyfill/is-core-module@1.0.39': {}
+
+  '@primitree/core@1.0.0-next.1': {}
+
+  '@primitree/dtcg@1.0.0-next.1':
+    dependencies:
+      '@primitree/core': 1.0.0-next.1
 
   '@resvg/resvg-wasm@2.4.0': {}
 
