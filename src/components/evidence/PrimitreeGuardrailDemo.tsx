@@ -134,22 +134,22 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
         <div className={styles.inspectBody}>
           <p>The two runs use the same configuration. Only <code>semantic.action.$value</code> changes.</p>
           <div className={styles.inspectFile}>
-            <span>primitree.config.ts</span>
+            <span><code>primitree.config.ts</code></span>
             <pre tabIndex={0} aria-label="Full Primitree configuration"><code>{PRIMITREE_DEMO.configSource}</code></pre>
           </div>
           <div className={styles.inspectFile}>
-            <span>tokens.json · {labels[selectedId]}</span>
+            <span><code>tokens.json</code> · {labels[selectedId]}</span>
             <pre tabIndex={0} aria-label="Full token input"><code>{selected.tokensSource}</code></pre>
           </div>
           <div className={styles.inspectFile}>
-            <span>primitree check --format json · exit {selected.check.exitCode}</span>
+            <span><code>primitree check --format json</code> · <code>exit {selected.check.exitCode}</code></span>
             <pre tabIndex={0} aria-label="Recorded Primitree check result"><code>{JSON.stringify(selected.checkReport, null, 2)}</code></pre>
           </div>
           <div className={styles.inspectFile}>
-            <span>primitree build · exit {selected.build.exitCode}</span>
+            <span><code>primitree build</code> · <code>exit {selected.build.exitCode}</code></span>
             <pre tabIndex={0} aria-label="Recorded Primitree build output"><code>{selected.build.stdout || selected.build.stderr}</code></pre>
           </div>
-          {selected.css && <div className={styles.inspectFile}><span>generated/css/tokens.css · complete file</span><pre tabIndex={0} aria-label="Complete generated CSS"><code>{selected.css}</code></pre></div>}
+          {selected.css && <div className={styles.inspectFile}><span><code>generated/css/tokens.css</code> · complete file</span><pre tabIndex={0} aria-label="Complete generated CSS"><code>{selected.css}</code></pre></div>}
         </div>
       </details>
 
