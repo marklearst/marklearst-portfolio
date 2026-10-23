@@ -2,10 +2,18 @@ import { readFile } from 'node:fs/promises'
 
 const WOFF2_MAGIC = 'wOF2'
 
-/** Wotfard URLs declared in the stylesheet, as site-relative paths. */
-export async function wotfardPaths() {
-  const css = await readFile(new URL('../src/styles/fonts.css', import.meta.url), 'utf8')
-  return [...css.matchAll(/url\(['"]?(\/fonts\/wotfard\/[^'"\s)]+)['"]?\)/g)].map(([, path]) => path)
+const STYLESHEETS = ['../src/styles/fonts.css', '../src/styles/monolisa.css']
+
+/** Licensed font URLs declared in the stylesheets, as site-relative paths. */
+export async function licensedFontPaths() {
+  const paths = []
+  for (const stylesheet of STYLESHEETS) {
+    const css = await readFile(new URL(stylesheet, import.meta.url), 'utf8')
+    for (const [, path] of css.matchAll(/url\(['"]?(\/fonts\/(?:wotfard|monolisa)\/[^'"\s)]+)['"]?\)/g)) {
+      paths.push(path)
+    }
+  }
+  return paths
 }
 
 /** Absolute file URL under public/ for a site-relative path. */
