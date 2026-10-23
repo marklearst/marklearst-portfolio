@@ -6,7 +6,7 @@ export const codeTheme: Record<string, CSSProperties> = {
   'code[class*="language-"]': {
     color: MONOKAI.foreground,
     background: 'transparent',
-    fontFamily: '"MonoLisa", "SF Mono", Consolas, monospace',
+    fontFamily: 'var(--font-mono)',
     textAlign: 'left',
     whiteSpace: 'pre',
     wordSpacing: 'normal',
@@ -20,7 +20,7 @@ export const codeTheme: Record<string, CSSProperties> = {
   'pre[class*="language-"]': {
     color: MONOKAI.foreground,
     background: 'transparent',
-    fontFamily: '"MonoLisa", "SF Mono", Consolas, monospace',
+    fontFamily: 'var(--font-mono)',
     textAlign: 'left',
     whiteSpace: 'pre',
     wordSpacing: 'normal',
