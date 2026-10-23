@@ -138,18 +138,18 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
             <pre tabIndex={0} aria-label="Full Primitree configuration"><code>{PRIMITREE_DEMO.configSource}</code></pre>
           </div>
           <div className={styles.inspectFile}>
-            <span><code>tokens.json</code> · {labels[selectedId]}</span>
+            <span><code>tokens.json</code> <span className={styles.separator}>·</span> {labels[selectedId]}</span>
             <pre tabIndex={0} aria-label="Full token input"><code>{selected.tokensSource}</code></pre>
           </div>
           <div className={styles.inspectFile}>
-            <span><code>primitree check --format json</code> · <code>exit {selected.check.exitCode}</code></span>
+            <span><code>primitree check --format json</code> <span className={styles.separator}>·</span> <code>exit {selected.check.exitCode}</code></span>
             <pre tabIndex={0} aria-label="Recorded Primitree check result"><code>{JSON.stringify(selected.checkReport, null, 2)}</code></pre>
           </div>
           <div className={styles.inspectFile}>
-            <span><code>primitree build</code> · <code>exit {selected.build.exitCode}</code></span>
+            <span><code>primitree build</code> <span className={styles.separator}>·</span> <code>exit {selected.build.exitCode}</code></span>
             <pre tabIndex={0} aria-label="Recorded Primitree build output"><code>{selected.build.stdout || selected.build.stderr}</code></pre>
           </div>
-          {selected.css && <div className={styles.inspectFile}><span><code>generated/css/tokens.css</code> · complete file</span><pre tabIndex={0} aria-label="Complete generated CSS"><code>{selected.css}</code></pre></div>}
+          {selected.css && <div className={styles.inspectFile}><span><code>generated/css/tokens.css</code> <span className={styles.separator}>·</span> complete file</span><pre tabIndex={0} aria-label="Complete generated CSS"><code>{selected.css}</code></pre></div>}
         </div>
       </details>
 
