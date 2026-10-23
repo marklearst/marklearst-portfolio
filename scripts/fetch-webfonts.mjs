@@ -1,7 +1,8 @@
 // Downloads the licensed webfont files from private Vercel Blob storage when a
 // checkout does not already have them. Local checkouts keep the originals in
-// public/fonts/wotfard and public/fonts/monolisa and never touch the network. Vercel builds start from a
-// clone without the binaries, so this runs before the font check.
+// public/fonts/wotfard and public/fonts/monolisa and never touch the network.
+// Vercel builds start from a clone without the binaries, so this runs before
+// the font check.
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'

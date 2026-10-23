@@ -18,7 +18,7 @@ project's environment. The files are stored with private access, so the token
 is the only way to read them.
 
 To seed or replace the stored files, run `pnpm fonts:upload` from a checkout
-that has the originals, with the same token set locally.
+that has the originals, with the same token in `.env.local`.
 
 After the fetch, `scripts/check-webfonts.mjs` confirms every file is present
 and is an original WOFF2. A missing or wrong file stops the build rather than
