@@ -70,7 +70,6 @@ export default function CaseStudyContent({
             <TrackedLink
               href='/work'
               className={styles.backLink}
-              aria-label='Back to work'
               event={{ type: 'navigation', data: {
                 action: 'back_to_work',
                 from: pathname,
@@ -78,7 +77,7 @@ export default function CaseStudyContent({
                 location: 'top',
               } }}
             >
-              <ArrowLeftIcon /> ../work
+              <ArrowLeftIcon /> Back to work
             </TrackedLink>
 
             <h1 id='case-study-title' className={styles.title}>{title}</h1>
@@ -185,7 +184,6 @@ export default function CaseStudyContent({
               <TrackedLink
                 href='/work'
                 className={styles.backLink}
-                aria-label='Back to work'
                 event={{ type: 'navigation', data: {
                   action: 'back_to_work',
                   from: pathname,
@@ -193,7 +191,7 @@ export default function CaseStudyContent({
                   location: 'bottom',
                 } }}
               >
-                <ArrowLeftIcon /> ../work
+                <ArrowLeftIcon /> Back to work
               </TrackedLink>
               <a href='#case-study-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
             </nav>

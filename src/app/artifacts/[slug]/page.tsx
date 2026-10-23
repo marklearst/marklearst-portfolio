@@ -73,7 +73,7 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
   return (
     <main className={styles.page}>
       <article className={`${styles.container} ${styles.article}`}>
-        <Link href='/artifacts' className={styles.backLink}><span aria-hidden='true'><ArrowLeftIcon /></span> ../artifacts</Link>
+        <Link href='/artifacts' className={styles.backLink}><span aria-hidden='true'><ArrowLeftIcon /></span> Back to artifacts</Link>
         <header>
           <div className={styles.articleMeta}><time dateTime={artifact.publishedAt.toISOString()}>{formatDate(artifact.publishedAt)}</time><span>{artifact.readingTime.minutes} min read</span></div>
           <h1 id='article-title' className={styles.title}>{artifact.title}</h1>
@@ -95,7 +95,7 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
           next={next ? { href: `/artifacts/${next.slug}`, title: next.title } : null}
         />
         <nav className={styles.endNavigation} aria-label='Article controls'>
-          <Link href='/artifacts' className={styles.backLink} aria-label='Back to artifacts'><ArrowLeftIcon /> ../artifacts</Link>
+          <Link href='/artifacts' className={styles.backLink}><ArrowLeftIcon /> Back to artifacts</Link>
           <a href='#article-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
         </nav>
       </article>
