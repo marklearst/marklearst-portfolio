@@ -1,14 +1,14 @@
 {
-  "total": 1402,
+  "total": 1394,
   "totals": {
     "spacing": 705,
     "font": 179,
-    "radius": 83,
+    "radius": 72,
     "color": 70,
     "font-size": 70,
     "duration": 67,
     "line-height": 53,
-    "font-weight": 38,
+    "font-weight": 41,
     "easing": 35,
     "breakpoint": 30,
     "letter-spacing": 20,
@@ -25,10 +25,10 @@
       "color": 10,
       "font-family": 1,
       "font-size": 4,
-      "font-weight": 3,
+      "font-weight": 4,
       "letter-spacing": 4,
       "line-height": 1,
-      "radius": 5,
+      "radius": 2,
       "spacing": 9
     },
     "src/app/artifacts/opengraph-image.tsx": {
@@ -37,7 +37,7 @@
       "font-size": 4,
       "font-weight": 2,
       "line-height": 2,
-      "radius": 3,
+      "radius": 1,
       "spacing": 5
     },
     "src/app/opengraph-image.tsx": {
@@ -47,7 +47,7 @@
       "font-weight": 1,
       "letter-spacing": 2,
       "line-height": 2,
-      "radius": 3,
+      "radius": 1,
       "spacing": 8
     },
     "src/app/work/[slug]/opengraph-image.tsx": {
@@ -57,7 +57,7 @@
       "font-weight": 4,
       "letter-spacing": 1,
       "line-height": 2,
-      "radius": 5,
+      "radius": 3,
       "spacing": 13
     },
     "src/app/work/opengraph-image.tsx": {
@@ -66,7 +66,7 @@
       "font-size": 4,
       "font-weight": 2,
       "line-height": 2,
-      "radius": 3,
+      "radius": 1,
       "spacing": 5
     },
     "src/components/about/AboutLayout.module.css": {
@@ -125,6 +125,7 @@
     },
     "src/components/content/code-theme.ts": {
       "font-size": 2,
+      "font-weight": 2,
       "line-height": 2
     },
     "src/components/content/CodeBlock.module.css": {

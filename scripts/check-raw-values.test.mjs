@@ -141,13 +141,14 @@ test('TS strings anywhere count, including class lists kept in variables', () =>
   assert.deepEqual(tally(hits), { color: 2, 'tailwind-type': 1, 'tailwind-color': 1, duration: 1, easing: 1 })
 })
 
-test('inline style entries count by category, numbers included, token names excluded', () => {
+test('inline style entries follow the CSS rules for their property', () => {
   const hits = scanTsx(`
     <div style={{ fontSize: '48px', padding: 0, gap: 12, lineHeight: 0.9, marginTop: -4 }} />
     <div style={{ gap: 'var(--spacing-2xl)', padding: 'var(--spacing-md, 16px)', color: 'rgba(252, 252, 250, 0.5)' }} />
     <div style={{ zIndex: 1, fontFamily: 'monospace', transition: 'opacity 180ms ease' }} />
+    <div style={{ borderRadius: '50%', fontWeight: 'bold', borderTopLeftRadius: 8 }} />
   `)
-  assert.deepEqual(tally(hits), { 'font-size': 1, spacing: 2, 'line-height': 1, fallback: 1, color: 1, 'font-family': 1, duration: 1, easing: 1 })
+  assert.deepEqual(tally(hits), { 'font-size': 1, spacing: 2, 'line-height': 1, fallback: 1, color: 1, 'font-family': 1, duration: 1, easing: 1, 'font-weight': 1, radius: 1 })
 })
 
 test('MDX color examples and fenced code are content, not design values', () => {

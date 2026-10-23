@@ -183,44 +183,19 @@ const STYLE_KEYS = 'fontSize|lineHeight|letterSpacing|fontWeight|fontFamily|padd
 const STYLE_ENTRY = new RegExp(`\\b(${STYLE_KEYS})\\s*:\\s*(?:(['"\`])((?:(?!\\2).)*)\\2|(-?(?:\\d*\\.)?\\d+)(?![\\w.]))`, 'g')
 const STRING = /(['"`])((?:\\.|(?!\1)[^\\])*)\1/g
 
-const STYLE_CATEGORY = [
-  [/^(?:padding|margin)\w*$|^(?:gap|rowGap|columnGap)$/, 'spacing'],
-  [/^fontSize$/, 'font-size'],
-  [/^lineHeight$/, 'line-height'],
-  [/^letterSpacing$/, 'letter-spacing'],
-  [/^fontWeight$/, 'font-weight'],
-  [/^border\w*Radius$/, 'radius'],
-  [/^(?:box|text)Shadow$/, 'shadow'],
-  [/^zIndex$/, 'z-index'],
-]
+const UNITLESS = new Set(['line-height', 'font-weight', 'z-index'])
 
 /**
  * Category counts for one style or object entry, such as { padding: '80px' } or
- * { lineHeight: 0.9 }. Each entry lands in the same category its CSS property would.
+ * { lineHeight: 0.9 }. The entry goes through the same rules as the CSS property
+ * it sets, so `borderRadius: '50%'` is geometry and `fontWeight: 'bold'` counts,
+ * exactly as they would in a stylesheet. A bare number means px, as in React,
+ * except on unitless properties.
  */
 function styleEntryHits(key, quoted, number) {
-  const hits = {}
-  const add = (category, n = 1) => { if (n > 0) hits[category] = (hits[category] ?? 0) + n }
-  const category = STYLE_CATEGORY.find(([re]) => re.test(key))?.[1]
-  if (number !== undefined) {
-    const n = parseFloat(number)
-    if (n !== 0 && !(key === 'zIndex' && Math.abs(n) <= 1) && category) add(category)
-    return hits
-  }
-  add('fallback', literalFallbacks(quoted))
-  const v = withoutVars(quoted)
-  if (/^(?:color|background(?:Color)?|borderColor|outlineColor|fill|stroke)$/.test(key)) add('color', colorLiterals(v, 'color'))
-  else if (key === 'fontFamily') add('font-family', v.trim() && !WIDE_KEYWORD.test(v) ? 1 : 0)
-  else if (/^(?:transition|animation)/.test(key)) {
-    add('duration', nonZero(v, DURATION))
-    add('easing', count(v, EASING))
-  } else if (category === 'shadow') {
-    add('shadow', layers(v).filter((layer) => /\d/.test(layer) && !/^\s*none\s*$/.test(layer)).length)
-    add('color', colorLiterals(v, 'box-shadow'))
-  } else if (category === 'z-index') {
-    if (/\d/.test(v) && !/^\s*-?[01]\s*$/.test(v)) add('z-index')
-  } else if (category) add(category, nonZero(v, NUMBER))
-  return hits
+  const prop = key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
+  const value = number === undefined ? quoted : UNITLESS.has(prop) ? number : `${number}px`
+  return classifyDeclaration(prop, value)
 }
 
 /** Lines of TS, TSX, or MDX. MDX color literals are content (token examples in prose and code), so only its classes count. */
