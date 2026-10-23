@@ -32,7 +32,7 @@ src/
   styles/               Global defaults, fonts, type/motion adapters
     generated/          Generated CSS; never edit by hand
   tokens/               Token sources and their generation contract
-    next/               Primitree copy of the tokens, staged; not a build input
+    next/               Primitree migration of the tokens, staged; not a build input
 scripts/                Font checks, token generation, validation, tests
 ```
 
@@ -79,9 +79,9 @@ Component CSS Modules sit beside their owner. `globals.css` contains document de
 
 Token JSON is the source of generated values, and Style Dictionary builds it. The generator and validator consume the same explicit source list, validate both supported modes and resolve references before emitting CSS. `pnpm tokens:check` compares output without overwriting it. `pnpm build` rejects stale output.
 
-Fluid typography is an authored adapter over the token values. Motion durations and easing are authored in `motion.css` and are not tokens. Spacing and radius tokens exist, but no component reads them yet: component CSS still writes geometry as literals. Components read the semantic `--color-*` names, and the component token layer has no consumers. The local schema validates this repository's format; it is not a Primitree or DTCG certification.
+Fluid typography is an authored adapter over the token values. Motion durations and easing are authored in `motion.css` and are not tokens. Spacing and radius tokens exist, but no component reads them yet: component CSS still writes geometry as literals. Components read the semantic `--color-*` names, with two exceptions: the MDX table header uses `text-monokai-cyan`, and the evidence gallery reads `--token-color-canvas`. The component token layer has no consumers. The local schema validates this repository's format; it is not a Primitree or DTCG certification.
 
-`src/tokens/next` holds the same tokens migrated once to Primitree's DTCG 2025.10 subset. Nothing reads it yet, and nothing regenerates it. Style Dictionary stays the build until Primitree's check replaces it.
+`src/tokens/next` holds a one time migration of these tokens to Primitree's DTCG 2025.10 subset. It drops the Monokai group, `font.serif`, `radius.pill`, and `component.card.shadow`, moves the light values into the base layer, and renames hyphenated keys to camelCase. Nothing reads it yet, and nothing regenerates it. Style Dictionary stays the build until Primitree's check replaces it.
 
 ESLint rejects route imports from components and UI imports from data/library modules. These checks support the ownership rules; review relative imports and new boundaries as part of code review too.
 

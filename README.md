@@ -8,7 +8,7 @@ Design systems, React component libraries, developer tools, and working interfac
 
 - Next.js 16 App Router, React 19, and TypeScript
 - CSS Modules for component styles, Tailwind CSS 4 for existing utilities
-- Style Dictionary for generated token CSS, with a Primitree copy of the tokens staged in `src/tokens/next`
+- Style Dictionary for generated token CSS, with a Primitree migration of the tokens staged in `src/tokens/next`
 - Wotfard for reading and MonoLisa for code
 - GlucoseIQ for the interactive glucose example
 
