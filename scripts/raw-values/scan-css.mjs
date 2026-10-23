@@ -1,10 +1,12 @@
-// Scans a stylesheet: declarations, @apply utilities, and @media or @container
-// conditions.
+// Scans a stylesheet: declarations, @apply utilities, and the conditions of
+// @media, @container, and @custom-media.
 //
-// A comment containing "raw:" exempts the node it's attached to: a node that
-// starts on the comment's line, or, when the comment stands alone on its line,
-// the node that starts on the very next line. Blank lines break the link, so a
-// comment left behind by a deleted declaration exempts nothing.
+// A comment containing "raw:" exempts the node it's attached to and everything
+// inside it: a node that starts on the comment's line, or, when the comment
+// stands alone on its line, the node that starts on the very next line. So a
+// comment above a declaration covers that declaration, and one above a rule or
+// an @media block covers every declaration inside. Blank lines break the link,
+// so a comment left behind by a deleted declaration exempts nothing.
 import postcss from 'postcss'
 import { classifyDeclaration, classifyMediaParams } from './classify.mjs'
 import { classifyClass } from './tailwind.mjs'
@@ -23,10 +25,14 @@ export function scanCss(source, from = 'input.css') {
     if (line === startLine(comment) || line === endLine(comment)) return true
     return standsAlone(comment) && line === endLine(comment) + 1
   }
-  const exempt = (node) => {
+  const marked = (node) => {
     const neighbors = [node.prev(), node.next()]
-    if (node.type === 'atrule' && node.nodes) neighbors.push(node.first)
+    if (node.nodes) neighbors.push(node.first)
     return neighbors.some((neighbor) => covers(neighbor, node))
+  }
+  const exempt = (node) => {
+    for (let cur = node; cur && cur.type !== 'root'; cur = cur.parent) if (marked(cur)) return true
+    return false
   }
 
   const hits = []
@@ -38,7 +44,7 @@ export function scanCss(source, from = 'input.css') {
   postcss.parse(source, { from }).walk((node) => {
     if (node.type === 'decl') {
       if (!exempt(node)) push(classifyDeclaration(node.prop, node.value), node, `${node.prop}: ${node.value}`)
-    } else if (node.type === 'atrule' && /^(?:media|container)$/i.test(node.name)) {
+    } else if (node.type === 'atrule' && /^(?:media|container|custom-media)$/i.test(node.name)) {
       if (!exempt(node)) push({ breakpoint: classifyMediaParams(node.params) }, node, `@${node.name} ${node.params}`)
     } else if (node.type === 'atrule' && node.name === 'apply') {
       if (exempt(node)) return
