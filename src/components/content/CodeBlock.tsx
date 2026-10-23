@@ -33,7 +33,7 @@ export default function CodeBlock({
           }}
           codeTagProps={{
             style: {
-              fontFamily: '"MonoLisa", "SF Mono", Consolas, monospace',
+              fontFamily: 'var(--font-mono)',
               fontFeatureSettings: '"liga" 1, "calt" 1',
               backgroundColor: 'transparent',
               padding: 0,

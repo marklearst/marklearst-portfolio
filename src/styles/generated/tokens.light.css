@@ -35,7 +35,7 @@
   --token-color-accent-danger: 173 57 49;
   --token-color-accent-warning: 118 81 9;
   --token-color-border-subtle: 209 209 200;
-  --token-font-mono: MonoLisa, 'SF Mono', Consolas, monospace; /** Existing MonoLisa for code and technical detail; unchanged font files. */
+  --token-font-mono: MonoLisa, 'MonoLisa fallback', 'SF Mono', Consolas, monospace; /** Existing MonoLisa for code and technical detail; unchanged font files. */
   --token-font-sans: Wotfard, Arial, sans-serif; /** Licensed Wotfard webfonts: Light, Regular, and Medium with matching italics. Font binaries are provisioned separately from the public repository. */
   --token-font-serif: ui-serif, Georgia, serif;
   --token-font-body: Wotfard, Arial, sans-serif;

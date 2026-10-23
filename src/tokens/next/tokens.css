@@ -24,7 +24,7 @@
   --color-light-accent-danger: color(srgb 0.6784 0.2235 0.1922);
   --color-light-accent-warning: color(srgb 0.4627 0.3176 0.0353);
   --color-light-border-subtle: color(srgb 0.8196 0.8196 0.7843);
-  --font-mono: MonoLisa, 'SF Mono', Consolas, monospace;
+  --font-mono: MonoLisa, 'MonoLisa fallback', 'SF Mono', Consolas, monospace;
   --font-sans: Wotfard, Arial, sans-serif;
   --space-xs: 4px;
   --space-sm: 8px;
