@@ -16,19 +16,46 @@ Generated CSS must be changed through the source files. Fluid type calculations 
 
 ## Raw values
 
-Components read design values from tokens. `pnpm tokens:raw` counts the values still written as literals, per file and category, and compares them with `scripts/raw-values.baseline.json`.
+Components read design values from tokens. `pnpm tokens:raw` counts the values still written as literals, per file and category, and compares them with `scripts/raw-values.baseline.json`. The parsers live in `scripts/raw-values`: postcss and postcss-value-parser for CSS, and the TypeScript compiler for TS and TSX.
 
-- **A file that gains a raw value fails.** Use a token, or keep the literal with a comment containing `raw:` and the reason, on the same line or the line before. That works for declarations, `@media` and `@container` rules, and lines of TypeScript.
-- **A file that loses one also fails** until `pnpm tokens:raw --update` lowers the baseline. That locks the improvement in. `--update` refuses to raise any count, even when another count dropped.
+- **A file that gains a raw value fails.** Use a token, or keep the literal with a `raw:` comment that says why (see below).
+- **A file that loses one also fails** until `pnpm tokens:raw --update` lowers the baseline. That locks the improvement in. `--update` refuses to raise any count, even when another count dropped in the same run.
 - **The build runs it with `--growth-only`,** so a deploy fails on new raw values but not on a stale baseline.
-- **`--reset` rebuilds the baseline from scratch.** It's only for changes to the scanner itself, and the baseline diff gets reviewed like code.
+- **`--reset` rebuilds the baseline from scratch.** It's only for changes to the scanner, and the baseline diff gets reviewed like code.
 - `pnpm tokens:raw --list [category]` prints every hit.
 
-Only decisions count: color (hex, color functions, named colors), the type properties and font families, spacing, radius, motion, shadows (including `drop-shadow()`), z-index, and breakpoints. They count in CSS Modules, `@apply` utilities, inline styles and other style objects in TypeScript, and Tailwind classes anywhere in a string. Each literal counts once, so a declaration with three literals counts three. Literal fallbacks inside `var()` count too, since every variable they guard is always defined and a stale fallback only hides drift.
+### What counts
 
-Some things stay out on purpose:
+Each literal counts once, so `transition: opacity 180ms, transform 500ms` is two durations.
 
-- **Geometry:** sizes, offsets, hairline borders, `50%` circles, chart coordinates, and arbitrary Tailwind values on layout utilities like `w-[...]` and `grid-cols-[...]`.
-- **Tailwind's numeric spacing utilities** (`p-4`, `gap-1.5`, `space-y-2`). They resolve through the `--spacing` token, so changing the token moves them.
-- **Demo data and engines in `src/lib`.** Their colors are content, like the color pair the a11y demo checks.
-- **Color examples in MDX.** In the writing, they're token examples, not interface color.
+- **Color:** hex, every color function (`rgb()`, `oklch()`, `color()` and the rest) when no argument is a token, and named colors like `red` on color properties.
+- **Spacing:** every length and percentage in padding, margin, gap, and scroll padding or margin, including inside `clamp()`, `calc()`, `min()`, and `max()`.
+- **Type:** font sizes (lengths and keywords like `medium`), line heights, letter spacing, font weights (numbers and `normal`, `bold`, `bolder`, `lighter`), font families, and each of those inside the `font` shorthand.
+- **Radius:** every length or percentage except a lone `50%`.
+- **Shadow:** each `box-shadow` or `text-shadow` layer, and each `drop-shadow()` in a filter.
+- **Motion:** each duration and easing in transitions and animations, `duration`, `delay`, and `easing` in objects passed to `animate()`, and `setTimeout` or `setInterval` delays.
+- **Stacking:** `z-index` other than 0, 1, and -1.
+- **Breakpoints:** lengths in `@media` and `@container` conditions and in Tailwind `min-[...]:` and `max-[...]:` variants.
+- **Tailwind defaults:** palette colors (`text-white/60`), the type scale (`text-sm`), and the default radius, shadow, motion, tracking, leading, weight, and z-index utilities. Arbitrary values and properties count as the CSS they set: `p-[24px]` is spacing, `text-[#123456]` is color, `[padding:18px]` is spacing.
+- **Fallbacks:** a literal inside `var()`, like `var(--ink, #f3eee8)`. Every variable it guards is always defined, so it only hides drift.
+
+### Where it looks
+
+- **CSS:** declarations, `@apply`, and `@media` or `@container` conditions in every stylesheet under `src`.
+- **TS and TSX:** an object property named for a CSS property counts like that property, so `{ padding: '80px' }` is spacing and `{ borderRadius: '50%' }` isn't. A bare number means px, as in React, except on `line-height`, `font-weight`, and `z-index`. JSX `fill`, `stroke`, and `color` count as colors. Every other string counts its Tailwind classes, then any literal colors, fallbacks, and easing functions left over. A string is one value however many lines it spans.
+- **MDX:** class attributes only.
+
+### What stays out on purpose
+
+- **Geometry:** sizes, offsets, hairline borders, `50%` circles, chart coordinates, SVG geometry attributes, and Tailwind arbitrary values on layout utilities like `w-[...]` and `grid-cols-[...]`.
+- **Tailwind's numeric spacing** (`p-4`, `gap-1.5`, `space-y-2`). It resolves through the `--spacing` token, so changing the token moves it.
+- **Resets to the font's own default:** `line-height: normal` and `letter-spacing: normal`.
+- **Values that come from code,** like `${MONOKAI.pink}` in a template, an imported constant, or a ternary's result. They aren't literals where they're used. The strings inside a ternary still count their classes, colors, and fallbacks, but not their spacing or type, since there's no property to read them against.
+- **Colors derived from a token,** like `rgb(var(--token-color-canvas))`.
+- **Content:** demo data and engines in `src/lib`, color examples in MDX writing and code samples, and named colors in plain TS strings, where "orange" is a word.
+- **Other files:** generated output (`src/styles/generated`, `src/tokens`), font faces, type declarations, and tests.
+- **JSX attributes that aren't styles,** like `href`, `d`, `alt`, and `aria-*`.
+
+### Exemptions
+
+A comment containing `raw:` keeps a literal and says why. It covers the code on its own line, or the code on the next line when the comment stands alone: `/* raw: */` in CSS, `// raw:` in TypeScript, and `{/* raw: */}` in JSX and MDX. In TypeScript, a comment above a property, an attribute, a JSX element, or a statement covers everything inside it.

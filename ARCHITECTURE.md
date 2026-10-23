@@ -79,7 +79,7 @@ Component CSS Modules sit beside their owner. `globals.css` contains document de
 
 Token JSON is the source of generated values, and Style Dictionary builds it. The generator and validator consume the same explicit source list, validate both supported modes and resolve references before emitting CSS. `pnpm tokens:check` compares output without overwriting it. `pnpm build` rejects stale output.
 
-`pnpm tokens:raw` counts the design values components still write as literals, per file and category, against a ratcheting baseline in `scripts/raw-values.baseline.json`. A file can lose raw values but not gain them. `src/tokens/README.md` lists what counts and how to exempt geometry.
+`pnpm tokens:raw` counts the design values components still write as literals, per file and category, against a ratcheting baseline in `scripts/raw-values.baseline.json`. A file can lose raw values but not gain them. It parses rather than pattern matches: postcss and postcss-value-parser for CSS, the TypeScript compiler for TS and TSX (`scripts/raw-values`). `src/tokens/README.md` is the contract: what counts, what stays out on purpose, and how to exempt a literal.
 
 Fluid typography is an authored adapter over the token values. Motion is not tokenized. `motion.css` holds the shared easing curve and two shared durations, but most timings live elsewhere: literals in component CSS Modules and `globals.css`, Tailwind duration classes, and durations and curves passed to `animate()` and timers in TypeScript. Spacing and radius tokens exist, but no component reads them yet: component CSS still writes geometry as literals.
 
