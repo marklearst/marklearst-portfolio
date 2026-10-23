@@ -60,7 +60,8 @@ export function classifyClass(raw) {
   const cls = raw.replace(/^!|!$/g, '')
   if (!/^[\w@[!-]/.test(cls)) return hits
   const parts = splitVariants(cls)
-  const utility = parts.pop().replace(/^-/, '')
+  // Important can also sit after the variants: hover:!bg-white/60.
+  const utility = parts.pop().replace(/^!|!$/g, '').replace(/^-/, '')
 
   for (const variant of parts) {
     // min-[837px]:, max-[600px]:, @min-[400px]:, [@media(min-width:900px)]:

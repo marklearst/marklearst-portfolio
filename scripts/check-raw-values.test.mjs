@@ -140,6 +140,10 @@ test('Tailwind: default scales count, tokens and numeric spacing do not, arbitra
     'space-y-2': {},
     'md:grid': {},
     'text-ink-primary': {},
+    'hover:!bg-white/60': { 'tailwind-color': 1 },
+    'md:!text-sm': { 'tailwind-type': 1 },
+    '!rounded-md': { 'tailwind-scale': 1 },
+    'md:p-[24px]!': { spacing: 1 },
   }
   for (const [cls, expected] of Object.entries(cases)) assert.deepEqual(classifyClass(cls), expected, cls)
 })
@@ -217,8 +221,10 @@ test('MDX: class attributes count across lines; colors in the writing and in cod
     '  text-sm">note</div>',
     '{/* raw: matches the screenshot frame */}',
     "<img className='rounded-lg' />",
+    '<span className={`text-xs`}>new</span>',
+    'Write `className="text-lg"` on the wrapper.',
   ].join('\n'))
-  assert.deepEqual(tally(hits), { 'tailwind-color': 1, 'tailwind-scale': 1, 'tailwind-type': 1 })
+  assert.deepEqual(tally(hits), { 'tailwind-color': 1, 'tailwind-scale': 1, 'tailwind-type': 2 })
 })
 
 async function fixture(t, files) {
