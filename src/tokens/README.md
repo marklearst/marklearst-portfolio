@@ -6,6 +6,8 @@ The generator and validator share one source list in `scripts/style-dictionary/t
 - `alias.json` defines semantic aliases and dark/light values.
 - `component.json` defines component aliases.
 
+`next/` holds these tokens migrated once to Primitree's DTCG 2025.10 subset, with a resolver for the dark and light contexts. It is not a build input and nothing regenerates it, so keep editing the files above until Primitree takes over the build.
+
 `modes.json` is a legacy reference snapshot. It is not a build input; edit light-mode values in `alias.json`.
 
 The local schema in `scripts/style-dictionary/token-schema.json` describes this repository's source format. Validation checks token shapes, duplicate definitions, references, and resolved value types in both modes. It does not certify DTCG or Primitree conformance.
