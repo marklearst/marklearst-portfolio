@@ -295,6 +295,7 @@
       "$type": "fontFamily",
       "$value": [
         "MonoLisa",
+        "MonoLisa fallback",
         "SF Mono",
         "Consolas",
         "monospace"
