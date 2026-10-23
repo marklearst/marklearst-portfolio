@@ -1,52 +1,86 @@
 {
-  "total": 1049,
+  "total": 1402,
   "totals": {
-    "spacing": 504,
-    "font": 114,
-    "inline-style": 110,
-    "radius": 64,
-    "duration": 46,
-    "line-height": 42,
-    "font-size": 34,
+    "spacing": 705,
+    "font": 179,
+    "radius": 83,
+    "color": 70,
+    "font-size": 70,
+    "duration": 67,
+    "line-height": 53,
+    "font-weight": 38,
+    "easing": 35,
     "breakpoint": 30,
-    "font-weight": 26,
-    "easing": 21,
-    "color": 18,
-    "shadow": 14,
-    "letter-spacing": 13,
-    "tailwind-color": 5,
-    "tailwind-scale": 4,
-    "z-index": 2,
-    "tailwind-type": 1,
-    "tailwind-arbitrary": 1
+    "letter-spacing": 20,
+    "shadow": 19,
+    "tailwind-color": 12,
+    "tailwind-scale": 8,
+    "font-family": 5,
+    "tailwind-type": 4,
+    "tailwind-arbitrary": 2,
+    "z-index": 2
   },
   "files": {
     "src/app/artifacts/[slug]/opengraph-image.tsx": {
-      "inline-style": 24
+      "color": 10,
+      "font-family": 1,
+      "font-size": 4,
+      "font-weight": 3,
+      "letter-spacing": 4,
+      "line-height": 1,
+      "radius": 5,
+      "spacing": 9
     },
     "src/app/artifacts/opengraph-image.tsx": {
-      "color": 1,
-      "inline-style": 16
+      "color": 11,
+      "font-family": 1,
+      "font-size": 4,
+      "font-weight": 2,
+      "line-height": 2,
+      "radius": 3,
+      "spacing": 5
     },
     "src/app/opengraph-image.tsx": {
-      "color": 1,
-      "inline-style": 20
+      "color": 12,
+      "font-family": 1,
+      "font-size": 5,
+      "font-weight": 1,
+      "letter-spacing": 2,
+      "line-height": 2,
+      "radius": 3,
+      "spacing": 8
     },
     "src/app/work/[slug]/opengraph-image.tsx": {
-      "inline-style": 29
+      "color": 7,
+      "font-family": 1,
+      "font-size": 6,
+      "font-weight": 4,
+      "letter-spacing": 1,
+      "line-height": 2,
+      "radius": 5,
+      "spacing": 13
     },
     "src/app/work/opengraph-image.tsx": {
-      "color": 1,
-      "inline-style": 16
+      "color": 11,
+      "font-family": 1,
+      "font-size": 4,
+      "font-weight": 2,
+      "line-height": 2,
+      "radius": 3,
+      "spacing": 5
     },
     "src/components/about/AboutLayout.module.css": {
       "breakpoint": 1,
-      "duration": 1,
-      "easing": 1,
+      "duration": 3,
+      "easing": 3,
       "font": 11,
       "font-weight": 1,
       "radius": 2,
-      "spacing": 29
+      "spacing": 34
+    },
+    "src/components/about/AboutNote.tsx": {
+      "tailwind-color": 1,
+      "tailwind-type": 1
     },
     "src/components/about/ContactLink.tsx": {
       "tailwind-color": 2,
@@ -62,13 +96,13 @@
       "font-size": 2,
       "font-weight": 3,
       "radius": 2,
-      "spacing": 52
+      "spacing": 64
     },
     "src/components/brand/Wordmark.module.css": {
       "breakpoint": 2,
-      "duration": 4,
-      "easing": 1,
-      "font": 1,
+      "duration": 9,
+      "easing": 2,
+      "font": 3,
       "font-size": 1,
       "font-weight": 1,
       "letter-spacing": 1,
@@ -76,38 +110,39 @@
       "spacing": 2
     },
     "src/components/case-study/CaseStudyDetails.module.css": {
-      "font": 1,
-      "spacing": 2
+      "font": 2,
+      "spacing": 3
     },
     "src/components/case-study/CaseStudyLayout.module.css": {
       "breakpoint": 1,
       "color": 1,
-      "duration": 1,
-      "easing": 1,
+      "duration": 2,
+      "easing": 2,
       "font": 12,
       "radius": 2,
       "shadow": 1,
-      "spacing": 41
+      "spacing": 47
     },
     "src/components/content/code-theme.ts": {
-      "inline-style": 4
+      "font-size": 2,
+      "line-height": 2
     },
     "src/components/content/CodeBlock.module.css": {
       "breakpoint": 1,
-      "duration": 1,
-      "easing": 1,
-      "font": 1,
+      "duration": 2,
+      "easing": 2,
+      "font": 2,
       "radius": 2,
-      "spacing": 6
+      "spacing": 9
     },
     "src/components/content/CodeBlock.tsx": {
-      "inline-style": 1
+      "font-size": 1
     },
     "src/components/content/Prose.module.css": {
       "font": 4,
       "font-size": 1,
       "font-weight": 5,
-      "spacing": 13
+      "spacing": 16
     },
     "src/components/dev/FigmaVarsDebug.tsx": {
       "tailwind-arbitrary": 1,
@@ -116,42 +151,42 @@
     },
     "src/components/evidence/A11yScenarioDemo.module.css": {
       "breakpoint": 1,
-      "duration": 1,
-      "easing": 1,
-      "font-size": 7,
+      "duration": 2,
+      "easing": 2,
+      "font-size": 9,
       "font-weight": 7,
       "letter-spacing": 4,
       "line-height": 11,
       "radius": 6,
-      "spacing": 35
+      "spacing": 48
     },
     "src/components/evidence/AuroraArchitecture.module.css": {
       "breakpoint": 1,
-      "font": 1,
-      "font-size": 3,
+      "font": 3,
+      "font-size": 7,
       "line-height": 3,
       "radius": 3,
-      "spacing": 9
+      "spacing": 12
     },
     "src/components/evidence/EvidenceGallery.module.css": {
       "breakpoint": 1,
-      "duration": 5,
-      "easing": 1,
-      "font": 7,
+      "duration": 6,
+      "easing": 2,
+      "font": 12,
       "radius": 5,
-      "spacing": 20
+      "spacing": 24
     },
     "src/components/evidence/PrimitreeGuardrailDemo.module.css": {
       "breakpoint": 2,
-      "duration": 3,
-      "easing": 2,
-      "font": 3,
+      "duration": 4,
+      "easing": 3,
+      "font": 7,
       "font-size": 4,
       "font-weight": 3,
       "letter-spacing": 3,
       "line-height": 15,
       "radius": 6,
-      "spacing": 60
+      "spacing": 86
     },
     "src/components/evidence/useEvidenceOrigin.ts": {
       "duration": 1,
@@ -159,50 +194,50 @@
     },
     "src/components/glucose/GlucoseDemo.module.css": {
       "breakpoint": 1,
-      "duration": 2,
-      "easing": 1,
-      "font-size": 13,
+      "duration": 4,
+      "easing": 3,
+      "font-size": 17,
       "font-weight": 4,
       "letter-spacing": 3,
       "line-height": 12,
       "radius": 9,
       "shadow": 2,
-      "spacing": 59
+      "spacing": 90
     },
     "src/components/glucose/GlucoseDemo.tsx": {
-      "color": 8
+      "color": 9
     },
     "src/components/home/A11yReadinessPreview.module.css": {
-      "font": 10,
+      "font": 23,
       "letter-spacing": 1,
       "radius": 4,
-      "spacing": 15
+      "spacing": 20
     },
     "src/components/home/FeaturedWork.module.css": {
       "breakpoint": 3,
-      "duration": 3,
-      "easing": 2,
-      "font": 11,
+      "duration": 5,
+      "easing": 4,
+      "font": 21,
       "radius": 4,
-      "shadow": 3,
-      "spacing": 41
+      "shadow": 4,
+      "spacing": 53
     },
     "src/components/home/Hero.module.css": {
       "breakpoint": 4,
-      "duration": 2,
-      "easing": 1,
-      "font": 6,
+      "duration": 3,
+      "easing": 2,
+      "font": 14,
       "radius": 2,
-      "spacing": 26
+      "spacing": 35
     },
     "src/components/home/HeroExamples.module.css": {
       "color": 2,
       "duration": 1,
       "easing": 1,
-      "font": 2,
+      "font": 4,
       "radius": 3,
-      "shadow": 2,
-      "spacing": 6
+      "shadow": 3,
+      "spacing": 7
     },
     "src/components/home/HeroExamples.tsx": {
       "duration": 2,
@@ -210,24 +245,27 @@
     },
     "src/components/home/Testimonials.module.css": {
       "breakpoint": 1,
-      "font": 4,
-      "spacing": 11
+      "font": 7,
+      "spacing": 15
+    },
+    "src/components/mdx/ArtifactMdxComponents.tsx": {
+      "tailwind-arbitrary": 1
     },
     "src/components/navigation/PrimaryNav.module.css": {
       "breakpoint": 1,
-      "color": 2,
-      "duration": 2,
+      "color": 5,
+      "duration": 3,
       "easing": 1,
-      "font": 1,
+      "font": 2,
       "font-size": 1,
       "letter-spacing": 1,
       "radius": 5,
-      "shadow": 3,
-      "spacing": 2
+      "shadow": 6,
+      "spacing": 3
     },
     "src/components/navigation/RelatedNavigation.module.css": {
       "breakpoint": 1,
-      "duration": 4,
+      "duration": 6,
       "font": 2,
       "radius": 1,
       "shadow": 2,
@@ -235,18 +273,18 @@
     },
     "src/components/privacy/PrivacyPage.module.css": {
       "breakpoint": 1,
-      "font": 3,
+      "font": 6,
       "font-weight": 1,
       "radius": 1,
-      "spacing": 14
+      "spacing": 17
     },
     "src/components/shell/Footer.module.css": {
       "breakpoint": 1,
       "duration": 1,
-      "font": 2,
+      "font": 4,
       "font-size": 2,
       "radius": 1,
-      "spacing": 16
+      "spacing": 25
     },
     "src/components/shell/SiteHeader.module.css": {
       "breakpoint": 3,
@@ -259,18 +297,23 @@
     },
     "src/components/ui/DisclosureSummary.module.css": {
       "duration": 2,
-      "font": 1,
+      "font": 2,
       "radius": 1,
       "spacing": 2
     },
     "src/components/work/WorkCatalog.module.css": {
       "breakpoint": 2,
-      "duration": 5,
-      "easing": 3,
-      "font": 10,
+      "duration": 6,
+      "easing": 4,
+      "font": 17,
       "radius": 3,
       "shadow": 1,
-      "spacing": 30
+      "spacing": 39
+    },
+    "src/mdx-components.tsx": {
+      "tailwind-color": 5,
+      "tailwind-scale": 2,
+      "tailwind-type": 1
     },
     "src/styles/globals.css": {
       "breakpoint": 1,
@@ -279,7 +322,10 @@
       "font-weight": 1,
       "line-height": 1,
       "radius": 1,
-      "spacing": 3,
+      "spacing": 4,
+      "tailwind-color": 1,
+      "tailwind-scale": 2,
+      "tailwind-type": 1,
       "z-index": 1
     },
     "src/styles/motion.css": {
