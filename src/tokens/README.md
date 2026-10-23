@@ -6,7 +6,7 @@ The generator and validator share one source list in `scripts/style-dictionary/t
 - `alias.json` defines semantic aliases and dark/light values.
 - `component.json` defines component aliases.
 
-`next/` holds these tokens migrated once to Primitree's DTCG 2025.10 subset, with a resolver for the dark and light contexts. It is not a build input and nothing regenerates it, so keep editing the files above until Primitree takes over the build.
+`next/` holds a one time migration of these tokens to Primitree's DTCG 2025.10 subset, with a resolver for the dark and light contexts. It drops the Monokai group, `font.serif`, `radius.pill`, and `component.card.shadow`, and moves the light values into the base layer. It is not a build input and nothing regenerates it, so keep editing the files above until Primitree takes over the build.
 
 `modes.json` is a legacy reference snapshot. It is not a build input; edit light-mode values in `alias.json`.
 
