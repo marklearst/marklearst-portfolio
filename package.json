@@ -9,15 +9,16 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/fetch-webfonts.mjs && node scripts/check-webfonts.mjs && node scripts/build-tokens-sd.mjs --check && next build",
+    "build": "node scripts/fetch-webfonts.mjs && node scripts/check-webfonts.mjs && node scripts/build-tokens-sd.mjs --check && node scripts/check-raw-values.mjs --growth-only && next build",
     "start": "next start",
     "lint": "eslint",
     "tokens:build": "node scripts/build-tokens-sd.mjs",
     "tokens:validate": "node scripts/validate-tokens.mjs",
     "typecheck": "tsc --noEmit",
     "test": "node --test \"src/**/*.test.mjs\" \"scripts/**/*.test.mjs\"",
-    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm tokens:check && pnpm tokens:raw",
     "tokens:check": "node scripts/build-tokens-sd.mjs --check",
+    "tokens:raw": "node scripts/check-raw-values.mjs",
     "fonts:upload": "node --env-file-if-exists=.env.local scripts/upload-webfonts.mjs"
   },
   "dependencies": {
@@ -52,9 +53,14 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.3.5",
+    "postcss": "^8.5.28",
+    "postcss-value-parser": "^4.2.0",
     "remark-frontmatter": "^5.0.0",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
     "style-dictionary": "^5.5.3",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "unified": "^11.0.5"
   }
 }
