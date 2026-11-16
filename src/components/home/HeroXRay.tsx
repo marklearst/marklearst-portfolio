@@ -21,9 +21,6 @@ interface HeroXRayProps {
  *
  * Where the line rests is the stylesheet's call (`--rest` in Hero.module.css),
  * because it differs by screen width. This only takes over once someone moves it.
- *
- * While the line moves, a lens follows just behind it and the drawing it has
- * uncovered comes into focus there. That is all in the stylesheet too.
  */
 export default function HeroXRay({ children, blueprint }: HeroXRayProps) {
   const stage = useRef<HTMLDivElement>(null)
@@ -60,7 +57,6 @@ export default function HeroXRay({ children, blueprint }: HeroXRayProps) {
         {blueprint}
       </div>
       <div className={styles.scanner} data-inspector-ui=''>
-        <div className={styles.lens} aria-hidden='true' />
         <input
           type='range'
           className={styles.scan}
