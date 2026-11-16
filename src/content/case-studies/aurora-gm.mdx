@@ -3,8 +3,8 @@ slug: aurora-gm
 title: Aurora Design System
 category: DESIGN SYSTEMS
 categoryColor: purple
-description: "Led design and implementation of GM's cross-brand React design system, with shared components, brand-specific token themes, and a WCAG 2.1 AA accessibility target."
-role: 'Senior Design Engineer and Lead, author of the Design Token Governance Document'
+description: "Led the architecture and build of GM's first React design system, shared by Chevrolet, Buick, GMC, and Cadillac. Each brand's look lives in its token theme, and WCAG 2.1 AA was the accessibility target."
+role: 'Senior Design Technologist and Design Systems Lead, author of the Design Token Governance Document'
 timeline: 'Jun 2021 to Sep 2024 (3+ years)'
 technologies:
   - React
@@ -24,25 +24,26 @@ impact:
   - metric: '60%'
     description: 'Component reuse across 4 GM brands (Chevy, Buick, GMC, Cadillac)'
   - metric: '30%'
-    description: 'Increase in release velocity across web and native platforms'
+    description: 'Helped increase release velocity across web and native platforms'
   - metric: '50+'
-    description: 'Engineers and designers trained on Aurora adoption'
+    description: 'Engineers and designers trained to build with Aurora'
 gradient: from-purple-500/20 via-pink-500/10 to-transparent
 ---
 
 <CaseStudySection title='Shared components for four GM brands'>
   <div className='space-y-6'>
     <CaseStudyParagraph>
-      <strong>Aurora</strong> is GM's cross-brand design system for Chevrolet,
-      Buick, GMC, and Cadillac. I led its design and implementation across
-      React and React Native, authored the Design Token Governance Document,
-      and supported adoption through documentation, workshops, and office hours.
+      <strong>Aurora</strong> is GM's first React design system, shared by
+      Chevrolet, Buick, GMC, and Cadillac. I led the architecture and build
+      across React and React Native, and I wrote the Design Token Governance
+      Document.
     </CaseStudyParagraph>
     <CaseStudyParagraph>
-      Each brand had separate design and development teams rebuilding similar
-      components. The system gave them shared components and token workflows
-      while keeping brand-specific themes and behavior. The linked Aurora
-      documentation provides a reference for the system.
+      Before Aurora, each brand had its own design and development teams
+      rebuilding much the same components. Aurora gave them one component set
+      and one token workflow, and each brand kept its own theme plus any
+      behavior specific to that brand. You can browse the Aurora docs on zeroheight
+      from the link on this page.
     </CaseStudyParagraph>
     <AuroraArchitecture />
   </div>
@@ -51,47 +52,47 @@ gradient: from-purple-500/20 via-pink-500/10 to-transparent
 <CaseStudySection title="Keep brand differences in the token layer">
   <div className="space-y-6">
     <CaseStudyMutedText>
-      I built a token-based theming system that allowed 60% of components to be
-      shared across all 4 brands, while the remaining 40% could be customized
-      per brand through token overrides. Teams could:
-    </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Import shared Aurora components</li>
-      <li>Apply brand-specific themes via token swaps (colors, typography, spacing)</li>
-      <li>Extend components only when brand-specific behavior was needed</li>
-    </CaseStudyMutedList>
-
-    <CaseStudyMutedText>
-      React and React Native components shared core logic, with adapters
-      handling platform-specific rendering.
+      With the token-based theming I built, 60% of components are shared across
+      all 4 brands. The other 40% are customized per brand through token
+      overrides. A brand team imports the shared Aurora components, swaps in its
+      own colors, typography, and spacing through tokens, and extends a
+      component only when it needs behavior the other brands don't.
     </CaseStudyMutedText>
 
-    <CaseStudySubheading>From governance to generated code</CaseStudySubheading>
     <CaseStudyMutedText>
-      I designed and built automated workflows that synced design tokens
-      from Figma Variables through Style Dictionary into React and React Native
-      codebases, removing manual handoff steps between design and development.
-      Naming conventions, modes, and approval rules defined how teams organized
-      and changed tokens. A semantic token structure (primitive -> semantic ->
-      component tokens) supported brand-specific themes.
+      The React and React Native components share their core logic, and
+      adapters handle the platform-specific rendering.
+    </CaseStudyMutedText>
+
+    <CaseStudySubheading>The token pipeline</CaseStudySubheading>
+    <CaseStudyMutedText>
+      I built the pipelines that synced tokens from Figma Variables through
+      Style Dictionary into the React and React Native codebases, which cut the
+      manual Figma-to-code handoffs for all four brands. My governance document
+      sets the naming, modes, and approval rules for changing a token. Tokens
+      are layered (primitive -> semantic -> component), and the brand themes
+      are built on that structure. The tokens started in Tokens Studio, and I
+      later migrated them to native Figma Variables on Figma Enterprise.
     </CaseStudyMutedText>
 
     <CaseStudySubheading>Accessibility in component review</CaseStudySubheading>
     <CaseStudyMutedText>
-      WCAG 2.1 AA was the accessibility target. Component work included:
+      The target was WCAG 2.1 AA, written into the design-to-code workflow,
+      and I closed 80+ accessibility defects along the way. Component reviews
+      covered:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>ARIA patterns and semantic HTML</li>
       <li>Keyboard navigation and focus management</li>
       <li>Screen reader testing with NVDA and JAWS</li>
-      <li>Color contrast validation (4.5:1 minimum for text)</li>
-      <li>Automated accessibility testing in CI/CD pipeline</li>
+      <li>Color contrast checks (4.5:1 minimum for text)</li>
+      <li>Automated accessibility checks in CI/CD</li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
-      I built Storybook documentation for component variants, states, and
-      accessibility features so designers, developers, and QA could review the
-      same implementations.
+      I documented each component's variants, states, and accessibility
+      behavior in Storybook, so everyone reviewing a component, from design to
+      QA, was looking at the same build.
     </CaseStudyMutedText>
 
   </div>
@@ -100,13 +101,14 @@ gradient: from-purple-500/20 via-pink-500/10 to-transparent
 <CaseStudySection title="The governance behind a token change">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      Aurora's published <a href="https://zeroheight.com/8ee82a8f9/p/12a682-wip---aurora-design-tokens-governance" target="_blank" rel="noopener noreferrer">token governance guide</a>,
-      marked WIP, makes the naming and review process available to inspect:
+      Aurora's <a href="https://zeroheight.com/8ee82a8f9/p/12a682-wip---aurora-design-tokens-governance" target="_blank" rel="noopener noreferrer">token governance guide</a>
+      is public on zeroheight, still marked WIP. Three of its pages cover how a
+      token change gets named and approved.
     </CaseStudyParagraph>
     <CaseStudyMutedList className="space-y-2">
-      <li><a href="https://zeroheight.com/8ee82a8f9/p/33aeb8-naming-convention" target="_blank" rel="noopener noreferrer">Names carry structure.</a> Namespace, category, property, variant, scale, and state describe a token's role.</li>
-      <li><a href="https://zeroheight.com/8ee82a8f9/p/99609f-design-token-contract" target="_blank" rel="noopener noreferrer">Changes have shared ownership.</a> Design and development approve naming changes before implementation.</li>
-      <li><a href="https://zeroheight.com/8ee82a8f9/p/86e293-token-review-and-approval" target="_blank" rel="noopener noreferrer">Review precedes publication.</a> Proposals include values, scope, inheritance, and usage examples. Approved changes enter the central repository with a record.</li>
+      <li><a href="https://zeroheight.com/8ee82a8f9/p/33aeb8-naming-convention" target="_blank" rel="noopener noreferrer">Naming convention.</a> A token's name spells out its namespace, category, property, variant, scale, and state, so you can read its role from the name.</li>
+      <li><a href="https://zeroheight.com/8ee82a8f9/p/99609f-design-token-contract" target="_blank" rel="noopener noreferrer">Design token contract.</a> Design and development both approve a naming change before anyone implements it.</li>
+      <li><a href="https://zeroheight.com/8ee82a8f9/p/86e293-token-review-and-approval" target="_blank" rel="noopener noreferrer">Review and approval.</a> A proposal includes the value, scope, inheritance, and usage examples. Once approved, the change goes into the central repository and gets recorded.</li>
     </CaseStudyMutedList>
   </div>
 </CaseStudySection>
@@ -114,9 +116,11 @@ gradient: from-purple-500/20 via-pink-500/10 to-transparent
 <CaseStudySection title="Helping four teams adopt one system">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      I trained and onboarded 50+ engineers and designers through workshops,
-      documentation, and office hours. Onboarding time fell by approximately
-      40%, and release velocity across web and native platforms increased by 30%.
+      I trained 50+ engineers and designers to build with Aurora through
+      workshops, docs, and office hours. Onboarding time fell about 40%, and I
+      helped increase release velocity across web and native platforms by 30%.
+      Aurora, its token governance, its Storybook, and the accessibility
+      standards in its docs are still in use at GM in 2026.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>

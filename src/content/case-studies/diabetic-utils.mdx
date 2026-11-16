@@ -3,7 +3,7 @@ slug: diabetic-utils
 title: Diabetic Utils
 category: HEALTH TECH
 categoryColor: pink
-description: 'TypeScript library for glucose, A1C, and Time in Range (TIR) calculations. Featured in Google AI Overview for diabetes developer tools with 100% test coverage and adopted by health tech teams.'
+description: 'TypeScript library for glucose, A1C, and Time in Range (TIR) calculations, with 100% test coverage. Featured in Google AI Overview for diabetes developer tools.'
 role: 'Creator & Maintainer'
 timeline: '2023 to present'
 technologies:
@@ -25,34 +25,31 @@ impact:
     description: 'Vitest coverage for formulas, input validation, precision, and rounding'
   - metric: 'Google AI'
     description: 'Featured in Google AI Overview for diabetes developer tools'
-  - metric: 'Production'
-    description: 'Adopted by health tech teams for glucose monitoring apps'
 gradient: from-orange-500/20 via-yellow-500/10 to-transparent
 ---
 
 <CaseStudySection title="Extract the calculations I kept rewriting">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      I built GlucoseIQ (Apple Watch app) and kept rewriting the same utility
-      functions. I wanted those calculations in one tested TypeScript library
-      that other diabetes developers could use.
+      While working on the GlucoseIQ Apple Watch app, I kept rewriting the same
+      utility functions. I wanted those calculations in one tested TypeScript
+      library that other diabetes developers could use too.
     </CaseStudyParagraph>
 
     <CaseStudyDetails summary="Calculation and data-handling problems">
     <CaseStudyMutedList className='space-y-3'>
       <li>
-        Teams reinventing the same glucose conversion algorithms (mg/dL to
-        mmol/L)
+        Glucose unit conversion (mg/dL to mmol/L) rewritten from scratch in
+        each project
       </li>
       <li>
-        A1C calculation formulas copy-pasted from medical papers without
-        validation
+        A1C formulas copied from medical papers without validation
       </li>
       <li>
         Time in Range (TIR) metrics implemented inconsistently across apps
       </li>
       <li>No type-safe APIs for glucose data structures</li>
-      <li>Clinical calculation errors that could impact patient care</li>
+      <li>Calculation errors that could affect patient care</li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
   </div>
@@ -61,9 +58,8 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
 <CaseStudySection title="Test calculations and edge cases">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      <strong>Diabetic Utils</strong> is a TypeScript library providing
-      calculations for glucose monitoring, A1C estimation, and
-      Time in Range metrics.
+      <strong>Diabetic Utils</strong> is a TypeScript library of calculations
+      for glucose monitoring, A1C estimation, and Time in Range.
     </CaseStudyParagraph>
 
     <CaseStudySubheading>100% test coverage</CaseStudySubheading>
@@ -71,8 +67,8 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       The Vitest suite covers:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>All calculation formulas against known medical values</li>
-      <li>Edge cases: boundary values, negative numbers, zero handling</li>
+      <li>Every formula, checked against known medical values</li>
+      <li>Edge cases like boundary values, negative numbers, and zero</li>
       <li>Input validation and error handling</li>
       <li>Precision and rounding behavior</li>
     </CaseStudyMutedList>
@@ -107,45 +103,44 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
     />
 
     <CaseStudyDetails summary="Conversion, A1C, and Time in Range API reference">
-    <CaseStudySubheading>Glucose Conversions</CaseStudySubheading>
+    <CaseStudySubheading>Glucose conversions</CaseStudySubheading>
     <CaseStudyMutedText>
       Type-safe functions for converting between mg/dL and mmol/L:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>mgDlToMmolL()</code> - Convert mg/dL to mmol/L with proper rounding</li>
-      <li><code>mmolLToMgDl()</code> - Convert mmol/L to mg/dL</li>
+      <li><code>mgDlToMmolL()</code> converts mg/dL to mmol/L and rounds the result</li>
+      <li><code>mmolLToMgDl()</code> converts mmol/L to mg/dL</li>
       <li>Handles edge cases and validates input ranges</li>
-      <li>Uses standard conversion factor (18.0182) from clinical guidelines</li>
+      <li>Uses the standard conversion factor (18.0182) from clinical guidelines</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>A1C Calculations</CaseStudySubheading>
+    <CaseStudySubheading>A1C calculations</CaseStudySubheading>
     <CaseStudyMutedText>
-      Estimated A1C (eA1C) calculation from average glucose using the ADAG
-      formula:
+      Estimated A1C (eA1C) from average glucose, using the ADAG formula:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>calculateA1C()</code> - Convert average glucose to estimated A1C percentage</li>
-      <li>Based on ADAG Study formula: A1C = (avg_glucose + 46.7) / 28.7</li>
-      <li>Supports both mg/dL and mmol/L input</li>
-      <li>Returns A1C as percentage (e.g., 7.2%)</li>
+      <li><code>calculateA1C()</code> converts average glucose to an estimated A1C percentage</li>
+      <li>Based on the ADAG Study formula, A1C = (avg_glucose + 46.7) / 28.7</li>
+      <li>Accepts mg/dL or mmol/L input</li>
+      <li>Returns A1C as a percentage (for example, 7.2%)</li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Time in Range (TIR)</CaseStudySubheading>
     <CaseStudyMutedText>
-      Calculate TIR metrics following ADA/ATTD consensus guidelines:
+      The TIR metrics follow the ADA/ATTD consensus guidelines:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>calculateTIR()</code> - Percentage of readings in target range (70-180 mg/dL)</li>
-      <li><code>calculateTBR()</code> - Time below range (hypoglycemia detection)</li>
-      <li><code>calculateTAR()</code> - Time above range (hyperglycemia detection)</li>
+      <li><code>calculateTIR()</code> returns the percentage of readings in the target range (70-180 mg/dL)</li>
+      <li><code>calculateTBR()</code> returns time below range (hypoglycemia detection)</li>
+      <li><code>calculateTAR()</code> returns time above range (hyperglycemia detection)</li>
       <li>Configurable target ranges for personalized therapy goals</li>
       <li>Handles missing data and validates reading counts</li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Enhanced TIR (5-range)</CaseStudySubheading>
     <CaseStudyMutedText>
-      Enhanced TIR mirrors clinical targets. It is the feature most teams ask
-      about.
+      Enhanced TIR splits readings into five ranges that mirror the clinical
+      targets.
     </CaseStudyMutedText>
     <CodeBlock
       language="typescript"
@@ -176,39 +171,38 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
 <CaseStudySection title="Use published formulas and typed inputs">
   <div className="space-y-6">
     <CaseStudySubheading>Formula sources</CaseStudySubheading>
-    <CaseStudyMutedText>Formulas validated against clinical sources:</CaseStudyMutedText>
+    <CaseStudyMutedText>Each formula is checked against a published clinical source:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>A1C calculation uses ADAG Study consensus formula</li>
-      <li>TIR ranges follow ADA/ATTD 2019 guidelines</li>
+      <li>A1C uses the ADAG Study consensus formula</li>
+      <li>TIR ranges follow the ADA/ATTD 2019 guidelines</li>
       <li>Conversion factors match international standards</li>
-      <li>Test cases derived from published medical examples</li>
+      <li>Test cases come from published medical examples</li>
     </CaseStudyMutedList>
 
     <CaseStudyDetails summary="TypeScript contracts, package format, and integrations">
     <CaseStudySubheading className="mt-0">TypeScript API</CaseStudySubheading>
-    <CaseStudyMutedText>Built with TypeScript for type safety:</CaseStudyMutedText>
+    <CaseStudyMutedText>The API is typed throughout:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Strongly typed glucose reading objects</li>
+      <li>Typed glucose reading objects</li>
       <li>Enum types for units (mg/dL, mmol/L)</li>
-      <li>Generic functions supporting both unit systems</li>
-      <li>Full IntelliSense support in IDEs</li>
+      <li>Generic functions that accept either unit system</li>
+      <li>IntelliSense in the editor</li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Package format</CaseStudySubheading>
-    <CaseStudyMutedText>Designed for ease of use:</CaseStudyMutedText>
+    <CaseStudyMutedText>It's pure TypeScript with zero dependencies, and it ships with:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Zero dependencies, pure TypeScript implementation</li>
-      <li>Tree-shakeable exports for minimal bundle size</li>
-      <li>Comprehensive JSDoc documentation</li>
-      <li>Published on npm with semantic versioning</li>
+      <li>Tree-shakeable exports to keep bundles small</li>
+      <li>JSDoc documentation throughout</li>
+      <li>Semantic versioning on npm</li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Use cases</CaseStudySubheading>
-    <CaseStudyMutedText>Powers glucose monitoring features in:</CaseStudyMutedText>
+    <CaseStudyMutedText>It's written for:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>CGM (Continuous Glucose Monitor) companion apps</li>
+      <li>CGM (continuous glucose monitor) companion apps</li>
       <li>Diabetes management dashboards</li>
-      <li>Apple Watch and wearable health apps (like GlucoseIQ)</li>
+      <li>Apple Watch and wearable health apps, like the GlucoseIQ watch app I'm building</li>
       <li>HealthKit integration layers</li>
       <li>Clinical research data processing</li>
     </CaseStudyMutedList>
@@ -216,35 +210,29 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Adoption and maintenance">
+<CaseStudySection title="Where it stands">
   <div className="space-y-6">
     <CaseStudyMutedList className='space-y-4'>
       <li>
-        <strong>Featured in Google AI Overview</strong> for diabetes developer
-        tools
+        Featured in Google AI Overview for diabetes developer tools
       </li>
       <li>
-        <strong>Adopted by health tech teams</strong> building production CGM
-        apps and diabetes management platforms
+        100% test coverage on the calculation formulas and their edge cases
       </li>
       <li>
-        <strong>100% test coverage</strong> for the calculation formulas and
-        their edge cases
+        A typed API with explicit mg/dL and mmol/L units
       </li>
       <li>
-        <strong>Type-safe API</strong> with explicit units for mg/dL and mmol/L
+        Open source, so other diabetes developers don't have to write these
+        calculations again
       </li>
       <li>
-        <strong>Open-source contribution</strong> to the diabetes developer
-        community, reducing duplicated effort
-      </li>
-      <li>
-        <strong>Zero dependencies</strong> in a pure TypeScript implementation
+        Zero dependencies, pure TypeScript
       </li>
     </CaseStudyMutedList>
     <CaseStudyParagraph className='mt-8'>
-      The library is actively maintained on npm and serves as the calculation
-      engine for GlucoseIQ (Apple Watch app) and other health tech projects.
+      The 1.5.x line stays on npm. New work happens in GlucoseIQ, which grew
+      out of this library.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>

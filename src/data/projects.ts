@@ -43,10 +43,10 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'DESIGN SYSTEMS',
     categoryColor: 'purple',
     summary:
-      "Shared React components and brand-specific token themes for Chevrolet, Buick, GMC, and Cadillac, with a WCAG 2.1 AA accessibility target.",
+      "One React design system for GM's four brands: Chevrolet, Buick, GMC, and Cadillac. 60% of components are shared, and each brand keeps its look through token themes.",
     description:
-      "Led design and implementation of GM's cross-brand React design system, with shared components, brand-specific token themes, and a WCAG 2.1 AA accessibility target.",
-    role: 'Senior Design Engineer and Lead, author of the Design Token Governance Document',
+      "Led the architecture and build of GM's first React design system, shared by Chevrolet, Buick, GMC, and Cadillac. Each brand's look lives in its token theme, and WCAG 2.1 AA was the accessibility target.",
+    role: 'Senior Design Technologist and Design Systems Lead, author of the Design Token Governance Document',
     timeline: 'Jun 2021 to Sep 2024 (3+ years)',
     publishedAt: '2024-09-01',
     pinned: true,
@@ -72,10 +72,10 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'DESIGN SYSTEMS',
     categoryColor: 'purple',
     summary:
-      'Modernized Abusix design system to React 19, Tailwind v4 tokens, Storybook 10, and WCAG 2.2 AA patterns.',
+      "A fork I maintain of Abusix's Hailstorm design system, moved to React 19, Tailwind v4 tokens, and Storybook 10 with WCAG 2.2 AA keyboard and focus defaults.",
     description:
-      'Modernized Abusix design system into a React 19 component library with token-driven styling, Storybook 10 docs, and automated QA.',
-    role: 'Design Systems Engineer, Modernization Lead',
+      "My fork of Abusix's Hailstorm design system, rebuilt on React 19, Tailwind v4 tokens, and Storybook 10, with tests in Vitest, Testing Library, and Playwright. The component APIs stay the same.",
+    role: 'Design Systems Engineer, Open Source Modernization',
     timeline: '2025 to present',
     publishedAt: '2025-11-01',
     technologies: [
@@ -99,9 +99,9 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'DEVELOPER TOOLS',
     categoryColor: 'cyan',
     summary:
-      'React 19 hooks library and CLI for Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage.',
+      'Typed React 19 hooks and a CLI that keep React apps in sync with the Figma Variables REST API. 100% test coverage.',
     description:
-      'React 19 hooks library and CLI for the official Figma Variables REST API. Type-safe synchronization between Figma and React apps with 100% test coverage.',
+      'Typed React 19 hooks and a CLI for the official Figma Variables REST API, so React apps stay in sync with Figma. It has 100% test coverage and is where Primitree started.',
     role: 'Creator & Maintainer',
     timeline: '2024 to present',
     publishedAt: '2024-12-01',
@@ -128,7 +128,7 @@ export const PROJECTS: ProjectMeta[] = [
     summary:
       'Token architecture rules, Figma-export diffs that preserve identity, and DTCG, CSS, Tailwind, and TypeScript output from one pipeline.',
     description:
-      'DTCG token pipeline that turns design system architecture into a checkable contract. Six packages covering a CLI, token graph, emitters for CSS, Tailwind and TypeScript, React hooks, and an MCP server.',
+      "DTCG token pipeline that checks a design system's token architecture in the build. Six packages cover a CLI, a token graph, emitters for CSS, Tailwind, and TypeScript, React hooks, and an MCP server agents can use to query and diff tokens.",
     role: 'Creator & Maintainer',
     timeline: '2025 to present',
     publishedAt: '2026-08-25',
@@ -206,9 +206,9 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'HEALTH TECH',
     categoryColor: 'pink',
     summary:
-      'TypeScript library for glucose, A1C, and TIR calculations. Featured in Google AI Overview with 100% test coverage and adopted by health tech teams.',
+      "TypeScript library for glucose, A1C, and TIR calculations, with 100% test coverage. It shows up in Google's AI Overview for diabetes developer tools.",
     description:
-      'TypeScript library for glucose, A1C, and Time in Range (TIR) calculations. Featured in Google AI Overview for diabetes developer tools with 100% test coverage and adopted by health tech teams.',
+      "TypeScript library for glucose, A1C, and Time in Range (TIR) calculations, tested to 100% coverage. It shows up in Google's AI Overview for diabetes developer tools.",
     role: 'Creator & Maintainer',
     timeline: '2023 to present',
     publishedAt: '2023-10-01',
@@ -231,10 +231,10 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'STANDARDS',
     categoryColor: 'orange',
     summary:
-      'Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, solving tool lock-in and version control gaps.',
+      'An open spec I wrote for governing design variables on DTCG 2025.10, so tokens can move between tools and stay under version control.',
     description:
-      'Open specification for design variable governance and cross-tool synchronization. DTCG 2025.10 compliant, addressing tool lock-in and broken design-code handoff workflows affecting design systems teams globally.',
-    role: 'Specification Author & W3C Community Contributor',
+      'An independent open spec for governing design variables and keeping them in sync across tools, built on DTCG 2025.10. It covers three layers, naming rules, reference validation, mode consistency, and breaking-change detection.',
+    role: 'Specification Author',
     timeline: '2024 to present',
     publishedAt: '2024-10-01',
     featured: true,

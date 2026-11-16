@@ -3,8 +3,8 @@ slug: variable-design-standard
 title: Variable Design Standard
 category: STANDARDS
 categoryColor: orange
-description: Open specification for design variable governance. Defines JSON structure, naming rules, validation, and versioning on DTCG 2025.10 format. Three layers. No mapped collections.
-role: Specification Author & Editor
+description: An independent open specification for governing design variables on the DTCG 2025.10 format. It covers JSON structure, naming rules, validation, and versioning, using three layers and no mapped collections.
+role: Specification Author
 timeline: 2024 to present
 technologies:
   - JSON Schema
@@ -22,11 +22,11 @@ links:
     icon: external
 impact:
   - metric: DTCG
-    description: Built on W3C Design Tokens Community Group 2025.10 specification
+    description: Built on the DTCG 2025.10 format from the W3C Design Tokens Community Group
   - metric: JSON-as-API
-    description: File paths and variable names are the contract interface
+    description: File paths and variable names are the contract
   - metric: 3 Layers
-    description: Base, Alias, Component. No fourth layer. No extra hops.
+    description: Base, Alias, and Component, with no fourth layer and no extra hops
 gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 ---
 
@@ -34,45 +34,42 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
   <div className="space-y-6">
     <CaseStudyParagraph>
       After building <a href="/work/aurora-gm">Aurora at GM</a> across 4 brands, I wanted a governance layer
-      on an existing format that could handle multiple brands without adding
-      complexity. The JSON file set is the API surface: file paths and variable
-      names form the contract, and a rename is a breaking change.
+      on an existing format that could handle multiple brands without piling on
+      complexity. In VDS the JSON files are the API. File paths and variable
+      names form the contract, so a rename is a breaking change.
     </CaseStudyParagraph>
 
     <CaseStudyDetails summary="Naming, handoff, and layer proliferation">
     <CaseStudyParagraph>
-      Teams use different terms: design tokens, style properties,
-      variables, constants. The terminology split is a symptom of a deeper
-      problem: there is no standard for how design variables should be governed
-      across tools and teams. This creates:
+      Teams call them design tokens, style properties, variables, or
+      constants, and nothing standard says how they should be governed across
+      tools and teams. That gap shows up in a few ways:
     </CaseStudyParagraph>
     <CaseStudyMutedList className='space-y-3'>
       <li>
-        <strong>Naming confusion:</strong> Designers call them one thing,
-        developers another. Handoff breaks because vocabulary is split.
+        Designers call them one thing and developers another, so handoff
+        breaks on vocabulary alone.
       </li>
       <li>
-        <strong>No governance:</strong> Variables change without rules. Breaking
-        changes ship to production without notice.
+        Variables change without rules, and breaking changes reach production
+        without notice.
       </li>
       <li>
-        <strong>Tool lock-in:</strong> Figma Variables, Tokens Studio, and
-        code-based systems use incompatible formats and reference syntax.
+        Figma Variables, Tokens Studio, and code-based systems use incompatible
+        formats and reference syntax, which locks teams into one tool.
       </li>
       <li>
-        <strong>Handoff breaks:</strong> Design and code don't align. No way to
-        track which variable version is deployed.
+        Design and code drift apart, with no way to track which variable
+        version is deployed.
       </li>
       <li>
-        <strong>No validation:</strong> Invalid variables pass review and cause
-        build failures downstream.
+        Invalid variables pass review and cause build failures downstream.
       </li>
       <li>
-        <strong>Layer proliferation:</strong> Teams add <em>mapped</em>{' '}
-        collections between base and semantic layers to solve brand switching.
-        Each extra layer means extra reference hops, extra naming decisions, and
-        extra surfaces to audit. Variables should be easy to reason about, without
-        requiring a specialist to untangle.
+        Teams add <em>mapped</em>{' '}collections between base and semantic
+        layers to handle brand switching. Each one adds reference hops, naming
+        decisions, and another surface to audit. Variables should be easy to
+        reason about without calling in a specialist.
       </li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
@@ -82,51 +79,55 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 <CaseStudySection title="Treat variable names as an API">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      <strong>Variable Design Standard (VDS)</strong> is a governance layer on
-      the DTCG 2025.10 format. It defines naming rules, validation requirements,
-      versioning strategy, and adapter patterns for handoff as teams and
-      products grow. It uses three layers and selects files for each brand,
-      without extra reference hops.
+      <strong>Variable Design Standard (VDS)</strong> is the spec I wrote for
+      that governance layer, built on the DTCG 2025.10 format. It sets naming
+      rules, validation requirements, a versioning strategy, and adapter
+      patterns for handoff as teams and products grow. Brands are handled by
+      selecting files, so three layers are enough and there are no extra
+      reference hops.
     </CaseStudyParagraph>
 
     <CaseStudyMutedText>
-      VDS defines three layers only. Base, Alias, Component. Implementations
-      must not add a fourth layer between Alias and Base:
+      There are three layers. Implementations must not add a fourth between
+      Alias and Base:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>
-        <strong>Base variables:</strong> Raw scales and palettes. The only place
-        literal values live. <code>color.gray.900</code>, <code>space.4</code>
+        <strong>Base variables:</strong> raw scales and palettes, and the only
+        place literal values live. <code>color.gray.900</code>, <code>space.4</code>
       </li>
       <li>
-        <strong>Alias variables:</strong> Semantic intent. Reference base
+        <strong>Alias variables:</strong> semantic intent, referencing base
         variables. <code>color.text.primary</code> → <code>{'{color.gray.900}'}</code>
       </li>
       <li>
-        <strong>Component variables:</strong> Scoped control when needed.
+        <strong>Component variables:</strong> component-scoped control, used
+        only when a component needs it.
         <code>component.button.color.background</code> → <code>{'{color.surface.brand}'}</code>
       </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Tool adapters</CaseStudySubheading>
     <CaseStudyMutedText>
-      Tool exports are inputs, not the contract. Adapters normalize Figma,
-      Tokens Studio, and other formats into VDS:
+      Adapters normalize exports from Figma, Tokens Studio, and other tools
+      into VDS. The export is an input, and the normalized JSON is what the
+      contract covers.
     </CaseStudyMutedText>
 
     <CaseStudySubheading>Governance checks</CaseStudySubheading>
     <CaseStudyMutedText>
-      Variable names are treated like an API. Changes are reviewed before merge:
+      A change to a variable name gets the same review as an API change,
+      before it merges:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>Naming rules validated in CI (dot-separated paths, no hyphens)</li>
       <li>References validated for resolution and cycles</li>
-      <li>Breaking changes require MAJOR version bump</li>
-      <li>Deprecation strategy with migration paths</li>
+      <li>Breaking changes require a MAJOR version bump</li>
+      <li>Deprecations come with a migration path</li>
     </CaseStudyMutedList>
 
     <CaseStudyDetails summary="JSON contract and adapter examples">
-    <CaseStudySubheading>JSON-as-API Architecture</CaseStudySubheading>
+    <CaseStudySubheading>JSON-as-API architecture</CaseStudySubheading>
 
 <CodeBlock
   language='json'
@@ -198,21 +199,20 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 <CaseStudySection title="Select files instead of adding mapped layers">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      Some approaches add <em>mapped</em> collections between base and semantic
-      layers to handle brand switching. As those collections multiply, tracing
-      the value that renders can require a specialist.
+      Some setups add <em>mapped</em> collections between the base and semantic
+      layers to handle brand switching. As those collections multiply, it can
+      take a specialist to trace which value renders.
     </CaseStudyParagraph>
     <CaseStudyParagraph>
-      In VDS, <strong>file selection replaces mapped layers</strong>. JSON
-      provides structure, folders organize each brand's values, and CSS
+      VDS replaces mapped layers with <strong>file selection</strong>. JSON
+      gives the structure, a folder holds each brand's values, and CSS{' '}
       <code>@layer</code>, <code>@import</code>, and the cascade handle
       consumption.
     </CaseStudyParagraph>
 
     <CaseStudyMutedText>
-      Brand selection happens by file list, not by mapped collections in a
-      design tool panel. Selecting a brand folder changes the values while
-      preserving the semantic names.
+      You pick a brand by putting its folder in the build's file list. The
+      values change and the semantic names stay the same.
     </CaseStudyMutedText>
 
     <CaseStudySubheading>Brand file selection</CaseStudySubheading>
@@ -234,29 +234,27 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
     <CaseStudyDetails summary="Mapped layer costs and brand-selection examples">
     <CaseStudySubheading>Mapped layer costs</CaseStudySubheading>
     <CaseStudyMutedText>
-      Each additional layer between base and alias creates compounding overhead:
+      Each extra layer between base and alias adds overhead, and it compounds:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>
-        <strong>Second naming decision:</strong> Every semantic variable now
-        requires naming the intermediate mapped value too. Double the naming
-        surface. Double the review scope.
+        Every semantic variable also needs a name for its intermediate mapped
+        value, which doubles the naming surface and the review scope.
       </li>
       <li>
-        <strong>Extra reference hop:</strong> Every resolution traverses one
-        more layer. More hops, more failure points, slower builds.
+        Resolving a variable takes one more hop. That's one more place for it
+        to fail, and a slower build.
       </li>
       <li>
-        <strong>Extra audit surface:</strong> Another collection to review,
-        validate, and keep in sync across brands. Another place for drift.
+        There's another collection to review, validate, and keep in sync across
+        brands, and one more place for drift to start.
       </li>
       <li>
-        <strong>Expanded decision surface:</strong> Instead of one file
-        selection, you now manage collection modes in cramped tool panels.
+        A single file selection turns into managing collection modes in cramped
+        tool panels.
       </li>
       <li>
-        <strong>Artificial complexity:</strong> Complexity that benefits
-        specialists, not teams. Variables should be easy to reason about.
+        The added complexity mostly helps specialists.
       </li>
     </CaseStudyMutedList>
 
@@ -291,8 +289,8 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 />
 
     <CaseStudyMutedText className="mt-4">
-      If you can select files, you can switch brands. No extra collection
-      required. One decision point. CSS cascade layers handle consumption.
+      If you can select files, you can switch brands without an extra
+      collection. CSS cascade layers handle consumption.
     </CaseStudyMutedText>
 
 <CodeBlock
@@ -306,44 +304,42 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 
     <CaseStudySubheading>Review and resolution</CaseStudySubheading>
     <CaseStudyMutedList className="space-y-2">
-      <li>One alias hop from base is the default. Direct path. No detours.</li>
-      <li>No extra collection to review, audit, or explain to new team members.</li>
+      <li>By default an alias sits one hop from base.</li>
+      <li>There's no extra collection to review, audit, or explain to new team members.</li>
       <li>The three-layer graph keeps review scope small and traceable.</li>
-      <li>CSS <code>@layer</code> and <code>@import</code> handle cascade. Use the platform.</li>
-      <li>Decisions live in files and build inputs, not cramped plugin panels.</li>
+      <li>CSS <code>@layer</code> and <code>@import</code> handle the cascade. I'd rather use the platform than build around it.</li>
+      <li>Decisions live in files and build inputs, which go through review like any other change.</li>
       <li>Any engineer can read the folder structure and understand the brand switch.</li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Version control and build inputs</CaseStudySubheading>
     <CaseStudyMutedText>
-      The primitives already exist. You do not need new abstraction layers:
+      The pieces already exist, so you don't need new abstraction layers:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>
-        <strong>Files are already versioned.</strong> Git tracks every change.
-        History, blame, diff, rollback for free.
+        Git already versions the files. History, blame, diff, and rollback come
+        with it.
       </li>
       <li>
-        <strong>Paths are already structured.</strong> <code>tokens/brand-a/color.json</code>
-        is self-documenting. No second naming system required.
+        A path like <code>tokens/brand-a/color.json</code> explains itself. You
+        don't need a second naming system on top of it.
       </li>
       <li>
-        <strong>Build tools already select files.</strong> Style Dictionary's
-        <code>source</code> array. CSS <code>@import</code>. The selector exists.
+        Build tools can already select files, through Style Dictionary's{' '}
+        <code>source</code> array or CSS <code>@import</code>.
       </li>
       <li>
-        <strong>Engineers already know this pattern.</strong> Every dev
-        understands folder structure. Not every dev wants to learn design tool
-        panel quirks.
+        Every developer understands folder structure, and not all of them want
+        to learn the quirks of a design tool panel.
       </li>
       <li>
-        <strong>One source of truth.</strong> The JSON in version control is
-        canonical. The design tool panel is a view, not the source.
+        The design tool panel is only a view of the canonical JSON in version
+        control.
       </li>
     </CaseStudyMutedList>
     <CaseStudyMutedText className="mt-4">
-      Mapped layers are a workaround for tools that cannot do file selection.
-      We have tools that can.
+      Mapped layers are a workaround for tools that can't select files.
     </CaseStudyMutedText>
     </CaseStudyDetails>
   </div>
@@ -352,8 +348,8 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 <CaseStudySection title="Validate changes before merge">
   <div className="space-y-6">
     <CaseStudyMutedText>
-      VDS builds on the W3C Design Tokens Community Group specification, adding
-      governance without reinventing the format.
+      VDS keeps the format from the W3C Design Tokens Community Group as it is
+      and adds governance on top.
     </CaseStudyMutedText>
 
     <CaseStudySubheading>Validation in CI</CaseStudySubheading>
@@ -365,7 +361,7 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
       <li>Naming convention checks (dot-separated, lowercase)</li>
       <li>Reference resolution and cycle detection</li>
       <li>Mode key consistency within collections</li>
-      <li>Breaking change detection with release notes requirements</li>
+      <li>Breaking change detection, with required release notes</li>
     </CaseStudyMutedList>
 
     <CaseStudyDetails summary="DTCG types, versioning rules, and deprecation example">
@@ -405,7 +401,8 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 
     <CaseStudySubheading>Versioning and deprecation</CaseStudySubheading>
     <CaseStudyMutedText>
-      Breaking changes are explicit. Consumers can plan upgrades:
+      Breaking changes show up in the version number, so consumers can plan
+      upgrades:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
       <li>
@@ -446,24 +443,23 @@ gradient: from-purple-500/20 via-indigo-500/10 to-transparent
 <CaseStudySection title="Where the specification ends">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      I publish VDS as a living governance specification informed by design
-      systems work. It defines naming, validation, versioning, and adapter
-      patterns on DTCG 2025.10. The intended contract outlives an individual
-      design tool and stays in version control.
+      I publish VDS as an independent spec. It's still evolving. It covers
+      naming, validation, versioning, and adapter patterns on DTCG 2025.10. The
+      contract lives in version control so it can outlast any one design tool.
     </CaseStudyParagraph>
 
     <CaseStudyMutedText>
-      VDS is not a new file format, a runtime library, or a design system. It
-      governs variables and their changes; it does not choose a team's design
-      decisions. Validation happens at build time. The three-layer constraint
-      keeps the contract explicit rather than adding another abstraction layer.
+      VDS doesn't define a new file format, and it isn't a runtime library or
+      a design system. It governs variables and how they change, and leaves
+      design decisions to the team. Validation runs at build time, and the
+      three-layer limit keeps the contract explicit.
     </CaseStudyMutedText>
 
     <CaseStudyMutedText>
-      The specification describes what a conforming workflow must check.{' '}
-      <a href="/work/primitree">Primitree</a> is where I implement token
-      architecture checks, build output, and change reports. Keeping the
-      specification and the tool separate makes each responsibility reviewable.
+      The spec says what a conforming workflow has to check.{' '}
+      <a href="/work/primitree">Primitree</a> is my implementation, with token
+      architecture checks, build output, and change reports. I keep the two
+      separate so each one can be reviewed on its own terms.
     </CaseStudyMutedText>
   </div>
 </CaseStudySection>
