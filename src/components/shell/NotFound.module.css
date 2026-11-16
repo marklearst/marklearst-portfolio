@@ -1,0 +1,148 @@
+.page {
+  min-height: 80dvh;
+  background: var(--color-canvas);
+  color: var(--color-ink-secondary);
+}
+
+.container {
+  width: min(calc(100% - var(--space-12)), 54rem);
+  margin-inline: auto;
+  padding-block: calc(var(--space-16) * 2) var(--space-16);
+}
+
+/* The same three parts as the inspector's status line: what was asked, the verdict, the code. */
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin: 0 0 var(--space-6);
+  color: var(--color-ink-muted);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+}
+
+.status code {
+  padding: 0;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+  overflow-wrap: anywhere;
+}
+
+.status strong {
+  color: var(--color-accent-danger);
+  font-size: var(--text-ui);
+  font-weight: var(--font-weight-medium);
+}
+
+.status .code {
+  padding: 0 var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-1);
+  color: var(--color-accent-danger);
+  line-height: var(--leading-code);
+}
+
+.title {
+  margin: 0 0 var(--space-6);
+  color: var(--color-ink-primary);
+  font: var(--font-weight-medium) var(--text-title)/var(--leading-title) var(--font-body);
+  letter-spacing: var(--tracking-title);
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 38rem;
+  margin: 0 0 var(--space-8);
+  font: var(--font-weight-regular) var(--text-lead)/var(--leading-lead) var(--font-body);
+  text-wrap: pretty;
+}
+
+/* A chain like the inspector draws, that ends before it reaches a page. */
+.chain {
+  position: relative;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 38rem;
+  margin: 0 0 var(--space-10);
+  padding: 0 0 0 var(--space-6);
+  list-style: none;
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+}
+
+.chain::before {
+  content: '';
+  position: absolute;
+  top: var(--space-2);
+  bottom: var(--space-2);
+  left: 6px;
+  width: 1px;
+  background: var(--color-border-subtle);
+}
+
+.chain li {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-4);
+  color: var(--color-ink-muted);
+}
+
+.chain li::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: calc(var(--space-6) * -1 + 2px);
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--color-ink-muted);
+  /* A square, like the swatches. A row of circles is what every status list uses. */
+  border-radius: calc(var(--radius-1) / 2);
+  background: var(--color-canvas);
+}
+
+.chain li[data-end]::before {
+  border-color: var(--color-accent-danger);
+  background: var(--color-accent-danger);
+}
+
+.chain code {
+  padding: 0;
+  background: none;
+  color: var(--color-ink-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+  overflow-wrap: anywhere;
+}
+
+.chain li[data-end] strong {
+  color: var(--color-accent-danger);
+  font-weight: var(--font-weight-medium);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-6);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-ink-primary);
+  font: var(--font-weight-medium) var(--text-ui)/var(--leading-ui) var(--font-body);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-muted);
+  text-underline-offset: .2em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+}
