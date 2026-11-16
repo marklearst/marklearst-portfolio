@@ -257,7 +257,7 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'CONSULTING',
     categoryColor: 'yellow',
     summary:
-      "Configuration-driven React components for Skydio's drone mission controls, documented in a public Storybook and shipped in a Skydio software release. I also trained their product and engineering teams on the patterns.",
+      "A configuration-driven React widget for Skydio's drone mission controls, documented in a public Storybook and shipped in a Skydio software release. I also trained their product and engineering teams on its patterns.",
     description:
       "Built a React mission-control widget in Skydio's Rivit design language. One typed config file drives four mission types and 15+ mission actions, and the widget runs on its own state or on state the host app passes in.",
     role: 'Frontend Consultant · Component Architecture & Storybook',
