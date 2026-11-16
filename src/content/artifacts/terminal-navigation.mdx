@@ -15,7 +15,7 @@ pinned: false
 
 I originally built a terminal overlay for this portfolio because the command-line metaphor felt familiar. Clicking a link started an entrance animation, typed a command, and waited 450ms before calling the router. Even when the next page was ready, the visitor had to wait for the performance. The overlay also needed its own state, timers, and recovery logic.
 
-I replaced it with a transition on the page content. Links start navigation normally; motion follows the route change.
+I replaced it with a transition on the page content. Links navigate normally, and the motion follows the route change.
 
 ## Let the router navigate
 
@@ -48,10 +48,10 @@ An earlier version captured the outgoing page and blurred and translated both pa
 
 The first render stays still. So do section links, since changing a hash does not change the pathname. Keyboard navigation, Back and Forward, and reduced-motion preferences all skip the fade and show the committed content immediately.
 
-Another route change or unmount cancels any running animation. Changing the reduced-motion preference cancels it too. The effect removes its listener during cleanup.
+A route change, an unmount, or a change to the reduced-motion preference cancels any running animation. The effect removes its listener during cleanup.
 
 ## Preserve ordinary navigation
 
 Normal links retain modified-click and new-tab behavior. The transition adds no delay before navigation, and the new page stays interactive throughout the fade.
 
-The useful checks are practical: follow a case-study link, return with Back, jump to a section, navigate with the keyboard, and repeat with reduced motion enabled. Each should remain usable with the transition removed.
+To check it, follow a case-study link, return with Back, jump to a section, navigate with the keyboard, and repeat with reduced motion enabled. Everything should work as it would without the transition.
