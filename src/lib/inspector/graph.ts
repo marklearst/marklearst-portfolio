@@ -250,8 +250,9 @@ export const tokenGraph = () => editedGraph()
 
 /**
  * Breaks the rule: every value of BREAK_PATH becomes the literal it resolves
- * to right now. The resolved values, and so the pixels, do not change. What
- * changes is that the token no longer follows what it used to reference.
+ * to right now. The resolved values, and so the colors, do not change. What
+ * changes is that the token no longer follows what it used to reference. The
+ * page shows that by letting what the token paints hang loose.
  */
 export function freeze(graph: TokenGraph): FrozenValue[] {
   return tokensByPath.get(BREAK_PATH)!.values.map(({ conditions }) => ({

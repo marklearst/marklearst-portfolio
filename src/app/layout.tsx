@@ -23,7 +23,9 @@ const FigmaVarsDebug = isDev ? dynamic(() => import('@/components/dev/FigmaVarsD
 //
 // It also marks the first page of a session, so the hero's token chain resolves
 // row by row once and then stays out of the way.
-const contextScript = `(function(){var d=document.documentElement;try{var m=localStorage.getItem('ml:motion');d.dataset.motion=m==='reduced'||m==='default'?m:matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'default';if(!sessionStorage.getItem('ml:intro')){sessionStorage.setItem('ml:intro','1');d.dataset.intro=''}}catch(e){}})()`
+// Storage can throw, as it does in a private window with storage blocked. The motion context is set either way,
+// from the system's preference, and only the stored choice and the intro are skipped.
+const contextScript = `(function(){var d=document.documentElement,m=null;try{m=localStorage.getItem('ml:motion')}catch(e){}d.dataset.motion=m==='reduced'||m==='default'?m:matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'default';try{if(!sessionStorage.getItem('ml:intro')){sessionStorage.setItem('ml:intro','1');d.dataset.intro=''}}catch(e){}})()`
 
 const revealUnder = (motion: string) =>
   tokenGraph().chain('semantic.duration.reveal', { ...DEFAULT_SELECTION, motion })?.value.text ?? ''

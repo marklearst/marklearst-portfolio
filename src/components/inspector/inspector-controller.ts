@@ -11,6 +11,15 @@ import type { CheckSummary, ContextSelection, Contrast, Inspection, ResolvedChai
 /** The motion context: as designed, off, or every duration at a quarter of its speed for a close look. */
 export type Motion = 'default' | 'reduced' | 'slow'
 
+/** A stored preference, or nothing where the browser refuses storage, as it can in a private window. */
+function stored(key: string): string | null {
+  try {
+    return localStorage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
 /** A token chain the dock shows before anything is selected. */
 export interface PreviewProperty {
   id: string
@@ -216,7 +225,7 @@ export class InspectorController {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
     const followSystem = () => {
-      if (!localStorage.getItem(MOTION_KEY)) this.applyMotion(reduced.matches ? 'reduced' : 'default')
+      if (!stored(MOTION_KEY)) this.applyMotion(reduced.matches ? 'reduced' : 'default')
     }
     const narrow = window.matchMedia(NARROW)
     const onNarrow = () => this.updateFloating()
