@@ -18,6 +18,8 @@ The consequence is specific. A peer has to be willing to forward the site to the
 
 A portfolio for Mark Learst, design engineer and UI architect, working across design systems, design tokens, React, accessibility, and developer tooling. Open to principal design engineering roles. Success is an offer for a principal role, ideally in the design led product tooling cohort: Vercel, Linear, Notion, Apple.
 
+The site is also the first piece of work a visitor judges, and it is judged against other candidates' sites. The bar is a site a peer would nominate: Awwwards site of the day, where design, usability, creativity, and content are each scored. A correct, quiet portfolio loses to the one that is remembered.
+
 ## Positioning
 
 Design engineer and UI architect who sets system direction in code.
@@ -35,7 +37,7 @@ Every claim has to survive a peer opening the GitHub sidebar. Nothing on the sit
 
 ## Brand Personality
 
-Precise, restrained, unshowy. Confidence shows through subtraction: the work carries the page, and nothing performs a trick for its own sake. The voice is a practitioner talking to practitioners: specific, unhedged, willing to name what was rejected and why.
+Precise and bold. The site performs, and every performance is the system at work: the introduction opens as its own blueprint, a broken rule visibly breaks the page, and any motion can be slowed down and read. Confidence shows in how far an idea is taken, not in how little is on the page. What stays out is the trick for its own sake: motion that reports nothing, or an effect that would fit a stranger's site unchanged. The voice is a practitioner talking to practitioners: specific, unhedged, willing to name what was rejected and why.
 
 ## Anti-references
 
@@ -61,9 +63,11 @@ The neutral grotesque defaults (Inter, Geist) stay out for the same reason as de
 
 **Show, never assert.** Every claim on the site needs an artifact a reader can see or operate. A sentence describing a build failure is worth less than the failing build.
 
+**Go further than correct.** A demonstration that is only correct gets a nod and is forgotten. Each centerpiece is pushed until a peer wants to play with it: it has weight, it has consequences, and it rewards a second look. Where the choice is between quiet and memorable, memorable wins, as long as what moves is the system doing something true.
+
 **The identity is what ships.** A dark canvas, Wotfard for everything people read, MonoLisa only where the text is code, sentence case headings, grayscale with one accent, and the braced wordmark. Only the decorative layer is negotiable.
 
-**The site is the system.** The goal: every visible value comes from a governed token, and the site runs on the same open source it presents. GlucoseIQ already powers the glucose demo; Primitree takes over the site's tokens next.
+**The site is the system.** The goal: every visible value comes from a governed token, and the site runs on the same open source it presents. GlucoseIQ powers the glucose demo. Primitree builds and checks the site's tokens, and the inspector on every page lets a visitor trace any element back through them. Color, type, and motion are governed; geometry is next, and the inspector says so wherever it meets a raw value.
 
 **Practice what is preached.** An accessibility specialist's own site must pass the standard it sells. A contrast or focus failure here costs more credibility than it would anywhere else.
 

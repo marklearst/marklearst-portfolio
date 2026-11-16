@@ -1,18 +1,90 @@
-# Token source and generated CSS
+# Token source
 
-The generator and validator share one source list in `scripts/style-dictionary/tokens.mjs`:
+The site's tokens are DTCG 2025.10 files with a Resolver. Primitree reads them, checks them, and writes everything the site consumes.
 
-- `base.json` defines primitive colors, font families, spacing, radii, and type values.
-- `alias.json` defines semantic aliases and dark/light values.
-- `component.json` defines component aliases.
+## Sources
 
-`next/` holds a one time migration of these tokens to Primitree's DTCG 2025.10 subset, with a resolver for the dark and light contexts. It drops the Monokai group, `font.serif`, `radius.pill`, and `component.card.shadow`, and moves the light values into the base layer. It is not a build input and nothing regenerates it, so keep editing the files above until Primitree takes over the build.
+| File | Layer | Holds |
+|---|---|---|
+| `base.tokens.json` | base | Literal values: the neutral ramp, accent and signal colors, font families, sizes, weights, leading, tracking, spacing, radii, layers, durations, easings, spring bounce |
+| `semantic.tokens.json` | meaning | References to base, named for the job: surfaces, ink, border, accent, status, type roles, motion |
+| `component.tokens.json` | component | References to meaning, for the button, the inspector, and its dock |
+| `theme.light.tokens.json` | meaning | The light theme's reroutes |
+| `motion.reduced.tokens.json` | meaning | The reduced motion reroutes: every duration to `duration.instant` |
+| `motion.slow.tokens.json` | meaning | The slow motion reroutes: every duration to its `duration.quarter` step, four times as long |
+| `tokens.resolver.json` | | One set (the three layers) and two axes: `theme` (dark, light) and `motion` (default, reduced, slow) |
+| `css-adapter.json` | | The names the site's CSS already used, pointed at Primitree's variables |
 
-The local schema in `scripts/style-dictionary/token-schema.json` describes this repository's source format. Validation checks token shapes, duplicate definitions, references, and resolved value types in both modes. It does not certify DTCG or Primitree conformance.
+A context reroutes references in the meaning layer and nothing else. Base values never change, and a context can't add a token.
 
-Run `pnpm tokens:validate` to validate the source. Run `pnpm tokens:build` to regenerate `src/styles/generated/tokens.css`, `tokens.light.css`, and `theme.css`. Run `node scripts/build-tokens-sd.mjs --check` to detect missing or stale generated files without writing them.
+## Color
 
-Generated CSS must be changed through the source files. Fluid type calculations and interaction motion belong to the authored CSS adapters and are not emitted by this generator.
+Three surfaces, three inks, one border, the signals, and one accent.
+
+The accent is one hue. `color.brand.500` is chosen. `color.brand.300` and `color.brand.700` are solved from its hue by the rule in `src/lib/inspector/brand.ts`: of every tone at that hue that holds the contrast it needs, the one with the most color. To change the accent, pick the new 500 and run the rule for the other two:
+
+```sh
+pnpm tokens:accent '#DB1834'
+```
+
+It prints both tones as DTCG values to paste into `base.tokens.json`, with the contrast each one holds.
+
+| Meaning token | Used for | Has to hold |
+|---|---|---|
+| `semantic.color.accent.primary` | Fills, outlines, icons, marks | 3:1 against every surface, and 4.5:1 under its label |
+| `semantic.color.accent.text` | The accent when it is text | 4.5:1 against every surface |
+| `semantic.color.ink.onAccent` | Text and icons on the accent | 4.5:1 on the accent |
+
+`scripts/tokens/contrast.test.mjs` is the gate. It reads the sources in both themes and fails the build's tests when text drops under 4.5:1 on a surface, a mark under 3:1, or a label under 4.5:1 on its fill.
+
+A token's `$description` says what the token is for. It never holds a link: the token files are public, and `scripts/tokens/sources.test.mjs` fails if one does.
+
+## Rules
+
+`primitree.config.ts` at the repository root holds the policy:
+
+- **base** owns `color`, `font`, `space`, `radius`, `layer`, `duration`, `easing`, and `spring`. Literals only.
+- **meaning** owns `semantic`. References only, and only to base.
+- **component** owns `component`. References only, and only to meaning.
+
+A literal in the meaning layer is PT1003. A component token that skips the meaning layer is PT1004. Either one fails the build.
+
+## Build
+
+`pnpm tokens:build` runs `scripts/tokens/build.mjs`. It applies the Resolver, composes one Primitree graph for every context (a context's override becomes a conditional value on the token it reroutes), evaluates the policy once over that graph, and writes:
+
+| Output | For |
+|---|---|
+| `src/styles/generated/tokens.css` | Primitree's CSS: defaults on `:root`, `[data-theme='light']`, `[data-motion='reduced']`, `[data-motion='slow']`, and the site's media query fallback for reduced motion |
+| `src/styles/generated/theme.css` | The adapter names, as a Tailwind theme and as plain custom properties |
+| `src/tokens/generated/tokens.ts` | Primitree's TypeScript: `TokenPath`, `tokenVars`, `tokenValues` |
+| `src/tokens/generated/site.tokens.json` | The default context as one document, which `primitree check` and `primitree inspect` read |
+| `src/tokens/generated/graph.json` | The graph, policy, and adapter names the inspector loads in the browser |
+
+Generated files change only through the sources. `pnpm tokens:check` fails when one is missing or stale, then runs `primitree check`.
+
+```sh
+pnpm tokens:build
+pnpm tokens:check
+pnpm tokens:inspect component.button.primary.background
+```
+
+Two site adapters cover what Primitree doesn't emit yet. Both are small, and both are upstream issues:
+
+- **A media query for a context.** Primitree writes a context under a data attribute. `layout.tsx` sets `data-motion` before first paint, and `tokens.css` repeats the reduced motion overrides under `prefers-reduced-motion` for a page that hasn't run that script.
+- **A Resolver in the config form.** `primitree check` reads one document, so the build writes the default context to `generated/site.tokens.json` for it. The build script checks every context itself with the same policy.
+
+Letter spacing is stored as a number, a multiple of the font size, because DTCG dimensions take px or rem. The adapter multiplies it by `1em`.
+
+The light theme's tokens pass the policy, but nothing sets `data-theme` yet. Code that still assumes a dark page has to move onto tokens before the switch ships.
+
+## The inspector reads this
+
+`src/lib/inspector` loads `graph.json` and runs `@primitree/core` in the browser: the same graph and the same policy. Break a rule swaps one meaning token's reference for the literal it resolved to and evaluates the policy again, so the finding a visitor sees is the one the build would report.
+
+While the rule is broken, the dock shows the token that was cut loose and lets a visitor move its hue. The new color comes from the same rule that solved the built tones, asked to hold the same contrast, so any hue passes. Everything the broken token paints stays the old color, which is the cost of the broken rule made visible. Restoring the rule lets it all catch up.
+
+To find an element's tokens, the inspector reads the stylesheets for rules that match the element and read a custom property, then sets each candidate to a sentinel for an instant and watches which painted properties move. The cascade stays the browser's own answer. A property no token reaches is reported as a raw value.
 
 ## Raw values
 
