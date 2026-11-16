@@ -3,6 +3,7 @@ import { ArrowLeftIcon, ArrowUpIcon, ArrowUpRightIcon } from '@/components/ui/Ic
 import DisclosureSummary from '@/components/ui/DisclosureSummary'
 import CaseStudyAnalytics from '@/components/analytics/CaseStudyAnalytics'
 import TrackedLink from '@/components/analytics/TrackedLink'
+import ProjectTitle from '@/components/transitions/ProjectTitle'
 import type { ProjectCategory } from '@/data/projects'
 import { extractCaseStudySections, type CaseStudySectionData } from '@/components/case-study/case-study-sections'
 import Footer from '../shell/Footer'
@@ -80,7 +81,7 @@ export default function CaseStudyContent({
               <ArrowLeftIcon /> Back to work
             </TrackedLink>
 
-            <h1 id='case-study-title' className={styles.title}>{title}</h1>
+            <h1 id='case-study-title' className={styles.title}><ProjectTitle slug={slug}>{title}</ProjectTitle></h1>
             <p className={styles.description}>{description}</p>
 
             {links.length > 0 && (

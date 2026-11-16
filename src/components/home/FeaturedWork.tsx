@@ -7,6 +7,7 @@ import { getProjectBySlug, type ProjectMeta } from '@/data/projects'
 import TrackedLink from '@/components/analytics/TrackedLink'
 import SectionViewTracker from '@/components/analytics/SectionViewTracker'
 import AuroraArchitecture from '@/components/evidence/AuroraArchitecture'
+import ProjectTitle from '@/components/transitions/ProjectTitle'
 import styles from '@/components/home/FeaturedWork.module.css'
 
 // Titles and summaries come from PROJECTS, the same copy the Work index shows.
@@ -54,7 +55,7 @@ export default function FeaturedWork() {
         <div className={styles.projectGrid}>
         {SHOWCASES.map(({ project, note, image, alt, caption }, index) => (
           <article key={project.slug} className={`${styles.project} ${index === 0 ? styles.projectFeatured : ''}`}>
-            <h3 className={styles.projectTitle}>{project.cardTitle}</h3>
+            <h3 className={styles.projectTitle}><ProjectTitle slug={project.slug}>{project.cardTitle}</ProjectTitle></h3>
             <figure className={styles.figure}>
               <TrackedLink className={styles.imageLink} href={project.route} aria-label={`Explore ${project.cardTitle}`} event={projectClickEvent(project)}>
                 <span className={styles.imageViewport}>
@@ -74,7 +75,7 @@ export default function FeaturedWork() {
         </div>
         <article className={styles.enterprise}>
           <div className={styles.projectContent}>
-            <h3>{AURORA.cardTitle}</h3>
+            <h3><ProjectTitle slug={AURORA.slug}>{AURORA.cardTitle}</ProjectTitle></h3>
             <p className={styles.projectSummary}>{AURORA.summary}</p>
             <TrackedLink href={AURORA.route} className={styles.caseLink} event={projectClickEvent(AURORA)}>Inside Aurora <span aria-hidden='true'><ArrowRightIcon /></span></TrackedLink>
           </div>
@@ -83,13 +84,13 @@ export default function FeaturedWork() {
         <article className={styles.librarySample} aria-labelledby='glucose-sample-heading'>
           <div className={styles.projectContent}>
             <p className={styles.eyebrow}>My library, running here</p>
-            <h3 id='glucose-sample-heading'>{GLUCOSEIQ.cardTitle}</h3>
+            <h3 id='glucose-sample-heading'><ProjectTitle slug={GLUCOSEIQ.slug}>{GLUCOSEIQ.cardTitle}</ProjectTitle></h3>
             <p className={styles.projectSummary}>{GLUCOSEIQ.summary}</p>
             <TrackedLink href={GLUCOSEIQ.route} className={styles.caseLink} event={projectClickEvent(GLUCOSEIQ)}>{GLUCOSEIQ.cardTitle} case study <ArrowRightIcon /></TrackedLink>
           </div>
           <div className={styles.livePreview}>
             <GlucoseDemo compact />
-            <a href='https://github.com/marklearst/marklearst-portfolio/blob/99ed8e2ec1b5c8f1665d893410a39efaee391778/src/lib/glucose-demo.ts' target='_blank' rel='noopener noreferrer' className={styles.previewLink}>View sample source <ArrowUpRightIcon /></a>
+            <a href='https://github.com/marklearst/marklearst-portfolio/blob/7b19f1b586a87cc8a8a615e049deb4cafe55fb99/src/lib/glucose-demo.ts' target='_blank' rel='noopener noreferrer' className={styles.previewLink}>View sample source <ArrowUpRightIcon /></a>
           </div>
         </article>
         <div className={styles.moreWork}>

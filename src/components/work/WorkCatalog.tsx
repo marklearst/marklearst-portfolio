@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PROJECTS_IN_DISPLAY_ORDER, type ProjectMeta } from '@/data/projects'
 import { trackCaseStudyClick, trackProjectCardHover, trackProjectCardImpression } from '@/lib/analytics'
+import ProjectTitle from '@/components/transitions/ProjectTitle'
 import styles from './WorkCatalog.module.css'
 
 const FILTERS = [
@@ -55,7 +56,7 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
         <span>{project.openSource ? 'Open source' : project.category.toLowerCase()}</span>
       </div>
       <div className={styles.projectBody}>
-        <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>{project.cardTitle}<span aria-hidden='true'><ArrowRightIcon size={20} /></span></Link></h2>
+        <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}><ProjectTitle slug={project.slug}>{project.cardTitle}</ProjectTitle><span aria-hidden='true'><ArrowRightIcon size={20} /></span></Link></h2>
         {preview && <figure className={styles.preview}>
           <Link className={styles.previewLink} href={project.route} aria-label={`${project.cardTitle} case study preview`} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>
             <span className={styles.previewViewport}><Image src={preview.src} alt={preview.alt} width={1280} height={720} loading={index === 0 ? 'eager' : undefined} fetchPriority={index === 0 ? 'high' : undefined} sizes='(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px' /></span>
