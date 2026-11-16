@@ -2,6 +2,7 @@
 
 import { getImageProps } from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { durationMs } from '@/lib/motion-tokens'
 import { createEvidenceImagePreparation, type EvidenceImage } from './evidence-image-preparation'
 
 export interface EvidenceRequest {
@@ -48,18 +49,12 @@ export function useEvidenceGallery(items: EvidenceImage[]) {
   }, [])
 
   useEffect(() => {
-    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const stopMotion = () => {
-      if (preference.matches) stopAnimation()
-    }
-    preference.addEventListener('change', stopMotion)
     return () => {
-      preference.removeEventListener('change', stopMotion)
       // Invalidate in-flight work without permanently disabling the preparer
       // during Strict Mode's effect cleanup rehearsal.
       requestVersion.current += 1
     }
-  }, [stopAnimation])
+  }, [])
 
   async function select(index: number, options: SelectionOptions = {}) {
     const item = items[index]
@@ -89,7 +84,7 @@ export function useEvidenceGallery(items: EvidenceImage[]) {
     }
     if (!ready || !isCurrent()) return
 
-    const animate = Boolean(mayAnimate) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const animate = Boolean(mayAnimate) && durationMs('--semantic-duration-feedback') > 0
     const previous = animate ? committed.current : null
     committed.current = index
     animating.current = animate

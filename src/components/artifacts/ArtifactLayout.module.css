@@ -67,7 +67,7 @@
 }
 
 .pinned {
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text);
 }
 
 .entryBody {
@@ -94,7 +94,7 @@
 
 .entryBody h2 a span {
   flex-shrink: 0;
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text);
   font-size: 1em;
 }
 
@@ -131,7 +131,7 @@
 }
 
 .backLink span {
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text);
 }
 
 .endNavigation {

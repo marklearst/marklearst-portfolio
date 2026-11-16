@@ -12,7 +12,7 @@ export default function AboutNote({
   className,
   ...rest
 }: ComponentPropsWithoutRef<'div'>) {
-  const base = 'mt-6 [&>p]:text-base [&>p]:text-white/60'
+  const base = 'mt-6 [&>p]:text-base [&>p]:text-ink-primary/60'
 
   return (
     <div className={className ? `${base} ${className}` : base} {...rest}>

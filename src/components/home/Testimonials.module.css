@@ -13,7 +13,7 @@
 .heading {
   margin: 0 0 36px;
   font: 500 var(--text-subheading)/1.2 var(--font-body);
-  letter-spacing: var(--token-tracking-heading);
+  letter-spacing: var(--tracking-heading);
   text-wrap: balance;
 }
 
@@ -34,7 +34,7 @@
 .words {
   margin: 0;
   color: var(--color-ink-secondary);
-  font: 400 var(--text-body)/var(--token-leading-body) var(--font-body);
+  font: 400 var(--text-body)/var(--leading-body) var(--font-body);
   text-wrap: pretty;
 }
 

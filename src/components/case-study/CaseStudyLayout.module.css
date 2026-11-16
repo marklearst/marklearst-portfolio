@@ -1,5 +1,5 @@
 .page {
-  --case-accent: var(--color-accent-primary);
+  --case-accent: var(--color-accent-text);
   position: relative;
   z-index: 1;
   min-height: 100vh;
@@ -98,7 +98,7 @@
   background: var(--color-surface);
   text-decoration: none;
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%);
-  transition: color 160ms ease, background-color 160ms ease;
+  transition: color var(--duration-feedback) var(--ease-out), background-color var(--duration-feedback) var(--ease-out);
 }
 
 .projectLink,
@@ -298,12 +298,5 @@
 
   .impactGrid {
     gap: 24px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .links .projectLink {
-    transition: none;
   }
 }

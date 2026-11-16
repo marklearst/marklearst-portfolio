@@ -1,0 +1,224 @@
+{
+  "semantic": {
+    "$description": "Meaning layer. References to base only. Contexts reroute these and nothing else.",
+    "color": {
+      "$type": "color",
+      "surface": {
+        "canvas": {
+          "$value": "{color.neutral.900}"
+        },
+        "base": {
+          "$value": "{color.neutral.875}"
+        },
+        "raised": {
+          "$value": "{color.neutral.825}"
+        }
+      },
+      "ink": {
+        "primary": {
+          "$value": "{color.neutral.100}"
+        },
+        "secondary": {
+          "$value": "{color.neutral.200}"
+        },
+        "muted": {
+          "$value": "{color.neutral.400}"
+        },
+        "onAccent": {
+          "$value": "{color.neutral.100}",
+          "$description": "Text and icons that sit on the accent."
+        }
+      },
+      "border": {
+        "subtle": {
+          "$value": "{color.neutral.800}"
+        }
+      },
+      "accent": {
+        "primary": {
+          "$value": "{color.brand.500}",
+          "$description": "Fills, outlines, icons, and marks."
+        },
+        "text": {
+          "$value": "{color.brand.300}",
+          "$description": "The accent when it is text, which needs more contrast than a mark does."
+        }
+      },
+      "status": {
+        "$description": "Signals. A rebrand never moves these.",
+        "pass": {
+          "$value": "{color.green.300}"
+        },
+        "warn": {
+          "$value": "{color.amber.300}"
+        },
+        "fail": {
+          "$value": "{color.red.300}"
+        }
+      }
+    },
+    "font": {
+      "$type": "fontFamily",
+      "body": {
+        "$value": "{font.family.sans}"
+      },
+      "code": {
+        "$value": "{font.family.mono}"
+      }
+    },
+    "type": {
+      "display": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.700}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.100}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.tight}"
+        }
+      },
+      "title": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.600}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.200}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.tight}"
+        }
+      },
+      "heading": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.500}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.300}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.snug}"
+        }
+      },
+      "subheading": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.400}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.400}"
+        }
+      },
+      "body": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.300}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.none}"
+        }
+      },
+      "lead": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.300}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        }
+      },
+      "ui": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.200}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        }
+      },
+      "caption": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.100}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        }
+      },
+      "code": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.50}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.600}"
+        }
+      }
+    },
+    "duration": {
+      "$type": "duration",
+      "$description": "Named for the job. The reduced motion context routes every one of these to duration.instant.",
+      "feedback": {
+        "$value": "{duration.quick}",
+        "$description": "Hover and press."
+      },
+      "reveal": {
+        "$value": "{duration.base}",
+        "$description": "Content changing in place."
+      },
+      "handoff": {
+        "$value": "{duration.slow}",
+        "$description": "Route changes and larger moves."
+      },
+      "causal": {
+        "$value": "{duration.hop}",
+        "$description": "One step of delay between tokens that depend on each other."
+      }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "enter": {
+        "$value": "{easing.out}",
+        "$description": "Anything entering, leaving, or answering a press."
+      },
+      "move": {
+        "$value": "{easing.inOut}",
+        "$description": "Something already on screen travelling to a new place."
+      },
+      "linear": {
+        "$value": "{easing.linear}",
+        "$description": "Time shown as time."
+      },
+      "settle": {
+        "$value": "{easing.overshoot}",
+        "$description": "One thing landing with some weight, like the inspector's outline arriving on an element."
+      }
+    },
+    "spring": {
+      "$type": "number",
+      "land": {
+        "$value": "{spring.bounce.soft}",
+        "$description": "Something that was sent somewhere and arrives with its own speed: the outline, a thrown dock."
+      }
+    }
+  }
+}

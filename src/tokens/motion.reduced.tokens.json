@@ -1,0 +1,19 @@
+{
+  "semantic": {
+    "duration": {
+      "$type": "duration",
+      "feedback": {
+        "$value": "{duration.instant}"
+      },
+      "reveal": {
+        "$value": "{duration.instant}"
+      },
+      "handoff": {
+        "$value": "{duration.instant}"
+      },
+      "causal": {
+        "$value": "{duration.instant}"
+      }
+    }
+  }
+}

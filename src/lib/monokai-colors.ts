@@ -1,16 +1,26 @@
-import baseTokens from '@/tokens/base.json'
+import tokens from '@/tokens/generated/site.tokens.json'
 
-// Compatibility values for inline styles and server-rendered share images.
-// New UI styles consume the generated semantic CSS variables directly.
-const hex = ({ r, g, b }: { r: number; g: number; b: number }) =>
-  '#' + [r, g, b].map((channel) => channel.toString(16).padStart(2, '0')).join('')
-const base = baseTokens.color.base
-const ink = hex(base.white.$value)
-const secondary = hex(base.gray.$value)
-const muted = hex(base.muted.$value)
-const orange = hex(base.orange.$value)
-const success = hex(baseTokens.color.status.success.$value)
-const danger = hex(baseTokens.color.status.danger.$value)
+// Compatibility values for server-rendered share images, which cannot read CSS
+// variables. They follow the dark theme's semantic tokens in Primitree's build
+// output. UI styles read the generated CSS variables instead.
+type TokenNode = { $value?: unknown; [key: string]: unknown }
+
+function hex(path: string): string {
+  let node: TokenNode | undefined = tokens as TokenNode
+  for (const key of path.split('.')) node = node?.[key] as TokenNode | undefined
+  const value = node?.$value
+  if (typeof value === 'string') return hex(value.slice(1, -1))
+  const color = value as { hex?: string } | undefined
+  if (!color?.hex) throw new Error(`No color token at ${path}`)
+  return color.hex.toLowerCase()
+}
+
+const ink = hex('semantic.color.ink.primary')
+const secondary = hex('semantic.color.ink.secondary')
+const muted = hex('semantic.color.ink.muted')
+const orange = hex('semantic.color.accent.primary')
+const success = hex('semantic.color.status.pass')
+const danger = hex('semantic.color.status.fail')
 
 export const MONOKAI = {
   pink: orange,
@@ -19,8 +29,8 @@ export const MONOKAI = {
   green: secondary,
   cyan: ink,
   purple: muted,
-  background: hex(base.black.$value),
-  backgroundAlt: hex(base.smoke.$value),
+  background: hex('semantic.color.surface.canvas'),
+  backgroundAlt: hex('semantic.color.surface.base'),
   foreground: ink,
   terminal: {
     prompt: secondary,

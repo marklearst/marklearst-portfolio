@@ -50,7 +50,7 @@
   font: 500 var(--text-caption)/1.3 var(--font-body);
   cursor: pointer;
   touch-action: manipulation;
-  transition: background-color var(--duration-feedback), color var(--duration-feedback);
+  transition: background-color var(--duration-feedback) var(--ease-out), color var(--duration-feedback) var(--ease-out);
 }
 
 .choices button[aria-pressed='true'] {
@@ -170,16 +170,6 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-
-  .panels[data-motion='true'] > .panel[data-active='true'] {
-    animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .choices button {
-    transition: none;
-  }
+.panels[data-motion='true'] > .panel[data-active='true'] {
+  animation: var(--animation-panel-reveal) var(--duration-reveal) var(--ease-out);
 }

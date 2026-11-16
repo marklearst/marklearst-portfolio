@@ -29,6 +29,7 @@ export default function CodeBlockFrame({ code, language, analyticsLabel, childre
     try {
       await navigator.clipboard.writeText(code)
       setCopyState('copied')
+      // raw: holds the confirmation long enough to read. Not motion, so reduced motion must not zero it.
       resetCopyRef.current = setTimeout(() => setCopyState('idle'), 1800)
     } catch {
       setCopyState('failed')
