@@ -8,11 +8,12 @@ Design systems, React component libraries, developer tools, and working interfac
 
 - Next.js 16 App Router, React 19, and TypeScript
 - CSS Modules for component styles, Tailwind CSS 4 for existing utilities
-- Style Dictionary for generated token CSS, with a Primitree migration of the tokens staged in `src/tokens/next`
+- Primitree for the tokens: DTCG 2025.10 sources with a Resolver, checked against layer rules on every build
+- An inspector on every page that traces any element to its tokens through the same graph the build checked
 - Wotfard for reading and MonoLisa for code
 - GlucoseIQ for the interactive glucose example
 
-See [Architecture](./ARCHITECTURE.md) for ownership, component contracts, and the server/client boundary. See [Token source](./src/tokens/README.md) for generation and validation.
+See [Architecture](./ARCHITECTURE.md) for ownership, component contracts, and the server/client boundary. See [Token source](./src/tokens/README.md) for the token layers, the build, and the checks.
 
 ## Development
 
@@ -32,7 +33,13 @@ pnpm check
 pnpm build
 ```
 
-`check` runs ESLint, TypeScript, behavior tests, and generated-token drift detection. `build` also verifies the licensed fonts and token output before building every route.
+`check` runs ESLint, TypeScript, behavior tests, the Primitree check (`primitree check` plus the same policy across every context), stale-output detection, and the raw value ratchet. `build` also verifies the licensed fonts before building every route.
+
+```sh
+pnpm tokens:build              # rebuild generated CSS, TypeScript, and the inspector's graph
+pnpm tokens:inspect semantic.color.ink.primary
+pnpm tokens:accent '#DB1834'   # solve the accent's other tones from the chosen color
+```
 
 The recorded Primitree demo has an optional fresh-CLI replay test. Without `PRIMITREE_DEMO_CLI`, that test is reported as skipped; the recorded-result tests still run.
 
