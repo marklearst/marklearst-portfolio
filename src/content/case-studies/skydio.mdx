@@ -3,177 +3,217 @@ slug: skydio
 title: Skydio Autonomy Widget
 category: CONSULTING
 categoryColor: yellow
-description: "Built a React mission-control widget implementing Skydio's Rivit design language, with configurable actions, shared state, and Storybook documentation."
+description: "Built a React mission-control widget in Skydio's Rivit design language. One typed config file drives four mission types and 15+ mission actions, and the widget runs on its own state or on state the host app passes in."
 role: "Frontend Consultant · Component Architecture & Storybook"
-timeline: "2024 (Contract)"
+timeline: "2025 (Contract)"
 technologies:
   - React
   - TypeScript
   - Storybook
   - Tailwind CSS
   - Vite
+  - Vitest
+  - Chromatic
   - Config-Driven UI
 links:
   - label: Storybook
     href: https://skydio-autonomy-widget.vercel.app/
     icon: external
 impact:
-  - metric: Delivered
-    description: "React widget system for autonomous drone mission controls"
-  - metric: Storybook
-    description: "Interactive component documentation with accessibility testing"
+  - metric: Shipped
+    description: "The mission-control widget went out in a Skydio software release"
   - metric: Config-Driven
-    description: "Declarative action configuration and runtime state integration"
+    description: "One typed config file defines 15+ mission actions across 13 mission states"
+  - metric: Storybook
+    description: "Guided docs, live examples, and interaction tests, with accessibility violations failing the run"
 gradient: from-cyan-500/20 via-blue-500/10 to-transparent
 ---
 
 <CaseStudySection title="One widget, four mission types">
   <div className="space-y-6">
     <EvidenceGallery
-      label="Skydio Autonomy Widget states"
+      label="Skydio Autonomy Widget in Storybook"
       items={[
         {
           src: '/images/skydio-orbit-story.jpg',
           width: 1280,
           height: 720,
           title: 'Orbit mode',
-          alt: 'Skydio Autonomy Widget in Storybook Orbit Mode, showing Orbiting status, a circular timer, Stop control, and orbit slider.',
-          caption: 'Orbit Mode in the public Storybook. Inspect the timer, mission actions, and orbit control in the running component example.',
+          alt: 'Skydio Autonomy Widget Orbit Mode story in Storybook, showing Orbiting status, a circular timer at 1:57, a red Pause control, and the orbit progress control.',
+          caption: 'Orbit Mode in the public Storybook. The small marker is the fixed orbit reference, and the carets move the progress indicator in 5% steps.',
           sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--orbit-mode',
         },
         {
-          src: '/images/skydio-expanded-controls.jpg',
-          width: 960,
-          height: 540,
-          title: 'Expanded controls',
-          alt: 'Skydio Storybook Expanded story showing Flying to Point 1, Stop, and an expanded row of mission controls.',
-          caption: 'The expanded story exposes the mission controls beneath the current status and Stop action.',
-          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--expanded',
+          src: '/images/skydio-config-explorer.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Mission configuration',
+          alt: 'Storybook Architecture page with the mission configuration explorer open on waypoint-mission: status Flying to Point 1, four active controls, one paused control, and the raw ACTION_CONFIGS entry.',
+          caption: 'The Architecture page reads entries straight from the config file. The waypoint mission resolves to its status text, four active controls, and one paused control.',
+          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/docs/overview-architecture--docs',
         },
         {
-          src: '/images/skydio-paused-state.jpg',
-          width: 960,
-          height: 540,
-          title: 'Paused mission',
-          alt: 'Skydio Storybook Paused story showing Mission Paused, a circular timer at 6:47, and a blue Resume control.',
-          caption: 'The paused story keeps the remaining time visible and changes the primary action to Resume.',
-          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--paused',
+          src: '/images/skydio-architecture-host.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Host-controlled state',
+          alt: 'Storybook Architecture page with a host application that sets the mission, paused, and expanded state beside the rendered widget, above panels showing the state input and the resolved configuration.',
+          caption: 'A small host app drives the real widget through its provider. The panels show the state going in and the configuration it resolves to.',
+          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/docs/overview-architecture--docs',
         },
       ]}
     />
     <CaseStudyParagraph>
       The <strong>Skydio Autonomy Widget</strong> is a React interface for
-      drone mission controls. As a frontend consultant, I built its component
-      architecture and Storybook documentation, implementing Skydio's Rivit
-      design language. The delivered widget supports Waypoint, RTD, Orbit,
-      and Tracking mission types.
+      drone mission controls. I came in as a frontend consultant, built the
+      component architecture in Skydio's Rivit design language, and documented
+      it in Storybook. One widget handles all four mission types: Waypoint,
+      RTD, Orbit, and Tracking.
     </CaseStudyParagraph>
     <CaseStudyParagraph>
-      The widget was designed as a "UI microservice" with minimal coupling to
-      Skydio's control systems and layouts for mobile and desktop. The linked
-      Storybook lets reviewers inspect the components, their props, and
-      interactive examples.
+      Everything the widget shows comes from one typed config file, and its
+      state can live inside the widget or come from the app around it. That
+      makes it close to a headless component: the config decides what it
+      shows, the provider decides who owns the state, and the widget reports
+      what the operator pressed. The public Storybook, linked on this page,
+      walks through each part with live examples.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
 
-<CaseStudySection title="Actions come from configuration">
+<CaseStudySection title="One config file drives the widget">
   <div className="space-y-6">
     <CaseStudyMutedText>
-      I put each action's icon, label, tooltip, and variant in a shared
-      configuration. Controls read that configuration to render mission actions:
+      <code>AutonomyWidget.configs.ts</code> is a typed catalog with an entry
+      for each of 13 mission states. An entry sets the status text, the paused
+      text, the timer icon, and the controls to show while the mission is
+      active and while it's paused. The widget looks up the current mission
+      and renders that entry.
     </CaseStudyMutedText>
 
 <CodeBlock
   language="typescript"
   analyticsLabel="action_configs"
-  code={`// AutonomyWidget.configs.ts
-const ACTION_CONFIGS = {
-  pause: {
-    icon: PauseIcon,
-    label: 'Pause',
-    tooltip: 'Pause current mission',
-    variant: 'secondary'
+  code={`// AutonomyWidget.configs.ts (excerpt)
+export const ACTION_CONFIGS: Record<ActionType, ActionConfig> = {
+  'waypoint-mission': {
+    displayName: 'Flying to Point 1',
+    pausedName: 'Mission Paused',
+    actionTooltip: 'ETA to Point 1',
+    timerIcon: 'RouteIcon',
+    buttons: [...WAYPOINT_BUTTONS],
+    pausedButtons: [EXIT_MISSION_BUTTON],
   },
-  orbit: {
-    icon: OrbitIcon,
-    label: 'Orbit',
-    tooltip: 'Enable orbit mode',
-    variant: 'primary'
+  orbiting: {
+    displayName: 'Orbiting',
+    pausedName: 'Orbit Paused',
+    actionTooltip: 'Orbiting',
+    timerIcon: 'OrbitIcon',
+    buttons: [ORBIT_SLIDER_BUTTON],
+    pausedButtons: [ORBIT_SLIDER_BUTTON],
   },
-  // ... 15+ mission actions
-} as const
-
-// Usage: Automatic UI generation
-<IconButton {...ACTION_CONFIGS[action]} />`}
+  // ...11 more mission states
+}`}
 />
 
-    <CaseStudySubheading>Mission state and controls</CaseStudySubheading>
     <CaseStudyMutedText>
-      A React Context provider manages mission type, timer, and action states.
-      Remote state synchronization, event subscription hooks for analytics
-      telemetry, and runtime config injection connect the widget to the
-      surrounding application.
+      Adding a mission means adding it to the <code>ActionType</code> union,
+      writing its entry, and testing its active and paused states. The layout
+      stays the same. Only a new kind of control needs renderer work.
     </CaseStudyMutedText>
-    <CaseStudyMutedText>The component system includes:</CaseStudyMutedText>
+
+    <CaseStudySubheading>Local state or host state</CaseStudySubheading>
+    <CaseStudyMutedText>
+      <code>AutonomyWidgetProvider</code> is the state boundary, and it works
+      two ways. Pass <code>initialState</code> and the widget is uncontrolled:
+      it starts from that input and handles pause, resume, expansion, and orbit
+      progress itself. Pass <code>state</code> and <code>onStateChange</code>{' '}
+      and it's controlled: each change comes back to the host app as a
+      proposal, and the app decides what to keep. The app can fill that state
+      from an API response, a store, or device events.
+    </CaseStudyMutedText>
+
+<CodeBlock
+  language="tsx"
+  analyticsLabel="controlled_provider"
+  code={`<AutonomyWidgetProvider
+  state={state}
+  onStateChange={onStateChange}
+  onAction={onAction}
+  onOrbitProgressChange={onOrbitProgressChange}>
+  <AutonomyWidget />
+</AutonomyWidgetProvider>`}
+/>
+
+    <CaseStudyMutedText>
+      In both modes the widget never fetches data or talks to the drone. A
+      mission button emits{' '}
+      <code>{"{ type: 'mission-action', action, id }"}</code> through{' '}
+      <code>onAction</code>, and orbit changes go out through{' '}
+      <code>onOrbitProgressChange</code>. Sending the command, confirming it,
+      and syncing telemetry stay with the host app, and the timer counts down
+      locally from the duration it's given.
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedText>The widget's main components:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><strong>Dynamic Timer:</strong> Circular countdown ring with animated icon transitions</li>
-      <li><strong>OrbitSlider:</strong> Dual progress indicators with chevron controls</li>
-      <li><strong>IconButton:</strong> Shared component with icons, tooltips, and labels</li>
-      <li><strong>StatusMessage:</strong> Expandable area for mission updates</li>
-      <li><strong>Tooltip System:</strong> Custom tooltips with ARIA support</li>
+      <li><code>Timer</code>: a countdown ring with a text and icon transition, and a completion callback</li>
+      <li><code>OrbitSlider</code>: a fixed center reference and a progress indicator that two native caret buttons move in 5% steps</li>
+      <li><code>Button</code>: native buttons in a closed set of variants (default, action, play, stop, caret), with hover and focus tooltips</li>
+      <li><code>StatusMessage</code>: the one-line mission status, announced through a polite live region</li>
+      <li><code>Tooltip</code>: opens on hover or focus and closes with Escape</li>
     </CaseStudyMutedList>
 
-    <CaseStudySubheading>Reviewing component states</CaseStudySubheading>
+    <CaseStudySubheading>Docs and tests in Storybook</CaseStudySubheading>
     <CaseStudyMutedText>
-      I documented the components in Storybook with prop tables and usage
-      examples for product and engineering teams. The stories include:
+      The Storybook has guide pages for the overview, architecture, design
+      system, tokens, integration, component API, and verification. Interaction
+      stories press the same named buttons a person would and check pause and
+      resume, expansion, the typed action payload, and the orbit limits. Story
+      and behavior tests run in Chromium through Vitest, and any violation the
+      accessibility addon finds fails the run. Chromatic captures every story
+      for visual review, and a person accepts the baselines.
     </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Storybook with Vite integration</li>
-      <li>Accessibility addon (@storybook/addon-a11y) for automated accessibility checks</li>
-      <li>Theme switching addon for light/dark mode validation</li>
-      <li>Component Docs tabs with prop tables and usage examples</li>
-    </CaseStudyMutedList>
   </div>
 </CaseStudySection>
 
 <CaseStudySection title="A component system the team can extend">
   <div className="space-y-6">
     <CaseStudyMutedText>
-      Figma-exported SVG icons became React components, and Figma Variables
-      mapped to the Tailwind config. Tailwind CSS layouts provide compact
-      mobile controls and an expanded desktop mode with full action sets.
+      Icons exported from Figma as SVG became React components through SVGR.
+      Color, type, geometry, and motion live in one Tailwind v4 stylesheet,
+      where palette primitives feed semantic roles such as{' '}
+      <code>--color-action-pause</code> and components use only the roles.
+      Below a 600px viewport the widget keeps the timer and the pause control
+      and takes the secondary row out of the tab order. On touch screens the
+      controls grow to 44px targets.
     </CaseStudyMutedText>
 
     <CaseStudyDetails summary="Component imports and build setup">
     <CaseStudySubheading className="mt-0">Component exports</CaseStudySubheading>
-    <CaseStudyMutedText>Shared exports give consumers one component import path:</CaseStudyMutedText>
+    <CaseStudyMutedText>
+      One barrel file, <code>src/components/index.ts</code>, exports the
+      widget, its provider and types, and the shared components.
+    </CaseStudyMutedText>
 
 <CodeBlock
   language="typescript"
   analyticsLabel="barrel_architecture"
-  code={`// Clean imports via barrel pattern
-import {
+  code={`import {
   AutonomyWidget,
-  IconButton,
-  OrbitSlider
-} from '@/components'
-
-// Instead of deep imports
-import AutonomyWidget from '@/components/AutonomyWidget'
-import IconButton from '@/components/IconButton'`}
+  AutonomyWidgetProvider,
+  Button,
+  OrbitSlider,
+  Timer,
+} from 'components'`}
 />
 
     <CaseStudySubheading>Build setup</CaseStudySubheading>
-    <CaseStudyMutedText>The development setup includes:</CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Vite for fast builds and HMR</li>
-      <li>pnpm workspace management</li>
-      <li>ESLint configuration for code quality</li>
-      <li>TypeScript strict mode for type safety</li>
-      <li>Deployed via Vercel for Storybook hosting</li>
-    </CaseStudyMutedList>
+    <CaseStudyMutedText>
+      It builds with Vite inside a pnpm workspace, under ESLint and TypeScript
+      strict mode. Vercel builds and serves the Storybook, and Chromatic
+      handles visual review.
+    </CaseStudyMutedText>
     </CaseStudyDetails>
   </div>
 </CaseStudySection>
@@ -181,9 +221,9 @@ import IconButton from '@/components/IconButton'`}
 <CaseStudySection title="Handoff through Storybook">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      I delivered the configurable widget system, responsive components, and
-      Storybook documentation, and trained product and engineering teams on
-      component patterns and adoption workflows.
+      The widget shipped in a Skydio software release. I handed off the
+      components and the Storybook docs, and trained Skydio's product and
+      engineering teams on the component patterns.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
