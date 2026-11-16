@@ -11,81 +11,96 @@
   color: var(--color-ink-primary);
 }
 
+/* Each part names the space above it once, as a token and as that token's name. The margin reads the first and the
+   blueprint prints the second, so the label can't drift from the value. */
+
+/* As wide as its words, so an outline frames the name and not the column. */
 .name {
-  margin: 0 0 24px;
-  font: 500 clamp(2.75rem, 4.8vw, 4rem)/1.08 var(--font-body);
-  letter-spacing: var(--token-tracking-display);
+  position: relative;
+  width: fit-content;
+  margin: 0;
+  font: var(--font-weight-medium) var(--text-display)/var(--leading-display) var(--font-body);
+  letter-spacing: var(--tracking-display);
   text-wrap: balance;
 }
 
 .heroGrid {
   display: grid;
-  grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
-  gap: clamp(36px, 5vw, 72px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  gap: clamp(36px, 6vw, 96px);
   align-items: start;
 }
 
+/* What the blueprint has room for depends on how wide the introduction is, not the screen: two columns on a
+   laptop leave it as narrow as a phone does. So it is the container the blueprint asks. */
 .introduction {
   min-width: 0;
+  max-width: 41rem;
+  container: introduction / inline-size;
 }
 
 .lead {
-  margin: 0 0 24px;
+  --above: var(--space-6);
+  --above-name: 'space.6';
+  position: relative;
+  margin: var(--above) 0 0;
   color: var(--color-ink-primary);
-  font: 400 var(--text-subheading)/1.35 var(--font-body);
-  letter-spacing: var(--token-tracking-heading);
+  font: var(--font-weight-regular) var(--text-subheading)/var(--leading-subheading) var(--font-body);
+  letter-spacing: var(--tracking-heading);
   text-wrap: pretty;
 }
 
 .support {
+  --above: var(--space-6);
+  --above-name: 'space.6';
+  --between: var(--space-4);
+  --between-name: 'space.4';
+  position: relative;
   display: grid;
-  gap: 16px;
+  gap: var(--between);
+  margin-top: var(--above);
   color: var(--color-ink-secondary);
-  font: 400 var(--text-body)/var(--token-leading-body) var(--font-body);
+  font: var(--font-weight-regular) var(--text-body)/var(--leading-body) var(--font-body);
   text-wrap: pretty;
 }
 
 .support p {
+  position: relative;
   margin: 0;
 }
 
 .actions {
+  --above: var(--space-8);
+  --above-name: 'space.8';
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 20px;
-  margin-top: 32px;
+  gap: var(--space-3) var(--space-5);
+  margin-top: var(--above);
 }
 
-.primaryLink,
+/* The icon side sits 2px tighter, so the label reads as centered. */
+.explore {
+  gap: var(--space-4);
+  padding-right: calc(var(--space-5) - 2px);
+}
+
+.explore svg {
+  transition: transform var(--duration-feedback) var(--ease-out);
+}
+
 .textLink {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  min-height: 48px;
-  font: 500 var(--text-ui)/1.5 var(--font-body);
-  text-decoration: none;
-}
-
-.primaryLink {
-  --color-action-icon: var(--color-canvas);
-  padding: 12px 18px 12px 20px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  background: var(--color-ink-primary);
-  color: var(--color-canvas);
-  transition: background-color 160ms ease-out, box-shadow 160ms ease-out;
-}
-
-.primaryLink svg {
-  transition: transform 160ms var(--ease-out);
-}
-
-.textLink {
   gap: 10px;
+  min-height: 48px;
   padding-block: 12px;
   color: var(--color-ink-primary);
+  font: var(--font-weight-medium) var(--text-ui)/var(--leading-ui) var(--font-body);
+  text-decoration: none;
 }
 
 .brandIcon {
@@ -93,12 +108,15 @@
 }
 
 .available {
-  margin: 24px 0 0;
+  --above: var(--space-6);
+  --above-name: 'space.6';
+  position: relative;
+  margin: var(--above) 0 0;
   color: var(--color-ink-muted);
-  font: 400 var(--text-caption)/1.5 var(--font-body);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
 }
 
-.available a {
+.availableLink {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -108,52 +126,24 @@
   text-decoration: underline;
 }
 
-.previewLinks {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0 24px;
-  margin-top: 8px;
-}
-
-.previewLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 44px;
-  padding-block: 10px;
-  color: var(--color-ink-secondary);
-  font: 400 var(--text-caption)/1.5 var(--font-body);
-  text-decoration: none;
-}
-
-.hero a:focus-visible {
+.hero .introduction a:focus-visible {
   outline: 2px solid var(--color-ink-primary);
   outline-offset: 5px;
   border-radius: 4px;
 }
 
-.primaryLink:active {
-  background: var(--color-ink-secondary);
-}
-
-.primaryLink:active svg {
+.explore:active svg {
   transform: translateY(3px);
 }
 
 @media (hover: hover) and (pointer: fine) {
 
-  .primaryLink:hover {
-    background: var(--color-ink-secondary);
-  }
-
-  .primaryLink:hover svg {
+  .explore:hover svg {
     transform: translateY(2px);
   }
 
   .textLink:hover,
-  .previewLink:hover,
-  .available a:hover {
+  .availableLink:hover {
     color: var(--color-ink-primary);
     text-decoration: underline;
   }
@@ -170,10 +160,11 @@
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 959px) {
 
   .heroGrid {
     grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
   }
 }
 
@@ -183,47 +174,405 @@
     padding: 120px 24px 48px;
   }
 
-  .name {
-    margin-bottom: 20px;
-  }
-
-  .heroGrid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .heroGrid {
-    gap: 36px;
-  }
-
-  .lead {
-    margin-bottom: 20px;
+  .lead,
+  .support {
+    --above: var(--space-5);
+    --above-name: 'space.5';
   }
 
   .actions {
-    margin-top: 24px;
+    --above: var(--space-6);
+    --above-name: 'space.6';
   }
 
   .available {
-    margin-top: 16px;
+    --above: var(--space-4);
+    --above-name: 'space.4';
   }
 }
 
 @media (max-width: 480px) {
 
-  .available a {
+  .availableLink {
     margin-left: 0;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* The blueprint
+   The introduction is on the page twice: as itself, and on top of that as a drawing of itself. A line cuts the
+   drawing off, and the visitor drags the line. --peel is how far across it sits. It is a registered property, so
+   it can animate: the intro scans it across once, and it eases back out of the way when something under the
+   drawing takes focus, when inspect mode starts, or when a rule is broken. */
 
-  .primaryLink,
-  .primaryLink svg {
-    transition: none;
+@property --peel {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 100%;
+}
+
+/* --rest is where the line sits until someone moves it. */
+.stage {
+  --rest: 50%;
+  --peel: var(--rest);
+  position: relative;
+  transition: --peel var(--duration-handoff) var(--ease-move);
+}
+
+/* While the line is being dragged it follows the pointer exactly. */
+.stage[data-dragging] {
+  transition: none;
+}
+
+/* A link or button under the drawing that takes keyboard focus has to be seen, so the drawing gets out of its way. */
+.stage:has(.rendered :focus-visible),
+:global(html[data-inspecting]) .stage,
+:global(html[data-rule-broken]) .stage {
+  --peel: 100% !important;
+}
+
+:global(html[data-inspecting]) .scanner,
+:global(html[data-rule-broken]) .scanner {
+  visibility: hidden;
+}
+
+/* The scan drives the line until someone takes hold of it. From then on the line is theirs. */
+:global(html[data-intro]) .stage:not([data-touched]) {
+  animation: scan calc(var(--duration-handoff) * 4) var(--ease-move) both;
+  animation-delay: var(--duration-handoff);
+}
+
+/* It starts off the right edge, crosses most of the way, and comes back to rest where the inline style puts it. */
+@keyframes scan {
+  from { --peel: 100%; }
+  55% { --peel: 22%; }
+}
+
+/* The drawing. It covers the page under it with the canvas, and it never takes the pointer, so the real links
+   underneath still do. Every line on it measures something: a baseline, a letter's height, a gap. */
+.xray {
+  position: absolute;
+  /* It bleeds above and below the introduction, never sideways: it is exactly as wide, so the line's percentage
+     cuts it at the line. */
+  inset: calc(var(--space-6) * -1) 0;
+  padding: var(--space-6) 0;
+  clip-path: inset(0 0 0 var(--peel));
+  background-color: var(--color-canvas);
+  pointer-events: none;
+  user-select: none;
+}
+
+.xray {
+  --edge: var(--color-accent-primary);
+  --faint: color-mix(in srgb, var(--color-accent-primary) 45%, transparent);
+}
+
+.xray :is(.name, .lead, .support p, .available, .textLink) {
+  outline: 1px dashed var(--faint);
+  outline-offset: 3px;
+}
+
+/* The name as an outline of itself, between its cap line and its baseline. */
+.xray .name {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-accent-text);
+}
+
+/* Three guides run through the name: cap height, x height, and baseline. The numbers are Wotfard Medium's own,
+   measured from the font: the baseline sits 0.985 em under the top of a 1.23 em content box, capitals stand
+   0.7 em tall, and lowercase 0.485 em. Half the leading goes above the content box. */
+.xray .name::before {
+  --cap: .7em;
+  --x-height: .485em;
+  content: '';
+  position: absolute;
+  top: calc((var(--leading-display) / 2 + .37) * 1em - var(--cap));
+  left: calc(var(--space-6) * -1);
+  width: 200vw;
+  height: var(--cap);
+  border-block: 1px solid var(--faint);
+  background: linear-gradient(var(--faint), var(--faint)) 0 calc(var(--cap) - var(--x-height)) / 100% 1px no-repeat;
+  pointer-events: none;
+}
+
+/* Running text drawn on its baselines. Wotfard Regular: 0.981 em above the baseline in a 1.2247 em content box. */
+.xray :is(.lead, .support p, .available) {
+  --baseline: calc((1lh - 1.2247em) / 2 + .981em);
+  color: var(--color-ink-muted);
+  background-image: linear-gradient(to bottom, transparent calc(var(--baseline) - 1px), var(--faint) calc(var(--baseline) - 1px), var(--faint) var(--baseline), transparent var(--baseline));
+  background-size: 100% 1lh;
+}
+
+/* The space above a part, as a bracket with its token's name. The brackets ride just right of the line, so they
+   travel with it as it is dragged, like a readout. Every part that draws one is as wide as the introduction, so
+   the line's percentage means the same thing in each. */
+.xray :is(.lead, .support, .actions, .available)::before,
+.xray .support p:not(:first-of-type)::before {
+  content: var(--above-name);
+  position: absolute;
+  bottom: 100%;
+  left: calc(var(--peel) + var(--space-2));
+  display: flex;
+  align-items: center;
+  /* All or nothing: once the name no longer fits between the line and the right edge, only the bracket is left.
+     The product is far below zero or far above any width, so it works as a switch. */
+  max-width: max(0px, calc((100% - var(--peel) - var(--space-4) - 8ch) * 999));
+  height: var(--above);
+  overflow: hidden;
+  padding-left: var(--space-2);
+  border-left: 1px solid var(--edge);
+  background:
+    linear-gradient(var(--edge), var(--edge)) left top / var(--space-2) 1px no-repeat,
+    linear-gradient(var(--edge), var(--edge)) left bottom / var(--space-2) 1px no-repeat;
+  color: var(--color-accent-text);
+  font: var(--font-weight-regular) var(--text-code)/var(--leading-code) var(--font-mono);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.xray .support p:not(:first-of-type)::before {
+  content: var(--between-name);
+  height: var(--between);
+}
+
+/* A control drawn as its box. */
+.xray .explore {
+  position: relative;
+  border: 1px dashed var(--edge);
+  background: transparent;
+  color: var(--color-ink-muted);
+}
+
+.xray .explore svg,
+.xray .textLink,
+.xray .availableLink {
+  color: var(--color-ink-muted);
+}
+
+.xray .brandIcon,
+.xray .textLink svg,
+.xray .availableLink svg {
+  color: var(--faint);
+}
+
+.xray .availableLink {
+  text-decoration: none;
+}
+
+/* The token group a part reads, written at the introduction's right edge, above the part.
+
+   It is never seen cut through. --room is what the drawing has to the right of the line and its brackets. With
+   room for the whole path, the label shows the whole path. With less, the layer at the front goes and the name
+   holds. With less than the name needs, the label is gone. Each product below is far under zero or far over any
+   width, so it works as a switch, and --path and --name come from Hero.tsx, which knows how long each is.
+   Every part that carries a label is as wide as the introduction, so a percentage means that width. */
+.xray {
+  --readout: calc(var(--space-6) + 8ch);
+}
+
+.spec {
+  --room: calc(100% - var(--peel) - var(--readout));
+  --path-box: calc(var(--path) + var(--space-2) + 1px);
+  --name-box: calc(var(--name) + var(--space-2) + 1px);
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + var(--space-1));
+  display: flex;
+  justify-content: flex-end;
+  max-width: max(
+    0px,
+    min(
+      max(var(--name-box), min(var(--room), calc((var(--room) - var(--path-box)) * 999))),
+      calc((var(--room) - var(--name-box)) * 999)
+    )
+  );
+  overflow: hidden;
+  background: var(--color-canvas);
+  color: var(--color-accent-text);
+  font: var(--font-weight-regular) var(--text-code)/var(--leading-code) var(--font-mono);
+  letter-spacing: 0;
+  white-space: nowrap;
+  -webkit-text-stroke: 0;
+}
+
+/* The padding belongs to the pieces, so a label with no room is no width at all. */
+.specLayer {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  padding-left: var(--space-1);
+}
+
+.specName {
+  flex: none;
+  padding-right: var(--space-1);
+}
+
+/* The name's box has room above its capitals, so its label tucks into that. The name is only as wide as its
+   words, so its label belongs to the drawing, which is as wide as the introduction. */
+.xray > .spec {
+  top: calc(var(--space-6) + var(--space-3));
+  bottom: auto;
+  translate: 0 -100%;
+}
+
+/* The button's label is a tag on its top edge, starting where the button does, which is where the row does. It
+   belongs to the row, because the row is as wide as the introduction and the button is not. Its room is what the
+   line has uncovered of it, so it reads whole once the line is all the way left, by name before that, and not at
+   all while the line still crosses the name. */
+.xray .actions > .spec {
+  --room: calc(var(--path-box) - var(--peel) + 1px);
+  top: 0;
+  right: calc(100% - var(--path-box));
+  bottom: auto;
+  translate: 0 -50%;
+}
+
+/* The line, its label, and the grip. The range input sits over the whole introduction and only its thumb takes the pointer. */
+.scanner {
+  position: absolute;
+  inset: calc(var(--space-6) * -1) 0;
+  pointer-events: none;
+}
+
+/* The lens. While the line is moving, the strip of drawing just behind it is out of focus, most at the line and
+   not at all a little way in, so the drawing seems to sharpen as the line uncovers it. It is a second layer over
+   the drawing, not a filter on it: a backdrop blur under a gradient mask, which is what lets the blur fade out.
+   Blurring the drawing itself would only be cut off by the clip.
+
+   It follows the line a beat late, because its own position eases toward where the line is. The line answers the
+   hand at once and the lens catches up, the way a second part of one moving thing does. At rest it is gone, so
+   the text at the cut is sharp. */
+.lens {
+  position: absolute;
+  inset-block: 0;
+  left: var(--peel);
+  width: var(--space-16);
+  backdrop-filter: blur(var(--space-2)) saturate(1.5);
+  /* A mask only reads how opaque its colors are, so any solid token does for the opaque end. */
+  mask-image: linear-gradient(to right, var(--color-canvas), transparent);
+  opacity: 0;
+  transition: opacity var(--duration-handoff) var(--ease-out), left var(--duration-reveal) var(--ease-out);
+}
+
+.stage[data-dragging] .lens,
+:global(html[data-intro]) .stage:not([data-touched]) .lens {
+  opacity: 1;
+}
+
+.scan {
+  --thumb: var(--space-12);
+  appearance: none;
+  position: absolute;
+  inset-block: 0;
+  left: calc(var(--thumb) / -2);
+  width: calc(100% + var(--thumb));
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+.scan::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+}
+
+.scan::-moz-range-track {
+  height: 100%;
+  background: transparent;
+}
+
+.scan::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--thumb);
+  height: 100%;
+  border: 0;
+  background: transparent;
+  cursor: ew-resize;
+  pointer-events: auto;
+}
+
+.scan::-moz-range-thumb {
+  width: var(--thumb);
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: ew-resize;
+  pointer-events: auto;
+}
+
+.scan:focus-visible {
+  outline: none;
+}
+
+.line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--peel);
+  width: 1px;
+  background: var(--color-accent-primary);
+}
+
+.lineLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: var(--space-1) var(--space-2);
+  border-radius: 0 var(--radius-1) var(--radius-1) 0;
+  background: var(--component-inspector-label-background);
+  color: var(--component-inspector-label-text);
+  font: var(--font-weight-medium) var(--text-code)/var(--font-leading-200) var(--font-body);
+  white-space: nowrap;
+}
+
+.grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: var(--space-6);
+  height: var(--space-10);
+  translate: -50% -50%;
+  border-radius: var(--radius-2);
+  background: var(--color-accent-primary);
+  color: var(--color-on-accent);
+  transition: scale var(--duration-feedback) var(--ease-out);
+}
+
+.scan:focus-visible + .line .grip {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 3px;
+}
+
+.scan:active + .line .grip {
+  scale: .94;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .scan:hover + .line .grip {
+    scale: 1.08;
+  }
+}
+
+/* raw: breakpoints can't read custom properties */
+@container introduction (max-width: 480px) {
+
+  /* A narrow introduction gives the drawing more of itself, and its brackets keep their shape but leave their
+     names to wider ones, where there is room for them beside the labels. */
+  .stage {
+    --rest: 40%;
   }
 
-  .primaryLink:hover svg,
-  .primaryLink:active svg {
-    transform: none;
+  .xray {
+    --readout: var(--space-6);
+  }
+
+  .xray :is(.lead, .support, .actions, .available)::before,
+  .xray .support p:not(:first-of-type)::before {
+    content: '';
   }
 }

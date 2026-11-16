@@ -1,0 +1,80 @@
+.band {
+  padding: var(--space-8) var(--space-10) var(--space-16);
+  background: var(--color-canvas);
+  color: var(--color-ink-primary);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: var(--space-16);
+  align-items: center;
+  width: min(100%, 1280px);
+  margin-inline: auto;
+}
+
+.copy {
+  min-width: 0;
+  max-width: 30rem;
+}
+
+.copy h2 {
+  margin: 0 0 var(--space-4);
+  font: var(--font-weight-medium) var(--text-subheading)/var(--leading-heading) var(--font-body);
+  letter-spacing: var(--tracking-heading);
+}
+
+.copy p {
+  margin: 0 0 var(--space-5);
+  color: var(--color-ink-secondary);
+  font: var(--font-weight-regular) var(--text-body)/var(--leading-body) var(--font-body);
+  text-wrap: pretty;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-6);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  color: var(--color-ink-primary);
+  font: var(--font-weight-medium) var(--text-ui)/var(--leading-ui) var(--font-body);
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .link:hover {
+    text-decoration: underline;
+  }
+}
+
+/* raw: breakpoints can't read custom properties */
+@media (max-width: 1060px) {
+
+  .band {
+    padding-inline: var(--space-6);
+  }
+
+  .container {
+    gap: var(--space-10);
+  }
+}
+
+/* raw: breakpoints can't read custom properties */
+@media (max-width: 959px) {
+
+  .container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+
+  .band {
+    padding-block: var(--space-4) var(--space-12);
+  }
+}
