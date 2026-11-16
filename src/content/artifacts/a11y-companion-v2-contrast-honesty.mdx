@@ -1,7 +1,7 @@
 ---
 title: "a11y Companion v2.0.0: Contrast Tools Shouldn't Lie"
 slug: a11y-companion-v2
-summary: Why the v2.0.0 contrast inspector refuses false confidence, and what that means for honest WCAG implementation in Figma workflows.
+summary: Why the v2.0.0 Contrast Inspector only grades the color combinations it can evaluate honestly, and says so when it can't.
 tags:
   - a11y
   - accessibility
@@ -15,7 +15,7 @@ pinned: false
 
 **♿️ a11y Companion v2.0.0 is live.**
 
-If you want to track WCAG work inside Figma and FigJam, without spreadsheet theater, this is for you.
+If you want to track WCAG work inside Figma and FigJam without spreadsheet theater, this is for you.
 
 Source checklist: [The A11Y Project](https://www.a11yproject.com/checklist/). Standards target: [W3C WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/).
 
@@ -23,18 +23,14 @@ Source checklist: [The A11Y Project](https://www.a11yproject.com/checklist/). St
 
 ## The part most tools skip
 
-**Most contrast tools lie by omission.**
+Most contrast tools lie by omission. They show a ratio and an AA or AAA grade, and they rarely tell you what they can't evaluate.
 
-They show a ratio. They give you AA or AAA. They rarely tell you what they cannot evaluate.
+When I built the Contrast Inspector for v2, I decided it would only support what it can evaluate honestly.
 
-When building the Contrast Inspector for v2, I made a deliberate choice: only support what can be evaluated honestly.
+- **Supported:** solid on solid, solid on a single gradient, and a single gradient on solid.
+- **Explicitly unsupported:** dual gradients, image fills, and mixed or complex paint stacks.
 
-- **Supported:** solid on solid; solid on single gradient; single gradient on solid.
-- **Explicitly unsupported:** dual gradients; image fills; mixed or complex paint stacks.
-
-If the system cannot evaluate it reliably, it says so. No fake certainty. No "looks compliant" theater.
-
-**Accessibility tooling should reduce false confidence, not create it.**
+If it can't evaluate a combination reliably, it says so instead of showing a ratio that looks compliant. Accessibility tooling is supposed to reduce false confidence, and a confident number on an image fill creates it.
 
 ## What's new in v2.0.0
 
@@ -45,7 +41,7 @@ If the system cannot evaluate it reliably, it says so. No fake certainty. No "lo
 - **Avatar activity tracking** from real check and uncheck actions
 - **Refreshed UI and faster performance**
 
-Under the hood, this release also hardens the foundation:
+Under the hood, v2 also includes:
 
 - **Variable-first design-system guardrails** and baseline checks
 - **WCAG contrast automation scripts** and nearest safe shade-step suggestions
@@ -54,17 +50,11 @@ Under the hood, this release also hardens the foundation:
 
 ## Guided checklist, not automated audit
 
-This is a guided checklist, *not* an automated audit.
-
-It is built for real teams doing real reviews, in the file, with shared context visible in Figma and FigJam.
-
-That distinction matters. A ratio alone is not a full accessibility decision. You still need people, judgment, and explicit boundaries around what the tool can and cannot assert.
+The widget is a guided checklist for teams doing real reviews in the file, with shared context visible in Figma and FigJam. A ratio alone isn't a full accessibility decision. You still need people making the call, and clear limits on what the tool can and can't assert.
 
 ## Why I keep tightening this
 
-***Accessibility is personal for me.*** I have been the eyes and ears for my legally blind and deaf brother for decades. I have watched him burn time on sites that do not care.
-
-That is why I built this, and why I keep tightening it.
+Accessibility is personal for me. I've been the eyes and ears for my legally blind and deaf brother for decades, and I've watched him burn time on sites that don't care. That's why I built this, and why I keep tightening it.
 
 ## Links
 

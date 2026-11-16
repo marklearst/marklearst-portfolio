@@ -15,7 +15,7 @@ pinned: true
 
 **♿️ a11y Companion v3.0.0 is live.**
 
-The checklist is still the checklist. What changed is that the widget can now tell you whether the file actually earned the checkmarks.
+The checklist itself hasn't changed, but the widget can now tell you whether the file actually earned its checkmarks.
 
 Source checklist: [The A11Y Project](https://www.a11yproject.com/checklist/). Standards target: [W3C WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/).
 
@@ -23,35 +23,29 @@ Source checklist: [The A11Y Project](https://www.a11yproject.com/checklist/). St
 
 ## The gap I kept running into
 
-v2 was about a contrast tool refusing to claim what it cannot evaluate. Shipping it exposed the next problem, one floor down.
+v2 was about a contrast tool refusing to claim what it can't evaluate. Shipping it showed me the next problem, one floor down. A checked box is a claim too, and nothing in the widget knew whether the file met the criterion sitting next to the checkmark. A team could complete an entire checklist against a file that failed contrast, and the widget would show a full green ring.
 
-**A checked box is a claim, not a measurement.**
+So v3 asks what it would take to prove each checkmark.
 
-Nothing in the widget knew whether the file met the criterion sitting next to the checkmark. A team could complete an entire checklist against a file that failed contrast, and the widget would show a full green ring. The checklist was honest about what it asked. It had no way to be honest about the answer.
+## Making a checkmark provable
 
-So v3 asks a different question. Not "did someone check this box," but "what would it take to prove it."
+### Findings in Dev Mode
 
-## Three things a claim needs to become evidence
+v3 promotes audit results to Figma's own Dev Mode annotations, with the WCAG Understanding page linked and the failing property named (width, height, fill, font size, line height).
 
-### It has to reach the people who act on it
-
-Findings that live inside a widget are findings nobody fixes. v3 promotes audit results to Figma's own Dev Mode annotations, with the WCAG Understanding page linked and the failing property named: width, height, fill, font size, line height.
-
-It reads and rewrites the annotation array rather than replacing it, so annotations you wrote by hand survive, and running the same audit twice does not produce two copies.
+It reads and rewrites the annotation array rather than replacing it, so annotations you wrote by hand survive, and running the same audit twice doesn't produce two copies.
 
 ![Audit findings promoted to native Dev Mode annotations](/images/a11y-companion-v3-annotations.jpg)
 
-### It has to expire
+### Sign-offs that expire
 
 A sign-off that outlives the design it approved is worse than no sign-off, because it looks like diligence.
 
-When you sign a section in v3, the signature records what it actually reviewed: item ids, completion state, and the checklist revision. Change items underneath a signed section and the stamp turns amber. The approval does not quietly stay valid.
+When you sign a section in v3, the signature records what it actually reviewed: item ids, completion state, and the checklist revision. Change items underneath a signed section and the stamp turns amber instead of staying valid.
 
 ![Section sign-off with reviewer stamp and stale-state warning](/images/a11y-companion-v3-signoffs.jpg)
 
-### It has to leave the file
-
-A review that only exists in one Figma document stops being useful the moment anyone needs it elsewhere.
+### A record that leaves the file
 
 v3 compiles a Canvas Record, one Figma frame holding progress, sign-offs, audit summaries, contrast evidence, and priority findings. Re-running it refreshes the same frame instead of littering the page with copies. The same review exports as Markdown, CSV, or JSON.
 
@@ -71,27 +65,25 @@ v3 compiles a Canvas Record, one Figma frame holding progress, sign-offs, audit 
 
 ## Where it still says no
 
-The honesty argument only holds if the tool applies it to itself. Three places v3 refuses to overstate:
+The honesty argument only holds if the tool applies it to itself.
 
-- Audits share a capped slot. Past the cap, the **counts stay truthful** rather than reporting only what fits on screen, and the Canvas Record will not call itself ready on capped evidence.
-- Reports **disclose when their rows are representative** rather than complete. A grouped root cause is labeled as one.
-- The color vision preview is a **simulation, not a second grade**. WCAG contrast stays the normative result. Three more pass/fail badges would feel more thorough and mean less.
+- Audits share a capped slot. Past the cap, the counts still reflect the full total instead of only what fits on screen, and the Canvas Record won't call itself ready on capped evidence.
+- Reports say when their rows are representative rather than complete, and a grouped root cause is labeled as one.
+- The color vision preview is a simulation and doesn't give its own grade, since a pass/fail badge there would read like a second standard. WCAG contrast stays the normative result.
 
-Contrast thresholds are also evaluated at full precision, so a pair sitting just under the line cannot round its way into a pass.
+Contrast thresholds are also evaluated at full precision, so a pair sitting just under the line can't round its way into a pass.
 
 ## I ran it on itself
 
-v3 had to pass its own checklist. That caught real problems: checkboxes that failed WCAG 1.4.11 non-text contrast, severity conveyed by color alone, and WCAG references that rendered wrong in dark mode.
+v3 had to pass its own checklist, and the first runs caught real problems. Checkboxes failed WCAG 1.4.11 non-text contrast, severity was conveyed by color alone, and WCAG references rendered wrong in dark mode.
 
 Testing the token audit against Vercel's Geist file caught another one. My pairing logic looked for names containing "text" and "bg", which found roughly twelve pairs in a system named `gray/100` through `gray/1000`. It now infers role from the trailing numeric step instead.
 
-Being wrong in a way you can measure is the whole point.
-
 ## Why I keep tightening this
 
-I wrote in the [v2 post](/artifacts/a11y-companion-v2) about being the eyes and ears for my legally blind and deaf brother. That has not changed, and neither has why it matters here.
+In the [v2 post](/artifacts/a11y-companion-v2) I wrote about being the eyes and ears for my legally blind and deaf brother, and that hasn't changed.
 
-Compliance language never helped him. Working designs did. That is why v3 went after evidence instead of more checkboxes.
+Compliance language never helped him, but designs that actually worked did. That's why v3 went after evidence instead of more checkboxes.
 
 ## Links
 
