@@ -253,7 +253,7 @@ export const PROJECTS: ProjectMeta[] = [
     slug: 'skydio',
     route: '/work/skydio',
     title: 'Skydio Autonomy Widget',
-    cardTitle: 'Skydio Component Library',
+    cardTitle: 'Skydio Autonomy Widget',
     category: 'CONSULTING',
     categoryColor: 'yellow',
     summary:
