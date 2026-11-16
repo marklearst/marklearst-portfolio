@@ -9,6 +9,8 @@ import styles from './PageTransition.module.css'
  * Hands one route over to the next. A navigation is a React transition, so
  * the leaving page exits and the arriving one enters as a view transition:
  * the old page fades where it stands and the new one settles in from the top.
+ * A link can say where the next page sits: `nav-next` and `nav-previous` step
+ * along an ordered sequence, and `nav-up` returns to the index a page came from.
  *
  * The motion lives in globals.css on the `page-exit` and `page-enter` classes.
  * It runs for pointer navigation only. Keyboard and history moves, and the
@@ -20,7 +22,12 @@ export default function PageTransition({ children }: { children: ReactNode }) {
 
   return (
     <div id='page-content' className={styles.surface} data-route={pathname} tabIndex={-1}>
-      <ViewTransition key={pathname} enter='page-enter' exit='page-exit' default='none'>
+      <ViewTransition
+        key={pathname}
+        enter={{ 'nav-next': 'page-from-next', 'nav-previous': 'page-from-previous', 'nav-up': 'page-from-above', default: 'page-enter' }}
+        exit={{ 'nav-next': 'page-to-previous', 'nav-previous': 'page-to-next', 'nav-up': 'page-to-below', default: 'page-exit' }}
+        default='none'
+      >
         <div>{children}</div>
       </ViewTransition>
     </div>

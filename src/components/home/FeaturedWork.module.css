@@ -170,8 +170,44 @@
   display: block;
   width: 100%;
   height: auto;
-  transform-origin: 50% 45%;
-  transition: transform var(--duration-handoff) var(--ease-out);
+}
+
+/* The screenshot is a plate, not a thumbnail: it never zooms. Pointing at it brings its registration marks in
+   from outside, and they settle on the corners in the blueprint's accent, the same language the hero's X-ray draws in.
+   The marks are a thin frame masked down to its four corners, so they grow by widening the mask. */
+.plate {
+  position: relative;
+  display: block;
+}
+
+.plate::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--space-5) * -1);
+  border: thin solid var(--color-accent-primary);
+  opacity: 0;
+  pointer-events: none;
+  mask:
+    linear-gradient(currentColor 0 0) top left no-repeat,
+    linear-gradient(currentColor 0 0) top right no-repeat,
+    linear-gradient(currentColor 0 0) bottom left no-repeat,
+    linear-gradient(currentColor 0 0) bottom right no-repeat;
+  mask-size: var(--space-1) var(--space-1);
+  transition:
+    inset var(--duration-handoff) var(--ease-settle),
+    mask-size var(--duration-handoff) var(--ease-settle),
+    opacity var(--duration-feedback) var(--ease-out);
+}
+
+.imageLink:focus-visible .plate::after {
+  inset: calc(var(--space-3) * -1);
+  mask-size: var(--space-4) var(--space-4);
+  opacity: 1;
+}
+
+.imageLink:active .plate::after {
+  inset: calc(var(--space-2) * -1);
+  transition-duration: var(--duration-feedback);
 }
 
 .imageAction {
@@ -192,17 +228,9 @@
   background: var(--color-surface-raised);
 }
 
-.imageLink:focus-visible img {
-  transform: scale(1.025) translateY(-2px);
-}
-
 .imageLink:focus-visible .imageAction {
   background: var(--color-surface);
   color: var(--color-accent-text);
-}
-
-.imageLink:active img {
-  transform: scale(1.008);
 }
 
 .imageLink:active .imageAction {
@@ -268,17 +296,19 @@
     box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 10%, transparent), 0 20px 36px -28px var(--color-canvas);
   }
 
-  .imageLink:hover img {
-    transform: scale(1.025) translateY(-2px);
+  .imageLink:hover .plate::after {
+    inset: calc(var(--space-3) * -1);
+    mask-size: var(--space-4) var(--space-4);
+    opacity: 1;
+  }
+
+  .imageLink:hover:active .plate::after {
+    inset: calc(var(--space-2) * -1);
   }
 
   .imageLink:hover .imageAction {
     background: var(--color-surface);
     color: var(--color-accent-text);
-  }
-
-  .imageLink:active img {
-    transform: scale(1.008);
   }
 }
 
@@ -364,10 +394,4 @@
     padding: 18px 18px 48px;
     border-radius: 12px;
   }
-}
-
-:global([data-motion='reduced']) .imageLink:hover img,
-:global([data-motion='reduced']) .imageLink:focus-visible img,
-:global([data-motion='reduced']) .imageLink:active img {
-  transform: none;
 }

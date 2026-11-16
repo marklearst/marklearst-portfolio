@@ -58,8 +58,10 @@ export default function FeaturedWork() {
             <h3 className={styles.projectTitle}><ProjectTitle slug={project.slug}>{project.cardTitle}</ProjectTitle></h3>
             <figure className={styles.figure}>
               <TrackedLink className={styles.imageLink} href={project.route} aria-label={`Explore ${project.cardTitle}`} event={projectClickEvent(project)}>
-                <span className={styles.imageViewport}>
-                  <Image src={image} alt={alt} width={1280} height={720} sizes={index === 0 ? '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 60vw, 770px' : '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 45vw, 600px'} />
+                <span className={styles.plate}>
+                  <span className={styles.imageViewport}>
+                    <Image src={image} alt={alt} width={1280} height={720} sizes={index === 0 ? '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 60vw, 770px' : '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 45vw, 600px'} />
+                  </span>
                 </span>
                 <span className={styles.imageAction} aria-hidden='true'><ArrowRightIcon size={20} /></span>
               </TrackedLink>

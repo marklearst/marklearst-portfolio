@@ -15,8 +15,8 @@ export default function CaseStudyLayout({ slug, ...props }: CaseStudyLayoutProps
       relatedNavigation={
         <RelatedNavigation
           itemType='case study'
-          previous={previous ? { href: previous.route, title: previous.title } : null}
-          next={next ? { href: next.route, title: next.title } : null}
+          previous={previous ? { href: previous.route, title: previous.title, slug: previous.slug } : null}
+          next={next ? { href: next.route, title: next.title, slug: next.slug } : null}
         />
       }
     />

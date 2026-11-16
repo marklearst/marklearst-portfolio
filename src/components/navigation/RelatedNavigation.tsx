@@ -1,8 +1,18 @@
 import Link from 'next/link'
 import { ArrowLeftIcon, ArrowRightIcon } from '@/components/ui/Icon'
+import ProjectTitle from '@/components/transitions/ProjectTitle'
 import styles from './RelatedNavigation.module.css'
 
-type NavigationItem = { href: string; title: string }
+/** With a project `slug`, the title is the same object as the heading of the page it opens, so it travels there. */
+type NavigationItem = { href: string; title: string; slug?: string }
+
+function ItemTitle({ item }: { item: NavigationItem }) {
+  return (
+    <span className={styles.title}>
+      {item.slug ? <ProjectTitle slug={item.slug}>{item.title}</ProjectTitle> : item.title}
+    </span>
+  )
+}
 
 function NavigationArrow({ previous = false }: { previous?: boolean }) {
   const Arrow = previous ? ArrowLeftIcon : ArrowRightIcon
@@ -31,21 +41,21 @@ export default function RelatedNavigation({ itemType, previous, next }: RelatedN
       data-related-navigation
     >
       {previous && (
-        <Link href={previous.href} rel='prev' className={styles.link}>
+        <Link href={previous.href} rel='prev' transitionTypes={['nav-previous']} className={styles.link}>
           <span className={styles.direction}>
             <NavigationArrow previous />
             Previous {itemType}
           </span>
-          <span className={styles.title}>{previous.title}</span>
+          <ItemTitle item={previous} />
         </Link>
       )}
       {next && (
-        <Link href={next.href} rel='next' className={`${styles.link} ${styles.next}`}>
+        <Link href={next.href} rel='next' transitionTypes={['nav-next']} className={`${styles.link} ${styles.next}`}>
           <span className={styles.direction}>
             Next {itemType}
             <NavigationArrow />
           </span>
-          <span className={styles.title}>{next.title}</span>
+          <ItemTitle item={next} />
         </Link>
       )}
     </nav>

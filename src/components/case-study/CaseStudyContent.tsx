@@ -70,6 +70,7 @@ export default function CaseStudyContent({
           <div className={`${styles.container} relative`}>
             <TrackedLink
               href='/work'
+              transitionTypes={['nav-up']}
               className={styles.backLink}
               event={{ type: 'navigation', data: {
                 action: 'back_to_work',
