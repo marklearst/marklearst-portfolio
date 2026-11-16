@@ -51,7 +51,8 @@ export default function Wordmark() {
       ref={link}
       href='/'
       className={styles.link}
-      aria-label='Mark Learst, home'
+      // The name starts with the word a visitor sees, so asking a voice control to click "marklearst" finds it.
+      aria-label='marklearst, home'
       data-folded={folded || undefined}
       onClick={() => {
         if (pathname !== '/') trackNavigationClick({ action: 'logo_click', from: pathname, to: '/' })

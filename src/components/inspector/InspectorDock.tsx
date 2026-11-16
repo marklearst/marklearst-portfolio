@@ -592,8 +592,14 @@ interface InspectorBodyProps {
 
 export function InspectorBody({ preview }: InspectorBodyProps) {
   const inspecting = useInspector((state) => state.inspecting)
+  const floating = useInspector((state) => state.floating)
   const broken = useInspector((state) => state.broken)
   const selectionId = useInspector((state) => state.selectionId)
+  // The dock in the page is out of sight while the floating one is in use, but on a narrow screen it is still in
+  // the page's flow. If it followed every selection its height would change with each one, and everything under
+  // it would move: a control that had just taken focus could end up under the sheet. So it keeps its resting
+  // content until the floating dock is put away.
+  const reading = inspecting && !(preview && floating)
 
   const hint = useId()
 
@@ -603,8 +609,8 @@ export function InspectorBody({ preview }: InspectorBodyProps) {
         Shows every element on this page that uses this token.
       </p>
       {/* A new selection is a new scroll position, so the body remounts with it. */}
-      <div key={inspecting ? selectionId : broken ? 'broken' : 'preview'} className={styles.body}>
-        {inspecting ? <Selection /> : broken ? <BrokenRule /> : preview ? <PreviewChains preview={preview} /> : null}
+      <div key={reading ? selectionId : broken ? 'broken' : 'preview'} className={styles.body}>
+        {reading ? <Selection /> : broken ? <BrokenRule /> : preview ? <PreviewChains preview={preview} /> : null}
       </div>
     </RowHint>
   )
