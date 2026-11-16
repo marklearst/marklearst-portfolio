@@ -3,7 +3,7 @@ slug: hailstorm
 title: Hailstorm Design System
 category: DESIGN SYSTEMS
 categoryColor: purple
-description: "Modernized Abusix's Hailstorm design system to a React 19, Tailwind v4, Storybook 10 stack with WCAG 2.2 AA patterns, token governance, and automated QA."
+description: "A fork I maintain of Abusix's Hailstorm design system, moved to React 19, Tailwind v4 tokens, and Storybook 10, with WCAG 2.2 AA keyboard and focus defaults and automated tests."
 role: 'Design Systems Engineer, Open Source Modernization'
 timeline: '2025 to present'
 technologies:
@@ -25,34 +25,27 @@ links:
     icon: external
 impact:
   - metric: 'Modernized'
-    description: 'Upgraded legacy stack to React 19, Tailwind v4 tokens, and Storybook 10'
+    description: 'From the older stack to React 19, Tailwind v4 tokens, and Storybook 10'
   - metric: 'WCAG 2.2'
-    description: 'Accessibility-first patterns with keyboard and ARIA defaults'
+    description: 'AA keyboard, focus, and ARIA defaults in the primitives'
   - metric: 'QA'
-    description: 'Vitest + Testing Library + Playwright browser coverage'
+    description: 'Vitest and Testing Library, run in Playwright browser mode'
 gradient: from-purple-500/20 via-blue-500/10 to-transparent
 ---
 
 <CaseStudySection title='Modernize the foundation of an existing library'>
   <div className='space-y-6'>
     <CaseStudyParagraph>
-      Hailstorm is the Abusix design system. I maintain a fork focused on its
-      component foundation. The original system shipped real
-      UI, but the stack had fallen behind modern React patterns, token
-      workflows, and accessibility expectations. I wanted to upgrade those
-      foundations while preserving the APIs product teams used.
+      Hailstorm is Abusix's design system, and I maintain a fork of it that
+      focuses on the component foundation. The original shipped real UI, but
+      its tooling had aged to the point where changing a component felt risky.
     </CaseStudyParagraph>
-    <CaseStudyMutedList className='space-y-3'>
-      <li>Legacy tooling made it hard to evolve components safely</li>
-      <li>Tokens existed but lacked a clear, enforceable workflow</li>
-      <li>Storybook docs did not reflect the actual production APIs</li>
-      <li>Accessibility defaults needed to align with WCAG 2.2 AA</li>
-      <li>QA coverage was fragmented and hard to trust</li>
-    </CaseStudyMutedList>
     <CaseStudyParagraph>
-      The modernization had to keep API stability while moving to
-      React 19, Tailwind v4 tokens, Storybook 10, and
-      consistent automated tests.
+      Tokens existed, but nothing enforced how they were used. The Storybook
+      docs didn't match the production APIs, the accessibility defaults fell
+      short of WCAG 2.2 AA, and test coverage was too scattered to trust. I
+      wanted to get it onto React 19, Tailwind v4 tokens, Storybook 10, and one
+      consistent set of automated tests without changing the component APIs.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
@@ -60,43 +53,31 @@ gradient: from-purple-500/20 via-blue-500/10 to-transparent
 <CaseStudySection title="Review tokens, states, and components together">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      I rebuilt the Hailstorm foundation as a React 19 component library with
-      token-driven styling, Storybook-first documentation, and accessibility
-      defaults in the primitives.
+      I rebuilt the foundation as a React 19 component library.
     </CaseStudyParagraph>
 
     <CaseStudySubheading>Token definitions</CaseStudySubheading>
     <CaseStudyMutedText>
-      Tailwind v4 tokens now define the visual system, keeping themes consistent
-      and changes predictable.
+      Tailwind v4 tokens define the visual system, with semantic names for
+      color, spacing, and typography.
     </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Semantic token naming for color, spacing, and typography</li>
-      <li>Single source of truth for component styling</li>
-      <li>Token pipeline designed for long-term governance</li>
-    </CaseStudyMutedList>
 
     <CaseStudySubheading>Component examples alongside the API</CaseStudySubheading>
     <CaseStudyMutedText>
-      Storybook 10 + MDX docs are the canonical reference for component usage,
-      variants, and accessibility behavior.
+      The Storybook 10 and MDX docs are the reference for how to use each
+      component, its variants, and its accessibility behavior. I wrote the MDX
+      against the actual component APIs. Interaction states are documented in
+      the same place for visual QA, and the token guidance sits next to the
+      component examples.
     </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>MDX docs aligned with actual component APIs</li>
-      <li>Visual QA and interaction states documented in one place</li>
-      <li>Design token guidance lives alongside component examples</li>
-    </CaseStudyMutedList>
 
     <CaseStudySubheading>Keyboard and focus behavior</CaseStudySubheading>
     <CaseStudyMutedText>
-      Hailstorm uses Headless UI primitives and WCAG 2.2 AA defaults to ensure
-      keyboard, focus, and ARIA patterns are correct out of the box.
+      Hailstorm builds on Headless UI primitives, so keyboard handling and
+      focus management come with each component, set to WCAG 2.2 AA by
+      default. I use semantic HTML first and add ARIA only when it's needed.
+      The accessible patterns are documented in Storybook and covered by tests.
     </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>Keyboard interactions and focus management baked in</li>
-      <li>Semantic HTML first, ARIA only when needed</li>
-      <li>Accessible patterns documented and tested</li>
-    </CaseStudyMutedList>
 
   </div>
 </CaseStudySection>
@@ -104,19 +85,17 @@ gradient: from-purple-500/20 via-blue-500/10 to-transparent
 <CaseStudySection title="Test the same components the documentation renders">
   <div className="space-y-6">
     <CaseStudyMutedText>
-      The system now ships with Rollup builds, Vite for local development, and a
-      modern test stack that covers logic and interactions.
+      The library builds with Rollup, and local development runs on Vite.
+      Tests use Vitest and Testing Library in Playwright browser mode, so they
+      cover interactions as well as logic. TypeScript keeps the React 19
+      component contracts stable, and Storybook 10 is where docs, visual QA,
+      and design review happen.
     </CaseStudyMutedText>
-    <CaseStudyMutedList className="space-y-2">
-      <li>React 19 + TypeScript for stable component contracts</li>
-      <li>Rollup for library builds, Vite for local dev speed</li>
-      <li>Vitest + Testing Library + Playwright browser mode for QA</li>
-      <li>Storybook 10 for docs, visual QA, and design review</li>
-    </CaseStudyMutedList>
 
-    <CaseStudySubheading>Docs, tests, and builds</CaseStudySubheading>
+    <CaseStudySubheading>Day-to-day commands</CaseStudySubheading>
     <CaseStudyMutedText>
-      The repo ships with a predictable loop for docs, tests, and builds.
+      Storybook, the tests, and the library build each run from one pnpm
+      command.
     </CaseStudyMutedText>
     <CodeBlock
       language="bash"
@@ -130,8 +109,8 @@ gradient: from-purple-500/20 via-blue-500/10 to-transparent
 
     <CaseStudySubheading>One token source</CaseStudySubheading>
     <CaseStudyMutedText>
-      Tokens live in <code>src/styles/index.css</code> and are referenced in
-      component styles so updates stay centralized.
+      All tokens live in <code>src/styles/index.css</code>. Component styles
+      reference them from there, so a token change happens in one file.
     </CaseStudyMutedText>
 
   </div>
@@ -140,8 +119,9 @@ gradient: from-purple-500/20 via-blue-500/10 to-transparent
 <CaseStudySection title='Maintaining the fork'>
   <div className='space-y-6'>
     <CaseStudyParagraph>
-      Hailstorm now runs on a modern, stable foundation while preserving the
-      existing component APIs teams rely on.
+      The component APIs match the original Hailstorm, so existing usage
+      carries over. The code and the Storybook are both public and linked on
+      this page.
     </CaseStudyParagraph>
   </div>
 </CaseStudySection>
