@@ -1,4 +1,7 @@
 import type { ReactNode } from 'react'
+import Image from 'next/image'
+import ProjectPlate from '@/components/transitions/ProjectPlate'
+import type { ProjectPlate as ProjectPlateData } from '@/data/project-plates'
 import { ArrowLeftIcon, ArrowUpIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
 import DisclosureSummary from '@/components/ui/DisclosureSummary'
 import CaseStudyAnalytics from '@/components/analytics/CaseStudyAnalytics'
@@ -23,6 +26,8 @@ export interface CaseStudyContentProps {
   links?: readonly CaseStudyLinkInput[]
   sections?: CaseStudySectionData[]
   impact?: { metric: string; description: string }[]
+  /** The project's plate. The page opens on it, and the list's plate grows into it. */
+  cover?: ProjectPlateData
   children?: ReactNode
   relatedNavigation: ReactNode
 }
@@ -38,6 +43,7 @@ export default function CaseStudyContent({
   links = [],
   sections,
   impact,
+  cover,
   children,
   relatedNavigation,
 }: CaseStudyContentProps) {
@@ -117,6 +123,20 @@ export default function CaseStudyContent({
                   )
                 })}
               </div>
+            )}
+
+            {cover && (
+              <figure className={styles.cover}>
+                <ProjectPlate slug={slug}>
+                  <span className={styles.coverViewport}>
+                    <Image src={cover.src} alt={cover.alt} width={1280} height={720} loading='eager' fetchPriority='high' sizes='(max-width: 54rem) calc(100vw - 48px), 54rem' />
+                  </span>
+                </ProjectPlate>
+                <figcaption className={styles.coverCaption}>
+                  <span>{cover.caption}</span>
+                  <a href={cover.sourceUrl} target='_blank' rel='noopener noreferrer'>View original <ArrowUpRightIcon /></a>
+                </figcaption>
+              </figure>
             )}
           </div>
         </section>

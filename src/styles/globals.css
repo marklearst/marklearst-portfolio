@@ -243,6 +243,20 @@ html, body { scroll-behavior: auto; }
   40% { filter: blur(2px); }
 }
 
+/* A project's plate grows from the list into the cover of its case study, and shrinks back on the way out.
+   Both ends are the same 16:9 picture, so the snapshots scale together instead of stretching. It moves on the
+   handoff duration, the same as the title, so the name and the picture arrive as one. */
+::view-transition-group(.plate-morph) {
+  animation-duration: var(--semantic-duration-handoff);
+  animation-timing-function: var(--semantic-easing-move);
+}
+
+::view-transition-old(.plate-morph),
+::view-transition-new(.plate-morph) {
+  height: 100%;
+  object-fit: cover;
+}
+
 /* The header and the inspector hold still while the page changes under them. */
 ::view-transition-group(root),
 ::view-transition-group(site-header),

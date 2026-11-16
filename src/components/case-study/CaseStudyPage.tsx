@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import CaseStudyLayout from '@/components/case-study/CaseStudyLayout'
 import { caseStudyMdxComponents } from '@/components/mdx/CaseStudyMdxComponents'
 import { getCaseStudyBySlug } from '@/lib/content/case-studies'
+import { getProjectPlate } from '@/data/project-plates'
 import { extractCaseStudySections } from '@/components/case-study/case-study-sections'
 
 export async function getCaseStudyMetadata(slug: string): Promise<Metadata> {
@@ -14,5 +15,5 @@ export default async function CaseStudyPage({ slug }: { slug: string }) {
   const content = Content({ components: caseStudyMdxComponents })
   const sections = extractCaseStudySections(content)
 
-  return <CaseStudyLayout {...frontmatter} links={links} sections={sections} />
+  return <CaseStudyLayout {...frontmatter} links={links} sections={sections} cover={getProjectPlate(slug)} />
 }
