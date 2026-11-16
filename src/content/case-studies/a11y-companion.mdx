@@ -13,9 +13,16 @@ technologies:
   - TanStack Start
   - Design Tokens
   - Accessibility
+  - Vitest
 links:
   - label: Figma Community
     href: https://www.figma.com/community/widget/1509302611418259130/a11y-companion
+    icon: figma
+  - label: Figma Playground
+    href: https://www.figma.com/design/KxsBzkCUlRlqfGftjT60Vu/a11y-Companion-Playground?node-id=31-2
+    icon: figma
+  - label: Design File
+    href: https://www.figma.com/design/mKkWI0jUXCFitDIAiYziVq/a11y-Companion-Figma-Widget?node-id=0-1
     icon: figma
   - label: Product Site
     href: https://marklearst.me/a11y-companion-widget/
@@ -24,7 +31,7 @@ links:
     href: https://github.com/marklearst/a11y-companion-widget
     icon: github
 impact:
-  - metric: "400+"
+  - metric: "450+"
     description: "Users on Figma Community"
   - metric: "20 locales"
     description: "Checklist and interface translated through a term-protected pipeline"
@@ -36,31 +43,99 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
 <CaseStudySection title="When sign-off stops matching the design">
   <div className="space-y-6">
     <CaseStudyParagraph>
-      I created and maintain <strong>a11y Companion</strong>, an accessibility
-      review widget for Figma and FigJam. Version 3.0.0 brings The A11Y Project
-      Checklist together with canvas audits, contrast inspection, reviewer
-      sign-off, and handoff records.
+      I built and maintain <strong>a11y Companion</strong>, a widget for
+      accessibility review in Figma and FigJam. Version 3.0.0 pairs The A11Y
+      Project Checklist, 64 items in 16 sections, with canvas audits, contrast
+      inspection, reviewer sign-off, and handoff records.
     </CaseStudyParagraph>
 
     <CaseStudyParagraph>
-      The first version let teams complete an accessibility checklist in the
-      design file, but a signed section could not flag that changed items
-      needed another review. In v3.0.0, a named reviewer's signature records
-      item ids, completion state, and checklist revision. A change to that
-      evidence turns the stamp amber and marks the section for re-review.
+      The first version let teams complete the checklist in the design file.
+      Once a section was signed, though, it couldn't tell anyone that changed
+      items needed another look. In v3.0.0 a named reviewer's signature records
+      item ids, completion state, and checklist revision. If any of that
+      changes, the stamp turns amber and the section is marked for re-review.
     </CaseStudyParagraph>
 
     <A11yScenarioDemo />
   </div>
 </CaseStudySection>
 
+<CaseStudySection title="Design the decision before the screen">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      The design work lives in a Figma file that walks through the problem,
+      each decision, and what it costs. Product designers checking their own
+      page come first, and reviewers signing off sections come second. Both
+      lose context when findings end up in meetings, screenshots, or tickets
+      away from the design, so the checklist, the measured findings, the
+      reviewer decisions, and the handoff evidence all stay on the canvas.
+    </CaseStudyParagraph>
+
+    <EvidenceGallery
+      label="a11y Companion design decisions"
+      items={[
+        {
+          src: '/images/a11y-design-not-ready.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Still not ready',
+          alt: 'Design slide titled 100% complete. Still not ready. A Canvas Record fixture reads Review required with a 64 of 64 checklist, 15 of 16 current sign-offs, and 1 stale sign-off.',
+          caption: 'A finished checklist with one stale approval still reads Review required on the Canvas Record.',
+          sourceUrl: 'https://www.figma.com/design/mKkWI0jUXCFitDIAiYziVq/a11y-Companion-Figma-Widget?node-id=44-35',
+        },
+        {
+          src: '/images/a11y-design-review-at-scale.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Review at scale',
+          alt: 'Design slide titled 366 affected uses should not mean 366 rows, showing 366 affected token uses, 6 representative examples, and 800 token pairs checked, with the chosen approach and its cost.',
+          caption: 'Group repeated findings into causes and keep the full counts. The cost is that the summary is a sample, so the widget says so.',
+          sourceUrl: 'https://www.figma.com/design/mKkWI0jUXCFitDIAiYziVq/a11y-Companion-Figma-Widget?node-id=44-116',
+        },
+        {
+          src: '/images/a11y-design-signoff-evidence.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Approval freshness',
+          alt: 'Design slide titled A sign-off belongs to evidence, not a count, comparing a Ready for handoff record with 16 of 16 current sign-offs to a Review required record with 1 stale sign-off.',
+          caption: 'Same checklist total, different verdict. A sign-off fingerprints item ids, completion, and checklist revision, because a count can miss a real change.',
+          sourceUrl: 'https://www.figma.com/design/mKkWI0jUXCFitDIAiYziVq/a11y-Companion-Figma-Widget?node-id=44-176',
+        },
+      ]}
+    />
+
+    <CaseStudyMutedText>
+      The central decision was to make missing or outdated evidence impossible
+      to mistake for readiness. The rest follow from it:
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedList className="space-y-2">
+      <li>Checklist sections collapse and show their own progress, so 64 items stay navigable</li>
+      <li>Every item cites its WCAG criterion, because people trust a cited rule more than a tool's opinion</li>
+      <li>Audits group repeated findings into causes and say what's kept and what's only a sample</li>
+      <li>Light and dark themes with six accent colors change the widget and never the record</li>
+    </CaseStudyMutedList>
+
+    <CaseStudyMutedText>
+      I also decided what to leave out. One renderer for Figma and React would
+      hide their different host constraints. A cloud dashboard with accounts
+      would pull the evidence away from the design. Unlimited synced audit
+      history adds multiplayer weight and review noise. And a bounded scan of
+      a design can't back up an automated compliance claim, so the widget
+      never makes one.
+    </CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
 <CaseStudySection title="Follow a finding back to the layer">
   <div className="space-y-6">
     <CaseStudyMutedText>
-      Version 3.0.0 adds the canvas checks and native Dev Mode annotations
-      that the first version lacked. Three audits run against the selected
-      canvas scope, sharing a capped 25-finding slot with failures sorted ahead
-      of warnings. Counts include findings beyond the display cap.
+      Version 3.0.0 also adds canvas checks and native Dev Mode annotations,
+      which the first version didn't have. Targets, Text, and Tokens run
+      against the page or the current selection, and each keeps one current
+      result per page. The card shows up to three representative examples,
+      failures first, while the counts cover every affected use in the scan.
     </CaseStudyMutedText>
 
     <EvidenceGallery
@@ -72,7 +147,7 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
           height: 720,
           title: 'Audit and Canvas Record',
           alt: 'a11y Companion browser demo showing token contrast totals, representative-example counts, and affected uses beside Canvas Record.',
-          caption: 'Token audit and Canvas Record in the product site’s browser demo. Full counts remain visible when the list shows representative findings.',
+          caption: 'Token audit and Canvas Record in the browser demo on the product site. Full counts stay visible when the list shows only representative findings.',
           sourceUrl: 'https://marklearst.me/a11y-companion-widget/',
         },
       ]}
@@ -82,22 +157,22 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       <li>Targets: fails below 24px per WCAG 2.5.8, warns below 44px, with a 2000-node traversal budget</li>
       <li>Text: per-segment font size, line height, justification, line length, and all-caps checks</li>
       <li>Tokens: local variable collections across modes, alias chains resolved to depth 10, alpha-composited ratios</li>
-      <li>Per-finding Jump to select and zoom the offending layer</li>
-      <li>Severity glyphs that never rely on color alone</li>
+      <li>Jump on each finding selects and zooms to the offending layer</li>
+      <li>Severity always has a glyph and never relies on color alone</li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
-      Contrast inspection re-checks the selected layer in Watch mode. A
-      keep-alive bridge responds to selection changes, and shared ownership
-      with last-writer-wins takeover shows the team who is driving.
+      In Watch mode, contrast inspection re-checks whatever layer is selected.
+      A keep-alive bridge picks up selection changes, and shared ownership
+      with last-writer-wins takeover shows the team who's driving.
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
       <li>Thresholds evaluated at full precision before rounding for display</li>
       <li>A failing pair keeps the measured colors in the specimen while a separate line states the verdict</li>
       <li>Color vision preview for protanopia, deuteranopia, and tritanopia, labeled as simulation</li>
-      <li>WCAG contrast stays the normative result; the preview never issues a second grade</li>
-      <li>Explicit notices for pattern, shader, and video fills instead of a silent failure</li>
+      <li>WCAG contrast stays the normative result, and the preview never issues a second grade</li>
+      <li>Pattern, shader, and video fills get an explicit notice so they don't fail silently</li>
     </CaseStudyMutedList>
   </div>
 </CaseStudySection>
@@ -106,24 +181,25 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
   <div className="space-y-6">
     <CaseStudyMutedText>
       Early token pairing matched on names containing "text" and "bg". Testing
-      against Vercel's Geist file exposed a limit: ramp-named systems use
-      <code>gray/100</code> through <code>gray/1000</code>, and the audit was
-      checking roughly twelve pairs. It now infers role from the trailing numeric
-      step, reading high steps as ink and pairing them against low steps and
-      explicit surfaces in the same family, with the pair cap raised to 800.
+      against Vercel's Geist file showed where that fell short. Ramp-named
+      systems use <code>gray/100</code> through <code>gray/1000</code>, so the
+      audit was only checking about twelve pairs. Now it infers role from the
+      trailing numeric step. High steps read as ink and pair against low steps
+      and explicit surfaces in the same family, and the pair cap went up to 800.
     </CaseStudyMutedText>
 
     <CaseStudySubheading>State has to survive the widget runtime</CaseStudySubheading>
 
     <CaseStudyMutedText>
-      The widget runtime clears module memory between interactions. Watch
-      ownership therefore needs state that survives those resets:
+      The widget runtime clears module memory between interactions, so Watch
+      ownership has to live somewhere that survives the reset. A couple of
+      other runtime quirks needed workarounds too.
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
       <li>Watch ownership uses the durable <code>sessionId</code></li>
       <li>Export and clipboard access run through a hidden iframe bridge, since the widget sandbox has neither</li>
-      <li>Empty spacer AutoLayouts default to 100px tall; explicit <code>height=0</code> keeps them from inflating badge and chip rows</li>
+      <li>Empty spacer AutoLayouts default to 100px tall, so an explicit <code>height=0</code> keeps them from inflating badge and chip rows</li>
     </CaseStudyMutedList>
   </div>
 </CaseStudySection>
@@ -132,36 +208,39 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
   <div className="space-y-6">
     <CaseStudyMutedText>
       Native Dev Mode annotations keep findings attached to the affected
-      layers. Canvas Record gathers review progress and evidence in one Figma
-      frame. Both need to remain useful when the review runs again.
+      layers, and Canvas Record gathers review progress and evidence in one
+      Figma frame. Both have to hold up when someone runs the review again.
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Audit findings promote to Figma Dev Mode annotations, individually or in bulk</li>
+      <li>Annotate writes Dev Mode annotations for the examples shown and says how many findings it left out</li>
       <li>Read-modify-write preserves existing annotations and stays idempotent on re-run</li>
       <li>Annotations link the relevant WCAG Understanding page and cite the properties that failed</li>
-      <li>Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame</li>
-      <li>Re-running Record refreshes the same widget-owned frame instead of creating duplicates</li>
+      <li>Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame per page</li>
+      <li>Re-running Record refreshes the same widget-owned frame and doesn't create duplicates</li>
+      <li>The record reads Action required, Review required, In progress, or Ready for handoff, and a partial or selection-only scan can't reach Ready</li>
+      <li>The record keeps one canonical palette, whatever theme each reviewer's widget uses</li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
-      Markdown, CSV, and JSON exports carry run owner and time, scope, full
-      counts, grouped evidence, and an explicit disclosure when rows are
-      representative rather than complete.
+      Exports come in six formats: Markdown, CSV, JSON, SVG, PDF, and plain
+      text for the clipboard, all built from the same page data as the Canvas
+      Record. The Markdown, CSV, and JSON reports carry run owner and time,
+      scope, full counts, grouped evidence, and a note whenever the rows are
+      only a representative sample.
     </CaseStudyMutedText>
 
     <CaseStudyParagraph>
-      The widget has 400+ users on Figma Community and supports twenty locales.
-      The v3 workflow can be reviewed through its audit findings, Dev Mode
-      annotations, Canvas Record, and Markdown, CSV, or JSON exports.
+      Today the widget has 450+ users on Figma Community and runs in twenty
+      locales.
     </CaseStudyParagraph>
 
-    <CaseStudyDetails summary="Design-system checks, translation, and demo parity">
+    <CaseStudyDetails summary="Design-system checks and translation">
     <CaseStudySubheading>Design system checks</CaseStudySubheading>
 
     <CaseStudyMutedText>
-      Scripts in lint check the widget's token architecture, AA contrast, theme
-      drift, and bundle size.
+      The lint scripts check the widget's own token architecture, AA contrast,
+      theme drift, and bundle size.
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
@@ -179,20 +258,66 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     <CaseStudySubheading>Translation</CaseStudySubheading>
 
     <CaseStudyMutedText>
-      Twenty locales are generated through a pipeline that shields WCAG codes and
-      inline markup from machine translation. Missing keys fall back to English
-      per key, so a newly shipped command renders in English rather than as a
-      blank menu item while its translations are reviewed.
-    </CaseStudyMutedText>
-
-    <CaseStudySubheading>Product site parity</CaseStudySubheading>
-
-    <CaseStudyMutedText>
-      The product site is statically prerendered and gated by a Chrome-based
-      check that exercises audit interactions and control geometry at 390, 768,
-      1000, and 1440px. The site's inspector demo is held to the production
-      widget's exact specimen size, card inset, and vision grid.
+      Twenty locales come out of a pipeline that shields WCAG codes and inline
+      markup from machine translation. Missing keys fall back to English one key
+      at a time. A newly shipped command shows in English while its
+      translations are reviewed, so nobody sees a blank menu item.
     </CaseStudyMutedText>
     </CaseStudyDetails>
+  </div>
+</CaseStudySection>
+
+<CaseStudySection title="One contract, every output">
+  <div className="space-y-6">
+    <CaseStudyMutedText>
+      The widget, the product site's demo, the Canvas Record, the exports, and
+      the release checks all read the same typed accessibility state from one
+      contracts package. Each one renders that state natively. Figma and React
+      keep their own renderers and share only the rules, because the Widget
+      API and the DOM have different primitives.
+    </CaseStudyMutedText>
+
+    <EvidenceGallery
+      label="a11y Companion shared contract"
+      items={[
+        {
+          src: '/images/a11y-design-share-the-rule.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Share the rule',
+          alt: 'Design slide titled Share the rule. Respect the runtime. One readiness contract and nine executable scenarios feed the Figma widget, a hidden bridge for clipboard and downloads, and the product site.',
+          caption: "One readiness contract and nine scenarios feed three runtimes. A browser test can't prove native widget keyboard, sandbox, or multiplayer behavior, so that stays a manual check.",
+          sourceUrl: 'https://www.figma.com/design/mKkWI0jUXCFitDIAiYziVq/a11y-Companion-Figma-Widget?node-id=45-76',
+        },
+        {
+          src: '/images/a11y-scenario-lab.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Scenario Lab',
+          alt: 'a11y Companion Scenario Lab with the 1.20:1 contrast failure scenario selected, showing the widget failing the pair and the Canvas Record reading Action required.',
+          caption: 'Scenario Lab on the product site. Picking an edge case updates the widget, Canvas Record, export, and release check together.',
+          sourceUrl: 'https://marklearst.me/a11y-companion-widget/lab/',
+        },
+      ]}
+    />
+
+    <CaseStudyMutedText>
+      Nine edge cases drive all of it, from a blank selection and a 1.20:1
+      contrast failure to a partial 2,000-node scan, a stale sign-off, and a
+      page that's ready for handoff. Each scenario validates when its module
+      loads and again in Vitest, and the product site's release gate adds:
+    </CaseStudyMutedText>
+
+    <CaseStudyMutedList className="space-y-2">
+      <li>30 responsive page cases across five widths, from 390 to 1440px, in light, dark, and reduced-motion modes</li>
+      <li>A title, description, canonical URL, and Open Graph image checked on each of the 7 prerendered routes</li>
+      <li>Gzip budgets for initial JavaScript, product interaction code, and CSS</li>
+      <li>A separate manual check for Figma host behavior, since a browser test can't stand in for the real sandbox, multiplayer, and bridge</li>
+    </CaseStudyMutedList>
+
+    <CaseStudyMutedText>
+      I built the new TanStack Start site alongside the static v3 site and
+      kept v3 as the rollback until the new one matched it.
+    </CaseStudyMutedText>
   </div>
 </CaseStudySection>
