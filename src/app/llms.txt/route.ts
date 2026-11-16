@@ -12,7 +12,7 @@ Design engineer and UI architect who sets system direction in code. Portfolio at
 
 ## The site is a running design system
 
-Its colors, type, and motion come from one token graph. Primitree ${PRIMITREE_VERSION} builds that graph and checks it against layer rules on every deploy. This deploy: ${BUILD_CHECK.tokens} tokens, ${BUILD_CHECK.layers} layers, ${BUILD_CHECK.findings.length} findings, exit ${BUILD_CHECK.exit}.
+Its motion comes entirely from one token graph, and its color and type mostly do. Values that are still raw are counted by a ratchet that only goes down, and the inspector reports them as raw. Primitree ${PRIMITREE_VERSION} builds that graph and checks it against layer rules on every deploy. This deploy: ${BUILD_CHECK.tokens} tokens, ${BUILD_CHECK.layers} layers, ${BUILD_CHECK.findings.length} findings, exit ${BUILD_CHECK.exit}.
 
 - /tokens.json: the tokens as one DTCG 2025.10 document, in the default context
 - /graph.json: every token with its value in each context, the layer policy, the CSS variable names, and the check result

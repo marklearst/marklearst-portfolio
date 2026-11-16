@@ -38,7 +38,7 @@ export default function HeroInspector() {
   }
 
   return (
-    <InspectorSlot caption='The colors, type, and motion on this site come from one token graph, and Primitree checks it on every build. Inspect anything to trace a value to its source.'>
+    <InspectorSlot caption='Motion on this site is all tokens, and color and type mostly are. Primitree checks the graph on every build. Inspect anything to trace a value to its source, and where one is still raw the inspector says so.'>
       <InspectorDock placement='inline'>
         <InspectorStatus />
         <InspectorBody preview={preview} />
