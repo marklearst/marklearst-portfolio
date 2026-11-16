@@ -1,0 +1,94 @@
+.button {
+  --button-background: transparent;
+  --button-text: var(--color-ink-primary);
+  --button-border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 0 var(--space-5);
+  border: 1px solid var(--button-border);
+  border-radius: var(--radius-2);
+  background: var(--button-background);
+  color: var(--button-text);
+  font: var(--font-weight-medium) var(--text-ui)/var(--font-leading-200) var(--font-body);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  transition-property: scale, background-color, border-color, color;
+  transition-duration: var(--component-button-motion);
+  transition-timing-function: var(--ease-out);
+}
+
+.button[data-size='sm'] {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  font-size: var(--text-caption);
+}
+
+.button[data-variant='primary'] {
+  --button-background: var(--component-button-primary-background);
+  --button-text: var(--component-button-primary-text);
+  --color-action-icon: var(--component-button-primary-text);
+}
+
+.button[data-variant='accent'] {
+  --button-background: var(--component-button-accent-background);
+  --button-text: var(--component-button-accent-text);
+  --color-action-icon: var(--component-button-accent-text);
+}
+
+.button[data-variant='secondary'] {
+  --button-border: var(--component-button-secondary-border);
+  --button-text: var(--component-button-secondary-text);
+}
+
+.button[data-variant='ghost'] {
+  --button-text: var(--color-ink-secondary);
+  padding-inline: var(--space-1);
+}
+
+/* A toggle that is on wears the accent as an edge, so its state doesn't rest on color alone. */
+.button[aria-pressed='true'] {
+  --button-border: var(--color-accent-primary);
+  --button-text: var(--color-ink-primary);
+}
+
+.button:active {
+  scale: .97;
+}
+
+.button:disabled {
+  color: var(--color-ink-muted);
+  cursor: default;
+  scale: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .button[data-variant='primary']:hover {
+    --button-background: var(--color-ink-secondary);
+  }
+
+  .button[data-variant='accent']:hover {
+    /* Its label is light in both themes, so hover takes the fill a step darker and the label only gains contrast. */
+    --button-background: oklch(from var(--component-button-accent-background) calc(l - .04) c h);
+  }
+
+  .button[data-variant='secondary']:not([aria-pressed='true']):hover {
+    --button-border: var(--color-ink-muted);
+  }
+
+  .button[data-variant='ghost']:hover {
+    --button-text: var(--color-ink-primary);
+  }
+}

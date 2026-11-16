@@ -1,0 +1,73 @@
+/* A frame with the options side by side in it. The option that is on is filled, so its state never rests on color alone. */
+.segmented {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  padding: calc(var(--space-1) / 2);
+  border: 1px solid var(--color-ink-muted);
+  border-radius: var(--radius-2);
+  background: var(--color-canvas);
+}
+
+.option {
+  position: relative;
+  display: grid;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* The radio input covers its option and is not drawn. It is still what takes the click, the focus, and the arrow keys. */
+.input {
+  appearance: none;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.label {
+  display: grid;
+  place-items: center;
+  min-height: var(--space-8);
+  padding: 0 var(--space-2);
+  /* The frame's radius less the padding inside it. */
+  border-radius: calc(var(--radius-2) - var(--space-1) / 2);
+  color: var(--color-ink-secondary);
+  font: var(--font-weight-medium) var(--text-caption)/var(--font-leading-200) var(--font-body);
+  white-space: nowrap;
+  transition: background-color var(--duration-feedback) var(--ease-out), color var(--duration-feedback) var(--ease-out), scale var(--duration-feedback) var(--ease-out);
+}
+
+.input:checked + .label {
+  background: var(--color-ink-primary);
+  color: var(--color-canvas);
+}
+
+.input:active + .label {
+  scale: .97;
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+.input:focus-visible + .label {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .input:not(:checked):hover + .label {
+    color: var(--color-ink-primary);
+  }
+}
+
+/* A finger needs more than a pointer does. */
+@media (pointer: coarse) {
+
+  .label {
+    min-height: 44px;
+  }
+}

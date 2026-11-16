@@ -52,6 +52,9 @@ export function ArrowUpRightIcon({ size = 18, style, ...props }: IconProps) {
 export function ArrowRightIcon({ size = 18, style, ...props }: IconProps) {
   return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' data-action-icon='forward' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path className='icon-arrow' d='M4 12h15m-6-6 6 6-6 6' /></svg>
 }
+export function InspectIcon({ size = 18, style, ...props }: IconProps) {
+  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path d='M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4' /><circle cx='12' cy='12' r='2' fill='currentColor' stroke='none' /></svg>
+}
 export const ArrowLeftIcon = /* @__PURE__ */ icon(TbArrowLeft, { action: 'back' })
 export const ArrowDownIcon = /* @__PURE__ */ icon(TbArrowDown, { action: 'down' })
 export const ArrowUpIcon = /* @__PURE__ */ icon(TbArrowUp, { action: 'up' })
