@@ -180,9 +180,9 @@ export const PROJECTS: ProjectMeta[] = [
     category: 'ACCESSIBILITY',
     categoryColor: 'green',
     summary:
-      'Canvas-native accessibility review for Figma and FigJam. v3.0.0 adds three on-canvas audits, live contrast inspection, native Dev Mode annotations, and evidence-bound sign-off.',
+      'A Figma and FigJam widget for working through accessibility checks on the canvas, next to the design. v3.0.0 adds three on-canvas audits, live contrast inspection, Dev Mode annotations, and sign-offs tied to evidence.',
     description:
-      'Canvas-native accessibility review workflow for Figma and FigJam. v3.0.0 pairs The A11Y Project Checklist with live contrast inspection, three on-canvas audits, native Dev Mode annotations, evidence-bound sign-off, and a canonical Canvas Record.',
+      'Accessibility review for Figma and FigJam that stays on the canvas. v3.0.0 pairs The A11Y Project Checklist with live contrast inspection, three on-canvas audits, Dev Mode annotations, and sign-offs tied to evidence. A Canvas Record keeps the results with the file.',
     role: 'Creator & Maintainer',
     timeline: '2023 to present',
     publishedAt: '2026-07-12',
