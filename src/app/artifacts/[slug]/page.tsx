@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import Footer from '@/components/shell/Footer'
 import DisclosureSummary from '@/components/ui/DisclosureSummary'
 import RelatedNavigation from '@/components/navigation/RelatedNavigation'
-import { getArtifactBySlug, getArtifacts } from '@/lib/content/artifacts'
+import { getArtifacts } from '@/lib/content/artifacts'
 import { getAdjacentContent } from '@/lib/content/adjacent-content'
 import { stripFrontmatter } from '@/lib/content/strip-frontmatter'
 import { artifactMdxComponents } from '@/components/mdx/ArtifactMdxComponents'
@@ -31,7 +31,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ArtifactPageProps): Promise<Metadata> {
   const { slug } = await params
   if (!slug) return { title: 'Artifacts | Mark Learst' }
-  const artifact = await getArtifactBySlug(slug)
+  // An address with no artifact behind it is a 404. Looking it up with the function that throws made it a 500.
+  const artifact = (await getArtifacts()).find((item) => item.slug === slug)
+  if (!artifact) notFound()
   return { title: `${artifact.title} | Mark Learst`, description: artifact.summary }
 }
 
