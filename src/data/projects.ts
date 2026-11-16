@@ -253,15 +253,15 @@ export const PROJECTS: ProjectMeta[] = [
     slug: 'skydio',
     route: '/work/skydio',
     title: 'Skydio Autonomy Widget',
-    cardTitle: 'Skydio Component Library',
+    cardTitle: 'Skydio Autonomy Widget',
     category: 'CONSULTING',
     categoryColor: 'yellow',
     summary:
-      'Built React/Storybook component library and onboarded product and engineering teams on adoption patterns for autonomous drone platform.',
+      "A configuration-driven React widget for Skydio's drone mission controls, documented in a public Storybook and shipped in a Skydio software release. I also trained their product and engineering teams on its patterns.",
     description:
-      "Built a React mission-control widget implementing Skydio's Rivit design language, with configurable actions, shared state, and Storybook documentation.",
+      "Built a React mission-control widget in Skydio's Rivit design language. One typed config file drives four mission types and 15+ mission actions, and the widget runs on its own state or on state the host app passes in.",
     role: 'Frontend Consultant · Component Architecture & Storybook',
-    timeline: '2024 (Contract)',
+    timeline: '2025 (Contract)',
     publishedAt: '2024-05-01',
     featured: true,
     technologies: [
@@ -270,6 +270,8 @@ export const PROJECTS: ProjectMeta[] = [
       'Storybook',
       'Tailwind CSS',
       'Vite',
+      'Vitest',
+      'Chromatic',
       'Config-Driven UI',
     ],
     tags: ['React', 'Storybook', 'Consulting'],
