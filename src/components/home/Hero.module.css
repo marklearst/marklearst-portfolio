@@ -434,31 +434,6 @@
   pointer-events: none;
 }
 
-/* The lens. While the line is moving, the strip of drawing just behind it is out of focus, most at the line and
-   not at all a little way in, so the drawing seems to sharpen as the line uncovers it. It is a second layer over
-   the drawing, not a filter on it: a backdrop blur under a gradient mask, which is what lets the blur fade out.
-   Blurring the drawing itself would only be cut off by the clip.
-
-   It follows the line a beat late, because its own position eases toward where the line is. The line answers the
-   hand at once and the lens catches up, the way a second part of one moving thing does. At rest it is gone, so
-   the text at the cut is sharp. */
-.lens {
-  position: absolute;
-  inset-block: 0;
-  left: var(--peel);
-  width: var(--space-16);
-  backdrop-filter: blur(var(--space-2)) saturate(1.5);
-  /* A mask only reads how opaque its colors are, so any solid token does for the opaque end. */
-  mask-image: linear-gradient(to right, var(--color-canvas), transparent);
-  opacity: 0;
-  transition: opacity var(--duration-handoff) var(--ease-out), left var(--duration-reveal) var(--ease-out);
-}
-
-.stage[data-dragging] .lens,
-:global(html[data-intro]) .stage:not([data-touched]) .lens {
-  opacity: 1;
-}
-
 .scan {
   --thumb: var(--space-12);
   appearance: none;
