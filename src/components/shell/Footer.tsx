@@ -2,6 +2,7 @@ import { GithubIcon, LinkedinIcon, MailIcon, ArrowUpRightIcon } from '@/componen
 import TrackedLink from '@/components/analytics/TrackedLink'
 import SectionViewTracker from '@/components/analytics/SectionViewTracker'
 import AnalyticsOptOutToggle from '@/components/analytics/AnalyticsOptOutToggle'
+import BuildLine from '@/components/inspector/BuildLine'
 import styles from './Footer.module.css'
 
 const roleEmail = 'mailto:jobs@marklearst.com?subject=Role%20inquiry&body=Hi%20Mark%2C%0D%0A%0D%0AI%20am%20reaching%20out%20about%20a%20role%20on%20our%20team.'
@@ -37,6 +38,7 @@ export default function Footer({ showPrivacyLink = true }: { showPrivacyLink?: b
             ))}
           </nav>
         </div>
+        <BuildLine />
         <div className={styles.bottom}>
           <span className={styles.copyright}>© 2026 Mark Learst.</span>
           <div className={styles.controls}>
