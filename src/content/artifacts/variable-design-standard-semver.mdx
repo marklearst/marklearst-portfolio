@@ -1,7 +1,7 @@
 ---
 title: SemVer for Design Variables
 slug: variable-design-standard-semver
-summary: A lightweight framing for versioning tokens so design and code stay in lockstep. Part of the Variable Design Standard.
+summary: Versioning design tokens like an API, so a rename shows up as a breaking change before it reaches production. Part of the Variable Design Standard.
 tags:
   - design-systems
   - tokens
@@ -14,11 +14,11 @@ pinned: false
 
 A designer renames `color.brand.primary` to `color.brand.main` in Figma. Seems harmless. Three weeks later, 47 components are rendering fallback colors in production because the token sync ran, the build passed, and nobody caught the breaking change.
 
-This happens because design variables change like APIs, but we don't treat them that way. No versioning. No impact signal. No way for engineering to know if a token update is safe to pull or will break half the app.
+Design variables change like APIs, but we don't version them like APIs. There's no impact signal, and engineering has no way to know whether a token update is safe to pull or will break half the app.
 
-## The framing
+## Tokens as a versioned contract
 
-SemVer gives designers and engineers the same shared language for change. A contract is just a typed payload with a schema version and a contract version. The version tells teams whether a change is safe, risky, or breaking.
+SemVer gives designers and engineers one vocabulary for change. A contract is a typed payload with a schema version and a contract version, and the contract version tells teams whether a change is safe, risky, or breaking.
 
 ```json
 {
@@ -46,7 +46,7 @@ SemVer gives designers and engineers the same shared language for change. A cont
 
 ### Detecting breaking changes
 
-The version bump isn't manual it's computed from the diff. Here's the logic:
+Nobody picks the version bump by hand. It's computed from the diff:
 
 ```ts
 type BreakingChange = {
@@ -108,15 +108,8 @@ fi
 pnpm vds-cli publish --bump "$BUMP"
 ```
 
-## Why this matters
+## What versioning gets you
 
-When tokens are versioned like code, you can:
+Once tokens are versioned like code, every change has a diff you can audit, CI checks compatibility before anything syncs, and you can roll back to the last known-good version. Impact is described in version numbers every team already knows how to read. Drift turns into a release cycle you can plan around, with the contract enforced in the pipeline.
 
-- Audit changes with a clear diff
-- Validate compatibility in CI before sync
-- Roll back to a known-good version without guesswork
-- Communicate impact in a language every team already understands
-
-Variable drift becomes a predictable release cycle. The spec doesn't just document the change; it enforces the contract.
-
-This is part of the [Variable Design Standard](https://variable-design-standard.vercel.app/), a broader effort to bring infrastructure-level rigor to the design-engineering handoff.
+This is part of the [Variable Design Standard](https://variable-design-standard.vercel.app/), the spec I'm working on to bring infrastructure-style versioning and checks to the handoff between design and engineering.
