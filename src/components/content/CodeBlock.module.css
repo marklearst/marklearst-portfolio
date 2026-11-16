@@ -28,7 +28,7 @@
   font: 14px/1.5 var(--font-body);
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 140ms ease, color 140ms ease;
+  transition: background-color var(--duration-feedback) var(--ease-out), color var(--duration-feedback) var(--ease-out);
 }
 
 .header button:active {
@@ -66,13 +66,6 @@
 
   .source {
     padding: 16px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .header button {
-    transition: none;
   }
 }
 

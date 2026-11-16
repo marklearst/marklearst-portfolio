@@ -1,0 +1,985 @@
+/* The dock and the caption under it. */
+.figure {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.caption {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+  text-wrap: pretty;
+}
+
+/* The slot keeps the dock's space, so nothing on the page moves when the dock leaves to follow the visitor. */
+.slot {
+  position: relative;
+  min-width: 0;
+  min-height: 608px;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  border: 1px dashed var(--color-border-subtle);
+  border-radius: var(--radius-5);
+  color: var(--color-ink-muted);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-reveal) var(--ease-out);
+}
+
+.slot[data-empty] .placeholder {
+  opacity: 1;
+}
+
+/* Dock */
+
+.dock {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--component-dock-border);
+  border-radius: var(--radius-5);
+  background: var(--component-dock-background);
+  color: var(--color-ink-primary);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+  text-align: left;
+}
+
+.dock[data-away] {
+  visibility: hidden;
+}
+
+.dock[data-inspector-dock='floating'] {
+  position: fixed;
+  z-index: var(--layer-dock);
+  inset: auto calc(var(--space-5) + env(safe-area-inset-right, 0px)) calc(var(--space-5) + env(safe-area-inset-bottom, 0px)) auto;
+  width: 420px;
+  /* A set height. A dock that resized with each selection would jump every time the pointer moved. */
+  height: min(68dvh, 640px);
+}
+
+.dock code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+}
+
+.dock :is(button, a):focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 2px;
+}
+
+/* Status: the build's own words */
+
+.status {
+  flex: none;
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--component-dock-border);
+}
+
+.statusLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+}
+
+.command {
+  color: var(--color-ink-muted);
+}
+
+/* Letters that arrive one after another: each waits a fifth of a causal step for the one before it. */
+.letters > span {
+  display: inline-block;
+  animation: letter-in var(--duration-reveal) var(--ease-out) both;
+  animation-delay: calc(var(--i) * var(--duration-causal) / 5);
+}
+
+@keyframes letter-in {
+  from { opacity: 0; translate: 0 .4em; filter: blur(2px); }
+}
+
+.verdict {
+  color: var(--color-accent-success);
+  font-size: var(--text-ui);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Under .dock so it outranks the dock's reset for code. */
+.dock .exit {
+  margin-left: auto;
+  padding: 0 var(--space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--radius-1);
+  color: var(--color-accent-success);
+  line-height: var(--leading-code);
+}
+
+.status[data-failed] :is(.verdict, .exit) {
+  color: var(--color-accent-danger);
+}
+
+.findings {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-reveal) var(--ease-out);
+}
+
+.status[data-failed] .findings {
+  grid-template-rows: 1fr;
+}
+
+.findings > div {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.findingLine {
+  margin: var(--space-2) 0 0;
+  color: var(--color-accent-danger);
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-3);
+  margin: var(--space-1) 0 0;
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Only a dock that floats beside the page can change sides. The sheet on a small screen can't. */
+.cross {
+  display: none;
+}
+
+.notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 var(--space-3);
+  margin: var(--space-2) 0 0;
+  color: var(--color-ink-secondary);
+}
+
+/* Body */
+
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4);
+}
+
+/* The resting chains, which the session's intro resolves row by row. */
+.preview {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-ink-primary);
+  font-size: var(--text-ui);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-subheading);
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.selectionHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.source,
+.context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin: var(--space-1) 0 0;
+  color: var(--color-ink-muted);
+}
+
+.source code {
+  overflow-wrap: anywhere;
+}
+
+/* Its label says which state it is in. The edge only repeats it. */
+.pin {
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-ink-muted);
+  border-radius: var(--radius-1);
+  background: transparent;
+  color: var(--color-ink-primary);
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color var(--duration-feedback) var(--ease-out);
+}
+
+.pin[data-pinned] {
+  border-color: var(--color-accent-primary);
+}
+
+.close {
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-2);
+  background: transparent;
+  color: var(--color-ink-primary);
+  cursor: pointer;
+  transition: border-color var(--duration-feedback) var(--ease-out);
+}
+
+/* The control looks 36px and takes a 44px touch. The inset is measured from inside the 1px border. */
+.close::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+}
+
+.callout {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--color-accent-danger);
+  border-radius: var(--radius-3);
+  color: var(--color-ink-secondary);
+  text-wrap: pretty;
+}
+
+.callout > p {
+  margin: 0;
+}
+
+.callout strong {
+  color: var(--color-accent-danger);
+  font-weight: var(--font-weight-medium);
+}
+
+.property + .property {
+  margin-top: var(--space-4);
+}
+
+.propertyName {
+  margin: 0 0 var(--space-1);
+  color: var(--color-ink-muted);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-caption);
+  letter-spacing: 0;
+}
+
+.note {
+  margin: var(--space-1) 0 0 var(--space-6);
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+
+.where,
+.hint {
+  margin: var(--space-4) 0 0;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
+}
+
+.keys {
+  margin: var(--space-2) 0 0;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
+}
+
+.hint:first-child {
+  margin-top: 0;
+}
+
+/* The chain: each row is one token, the line is the references between them. */
+
+.chain {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chain + .chain {
+  margin-top: var(--space-2);
+}
+
+.chain::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 6px;
+  width: 1px;
+  background: var(--color-border-subtle);
+  transform-origin: top;
+}
+
+/* The token a broken one was cut from. A dashed rule marks the cut, and the piece below it hangs a little crooked, like the elements on the page. */
+.severed {
+  margin: var(--space-3) 0 var(--space-4);
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-accent-danger);
+  rotate: 1.5deg;
+  transform-origin: 0 0;
+}
+
+/* It swings once, at the moment it is cut. Shown again later, it just hangs. */
+.severed[data-cut] {
+  animation: sever calc(var(--duration-handoff) * 3) var(--ease-move) both;
+}
+
+.severedNote {
+  margin: 0;
+  color: var(--color-ink-muted);
+}
+
+/* What spills when the link is cut: the literal's own characters, thrown out sideways from the cut and dropping
+   as they go. Each piece carries where it lands and how far it turns. One element drifts sideways at a steady
+   speed while the glyph inside it falls faster and faster, which is what makes it read as weight. */
+.debris {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  pointer-events: none;
+}
+
+.piece {
+  --burst: calc(var(--duration-handoff) * 3);
+  position: absolute;
+  animation: drift var(--burst) var(--semantic-easing-linear) both;
+  animation-delay: calc(var(--i) * var(--duration-causal) / 6);
+}
+
+.piece > i {
+  display: block;
+  color: var(--color-accent-text);
+  font: var(--font-weight-regular) var(--text-code)/var(--leading-code) var(--font-mono);
+  font-style: normal;
+  animation: fall var(--burst) var(--semantic-easing-linear) both;
+  animation-delay: inherit;
+}
+
+@keyframes drift {
+  to { translate: var(--dx) 0; }
+}
+
+/* A fall is a curve, drawn here as five straight steps: up a little, then down by more each time. */
+@keyframes fall {
+  0% { translate: 0 0; rotate: 0deg; opacity: 1; }
+  20% { translate: 0 calc(var(--dy) * -.12); }
+  45% { translate: 0 calc(var(--dy) * .06); opacity: 1; }
+  70% { translate: 0 calc(var(--dy) * .42); }
+  100% { translate: 0 var(--dy); rotate: var(--spin); opacity: 0; }
+}
+
+@keyframes sever {
+  0% { rotate: 0deg; }
+  30% { rotate: 3deg; }
+  55% { rotate: .8deg; }
+  78% { rotate: 2deg; }
+  100% { rotate: 1.5deg; }
+}
+
+/* A layer name that doesn't fit beside its token drops under it and stays on the left. */
+.row {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 var(--space-2);
+  min-height: 36px;
+  padding-left: var(--space-6);
+}
+
+.row::before {
+  content: '';
+  position: absolute;
+  top: 13px;
+  left: 2px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--color-ink-muted);
+  /* A square, like the swatches. A row of circles is what every status list uses. */
+  border-radius: calc(var(--radius-1) / 2);
+  background: var(--component-dock-background);
+}
+
+.row[data-broken]::before {
+  border-color: var(--color-accent-danger);
+  background: var(--color-accent-danger);
+}
+
+.row[data-value]::before {
+  background: var(--color-ink-muted);
+}
+
+.row[data-value='color']::before {
+  display: none;
+}
+
+.token {
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 36px;
+  margin-left: calc(var(--space-1) * -1);
+  padding: 0 var(--space-1);
+  border: 0;
+  border-radius: var(--radius-1);
+  background: transparent;
+  color: var(--color-ink-primary);
+  text-align: left;
+  overflow-wrap: break-word;
+  cursor: pointer;
+  transition: background-color var(--duration-feedback) var(--ease-out);
+}
+
+.token[data-lit] {
+  background: var(--color-surface-raised);
+}
+
+.row[data-broken] .token {
+  color: var(--color-accent-danger);
+}
+
+.layer {
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+
+.valueMain {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.finding {
+  flex-basis: 100%;
+  margin: 0 0 var(--space-2);
+  color: var(--color-accent-danger);
+}
+
+.swatch {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-1);
+}
+
+.value {
+  color: var(--color-ink-primary);
+}
+
+.literal {
+  color: var(--color-accent-danger);
+}
+
+.contrast {
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.contrast[data-failed] {
+  color: var(--color-accent-danger);
+}
+
+/* A duration draws itself at its real length. */
+.durationBar {
+  flex: 0 1 96px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: var(--radius-1);
+  background: var(--color-border-subtle);
+}
+
+.durationBar > span {
+  display: block;
+  height: 100%;
+  background: var(--color-accent-primary);
+  transform-origin: left center;
+}
+
+/* An easing as a curve, with a marker that rides it. The marker's box crosses at a steady speed while the point
+   inside it climbs with the easing itself, and together they trace the curve. It runs when the row resolves. */
+.curve {
+  position: relative;
+  flex: none;
+  width: var(--curve-width);
+  height: var(--curve-height);
+  color: var(--color-ink-muted);
+}
+
+.curve svg {
+  display: block;
+}
+
+.curveMarker,
+.curveMarker > i {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.curveMarker > i::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: -2px;
+  width: var(--space-1);
+  height: var(--space-1);
+  border-radius: 50%;
+  background: var(--color-accent-primary);
+}
+
+[data-animate] .curveMarker {
+  animation: curve-across calc(var(--duration-handoff) * 3) var(--semantic-easing-linear) both;
+  animation-delay: calc(var(--i) * var(--duration-causal) + var(--duration-reveal));
+}
+
+[data-animate] .curveMarker > i {
+  animation: curve-up calc(var(--duration-handoff) * 3) var(--curve) both;
+  animation-delay: inherit;
+}
+
+@keyframes curve-across {
+  from { translate: 0 0; }
+  to { translate: var(--curve-width) 0; }
+}
+
+@keyframes curve-up {
+  from { translate: 0 0; }
+  to { translate: 0 calc(var(--curve-height) * -1); }
+}
+
+/* A selection the visitor settled on resolves in order: each row waits one causal step for the one above it. */
+
+[data-animate] .row {
+  animation: row-in var(--duration-reveal) var(--ease-out) both;
+  animation-delay: calc(var(--i) * var(--duration-causal));
+}
+
+[data-animate] .chain::before {
+  animation: line-grow calc(var(--duration-reveal) + var(--rows) * var(--duration-causal)) var(--ease-out) both;
+  animation-delay: calc(var(--start) * var(--duration-causal));
+}
+
+[data-animate] .durationBar > span {
+  animation: bar-fill var(--d) var(--semantic-easing-linear) both;
+  animation-delay: calc(var(--i) * var(--duration-causal) + var(--duration-reveal));
+}
+
+/* The one orchestrated moment, on the first page of a session: the hero's X-ray scans across (Hero.module.css),
+   and as it settles the heading's tokens resolve here from meaning down to raw value. Every time is a motion
+   token, so the reduced motion context shows the finished frame at once. */
+
+:global(html[data-intro]) .preview .row {
+  animation: row-in var(--duration-handoff) var(--ease-out) both;
+  animation-delay: calc(var(--duration-handoff) * 2 + var(--i) * var(--duration-causal));
+}
+
+:global(html[data-intro]) .preview .chain::before {
+  animation: line-grow calc(var(--duration-handoff) + var(--rows) * var(--duration-causal)) var(--ease-out) both;
+  animation-delay: calc(var(--duration-handoff) * 2 + var(--start) * var(--duration-causal));
+}
+
+
+@keyframes row-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+@keyframes line-grow {
+  from { transform: scaleY(0); }
+}
+
+@keyframes bar-fill {
+  from { transform: scaleX(0); }
+}
+
+/* Footer */
+
+.footer {
+  flex: none;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--component-dock-border);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.actions > * {
+  padding-inline: var(--space-2);
+  font-size: var(--text-caption);
+}
+
+/* The hue of the color a broken token used to follow */
+
+.hueRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--space-3);
+}
+
+.hue {
+  min-width: 0;
+}
+
+.color {
+  color: var(--color-ink-primary);
+  white-space: nowrap;
+}
+
+/* A square, so it reads as a swatch and never as a status dot. */
+.chip {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: var(--space-2);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: calc(var(--radius-1) / 2);
+  vertical-align: -2px;
+}
+
+.textButton {
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-1);
+  background: none;
+  color: var(--color-ink-primary);
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-muted);
+  text-underline-offset: 3px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.motionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.motionLabel {
+  font-weight: var(--font-weight-medium);
+}
+
+.readout {
+  margin-left: auto;
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The build line in the footer */
+
+.buildLine {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-6);
+  margin: 0;
+  padding-block: var(--space-4);
+  color: var(--color-ink-muted);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+.buildLine code {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--color-ink-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-code);
+}
+
+.buildLine a {
+  color: inherit;
+}
+
+.inspectHere {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink-primary);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+/* The toggle in the header */
+
+/* The toggle sits in the header's bar after the links. Its icon says it is an action, not a place. */
+.toggle {
+  flex: none;
+  border-radius: var(--radius-3);
+}
+
+/* Named twice so it outranks the button's own variant and pressed styles, whichever stylesheet loads last. */
+.toggle.toggle {
+  --button-text: var(--color-ink-primary);
+  padding-inline: var(--space-3);
+}
+
+/* On, it is filled: nothing else in the bar is, so it can't be mistaken for the current page. */
+.toggle.toggle[aria-pressed='true'] {
+  --button-background: var(--component-button-accent-background);
+  --button-text: var(--component-button-accent-text);
+  --button-border: transparent;
+}
+
+.toggle svg {
+  flex: none;
+  color: var(--color-accent-primary);
+}
+
+.toggle[aria-pressed='true'] svg {
+  color: currentColor;
+}
+
+/* Outlines live in document coordinates, so they scroll with the page instead of chasing it. */
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: var(--layer-outline);
+  pointer-events: none;
+}
+
+.overlay [data-part='box'],
+.overlay [data-part='hover'],
+.overlay [data-part='ghosts'] > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity var(--duration-feedback) var(--semantic-easing-linear);
+}
+
+.overlay [data-part='box'] {
+  border: 1.5px solid var(--component-inspector-outline);
+  border-radius: var(--radius-3);
+}
+
+.overlay [data-part='hover'],
+.overlay [data-part='ghosts'] > div {
+  border: 1px dashed var(--component-inspector-outline);
+  border-radius: var(--radius-2);
+}
+
+/* After a rebrand that a broken rule missed, the outlines take the color those elements should have. */
+.overlay[data-stranded] [data-part='ghosts'] > div {
+  border-color: var(--stranded);
+}
+
+.overlay [data-visible='true'],
+.overlay [data-part='ghosts'] > div[data-visible='true'] {
+  opacity: 1;
+}
+
+/* The selection's outline rides a spring in the controller. This is the lighter outline that follows the pointer while a selection is pinned: it glides to the next element and takes its shape. It is one empty box with no children to lay out, so its width and height can move with it. */
+.overlay [data-glide='true'] {
+  transition:
+    opacity var(--duration-feedback) var(--semantic-easing-linear),
+    transform var(--component-inspector-motion) var(--ease-settle),
+    width var(--component-inspector-motion) var(--ease-settle),
+    height var(--component-inspector-motion) var(--ease-settle);
+}
+
+.overlay [data-part='label'] {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: -1.5px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-1);
+  background: var(--component-inspector-label-background);
+  color: var(--component-inspector-label-text);
+  font: var(--font-weight-medium) var(--text-code)/var(--font-leading-200) var(--font-body);
+  white-space: nowrap;
+}
+
+.overlay [data-part='label']:empty {
+  display: none;
+}
+
+.overlay [data-label-below='true'] [data-part='label'] {
+  top: calc(100% + 6px);
+  bottom: auto;
+}
+
+.live,
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+
+  .token:hover {
+    background: var(--color-surface-raised);
+  }
+
+  .close:hover {
+    border-color: var(--color-ink-muted);
+  }
+
+  .textButton:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* A finger needs more than a pointer does. */
+@media (pointer: coarse) {
+
+  .textButton,
+  .pin,
+  .token,
+  .row {
+    min-height: 44px;
+  }
+
+  .pin {
+    min-width: 44px;
+  }
+}
+
+/* raw: breakpoints can't read custom properties */
+@media (min-width: 960px) {
+
+  /* The floating dock crosses to this side when it would cover what has keyboard focus, or when it is thrown there. */
+  .dock[data-inspector-dock='floating'][data-side='left'] {
+    right: auto;
+    left: calc(var(--space-5) + env(safe-area-inset-left, 0px));
+  }
+
+  .dock[data-inspector-dock='floating'] .cross {
+    display: inline;
+  }
+
+  /* Its header is a handle. */
+  .dock[data-inspector-dock='floating'] .status {
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .dock[data-inspector-dock='floating'][data-dragging] .status {
+    cursor: grabbing;
+  }
+}
+
+/* raw: breakpoints can't read custom properties */
+@media (max-width: 959px) {
+
+  /* Inspecting always uses the sheet here, so the dock in the page only ever holds its resting content and can be as tall as that is. */
+  .slot {
+    min-height: 0;
+  }
+
+  .dock[data-inspector-dock='inline'] {
+    position: relative;
+    inset: auto;
+  }
+
+  .dock[data-inspector-dock='inline'] .body {
+    overflow-y: visible;
+  }
+
+  /* On a small screen the floating dock is a sheet along the bottom edge. */
+  .dock[data-inspector-dock='floating'] {
+    inset: auto 0 0;
+    width: auto;
+    /* A set height: the sheet arrives at its size and never changes it, so nothing shifts as its content loads. */
+    height: var(--inspector-sheet-height);
+    max-height: none;
+    border-bottom: 0;
+    border-radius: var(--radius-5) var(--radius-5) 0 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* raw: breakpoints can't read custom properties */
+@media (max-width: 479px) {
+
+  .toggleLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .toggle {
+    width: 44px;
+    padding-inline: 0;
+  }
+}
+
+/* raw: breakpoints can't read custom properties */
+@media (max-height: 520px), (max-height: 700px) and (max-width: 959px) {
+
+  /* On a short screen the status and the controls alone would fill the dock, so all of it scrolls as one. A sheet
+     is only part of the screen's height, so it runs short sooner than a dock at the side does. */
+  .dock[data-inspector-dock='floating'] {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .dock[data-inspector-dock='floating'] .body {
+    flex: none;
+    overflow-y: visible;
+  }
+}

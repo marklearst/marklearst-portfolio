@@ -1,0 +1,901 @@
+{
+  "$description": "Base layer. Literal values only. Nothing here knows what it is used for.",
+  "color": {
+    "$type": "color",
+    "neutral": {
+      "0": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1
+          ],
+          "hex": "#FFFFFF"
+        }
+      },
+      "50": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9686,
+            0.9686,
+            0.9529
+          ],
+          "hex": "#F7F7F3"
+        }
+      },
+      "100": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9569,
+            0.9569,
+            0.949
+          ],
+          "hex": "#F4F4F2"
+        }
+      },
+      "150": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9255,
+            0.9255,
+            0.902
+          ],
+          "hex": "#ECECE6"
+        }
+      },
+      "200": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8902,
+            0.8902,
+            0.8745
+          ],
+          "hex": "#E3E3DF"
+        }
+      },
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8196,
+            0.8196,
+            0.7843
+          ],
+          "hex": "#D1D1C8"
+        }
+      },
+      "400": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6667,
+            0.6667,
+            0.6431
+          ],
+          "hex": "#AAAAA4"
+        }
+      },
+      "600": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.3843,
+            0.3843,
+            0.3569
+          ],
+          "hex": "#62625B"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.2784,
+            0.2784,
+            0.2627
+          ],
+          "hex": "#474743"
+        }
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.2039,
+            0.2039,
+            0.1961
+          ],
+          "hex": "#343432"
+        }
+      },
+      "825": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.149,
+            0.149,
+            0.149
+          ],
+          "hex": "#262626"
+        }
+      },
+      "875": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.102,
+            0.102,
+            0.102
+          ],
+          "hex": "#1A1A1A"
+        }
+      },
+      "900": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0784,
+            0.0784,
+            0.0784
+          ],
+          "hex": "#141414"
+        }
+      },
+      "925": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0667,
+            0.0667,
+            0.0627
+          ],
+          "hex": "#111110"
+        }
+      },
+      "$description": "One ramp for both themes. Dark reads it from the 900 end, light from the 0 end."
+    },
+    "brand": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            0.2745,
+            0.3176
+          ],
+          "hex": "#FF4651"
+        },
+        "$description": "The accent as text on dark surfaces: the most vivid tone at this hue that holds 4.5:1 on all three."
+      },
+      "500": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8588,
+            0.0941,
+            0.2039
+          ],
+          "hex": "#DB1834"
+        },
+        "$description": "The accent on dark surfaces. It holds a light label at 4.5:1 and reads at 3:1 against all three surfaces."
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.8353,
+            0.0392,
+            0.1843
+          ],
+          "hex": "#D50A2F"
+        },
+        "$description": "The accent on light surfaces, as a fill and as text."
+      },
+      "$description": "The accent, at one hue. Named for its job, not its color, because a rebrand changes the hue and nothing else. 500 is chosen. 300 and 700 are solved from its hue by the rule in src/lib/inspector/brand.ts."
+    },
+    "green": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.5725,
+            0.7333,
+            0.5412
+          ],
+          "hex": "#92BB8A"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.2353,
+            0.4235,
+            0.2039
+          ],
+          "hex": "#3C6C34"
+        }
+      }
+    },
+    "red": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9333,
+            0.5412,
+            0.502
+          ],
+          "hex": "#EE8A80"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.6784,
+            0.2235,
+            0.1922
+          ],
+          "hex": "#AD3931"
+        }
+      }
+    },
+    "amber": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.898,
+            0.7412,
+            0.3922
+          ],
+          "hex": "#E5BD64"
+        }
+      },
+      "800": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.4627,
+            0.3176,
+            0.0353
+          ],
+          "hex": "#765109"
+        }
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": [
+          "Wotfard",
+          "Wotfard fallback",
+          "Arial",
+          "sans-serif"
+        ],
+        "$description": "Licensed Wotfard webfonts: Light, Regular, and Medium with matching italics. Font binaries are provisioned separately from the public repository. The fallback is a local sans sized to Wotfard, so text keeps its line breaks while the webfont loads."
+      },
+      "mono": {
+        "$value": [
+          "MonoLisa",
+          "MonoLisa fallback",
+          "SF Mono",
+          "Consolas",
+          "monospace"
+        ],
+        "$description": "MonoLisa, for text that is code."
+      }
+    },
+    "size": {
+      "50": {
+        "$value": {
+          "value": 0.8125,
+          "unit": "rem"
+        }
+      },
+      "100": {
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        }
+      },
+      "200": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "300": {
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        }
+      },
+      "400": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      },
+      "500": {
+        "$value": {
+          "value": 2.5,
+          "unit": "rem"
+        }
+      },
+      "600": {
+        "$value": {
+          "value": 3.5,
+          "unit": "rem"
+        }
+      },
+      "700": {
+        "$value": {
+          "value": 5.5,
+          "unit": "rem"
+        }
+      },
+      "$type": "dimension"
+    },
+    "leading": {
+      "100": {
+        "$value": 1.05
+      },
+      "200": {
+        "$value": 1.15
+      },
+      "300": {
+        "$value": 1.25
+      },
+      "400": {
+        "$value": 1.35
+      },
+      "500": {
+        "$value": 1.5
+      },
+      "600": {
+        "$value": 1.6
+      },
+      "$type": "number"
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      }
+    },
+    "tracking": {
+      "$type": "number",
+      "$description": "Letter spacing as a multiple of the font size. DTCG dimensions take px or rem, so the em lives in the CSS adapter.",
+      "tight": {
+        "$value": -0.015
+      },
+      "snug": {
+        "$value": -0.01
+      },
+      "none": {
+        "$value": 0
+      }
+    }
+  },
+  "space": {
+    "1": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "2": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "3": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "4": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "5": {
+      "$value": {
+        "value": 20,
+        "unit": "px"
+      }
+    },
+    "6": {
+      "$value": {
+        "value": 24,
+        "unit": "px"
+      }
+    },
+    "8": {
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      }
+    },
+    "10": {
+      "$value": {
+        "value": 40,
+        "unit": "px"
+      }
+    },
+    "12": {
+      "$value": {
+        "value": 48,
+        "unit": "px"
+      }
+    },
+    "16": {
+      "$value": {
+        "value": 64,
+        "unit": "px"
+      }
+    },
+    "$type": "dimension",
+    "$description": "A 4px grid. The step number times 4 is the size in px."
+  },
+  "radius": {
+    "1": {
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      }
+    },
+    "2": {
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      }
+    },
+    "3": {
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      }
+    },
+    "4": {
+      "$value": {
+        "value": 12,
+        "unit": "px"
+      }
+    },
+    "5": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    },
+    "$type": "dimension"
+  },
+  "layer": {
+    "$type": "number",
+    "$description": "Stacking order for what floats above the page. The header sits at 40.",
+    "outline": {
+      "$value": 20
+    },
+    "dock": {
+      "$value": 30
+    }
+  },
+  "duration": {
+    "$type": "duration",
+    "$description": "A speed scale. Components never read it directly.",
+    "instant": {
+      "$value": {
+        "value": 0,
+        "unit": "ms"
+      }
+    },
+    "hop": {
+      "$value": {
+        "value": 60,
+        "unit": "ms"
+      }
+    },
+    "quick": {
+      "$value": {
+        "value": 140,
+        "unit": "ms"
+      }
+    },
+    "base": {
+      "$value": {
+        "value": 180,
+        "unit": "ms"
+      }
+    },
+    "slow": {
+      "$value": {
+        "value": 280,
+        "unit": "ms"
+      }
+    },
+    "quarter": {
+      "$description": "The same four steps at a quarter of their speed, for watching motion closely.",
+      "hop": {
+        "$value": {
+          "value": 240,
+          "unit": "ms"
+        }
+      },
+      "quick": {
+        "$value": {
+          "value": 560,
+          "unit": "ms"
+        }
+      },
+      "base": {
+        "$value": {
+          "value": 720,
+          "unit": "ms"
+        }
+      },
+      "slow": {
+        "$value": {
+          "value": 1120,
+          "unit": "ms"
+        }
+      }
+    }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "out": {
+      "$value": [
+        0.22,
+        1,
+        0.36,
+        1
+      ]
+    },
+    "inOut": {
+      "$value": [
+        0.645,
+        0.045,
+        0.355,
+        1
+      ]
+    },
+    "linear": {
+      "$value": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    "overshoot": {
+      "$value": [
+        0.34,
+        1.3,
+        0.64,
+        1
+      ],
+      "$description": "Passes its target by a little, then comes back to it."
+    }
+  },
+  "spring": {
+    "$description": "How a spring behaves, apart from how long it takes, which is a duration.",
+    "bounce": {
+      "$type": "number",
+      "none": {
+        "$value": 0,
+        "$description": "Arrives without passing its target."
+      },
+      "soft": {
+        "$value": 0.2,
+        "$description": "Passes its target a little, once."
+      }
+    }
+  },
+  "semantic": {
+    "$description": "Meaning layer. References to base only. Contexts reroute these and nothing else.",
+    "color": {
+      "$type": "color",
+      "surface": {
+        "canvas": {
+          "$value": "{color.neutral.900}"
+        },
+        "base": {
+          "$value": "{color.neutral.875}"
+        },
+        "raised": {
+          "$value": "{color.neutral.825}"
+        }
+      },
+      "ink": {
+        "primary": {
+          "$value": "{color.neutral.100}"
+        },
+        "secondary": {
+          "$value": "{color.neutral.200}"
+        },
+        "muted": {
+          "$value": "{color.neutral.400}"
+        },
+        "onAccent": {
+          "$value": "{color.neutral.100}",
+          "$description": "Text and icons that sit on the accent."
+        }
+      },
+      "border": {
+        "subtle": {
+          "$value": "{color.neutral.800}"
+        }
+      },
+      "accent": {
+        "primary": {
+          "$value": "{color.brand.500}",
+          "$description": "Fills, outlines, icons, and marks."
+        },
+        "text": {
+          "$value": "{color.brand.300}",
+          "$description": "The accent when it is text, which needs more contrast than a mark does."
+        }
+      },
+      "status": {
+        "$description": "Signals. A rebrand never moves these.",
+        "pass": {
+          "$value": "{color.green.300}"
+        },
+        "warn": {
+          "$value": "{color.amber.300}"
+        },
+        "fail": {
+          "$value": "{color.red.300}"
+        }
+      }
+    },
+    "font": {
+      "$type": "fontFamily",
+      "body": {
+        "$value": "{font.family.sans}"
+      },
+      "code": {
+        "$value": "{font.family.mono}"
+      }
+    },
+    "type": {
+      "display": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.700}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.100}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.tight}"
+        }
+      },
+      "title": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.600}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.200}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.tight}"
+        }
+      },
+      "heading": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.500}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.300}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.snug}"
+        }
+      },
+      "subheading": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.400}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.400}"
+        }
+      },
+      "body": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.300}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.none}"
+        }
+      },
+      "lead": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.300}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        }
+      },
+      "ui": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.200}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        }
+      },
+      "caption": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.100}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.500}"
+        }
+      },
+      "code": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.50}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.600}"
+        }
+      }
+    },
+    "duration": {
+      "$type": "duration",
+      "$description": "Named for the job. The reduced motion context routes every one of these to duration.instant.",
+      "feedback": {
+        "$value": "{duration.quick}",
+        "$description": "Hover and press."
+      },
+      "reveal": {
+        "$value": "{duration.base}",
+        "$description": "Content changing in place."
+      },
+      "handoff": {
+        "$value": "{duration.slow}",
+        "$description": "Route changes and larger moves."
+      },
+      "causal": {
+        "$value": "{duration.hop}",
+        "$description": "One step of delay between tokens that depend on each other."
+      }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "enter": {
+        "$value": "{easing.out}",
+        "$description": "Anything entering, leaving, or answering a press."
+      },
+      "move": {
+        "$value": "{easing.inOut}",
+        "$description": "Something already on screen travelling to a new place."
+      },
+      "linear": {
+        "$value": "{easing.linear}",
+        "$description": "Time shown as time."
+      },
+      "settle": {
+        "$value": "{easing.overshoot}",
+        "$description": "One thing landing with some weight, like the inspector's outline arriving on an element."
+      }
+    },
+    "spring": {
+      "$type": "number",
+      "land": {
+        "$value": "{spring.bounce.soft}",
+        "$description": "Something that was sent somewhere and arrives with its own speed: the outline, a thrown dock."
+      }
+    }
+  },
+  "component": {
+    "$description": "Component layer. References to meaning only.",
+    "button": {
+      "primary": {
+        "$type": "color",
+        "background": {
+          "$value": "{semantic.color.ink.primary}"
+        },
+        "text": {
+          "$value": "{semantic.color.surface.canvas}"
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "background": {
+          "$value": "{semantic.color.accent.primary}"
+        },
+        "text": {
+          "$value": "{semantic.color.ink.onAccent}"
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "border": {
+          "$value": "{semantic.color.border.subtle}"
+        },
+        "text": {
+          "$value": "{semantic.color.ink.primary}"
+        }
+      },
+      "motion": {
+        "$type": "duration",
+        "$value": "{semantic.duration.feedback}"
+      }
+    },
+    "inspector": {
+      "outline": {
+        "$type": "color",
+        "$value": "{semantic.color.accent.primary}"
+      },
+      "label": {
+        "$type": "color",
+        "background": {
+          "$value": "{semantic.color.accent.primary}"
+        },
+        "text": {
+          "$value": "{semantic.color.ink.onAccent}"
+        }
+      },
+      "motion": {
+        "$type": "duration",
+        "$value": "{semantic.duration.reveal}"
+      }
+    },
+    "dock": {
+      "background": {
+        "$type": "color",
+        "$value": "{semantic.color.surface.base}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{semantic.color.border.subtle}"
+      },
+      "motion": {
+        "$type": "duration",
+        "$value": "{semantic.duration.handoff}"
+      }
+    }
+  }
+}

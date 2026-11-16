@@ -16,7 +16,7 @@ export default function ContactLink({
 }: ContactLinkProps) {
   return (
     <a
-      className='text-white/50 transition-colors duration-300 hover:text-white'
+      className='text-ink-primary/50 hover:text-ink-primary'
       href={href}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >

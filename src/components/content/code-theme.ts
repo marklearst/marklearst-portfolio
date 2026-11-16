@@ -1,10 +1,14 @@
 import type { CSSProperties } from 'react'
-import { MONOKAI } from '@/lib/monokai-colors'
 
-// Restrained syntax colors follow the portfolio token source.
+// Syntax colors are semantic tokens, so code blocks follow the theme and the inspector can read them.
+const ink = 'var(--color-ink-primary)'
+const secondary = 'var(--color-ink-secondary)'
+const muted = 'var(--color-ink-muted)'
+const accent = 'var(--color-accent-text)'
+
 export const codeTheme: Record<string, CSSProperties> = {
   'code[class*="language-"]': {
-    color: MONOKAI.foreground,
+    color: ink,
     background: 'transparent',
     fontFamily: 'var(--font-mono)',
     textAlign: 'left',
@@ -18,7 +22,7 @@ export const codeTheme: Record<string, CSSProperties> = {
     hyphens: 'none',
   },
   'pre[class*="language-"]': {
-    color: MONOKAI.foreground,
+    color: ink,
     background: 'transparent',
     fontFamily: 'var(--font-mono)',
     textAlign: 'left',
@@ -35,102 +39,102 @@ export const codeTheme: Record<string, CSSProperties> = {
     overflow: 'auto',
   },
   comment: {
-    color: MONOKAI.purple,
+    color: muted,
     fontStyle: 'italic',
   },
   prolog: {
-    color: MONOKAI.purple,
+    color: muted,
   },
   doctype: {
-    color: MONOKAI.purple,
+    color: muted,
   },
   cdata: {
-    color: MONOKAI.purple,
+    color: muted,
   },
   punctuation: {
-    color: `${MONOKAI.foreground}b3`,
+    color: 'color-mix(in srgb, var(--color-ink-primary) 70.2%, transparent)',
   },
   '.namespace': {
     opacity: '.7',
   },
   property: {
-    color: MONOKAI.cyan,
+    color: ink,
   },
   tag: {
-    color: MONOKAI.pink,
+    color: accent,
   },
   constant: {
-    color: MONOKAI.purple,
+    color: muted,
   },
   symbol: {
-    color: MONOKAI.purple,
+    color: muted,
   },
   deleted: {
-    color: MONOKAI.pink,
+    color: accent,
   },
   boolean: {
-    color: MONOKAI.purple,
+    color: muted,
   },
   number: {
-    color: MONOKAI.purple,
+    color: muted,
   },
   selector: {
-    color: MONOKAI.green,
+    color: secondary,
   },
   'attr-name': {
-    color: MONOKAI.green,
+    color: secondary,
   },
   string: {
-    color: MONOKAI.yellow,
+    color: secondary,
   },
   char: {
-    color: MONOKAI.yellow,
+    color: secondary,
   },
   builtin: {
-    color: MONOKAI.cyan,
+    color: ink,
   },
   inserted: {
-    color: MONOKAI.green,
+    color: secondary,
   },
   operator: {
-    color: MONOKAI.pink,
+    color: accent,
   },
   entity: {
-    color: MONOKAI.yellow,
+    color: secondary,
     cursor: 'help',
   },
   url: {
-    color: MONOKAI.cyan,
+    color: ink,
   },
   '.language-css .token.string': {
-    color: MONOKAI.green,
+    color: secondary,
   },
   '.style .token.string': {
-    color: MONOKAI.green,
+    color: secondary,
   },
   variable: {
-    color: MONOKAI.foreground,
+    color: ink,
   },
   atrule: {
-    color: MONOKAI.yellow,
+    color: secondary,
   },
   'attr-value': {
-    color: MONOKAI.yellow,
+    color: secondary,
   },
   function: {
-    color: MONOKAI.green,
+    color: secondary,
   },
   'class-name': {
-    color: MONOKAI.cyan,
+    color: ink,
   },
   keyword: {
-    color: MONOKAI.pink,
+    color: accent,
   },
   regex: {
-    color: MONOKAI.orange,
+    color: accent,
   },
   important: {
-    color: MONOKAI.orange,
+    color: accent,
     fontWeight: 'bold',
   },
   bold: {

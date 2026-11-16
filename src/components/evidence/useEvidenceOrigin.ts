@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef } from 'react'
+import { durationMs, easing } from '@/lib/motion-tokens'
 
 interface ImageOrigin {
   left: number
@@ -40,12 +41,8 @@ export function useEvidenceOrigin() {
   }, [])
 
   useEffect(() => {
-    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const handlePreference = () => { if (preference.matches) cancelOrigin() }
-    preference.addEventListener('change', handlePreference)
     window.addEventListener('resize', cancelOrigin)
     return () => {
-      preference.removeEventListener('change', handlePreference)
       window.removeEventListener('resize', cancelOrigin)
       cancelOrigin()
     }
@@ -53,7 +50,7 @@ export function useEvidenceOrigin() {
 
   function captureOrigin(image: HTMLImageElement | null, pointer: boolean) {
     cancelOrigin()
-    if (!pointer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return null
+    if (!pointer || !durationMs('--semantic-duration-handoff')) return null
     const origin = containedImageBounds(image)
     if (!origin || !image) return null
 
@@ -69,7 +66,9 @@ export function useEvidenceOrigin() {
 
   function revealOrigin(origin: ImageOrigin | null, image: HTMLImageElement | null, dialog: HTMLDialogElement | null) {
     cancelOrigin()
-    if (!origin || !image || !dialog?.open || !image.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!origin || !image || !dialog?.open || !image.animate) return
+    const duration = durationMs('--semantic-duration-handoff')
+    if (!duration) return
     const destination = containedImageBounds(image)
     if (!destination || Math.abs(origin.aspectRatio / destination.aspectRatio - 1) > 0.01) return
 
@@ -81,7 +80,7 @@ export function useEvidenceOrigin() {
     const reveal = image.animate([
       { transform: `translate(${x}px, ${y}px) scale(${scale})`, transformOrigin },
       { transform: 'translate(0, 0) scale(1)', transformOrigin },
-    ], { duration: 220, easing: 'cubic-bezier(.22, 1, .36, 1)' })
+    ], { duration, easing: easing() })
 
     activeReveal.current = { animation: reveal, dialog }
     dialog.setAttribute('data-origin-motion', '')

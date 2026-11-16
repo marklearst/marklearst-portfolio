@@ -26,7 +26,7 @@
 
 .caret {
   color: var(--color-accent-primary);
-  transition: transform 180ms var(--ease-out);
+  transition: transform var(--duration-reveal) var(--ease-out);
 }
 
 :global(details[open]) > .summary > .caret {
@@ -43,11 +43,8 @@
   transition: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-
-  :global(details[open][data-disclosure-motion='pointer']) > .summary ~ * {
-    animation: disclosure-reveal 180ms var(--ease-out);
-  }
+:global(details[open][data-disclosure-motion='pointer']) > .summary ~ * {
+  animation: disclosure-reveal var(--duration-reveal) var(--ease-out);
 }
 
 @keyframes disclosure-reveal {
@@ -67,12 +64,5 @@
 
   .summary:hover {
     color: var(--color-ink-primary);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .caret {
-    transition: none;
   }
 }

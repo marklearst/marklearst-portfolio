@@ -5,7 +5,7 @@ export function useMDXComponents(components: MDXComponents = {}) {
   return {
     // Table wrapper - horizontal scroll on mobile, subtle surface background
     table: ({ children, ...props }: ComponentPropsWithoutRef<'table'>) => (
-      <div className="my-8 overflow-x-auto rounded-lg border border-white/8 bg-surface">
+      <div className="my-8 overflow-x-auto rounded-lg border border-ink-primary/8 bg-surface">
         <table
           className="w-full border-collapse text-sm"
           {...props}
@@ -17,14 +17,14 @@ export function useMDXComponents(components: MDXComponents = {}) {
 
     // Table head - subtle bottom border, muted text
     thead: ({ children, ...props }: ComponentPropsWithoutRef<'thead'>) => (
-      <thead className="border-b border-white/8" {...props}>
+      <thead className="border-b border-ink-primary/8" {...props}>
         {children}
       </thead>
     ),
 
     // Table body
     tbody: ({ children, ...props }: ComponentPropsWithoutRef<'tbody'>) => (
-      <tbody className="divide-y divide-white/5" {...props}>
+      <tbody className="divide-y divide-ink-primary/5" {...props}>
         {children}
       </tbody>
     ),
@@ -32,17 +32,17 @@ export function useMDXComponents(components: MDXComponents = {}) {
     // Table row - subtle hover state
     tr: ({ children, ...props }: ComponentPropsWithoutRef<'tr'>) => (
       <tr
-        className="transition-colors hover:bg-white/3"
+        className="transition-colors hover:bg-ink-primary/3"
         {...props}
       >
         {children}
       </tr>
     ),
 
-    // Table header cell - left-aligned, monokai cyan accent
+    // Table header cell - left-aligned, primary ink
     th: ({ children, ...props }: ComponentPropsWithoutRef<'th'>) => (
       <th
-        className="px-4 py-3 text-left font-medium text-monokai-cyan/80"
+        className="px-4 py-3 text-left font-medium text-ink-primary/80"
         {...props}
       >
         {children}
@@ -52,7 +52,7 @@ export function useMDXComponents(components: MDXComponents = {}) {
     // Table data cell - comfortable padding, muted text
     td: ({ children, ...props }: ComponentPropsWithoutRef<'td'>) => (
       <td
-        className="px-4 py-3 font-body text-white/70 whitespace-nowrap"
+        className="px-4 py-3 font-body text-ink-primary/70 whitespace-nowrap"
         {...props}
       >
         {children}

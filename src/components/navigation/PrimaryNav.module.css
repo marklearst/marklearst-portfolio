@@ -1,17 +1,39 @@
+/* One bar holds the links and, after a rule, the actions. Its radius is the scale's, and what sits inside takes that radius less the padding. */
+.bar {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  padding: var(--space-1);
+  border-radius: var(--radius-4);
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), inset 0 -1px 0 rgb(255 255 255 / 3%);
+}
+
 .nav {
-  --nav-padding: 4px;
   --preview-index: var(--active-index);
   --indicator-visible: 0;
   position: relative;
   isolation: isolate;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: clamp(228px, calc(100vw - 240px), 300px);
-  flex-shrink: 0;
-  padding: var(--nav-padding);
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), inset 0 -1px 0 rgb(255 255 255 / 3%), 0 3px 12px rgb(0 0 0 / 24%);
+  width: clamp(220px, calc(100vw - 248px), 292px);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: var(--space-1);
+}
+
+/* The rule that says what follows is a different kind of thing. */
+.actions::before {
+  content: '';
+  align-self: center;
+  width: 1px;
+  height: var(--space-5);
+  margin-right: var(--space-1);
+  background: var(--color-border-subtle);
 }
 
 /* Equal tracks let both layers travel without measuring or animating layout. */
@@ -20,13 +42,13 @@
 .nav::after {
   position: absolute;
   z-index: -1;
-  inset-block: var(--nav-padding);
-  inset-inline-start: var(--nav-padding);
-  width: calc((100% - 2 * var(--nav-padding)) / 3);
-  border-radius: 10px;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc(100% / 3);
+  border-radius: var(--radius-3);
   pointer-events: none;
   content: '';
-  transition: transform 220ms var(--ease-out), opacity 120ms linear;
+  transition: transform var(--duration-handoff) var(--ease-out), opacity var(--duration-feedback) var(--semantic-easing-linear);
 }
 
 .nav::before {
@@ -56,12 +78,12 @@
   justify-content: center;
   min-height: 44px;
   padding: 10px 8px;
-  border-radius: 10px;
+  border-radius: var(--radius-3);
   color: var(--color-ink-muted);
   font: 500 var(--text-ui)/1.4 var(--font-body);
   letter-spacing: -0.01em;
   text-decoration: none;
-  transition: color 140ms var(--ease-out);
+  transition: color var(--duration-feedback) var(--ease-out);
 }
 
 .link[aria-current='page'] {
@@ -112,25 +134,29 @@
 
 @media (max-width: 479px) {
 
-  .nav {
-    --nav-padding: 3px;
-    width: 228px;
-    border-radius: 12px;
+  /* The links give up width to the action beside them, down to the narrowest phones. */
+  .bar {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 284px;
   }
 
-  .nav::before, .nav::after, .link {
-    border-radius: 9px;
+  .nav {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
   }
 
   .link {
-    padding-inline: 8px;
+    padding-inline: 0;
     font-size: 14px;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* raw: breakpoints can't read custom properties */
+@media (max-width: 359px) {
 
-  .nav::before, .nav::after, .link {
-    transition: none;
+  .link {
+    font-size: var(--font-size-50);
   }
 }

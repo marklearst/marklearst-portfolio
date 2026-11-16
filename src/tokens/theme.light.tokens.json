@@ -1,0 +1,56 @@
+{
+  "semantic": {
+    "color": {
+      "$type": "color",
+      "surface": {
+        "canvas": {
+          "$value": "{color.neutral.50}"
+        },
+        "base": {
+          "$value": "{color.neutral.0}"
+        },
+        "raised": {
+          "$value": "{color.neutral.150}"
+        }
+      },
+      "ink": {
+        "primary": {
+          "$value": "{color.neutral.925}"
+        },
+        "secondary": {
+          "$value": "{color.neutral.700}"
+        },
+        "muted": {
+          "$value": "{color.neutral.600}"
+        },
+        "onAccent": {
+          "$value": "{color.neutral.50}"
+        }
+      },
+      "border": {
+        "subtle": {
+          "$value": "{color.neutral.300}"
+        }
+      },
+      "accent": {
+        "primary": {
+          "$value": "{color.brand.700}"
+        },
+        "text": {
+          "$value": "{color.brand.700}"
+        }
+      },
+      "status": {
+        "pass": {
+          "$value": "{color.green.700}"
+        },
+        "warn": {
+          "$value": "{color.amber.800}"
+        },
+        "fail": {
+          "$value": "{color.red.700}"
+        }
+      }
+    }
+  }
+}

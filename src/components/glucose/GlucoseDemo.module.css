@@ -6,7 +6,7 @@
   border-radius: 16px;
   background: var(--color-surface);
   color: var(--color-ink-primary);
-  font-family: var(--token-font-body);
+  font-family: var(--font-body);
   text-align: left;
 }
 
@@ -67,7 +67,7 @@
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
-  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  transition: background-color var(--duration-feedback) var(--ease-out), color var(--duration-feedback) var(--ease-out), transform var(--duration-feedback) var(--ease-out);
 }
 
 .controls button[aria-pressed='true'] {
@@ -125,7 +125,7 @@
 }
 
 .primaryMetric dd {
-  color: var(--color-accent-primary);
+  color: var(--color-ink-primary);
   font-size: clamp(34px, 4vw, 48px);
 }
 
@@ -168,7 +168,7 @@
 .chart svg .chartAnnotation {
   fill: var(--color-ink-secondary);
   font-size: 12px;
-  font-family: var(--token-font-body);
+  font-family: var(--font-body);
 }
 
 .chart figcaption {
@@ -479,7 +479,7 @@
 }
 
 .changed {
-  animation: report-change 220ms var(--ease-out) both;
+  animation: report-change var(--duration-handoff) var(--ease-out) both;
 }
 
 .compact .heading {
@@ -676,17 +676,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-  .controls button {
-    transition: none;
-  }
-
-  .controls button:active {
-    transform: none;
-  }
-
-  .changed {
-    animation: none;
-  }
+:global([data-motion='reduced']) .controls button:active {
+  transform: none;
 }

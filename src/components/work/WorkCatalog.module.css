@@ -18,8 +18,8 @@
 .header h1 {
   margin: 0 0 24px;
   color: var(--color-ink-primary);
-  font: 500 var(--text-title)/var(--token-leading-title) var(--font-body);
-  letter-spacing: var(--token-tracking-title);
+  font: 500 var(--text-title)/var(--leading-title) var(--font-body);
+  letter-spacing: var(--tracking-title);
 }
 
 .header > p {
@@ -47,7 +47,7 @@
   font: 500 var(--text-ui)/1.5 var(--font-body);
   cursor: pointer;
   touch-action: manipulation;
-  transition: color 150ms ease-out;
+  transition: color var(--duration-feedback) var(--ease-out);
 }
 
 .filters button::after {
@@ -58,7 +58,7 @@
   content: '';
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 160ms var(--ease-out);
+  transition: transform var(--duration-feedback) var(--ease-out);
 }
 
 .filters button[aria-pressed='true'] {
@@ -123,7 +123,7 @@
 .projectBody h2 {
   margin: 0 0 12px;
   font: 500 var(--text-subheading)/1.3 var(--font-body);
-  letter-spacing: var(--token-tracking-heading);
+  letter-spacing: var(--tracking-heading);
   text-wrap: balance;
 }
 
@@ -137,7 +137,8 @@
   text-decoration: none;
 }
 
-.projectBody h2 a span {
+/* The arrow only. The title is a span too, and it has to stay free to wrap. */
+.projectBody h2 a span[aria-hidden='true'] {
   flex-shrink: 0;
   color: var(--color-ink-muted);
 }
@@ -145,7 +146,7 @@
 .summary {
   margin: 0;
   color: var(--color-ink-secondary);
-  font: 400 var(--text-body)/var(--token-leading-body) var(--font-body);
+  font: 400 var(--text-body)/var(--leading-body) var(--font-body);
   text-wrap: pretty;
 }
 
@@ -180,7 +181,7 @@
   border-radius: 10px;
   background: var(--color-surface);
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink-primary) 8%, transparent);
-  transition: background-color 180ms ease-out;
+  transition: background-color var(--duration-reveal) var(--ease-out);
 }
 
 .previewViewport {
@@ -193,7 +194,7 @@
   display: block;
   width: 100%;
   height: auto;
-  transition: transform 240ms var(--ease-out);
+  transition: transform var(--duration-handoff) var(--ease-out);
 }
 
 .previewAction {
@@ -207,7 +208,7 @@
   border-radius: 50%;
   background: var(--color-surface-raised);
   color: var(--color-ink-secondary);
-  transition: color 180ms ease-out, background-color 180ms ease-out;
+  transition: color var(--duration-reveal) var(--ease-out), background-color var(--duration-reveal) var(--ease-out);
 }
 
 .previewLink:focus-visible {
@@ -220,7 +221,7 @@
 
 .previewLink:focus-visible .previewAction {
   background: var(--color-surface);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text);
 }
 
 .previewLink:active img {
@@ -229,7 +230,7 @@
 
 .previewLink:active .previewAction {
   background: var(--color-surface);
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text);
 }
 
 .preview figcaption {
@@ -258,7 +259,7 @@
     text-decoration: underline;
   }
 
-  .projectBody h2 a:hover span {
+  .projectBody h2 a:hover span[aria-hidden='true'] {
     color: var(--color-ink-primary);
   }
 
@@ -272,7 +273,7 @@
 
   .previewLink:hover .previewAction {
     background: var(--color-surface);
-    color: var(--color-accent-primary);
+    color: var(--color-accent-text);
   }
 
   .previewLink:active img {
@@ -349,13 +350,8 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-
-  .filters button, .filters button::after, .previewLink, .preview img, .previewAction {
-    transition: none;
-  }
-
-  .previewLink:hover img, .previewLink:focus-visible img, .previewLink:active img {
-    transform: none;
-  }
+:global([data-motion='reduced']) .previewLink:hover img,
+:global([data-motion='reduced']) .previewLink:focus-visible img,
+:global([data-motion='reduced']) .previewLink:active img {
+  transform: none;
 }

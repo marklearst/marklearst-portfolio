@@ -54,6 +54,12 @@ export default function PrivacyPage() {
               "analytics on/off" toggle in the footer. Your preference is
               stored locally in your browser.
             </p>
+            <p>
+              The inspector's motion setting is stored the same way, and
+              only when you choose reduced or default motion against your
+              system setting. Slow motion is never stored. Neither one
+              leaves your browser.
+            </p>
           </section>
 
           <section>

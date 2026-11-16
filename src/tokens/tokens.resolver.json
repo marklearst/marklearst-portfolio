@@ -1,0 +1,61 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/resolver.json",
+  "version": "2025.10",
+  "name": "marklearst",
+  "description": "Three layers in one set. Two axes reroute the meaning layer: theme (dark, light) and motion (default, reduced, slow).",
+  "sets": {
+    "foundation": {
+      "sources": [
+        {
+          "$ref": "base.tokens.json"
+        },
+        {
+          "$ref": "semantic.tokens.json"
+        },
+        {
+          "$ref": "component.tokens.json"
+        }
+      ]
+    }
+  },
+  "modifiers": {
+    "theme": {
+      "default": "dark",
+      "contexts": {
+        "dark": [],
+        "light": [
+          {
+            "$ref": "theme.light.tokens.json"
+          }
+        ]
+      }
+    },
+    "motion": {
+      "default": "default",
+      "contexts": {
+        "default": [],
+        "reduced": [
+          {
+            "$ref": "motion.reduced.tokens.json"
+          }
+        ],
+        "slow": [
+          {
+            "$ref": "motion.slow.tokens.json"
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/foundation"
+    },
+    {
+      "$ref": "#/modifiers/theme"
+    },
+    {
+      "$ref": "#/modifiers/motion"
+    }
+  ]
+}

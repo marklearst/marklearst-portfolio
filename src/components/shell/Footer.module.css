@@ -22,7 +22,7 @@
 .contactHeading {
   margin: 0 0 6px;
   font: 500 var(--text-subheading)/1.3 var(--font-body);
-  letter-spacing: var(--token-tracking-heading);
+  letter-spacing: var(--tracking-heading);
   text-wrap: balance;
 }
 
@@ -38,7 +38,7 @@
 .contactHeading a span {
   display: inline-flex;
   flex-shrink: 0;
-  transition: transform 180ms var(--ease-out);
+  transition: transform var(--duration-reveal) var(--ease-out);
 }
 
 .availability {
@@ -155,16 +155,5 @@
   .controls {
     width: 100%;
     gap: 8px 18px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .footer a, .footer button, .contactHeading a span {
-    transition: none;
-  }
-
-  .contactHeading a:hover span {
-    transform: none;
   }
 }

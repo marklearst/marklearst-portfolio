@@ -12,7 +12,28 @@
   text-decoration: none;
 }
 
-/* Braces remain still while the letter layers share one fixed frame. */
+/* One object in two states: {ml} and {marklearst}. The braces and the two initials are in both, so they stay.
+   The other eight letters are cells that open from no width to one letter wide, and the row's own layout pushes
+   the closing brace outward as they do. Only the cells animate. The link keeps one fixed width for both states,
+   so nothing beside the wordmark ever moves.
+
+   The link holds the state as custom properties, and each arriving cell reads them. Folded is the default. */
+
+.link {
+  /* The face is monospace: every letter is one `ch` wide, less the tracking the wordmark is set with. */
+  --cell: calc(1ch - .045em);
+  --width: 0px;
+  --presence: 0;
+  --veil: blur(calc(var(--space-1) / 2));
+
+  /* Folding is quick and quiet. The far letters go first, a hair apart. */
+  --travel: var(--duration-feedback);
+  --fade: var(--duration-feedback);
+  --curve: var(--ease-out);
+  --step-in: 0ms;
+  --step-out: calc(var(--duration-causal) / 4);
+  contain: layout;
+}
 
 .wordmark {
   display: inline-flex;
@@ -27,40 +48,32 @@
 .brace {
   font-weight: 400;
   opacity: .72;
-}
-
-.text {
-  display: grid;
-  align-items: center;
-}
-
-.initials, .name {
-  grid-area: 1 / 1;
-}
-
-.initials {
-  display: block;
+  transition: translate var(--duration-feedback) var(--ease-out);
 }
 
 .name {
-  display: none;
-  white-space: nowrap;
-  pointer-events: none;
+  display: inline-flex;
+  letter-spacing: 0;
 }
 
-.letter {
-  display: inline-grid;
+.cell {
+  display: inline-block;
+  width: var(--cell);
+  text-align: center;
 }
 
-.front, .back {
-  grid-area: 1 / 1;
-  transform-origin: 50% 75%;
-}
-
-.back {
-  opacity: 0;
-  transform: translateY(8px) rotateX(-65deg);
-  filter: blur(2px);
+/* A letter that is only there when the name is written out. While it arrives it crosses the space the closing
+   brace is leaving, so it comes in a little soft and sharpens as it lands. --in and --out are its place in the
+   order, set in Wordmark.tsx, and only one of the two steps is ever more than zero. */
+.arriving {
+  width: var(--width);
+  opacity: var(--presence);
+  filter: var(--veil);
+  transition:
+    width var(--travel) var(--curve),
+    opacity var(--fade) var(--ease-out),
+    filter var(--fade) var(--ease-out);
+  transition-delay: calc(var(--in) * var(--step-in) + var(--out) * var(--step-out));
 }
 
 @media (min-width: 480px) {
@@ -75,62 +88,45 @@
     gap: 4px;
   }
 
-  .initials {
-    display: none;
-  }
-
-  .name {
-    display: block;
+  /* Written out: at the top of a page, and whenever the folded wordmark takes keyboard focus. The letters beside
+     an initial arrive first and the rest follow outward, each landing with a little weight. */
+  .link:not([data-folded]),
+  .link[data-folded]:focus-visible {
+    --width: var(--cell);
+    --presence: 1;
+    --veil: none;
+    --travel: var(--duration-handoff);
+    --fade: var(--duration-reveal);
+    --curve: var(--ease-settle);
+    --step-in: calc(var(--duration-causal) / 2);
+    --step-out: 0ms;
   }
 }
 
 @media (hover: hover) and (pointer: fine) and (min-width: 480px) {
 
-  .front, .back {
-    transition: opacity 160ms ease-out, transform 220ms var(--ease-out), filter 160ms ease-out;
+  /* Pointing at the folded wordmark opens it. */
+  .link[data-folded]:hover {
+    --width: var(--cell);
+    --presence: 1;
+    --veil: none;
+    --travel: var(--duration-handoff);
+    --fade: var(--duration-reveal);
+    --curve: var(--ease-settle);
+    --step-in: calc(var(--duration-causal) / 2);
+    --step-out: 0ms;
   }
 
-  .link:hover .front {
-    opacity: 0;
-    transform: translateY(-6px) rotateX(65deg);
-    filter: blur(2px);
-    transition-delay: calc(var(--letter-index) * 12ms);
+  /* The braces answer the pointer in either state: they ease apart, and come back when it is pressed. */
+  .link:hover .brace:first-child {
+    translate: calc(var(--space-1) / -2) 0;
   }
 
-  .link:hover .back {
-    opacity: 1;
-    transform: translateY(0) rotateX(0);
-    filter: blur(0);
-    transition-duration: 160ms, 220ms, 160ms;
-    transition-delay: calc(20ms + var(--letter-index) * 12ms);
+  .link:hover .brace:last-child {
+    translate: calc(var(--space-1) / 2) 0;
   }
 
-  .link:focus-visible .front {
-    opacity: 1;
-    transform: none;
-    filter: none;
-    transition: none;
-  }
-
-  .link:focus-visible .back {
-    opacity: 0;
-    transition: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .front, .back {
-    transition: none;
-  }
-
-  .link:hover .front {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-
-  .back {
-    display: none;
+  .link:active .brace {
+    translate: 0 0;
   }
 }

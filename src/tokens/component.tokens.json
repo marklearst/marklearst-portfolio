@@ -1,0 +1,71 @@
+{
+  "component": {
+    "$description": "Component layer. References to meaning only.",
+    "button": {
+      "primary": {
+        "$type": "color",
+        "background": {
+          "$value": "{semantic.color.ink.primary}"
+        },
+        "text": {
+          "$value": "{semantic.color.surface.canvas}"
+        }
+      },
+      "accent": {
+        "$type": "color",
+        "background": {
+          "$value": "{semantic.color.accent.primary}"
+        },
+        "text": {
+          "$value": "{semantic.color.ink.onAccent}"
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "border": {
+          "$value": "{semantic.color.border.subtle}"
+        },
+        "text": {
+          "$value": "{semantic.color.ink.primary}"
+        }
+      },
+      "motion": {
+        "$type": "duration",
+        "$value": "{semantic.duration.feedback}"
+      }
+    },
+    "inspector": {
+      "outline": {
+        "$type": "color",
+        "$value": "{semantic.color.accent.primary}"
+      },
+      "label": {
+        "$type": "color",
+        "background": {
+          "$value": "{semantic.color.accent.primary}"
+        },
+        "text": {
+          "$value": "{semantic.color.ink.onAccent}"
+        }
+      },
+      "motion": {
+        "$type": "duration",
+        "$value": "{semantic.duration.reveal}"
+      }
+    },
+    "dock": {
+      "background": {
+        "$type": "color",
+        "$value": "{semantic.color.surface.base}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{semantic.color.border.subtle}"
+      },
+      "motion": {
+        "$type": "duration",
+        "$value": "{semantic.duration.handoff}"
+      }
+    }
+  }
+}

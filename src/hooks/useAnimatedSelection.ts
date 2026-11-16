@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { durationMs } from '@/lib/motion-tokens'
 
 /** Feedback is immediate. Only isolated pointer changes receive a short reveal. */
 export function useAnimatedSelection<T extends string>(initialValue: T) {
@@ -10,7 +11,9 @@ export function useAnimatedSelection<T extends string>(initialValue: T) {
   function select(value: T, pointer: boolean) {
     if (value === selection.value) return
     const now = performance.now()
-    const motion = pointer && now - lastChange.current > 180 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // Zero under reduced motion, which leaves nothing to reveal.
+    const reveal = durationMs('--semantic-duration-reveal')
+    const motion = pointer && reveal > 0 && now - lastChange.current > reveal
     lastChange.current = now
     setSelection({ value, motion })
   }

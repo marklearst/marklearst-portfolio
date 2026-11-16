@@ -1,7 +1,5 @@
+/* Durations and easing are tokens. See src/styles/generated/theme.css for their names. */
 :root {
-  --ease-out: cubic-bezier(.22, 1, .36, 1);
-  --duration-feedback: 140ms;
-  --duration-reveal: 180ms;
   --animation-panel-reveal: panel-reveal;
 }
 

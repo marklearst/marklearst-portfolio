@@ -85,7 +85,7 @@
 }
 
 .content a {
-  color: var(--color-accent-primary);
+  color: var(--color-accent-text);
   text-decoration: underline;
   text-underline-offset: 4px;
 }

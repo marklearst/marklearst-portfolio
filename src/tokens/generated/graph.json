@@ -1,0 +1,5545 @@
+{
+ "schemaVersion": 1,
+ "primitree": "1.0.0-next.1",
+ "policy": {
+  "id": "marklearst",
+  "viewId": "site",
+  "layers": [
+   {
+    "id": "base",
+    "roots": [
+     "color",
+     "font",
+     "space",
+     "radius",
+     "layer",
+     "duration",
+     "easing",
+     "spring"
+    ],
+    "values": "literal",
+    "references": []
+   },
+   {
+    "id": "meaning",
+    "roots": [
+     "semantic"
+    ],
+    "values": "reference",
+    "references": [
+     "base"
+    ]
+   },
+   {
+    "id": "component",
+    "roots": [
+     "component"
+    ],
+    "values": "reference",
+    "references": [
+     "meaning"
+    ]
+   }
+  ],
+  "ownership": {
+   "default": [
+    "marklearst"
+   ]
+  }
+ },
+ "contexts": {
+  "theme": {
+   "default": "dark",
+   "options": [
+    "dark",
+    "light"
+   ]
+  },
+  "motion": {
+   "default": "default",
+   "options": [
+    "default",
+    "reduced",
+    "slow"
+   ]
+  }
+ },
+ "cssVars": {
+  "color.amber.300": "--color-amber-300",
+  "color.amber.800": "--color-amber-800",
+  "color.brand.300": "--color-brand-300",
+  "color.brand.500": "--color-brand-500",
+  "color.brand.700": "--color-brand-700",
+  "color.green.300": "--color-green-300",
+  "color.green.700": "--color-green-700",
+  "color.neutral.0": "--color-neutral-0",
+  "color.neutral.100": "--color-neutral-100",
+  "color.neutral.150": "--color-neutral-150",
+  "color.neutral.200": "--color-neutral-200",
+  "color.neutral.300": "--color-neutral-300",
+  "color.neutral.400": "--color-neutral-400",
+  "color.neutral.50": "--color-neutral-50",
+  "color.neutral.600": "--color-neutral-600",
+  "color.neutral.700": "--color-neutral-700",
+  "color.neutral.800": "--color-neutral-800",
+  "color.neutral.825": "--color-neutral-825",
+  "color.neutral.875": "--color-neutral-875",
+  "color.neutral.900": "--color-neutral-900",
+  "color.neutral.925": "--color-neutral-925",
+  "color.red.300": "--color-red-300",
+  "color.red.700": "--color-red-700",
+  "component.button.accent.background": "--component-button-accent-background",
+  "component.button.accent.text": "--component-button-accent-text",
+  "component.button.motion": "--component-button-motion",
+  "component.button.primary.background": "--component-button-primary-background",
+  "component.button.primary.text": "--component-button-primary-text",
+  "component.button.secondary.border": "--component-button-secondary-border",
+  "component.button.secondary.text": "--component-button-secondary-text",
+  "component.dock.background": "--component-dock-background",
+  "component.dock.border": "--component-dock-border",
+  "component.dock.motion": "--component-dock-motion",
+  "component.inspector.label.background": "--component-inspector-label-background",
+  "component.inspector.label.text": "--component-inspector-label-text",
+  "component.inspector.motion": "--component-inspector-motion",
+  "component.inspector.outline": "--component-inspector-outline",
+  "duration.base": "--duration-base",
+  "duration.hop": "--duration-hop",
+  "duration.instant": "--duration-instant",
+  "duration.quarter.base": "--duration-quarter-base",
+  "duration.quarter.hop": "--duration-quarter-hop",
+  "duration.quarter.quick": "--duration-quarter-quick",
+  "duration.quarter.slow": "--duration-quarter-slow",
+  "duration.quick": "--duration-quick",
+  "duration.slow": "--duration-slow",
+  "easing.inOut": "--easing-inOut",
+  "easing.linear": "--easing-linear",
+  "easing.out": "--easing-out",
+  "easing.overshoot": "--easing-overshoot",
+  "font.family.mono": "--font-family-mono",
+  "font.family.sans": "--font-family-sans",
+  "font.leading.100": "--font-leading-100",
+  "font.leading.200": "--font-leading-200",
+  "font.leading.300": "--font-leading-300",
+  "font.leading.400": "--font-leading-400",
+  "font.leading.500": "--font-leading-500",
+  "font.leading.600": "--font-leading-600",
+  "font.size.100": "--font-size-100",
+  "font.size.200": "--font-size-200",
+  "font.size.300": "--font-size-300",
+  "font.size.400": "--font-size-400",
+  "font.size.50": "--font-size-50",
+  "font.size.500": "--font-size-500",
+  "font.size.600": "--font-size-600",
+  "font.size.700": "--font-size-700",
+  "font.tracking.none": "--font-tracking-none",
+  "font.tracking.snug": "--font-tracking-snug",
+  "font.tracking.tight": "--font-tracking-tight",
+  "font.weight.medium": "--font-weight-medium",
+  "font.weight.regular": "--font-weight-regular",
+  "layer.dock": "--layer-dock",
+  "layer.outline": "--layer-outline",
+  "radius.1": "--radius-1",
+  "radius.2": "--radius-2",
+  "radius.3": "--radius-3",
+  "radius.4": "--radius-4",
+  "radius.5": "--radius-5",
+  "semantic.color.accent.primary": "--semantic-color-accent-primary",
+  "semantic.color.accent.text": "--semantic-color-accent-text",
+  "semantic.color.border.subtle": "--semantic-color-border-subtle",
+  "semantic.color.ink.muted": "--semantic-color-ink-muted",
+  "semantic.color.ink.onAccent": "--semantic-color-ink-onAccent",
+  "semantic.color.ink.primary": "--semantic-color-ink-primary",
+  "semantic.color.ink.secondary": "--semantic-color-ink-secondary",
+  "semantic.color.status.fail": "--semantic-color-status-fail",
+  "semantic.color.status.pass": "--semantic-color-status-pass",
+  "semantic.color.status.warn": "--semantic-color-status-warn",
+  "semantic.color.surface.base": "--semantic-color-surface-base",
+  "semantic.color.surface.canvas": "--semantic-color-surface-canvas",
+  "semantic.color.surface.raised": "--semantic-color-surface-raised",
+  "semantic.duration.causal": "--semantic-duration-causal",
+  "semantic.duration.feedback": "--semantic-duration-feedback",
+  "semantic.duration.handoff": "--semantic-duration-handoff",
+  "semantic.duration.reveal": "--semantic-duration-reveal",
+  "semantic.easing.enter": "--semantic-easing-enter",
+  "semantic.easing.linear": "--semantic-easing-linear",
+  "semantic.easing.move": "--semantic-easing-move",
+  "semantic.easing.settle": "--semantic-easing-settle",
+  "semantic.font.body": "--semantic-font-body",
+  "semantic.font.code": "--semantic-font-code",
+  "semantic.spring.land": "--semantic-spring-land",
+  "semantic.type.body.leading": "--semantic-type-body-leading",
+  "semantic.type.body.size": "--semantic-type-body-size",
+  "semantic.type.body.tracking": "--semantic-type-body-tracking",
+  "semantic.type.caption.leading": "--semantic-type-caption-leading",
+  "semantic.type.caption.size": "--semantic-type-caption-size",
+  "semantic.type.code.leading": "--semantic-type-code-leading",
+  "semantic.type.code.size": "--semantic-type-code-size",
+  "semantic.type.display.leading": "--semantic-type-display-leading",
+  "semantic.type.display.size": "--semantic-type-display-size",
+  "semantic.type.display.tracking": "--semantic-type-display-tracking",
+  "semantic.type.heading.leading": "--semantic-type-heading-leading",
+  "semantic.type.heading.size": "--semantic-type-heading-size",
+  "semantic.type.heading.tracking": "--semantic-type-heading-tracking",
+  "semantic.type.lead.leading": "--semantic-type-lead-leading",
+  "semantic.type.lead.size": "--semantic-type-lead-size",
+  "semantic.type.subheading.leading": "--semantic-type-subheading-leading",
+  "semantic.type.subheading.size": "--semantic-type-subheading-size",
+  "semantic.type.title.leading": "--semantic-type-title-leading",
+  "semantic.type.title.size": "--semantic-type-title-size",
+  "semantic.type.title.tracking": "--semantic-type-title-tracking",
+  "semantic.type.ui.leading": "--semantic-type-ui-leading",
+  "semantic.type.ui.size": "--semantic-type-ui-size",
+  "space.1": "--space-1",
+  "space.10": "--space-10",
+  "space.12": "--space-12",
+  "space.16": "--space-16",
+  "space.2": "--space-2",
+  "space.3": "--space-3",
+  "space.4": "--space-4",
+  "space.5": "--space-5",
+  "space.6": "--space-6",
+  "space.8": "--space-8",
+  "spring.bounce.none": "--spring-bounce-none",
+  "spring.bounce.soft": "--spring-bounce-soft"
+ },
+ "aliases": {
+  "--color-canvas": {
+   "token": "semantic.color.surface.canvas"
+  },
+  "--color-surface": {
+   "token": "semantic.color.surface.base"
+  },
+  "--color-surface-raised": {
+   "token": "semantic.color.surface.raised"
+  },
+  "--color-ink-primary": {
+   "token": "semantic.color.ink.primary"
+  },
+  "--color-ink-secondary": {
+   "token": "semantic.color.ink.secondary"
+  },
+  "--color-ink-muted": {
+   "token": "semantic.color.ink.muted"
+  },
+  "--color-border-subtle": {
+   "token": "semantic.color.border.subtle"
+  },
+  "--color-accent-primary": {
+   "token": "semantic.color.accent.primary"
+  },
+  "--color-accent-text": {
+   "token": "semantic.color.accent.text"
+  },
+  "--color-on-accent": {
+   "token": "semantic.color.ink.onAccent"
+  },
+  "--color-accent-success": {
+   "token": "semantic.color.status.pass"
+  },
+  "--color-accent-warning": {
+   "token": "semantic.color.status.warn"
+  },
+  "--color-accent-danger": {
+   "token": "semantic.color.status.fail"
+  },
+  "--font-body": {
+   "token": "semantic.font.body"
+  },
+  "--font-ui": {
+   "token": "semantic.font.body"
+  },
+  "--font-display": {
+   "token": "semantic.font.body"
+  },
+  "--font-sans": {
+   "token": "semantic.font.body"
+  },
+  "--font-mono": {
+   "token": "semantic.font.code"
+  },
+  "--text-display": {
+   "token": "semantic.type.display.size",
+   "css": "clamp(3rem, 6vw, {var})"
+  },
+  "--text-title": {
+   "token": "semantic.type.title.size",
+   "css": "clamp(2.5rem, 4.5vw, {var})"
+  },
+  "--text-heading": {
+   "token": "semantic.type.heading.size",
+   "css": "clamp(2rem, 3vw, {var})"
+  },
+  "--text-subheading": {
+   "token": "semantic.type.subheading.size"
+  },
+  "--text-body": {
+   "token": "semantic.type.body.size",
+   "css": "clamp(1.125rem, 1.05rem + 0.25vw, {var})"
+  },
+  "--text-lead": {
+   "token": "semantic.type.lead.size"
+  },
+  "--text-ui": {
+   "token": "semantic.type.ui.size"
+  },
+  "--text-caption": {
+   "token": "semantic.type.caption.size"
+  },
+  "--leading-display": {
+   "token": "semantic.type.display.leading"
+  },
+  "--leading-title": {
+   "token": "semantic.type.title.leading"
+  },
+  "--leading-heading": {
+   "token": "semantic.type.heading.leading"
+  },
+  "--leading-subheading": {
+   "token": "semantic.type.subheading.leading"
+  },
+  "--leading-body": {
+   "token": "semantic.type.body.leading"
+  },
+  "--leading-lead": {
+   "token": "semantic.type.lead.leading"
+  },
+  "--leading-ui": {
+   "token": "semantic.type.ui.leading"
+  },
+  "--leading-caption": {
+   "token": "semantic.type.caption.leading"
+  },
+  "--text-code": {
+   "token": "semantic.type.code.size"
+  },
+  "--leading-code": {
+   "token": "semantic.type.code.leading"
+  },
+  "--tracking-display": {
+   "token": "semantic.type.display.tracking",
+   "css": "calc({var} * 1em)"
+  },
+  "--tracking-title": {
+   "token": "semantic.type.title.tracking",
+   "css": "calc({var} * 1em)"
+  },
+  "--tracking-heading": {
+   "token": "semantic.type.heading.tracking",
+   "css": "calc({var} * 1em)"
+  },
+  "--tracking-body": {
+   "token": "semantic.type.body.tracking",
+   "css": "calc({var} * 1em)"
+  },
+  "--default-transition-duration": {
+   "token": "semantic.duration.feedback"
+  },
+  "--default-transition-timing-function": {
+   "token": "semantic.easing.enter"
+  },
+  "--ease-out": {
+   "token": "semantic.easing.enter"
+  },
+  "--ease-move": {
+   "token": "semantic.easing.move"
+  },
+  "--ease-settle": {
+   "token": "semantic.easing.settle"
+  },
+  "--duration-feedback": {
+   "token": "semantic.duration.feedback"
+  },
+  "--duration-reveal": {
+   "token": "semantic.duration.reveal"
+  },
+  "--duration-handoff": {
+   "token": "semantic.duration.handoff"
+  },
+  "--duration-causal": {
+   "token": "semantic.duration.causal"
+  },
+  "--spring-land": {
+   "token": "semantic.spring.land"
+  }
+ },
+ "check": {
+  "command": "primitree check",
+  "tokens": 136,
+  "references": 81,
+  "layers": 3,
+  "contexts": 6,
+  "findings": [],
+  "summary": {
+   "active": 0,
+   "baseline": 0
+  },
+  "exit": 0
+ },
+ "fragment": {
+  "source": {
+   "id": "source:site",
+   "type": "dtcg",
+   "precedence": 0,
+   "provenance": [
+    {
+     "uri": "src/tokens"
+    }
+   ]
+  },
+  "groups": [],
+  "tokens": [
+   {
+    "id": "source:site/token:color.amber.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "color",
+     "amber",
+     "300"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.898,
+         0.7412,
+         0.3922
+        ],
+        "hex": "#E5BD64"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/amber/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/amber/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.amber.800",
+    "sourceId": "source:site",
+    "name": "800",
+    "path": [
+     "color",
+     "amber",
+     "800"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.4627,
+         0.3176,
+         0.0353
+        ],
+        "hex": "#765109"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/amber/800"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/amber/800"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.brand.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "color",
+     "brand",
+     "300"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         1,
+         0.2745,
+         0.3176
+        ],
+        "hex": "#FF4651"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/brand/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/brand/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.brand.500",
+    "sourceId": "source:site",
+    "name": "500",
+    "path": [
+     "color",
+     "brand",
+     "500"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.8588,
+         0.0941,
+         0.2039
+        ],
+        "hex": "#DB1834"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/brand/500"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/brand/500"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.brand.700",
+    "sourceId": "source:site",
+    "name": "700",
+    "path": [
+     "color",
+     "brand",
+     "700"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.8353,
+         0.0392,
+         0.1843
+        ],
+        "hex": "#D50A2F"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/brand/700"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/brand/700"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.green.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "color",
+     "green",
+     "300"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.5725,
+         0.7333,
+         0.5412
+        ],
+        "hex": "#92BB8A"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/green/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/green/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.green.700",
+    "sourceId": "source:site",
+    "name": "700",
+    "path": [
+     "color",
+     "green",
+     "700"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.2353,
+         0.4235,
+         0.2039
+        ],
+        "hex": "#3C6C34"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/green/700"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/green/700"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.0",
+    "sourceId": "source:site",
+    "name": "0",
+    "path": [
+     "color",
+     "neutral",
+     "0"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         1,
+         1,
+         1
+        ],
+        "hex": "#FFFFFF"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/0"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/0"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.100",
+    "sourceId": "source:site",
+    "name": "100",
+    "path": [
+     "color",
+     "neutral",
+     "100"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.9569,
+         0.9569,
+         0.949
+        ],
+        "hex": "#F4F4F2"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/100"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/100"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.150",
+    "sourceId": "source:site",
+    "name": "150",
+    "path": [
+     "color",
+     "neutral",
+     "150"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.9255,
+         0.9255,
+         0.902
+        ],
+        "hex": "#ECECE6"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/150"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/150"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.200",
+    "sourceId": "source:site",
+    "name": "200",
+    "path": [
+     "color",
+     "neutral",
+     "200"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.8902,
+         0.8902,
+         0.8745
+        ],
+        "hex": "#E3E3DF"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/200"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/200"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "color",
+     "neutral",
+     "300"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.8196,
+         0.8196,
+         0.7843
+        ],
+        "hex": "#D1D1C8"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.400",
+    "sourceId": "source:site",
+    "name": "400",
+    "path": [
+     "color",
+     "neutral",
+     "400"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.6667,
+         0.6667,
+         0.6431
+        ],
+        "hex": "#AAAAA4"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/400"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/400"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.50",
+    "sourceId": "source:site",
+    "name": "50",
+    "path": [
+     "color",
+     "neutral",
+     "50"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.9686,
+         0.9686,
+         0.9529
+        ],
+        "hex": "#F7F7F3"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/50"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/50"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.600",
+    "sourceId": "source:site",
+    "name": "600",
+    "path": [
+     "color",
+     "neutral",
+     "600"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.3843,
+         0.3843,
+         0.3569
+        ],
+        "hex": "#62625B"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/600"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/600"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.700",
+    "sourceId": "source:site",
+    "name": "700",
+    "path": [
+     "color",
+     "neutral",
+     "700"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.2784,
+         0.2784,
+         0.2627
+        ],
+        "hex": "#474743"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/700"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/700"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.800",
+    "sourceId": "source:site",
+    "name": "800",
+    "path": [
+     "color",
+     "neutral",
+     "800"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.2039,
+         0.2039,
+         0.1961
+        ],
+        "hex": "#343432"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/800"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/800"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.825",
+    "sourceId": "source:site",
+    "name": "825",
+    "path": [
+     "color",
+     "neutral",
+     "825"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.149,
+         0.149,
+         0.149
+        ],
+        "hex": "#262626"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/825"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/825"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.875",
+    "sourceId": "source:site",
+    "name": "875",
+    "path": [
+     "color",
+     "neutral",
+     "875"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.102,
+         0.102,
+         0.102
+        ],
+        "hex": "#1A1A1A"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/875"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/875"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.900",
+    "sourceId": "source:site",
+    "name": "900",
+    "path": [
+     "color",
+     "neutral",
+     "900"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.0784,
+         0.0784,
+         0.0784
+        ],
+        "hex": "#141414"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/900"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/900"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.925",
+    "sourceId": "source:site",
+    "name": "925",
+    "path": [
+     "color",
+     "neutral",
+     "925"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.0667,
+         0.0667,
+         0.0627
+        ],
+        "hex": "#111110"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/925"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/925"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.red.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "color",
+     "red",
+     "300"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.9333,
+         0.5412,
+         0.502
+        ],
+        "hex": "#EE8A80"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/red/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/red/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.red.700",
+    "sourceId": "source:site",
+    "name": "700",
+    "path": [
+     "color",
+     "red",
+     "700"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.6784,
+         0.2235,
+         0.1922
+        ],
+        "hex": "#AD3931"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/red/700"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/red/700"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.button.accent.background",
+    "sourceId": "source:site",
+    "name": "background",
+    "path": [
+     "component",
+     "button",
+     "accent",
+     "background"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.accent.primary"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/accent/background"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/accent/background"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.button.accent.text",
+    "sourceId": "source:site",
+    "name": "text",
+    "path": [
+     "component",
+     "button",
+     "accent",
+     "text"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.ink.onAccent"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/accent/text"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/accent/text"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.button.motion",
+    "sourceId": "source:site",
+    "name": "motion",
+    "path": [
+     "component",
+     "button",
+     "motion"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.duration.feedback"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/motion"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/motion"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.button.primary.background",
+    "sourceId": "source:site",
+    "name": "background",
+    "path": [
+     "component",
+     "button",
+     "primary",
+     "background"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.ink.primary"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/primary/background"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/primary/background"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.button.primary.text",
+    "sourceId": "source:site",
+    "name": "text",
+    "path": [
+     "component",
+     "button",
+     "primary",
+     "text"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.surface.canvas"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/primary/text"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/primary/text"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.button.secondary.border",
+    "sourceId": "source:site",
+    "name": "border",
+    "path": [
+     "component",
+     "button",
+     "secondary",
+     "border"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.border.subtle"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/secondary/border"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/secondary/border"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.button.secondary.text",
+    "sourceId": "source:site",
+    "name": "text",
+    "path": [
+     "component",
+     "button",
+     "secondary",
+     "text"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.ink.primary"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/secondary/text"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/secondary/text"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.dock.background",
+    "sourceId": "source:site",
+    "name": "background",
+    "path": [
+     "component",
+     "dock",
+     "background"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.surface.base"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/dock/background"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/dock/background"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.dock.border",
+    "sourceId": "source:site",
+    "name": "border",
+    "path": [
+     "component",
+     "dock",
+     "border"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.border.subtle"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/dock/border"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/dock/border"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.dock.motion",
+    "sourceId": "source:site",
+    "name": "motion",
+    "path": [
+     "component",
+     "dock",
+     "motion"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.duration.handoff"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/dock/motion"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/dock/motion"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.inspector.label.background",
+    "sourceId": "source:site",
+    "name": "background",
+    "path": [
+     "component",
+     "inspector",
+     "label",
+     "background"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.accent.primary"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/inspector/label/background"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/inspector/label/background"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.inspector.label.text",
+    "sourceId": "source:site",
+    "name": "text",
+    "path": [
+     "component",
+     "inspector",
+     "label",
+     "text"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.ink.onAccent"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/inspector/label/text"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/inspector/label/text"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.inspector.motion",
+    "sourceId": "source:site",
+    "name": "motion",
+    "path": [
+     "component",
+     "inspector",
+     "motion"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.duration.reveal"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/inspector/motion"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/inspector/motion"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.inspector.outline",
+    "sourceId": "source:site",
+    "name": "outline",
+    "path": [
+     "component",
+     "inspector",
+     "outline"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.accent.primary"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/inspector/outline"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/inspector/outline"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.base",
+    "sourceId": "source:site",
+    "name": "base",
+    "path": [
+     "duration",
+     "base"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 180,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/base"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/base"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.hop",
+    "sourceId": "source:site",
+    "name": "hop",
+    "path": [
+     "duration",
+     "hop"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 60,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/hop"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/hop"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.instant",
+    "sourceId": "source:site",
+    "name": "instant",
+    "path": [
+     "duration",
+     "instant"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 0,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/instant"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/instant"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.quarter.base",
+    "sourceId": "source:site",
+    "name": "base",
+    "path": [
+     "duration",
+     "quarter",
+     "base"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 720,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/quarter/base"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/quarter/base"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.quarter.hop",
+    "sourceId": "source:site",
+    "name": "hop",
+    "path": [
+     "duration",
+     "quarter",
+     "hop"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 240,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/quarter/hop"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/quarter/hop"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.quarter.quick",
+    "sourceId": "source:site",
+    "name": "quick",
+    "path": [
+     "duration",
+     "quarter",
+     "quick"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 560,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/quarter/quick"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/quarter/quick"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.quarter.slow",
+    "sourceId": "source:site",
+    "name": "slow",
+    "path": [
+     "duration",
+     "quarter",
+     "slow"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 1120,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/quarter/slow"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/quarter/slow"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.quick",
+    "sourceId": "source:site",
+    "name": "quick",
+    "path": [
+     "duration",
+     "quick"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 140,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/quick"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/quick"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.slow",
+    "sourceId": "source:site",
+    "name": "slow",
+    "path": [
+     "duration",
+     "slow"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 280,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/slow"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/slow"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:easing.inOut",
+    "sourceId": "source:site",
+    "name": "inOut",
+    "path": [
+     "easing",
+     "inOut"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": [
+        0.645,
+        0.045,
+        0.355,
+        1
+       ]
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/easing/inOut"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/easing/inOut"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:easing.linear",
+    "sourceId": "source:site",
+    "name": "linear",
+    "path": [
+     "easing",
+     "linear"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": [
+        0,
+        0,
+        1,
+        1
+       ]
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/easing/linear"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/easing/linear"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:easing.out",
+    "sourceId": "source:site",
+    "name": "out",
+    "path": [
+     "easing",
+     "out"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": [
+        0.22,
+        1,
+        0.36,
+        1
+       ]
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/easing/out"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/easing/out"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:easing.overshoot",
+    "sourceId": "source:site",
+    "name": "overshoot",
+    "path": [
+     "easing",
+     "overshoot"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": [
+        0.34,
+        1.3,
+        0.64,
+        1
+       ]
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/easing/overshoot"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/easing/overshoot"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.family.mono",
+    "sourceId": "source:site",
+    "name": "mono",
+    "path": [
+     "font",
+     "family",
+     "mono"
+    ],
+    "type": "fontFamily",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": [
+        "MonoLisa",
+        "MonoLisa fallback",
+        "SF Mono",
+        "Consolas",
+        "monospace"
+       ]
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/family/mono"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/family/mono"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.family.sans",
+    "sourceId": "source:site",
+    "name": "sans",
+    "path": [
+     "font",
+     "family",
+     "sans"
+    ],
+    "type": "fontFamily",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": [
+        "Wotfard",
+        "Wotfard fallback",
+        "Arial",
+        "sans-serif"
+       ]
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/family/sans"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/family/sans"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.leading.100",
+    "sourceId": "source:site",
+    "name": "100",
+    "path": [
+     "font",
+     "leading",
+     "100"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 1.05
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/leading/100"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/leading/100"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.leading.200",
+    "sourceId": "source:site",
+    "name": "200",
+    "path": [
+     "font",
+     "leading",
+     "200"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 1.15
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/leading/200"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/leading/200"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.leading.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "font",
+     "leading",
+     "300"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 1.25
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/leading/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/leading/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.leading.400",
+    "sourceId": "source:site",
+    "name": "400",
+    "path": [
+     "font",
+     "leading",
+     "400"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 1.35
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/leading/400"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/leading/400"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.leading.500",
+    "sourceId": "source:site",
+    "name": "500",
+    "path": [
+     "font",
+     "leading",
+     "500"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 1.5
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/leading/500"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/leading/500"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.leading.600",
+    "sourceId": "source:site",
+    "name": "600",
+    "path": [
+     "font",
+     "leading",
+     "600"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 1.6
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/leading/600"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/leading/600"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.100",
+    "sourceId": "source:site",
+    "name": "100",
+    "path": [
+     "font",
+     "size",
+     "100"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 0.875,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/100"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/100"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.200",
+    "sourceId": "source:site",
+    "name": "200",
+    "path": [
+     "font",
+     "size",
+     "200"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 1,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/200"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/200"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "font",
+     "size",
+     "300"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 1.25,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.400",
+    "sourceId": "source:site",
+    "name": "400",
+    "path": [
+     "font",
+     "size",
+     "400"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 1.5,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/400"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/400"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.50",
+    "sourceId": "source:site",
+    "name": "50",
+    "path": [
+     "font",
+     "size",
+     "50"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 0.8125,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/50"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/50"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.500",
+    "sourceId": "source:site",
+    "name": "500",
+    "path": [
+     "font",
+     "size",
+     "500"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 2.5,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/500"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/500"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.600",
+    "sourceId": "source:site",
+    "name": "600",
+    "path": [
+     "font",
+     "size",
+     "600"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 3.5,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/600"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/600"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.size.700",
+    "sourceId": "source:site",
+    "name": "700",
+    "path": [
+     "font",
+     "size",
+     "700"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 5.5,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/700"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/700"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.tracking.none",
+    "sourceId": "source:site",
+    "name": "none",
+    "path": [
+     "font",
+     "tracking",
+     "none"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 0
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/tracking/none"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/tracking/none"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.tracking.snug",
+    "sourceId": "source:site",
+    "name": "snug",
+    "path": [
+     "font",
+     "tracking",
+     "snug"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": -0.01
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/tracking/snug"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/tracking/snug"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.tracking.tight",
+    "sourceId": "source:site",
+    "name": "tight",
+    "path": [
+     "font",
+     "tracking",
+     "tight"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": -0.015
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/tracking/tight"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/tracking/tight"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.weight.medium",
+    "sourceId": "source:site",
+    "name": "medium",
+    "path": [
+     "font",
+     "weight",
+     "medium"
+    ],
+    "type": "fontWeight",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 500
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/weight/medium"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/weight/medium"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:font.weight.regular",
+    "sourceId": "source:site",
+    "name": "regular",
+    "path": [
+     "font",
+     "weight",
+     "regular"
+    ],
+    "type": "fontWeight",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 400
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/weight/regular"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/weight/regular"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:layer.dock",
+    "sourceId": "source:site",
+    "name": "dock",
+    "path": [
+     "layer",
+     "dock"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 30
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/layer/dock"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/layer/dock"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:layer.outline",
+    "sourceId": "source:site",
+    "name": "outline",
+    "path": [
+     "layer",
+     "outline"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 20
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/layer/outline"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/layer/outline"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:radius.1",
+    "sourceId": "source:site",
+    "name": "1",
+    "path": [
+     "radius",
+     "1"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 4,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/radius/1"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/radius/1"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:radius.2",
+    "sourceId": "source:site",
+    "name": "2",
+    "path": [
+     "radius",
+     "2"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 6,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/radius/2"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/radius/2"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:radius.3",
+    "sourceId": "source:site",
+    "name": "3",
+    "path": [
+     "radius",
+     "3"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 8,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/radius/3"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/radius/3"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:radius.4",
+    "sourceId": "source:site",
+    "name": "4",
+    "path": [
+     "radius",
+     "4"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 12,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/radius/4"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/radius/4"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:radius.5",
+    "sourceId": "source:site",
+    "name": "5",
+    "path": [
+     "radius",
+     "5"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 16,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/radius/5"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/radius/5"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.accent.primary",
+    "sourceId": "source:site",
+    "name": "primary",
+    "path": [
+     "semantic",
+     "color",
+     "accent",
+     "primary"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.brand.500"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/accent/primary"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.brand.700"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/accent/primary"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/accent/primary"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.accent.text",
+    "sourceId": "source:site",
+    "name": "text",
+    "path": [
+     "semantic",
+     "color",
+     "accent",
+     "text"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.brand.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/accent/text"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.brand.700"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/accent/text"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/accent/text"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.border.subtle",
+    "sourceId": "source:site",
+    "name": "subtle",
+    "path": [
+     "semantic",
+     "color",
+     "border",
+     "subtle"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.800"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/border/subtle"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.300"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/border/subtle"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/border/subtle"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.ink.muted",
+    "sourceId": "source:site",
+    "name": "muted",
+    "path": [
+     "semantic",
+     "color",
+     "ink",
+     "muted"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.400"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/ink/muted"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.600"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/ink/muted"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/ink/muted"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.ink.onAccent",
+    "sourceId": "source:site",
+    "name": "onAccent",
+    "path": [
+     "semantic",
+     "color",
+     "ink",
+     "onAccent"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.100"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/ink/onAccent"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.50"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/ink/onAccent"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/ink/onAccent"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.ink.primary",
+    "sourceId": "source:site",
+    "name": "primary",
+    "path": [
+     "semantic",
+     "color",
+     "ink",
+     "primary"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.100"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/ink/primary"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.925"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/ink/primary"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/ink/primary"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.ink.secondary",
+    "sourceId": "source:site",
+    "name": "secondary",
+    "path": [
+     "semantic",
+     "color",
+     "ink",
+     "secondary"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.200"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/ink/secondary"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.700"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/ink/secondary"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/ink/secondary"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.status.fail",
+    "sourceId": "source:site",
+    "name": "fail",
+    "path": [
+     "semantic",
+     "color",
+     "status",
+     "fail"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.red.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/status/fail"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.red.700"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/status/fail"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/status/fail"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.status.pass",
+    "sourceId": "source:site",
+    "name": "pass",
+    "path": [
+     "semantic",
+     "color",
+     "status",
+     "pass"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.green.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/status/pass"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.green.700"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/status/pass"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/status/pass"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.status.warn",
+    "sourceId": "source:site",
+    "name": "warn",
+    "path": [
+     "semantic",
+     "color",
+     "status",
+     "warn"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.amber.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/status/warn"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.amber.800"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/status/warn"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/status/warn"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.surface.base",
+    "sourceId": "source:site",
+    "name": "base",
+    "path": [
+     "semantic",
+     "color",
+     "surface",
+     "base"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.875"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/surface/base"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.0"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/surface/base"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/surface/base"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.surface.canvas",
+    "sourceId": "source:site",
+    "name": "canvas",
+    "path": [
+     "semantic",
+     "color",
+     "surface",
+     "canvas"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.900"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/surface/canvas"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.50"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/surface/canvas"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/surface/canvas"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.surface.raised",
+    "sourceId": "source:site",
+    "name": "raised",
+    "path": [
+     "semantic",
+     "color",
+     "surface",
+     "raised"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.825"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/surface/raised"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.150"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/surface/raised"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/surface/raised"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.duration.causal",
+    "sourceId": "source:site",
+    "name": "causal",
+    "path": [
+     "semantic",
+     "duration",
+     "causal"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.hop"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/duration/causal"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.instant"
+      },
+      "conditions": {
+       "motion": "reduced"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.reduced.tokens.json",
+        "pointer": "/semantic/duration/causal"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.quarter.hop"
+      },
+      "conditions": {
+       "motion": "slow"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.slow.tokens.json",
+        "pointer": "/semantic/duration/causal"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/duration/causal"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.duration.feedback",
+    "sourceId": "source:site",
+    "name": "feedback",
+    "path": [
+     "semantic",
+     "duration",
+     "feedback"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.quick"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/duration/feedback"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.instant"
+      },
+      "conditions": {
+       "motion": "reduced"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.reduced.tokens.json",
+        "pointer": "/semantic/duration/feedback"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.quarter.quick"
+      },
+      "conditions": {
+       "motion": "slow"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.slow.tokens.json",
+        "pointer": "/semantic/duration/feedback"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/duration/feedback"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.duration.handoff",
+    "sourceId": "source:site",
+    "name": "handoff",
+    "path": [
+     "semantic",
+     "duration",
+     "handoff"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.slow"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/duration/handoff"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.instant"
+      },
+      "conditions": {
+       "motion": "reduced"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.reduced.tokens.json",
+        "pointer": "/semantic/duration/handoff"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.quarter.slow"
+      },
+      "conditions": {
+       "motion": "slow"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.slow.tokens.json",
+        "pointer": "/semantic/duration/handoff"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/duration/handoff"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.duration.reveal",
+    "sourceId": "source:site",
+    "name": "reveal",
+    "path": [
+     "semantic",
+     "duration",
+     "reveal"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.base"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/duration/reveal"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.instant"
+      },
+      "conditions": {
+       "motion": "reduced"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.reduced.tokens.json",
+        "pointer": "/semantic/duration/reveal"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.quarter.base"
+      },
+      "conditions": {
+       "motion": "slow"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.slow.tokens.json",
+        "pointer": "/semantic/duration/reveal"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/duration/reveal"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.easing.enter",
+    "sourceId": "source:site",
+    "name": "enter",
+    "path": [
+     "semantic",
+     "easing",
+     "enter"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:easing.out"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/easing/enter"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/easing/enter"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.easing.linear",
+    "sourceId": "source:site",
+    "name": "linear",
+    "path": [
+     "semantic",
+     "easing",
+     "linear"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:easing.linear"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/easing/linear"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/easing/linear"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.easing.move",
+    "sourceId": "source:site",
+    "name": "move",
+    "path": [
+     "semantic",
+     "easing",
+     "move"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:easing.inOut"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/easing/move"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/easing/move"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.easing.settle",
+    "sourceId": "source:site",
+    "name": "settle",
+    "path": [
+     "semantic",
+     "easing",
+     "settle"
+    ],
+    "type": "cubicBezier",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:easing.overshoot"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/easing/settle"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/easing/settle"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.font.body",
+    "sourceId": "source:site",
+    "name": "body",
+    "path": [
+     "semantic",
+     "font",
+     "body"
+    ],
+    "type": "fontFamily",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.family.sans"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/font/body"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/font/body"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.font.code",
+    "sourceId": "source:site",
+    "name": "code",
+    "path": [
+     "semantic",
+     "font",
+     "code"
+    ],
+    "type": "fontFamily",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.family.mono"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/font/code"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/font/code"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.spring.land",
+    "sourceId": "source:site",
+    "name": "land",
+    "path": [
+     "semantic",
+     "spring",
+     "land"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:spring.bounce.soft"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/spring/land"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/spring/land"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.body.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "body",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.500"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/body/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/body/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.body.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "body",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/body/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/body/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.body.tracking",
+    "sourceId": "source:site",
+    "name": "tracking",
+    "path": [
+     "semantic",
+     "type",
+     "body",
+     "tracking"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.tracking.none"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/body/tracking"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/body/tracking"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.caption.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "caption",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.500"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/caption/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/caption/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.caption.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "caption",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.100"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/caption/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/caption/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.code.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "code",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.600"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/code/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/code/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.code.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "code",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.50"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/code/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/code/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.display.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "display",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.100"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/display/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/display/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.display.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "display",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.700"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/display/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/display/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.display.tracking",
+    "sourceId": "source:site",
+    "name": "tracking",
+    "path": [
+     "semantic",
+     "type",
+     "display",
+     "tracking"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.tracking.tight"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/display/tracking"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/display/tracking"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.heading.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "heading",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/heading/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/heading/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.heading.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "heading",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.500"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/heading/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/heading/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.heading.tracking",
+    "sourceId": "source:site",
+    "name": "tracking",
+    "path": [
+     "semantic",
+     "type",
+     "heading",
+     "tracking"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.tracking.snug"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/heading/tracking"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/heading/tracking"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.lead.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "lead",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.500"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/lead/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/lead/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.lead.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "lead",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/lead/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/lead/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.subheading.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "subheading",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.400"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/subheading/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/subheading/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.subheading.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "subheading",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.400"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/subheading/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/subheading/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.title.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "title",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.200"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/title/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/title/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.title.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "title",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.600"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/title/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/title/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.title.tracking",
+    "sourceId": "source:site",
+    "name": "tracking",
+    "path": [
+     "semantic",
+     "type",
+     "title",
+     "tracking"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.tracking.tight"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/title/tracking"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/title/tracking"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.ui.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "ui",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.500"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/ui/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/ui/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.ui.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "ui",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.200"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/ui/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/ui/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.1",
+    "sourceId": "source:site",
+    "name": "1",
+    "path": [
+     "space",
+     "1"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 4,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/1"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/1"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.10",
+    "sourceId": "source:site",
+    "name": "10",
+    "path": [
+     "space",
+     "10"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 40,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/10"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/10"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.12",
+    "sourceId": "source:site",
+    "name": "12",
+    "path": [
+     "space",
+     "12"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 48,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/12"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/12"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.16",
+    "sourceId": "source:site",
+    "name": "16",
+    "path": [
+     "space",
+     "16"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 64,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/16"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/16"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.2",
+    "sourceId": "source:site",
+    "name": "2",
+    "path": [
+     "space",
+     "2"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 8,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/2"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/2"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.3",
+    "sourceId": "source:site",
+    "name": "3",
+    "path": [
+     "space",
+     "3"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 12,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/3"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/3"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.4",
+    "sourceId": "source:site",
+    "name": "4",
+    "path": [
+     "space",
+     "4"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 16,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/4"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/4"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.5",
+    "sourceId": "source:site",
+    "name": "5",
+    "path": [
+     "space",
+     "5"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 20,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/5"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/5"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.6",
+    "sourceId": "source:site",
+    "name": "6",
+    "path": [
+     "space",
+     "6"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 24,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/6"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/6"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:space.8",
+    "sourceId": "source:site",
+    "name": "8",
+    "path": [
+     "space",
+     "8"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 32,
+        "unit": "px"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/space/8"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/space/8"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:spring.bounce.none",
+    "sourceId": "source:site",
+    "name": "none",
+    "path": [
+     "spring",
+     "bounce",
+     "none"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 0
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/spring/bounce/none"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/spring/bounce/none"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:spring.bounce.soft",
+    "sourceId": "source:site",
+    "name": "soft",
+    "path": [
+     "spring",
+     "bounce",
+     "soft"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 0.2
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/spring/bounce/soft"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/spring/bounce/soft"
+     }
+    ]
+   }
+  ]
+ }
+}

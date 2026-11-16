@@ -43,7 +43,7 @@
   padding: 8px 12px;
   border: 1px solid var(--color-border-subtle);
   border-radius: 6px;
-  background: rgb(var(--token-color-canvas) / .96);
+  background: color-mix(in srgb, var(--color-canvas) 96%, transparent);
   color: var(--color-ink-secondary);
   font: var(--text-caption)/1.5 var(--font-body);
 }
@@ -110,7 +110,7 @@
   height: calc(100% - var(--evidence-padding) * 2);
   object-fit: contain;
   border-radius: 3px;
-  transition: transform 180ms var(--ease-out);
+  transition: transform var(--duration-reveal) var(--ease-out);
 }
 
 .enlarge {
@@ -122,7 +122,7 @@
   right: 16px;
   min-height: 36px;
   padding: 8px 12px;
-  background: rgb(var(--token-color-canvas) / .94);
+  background: color-mix(in srgb, var(--color-canvas) 94%, transparent);
   border: 1px solid var(--color-border-subtle);
   border-radius: 6px;
   color: var(--color-ink-primary);
@@ -167,7 +167,7 @@
 }
 
 .dialog::backdrop {
-  background: rgb(var(--token-color-canvas) / .96);
+  background: color-mix(in srgb, var(--color-canvas) 96%, transparent);
 }
 
 .viewer {
@@ -183,7 +183,7 @@
 /* Only a measured pointer opening moves the image; the viewer chrome stays put. */
 
 .dialog[open][data-origin-motion]::backdrop {
-  animation: backdrop-reveal 220ms var(--ease-out);
+  animation: backdrop-reveal var(--duration-handoff) var(--ease-out);
 }
 
 @keyframes backdrop-reveal {
@@ -222,7 +222,7 @@
   background: var(--color-surface-raised);
   color: var(--color-ink-primary);
   cursor: pointer;
-  transition: background-color 150ms ease-out, transform 150ms ease-out;
+  transition: background-color var(--duration-feedback) var(--ease-out), transform var(--duration-feedback) var(--ease-out);
 }
 
 .viewer button:active {
@@ -246,13 +246,13 @@
 }
 
 .incoming {
-  animation: evidence-in 170ms var(--ease-out);
+  animation: evidence-in var(--duration-feedback) var(--ease-out);
 }
 
 .outgoing {
   pointer-events: none;
   opacity: 0;
-  animation: evidence-out 170ms var(--ease-out);
+  animation: evidence-out var(--duration-feedback) var(--ease-out);
 }
 
 @keyframes evidence-in {
@@ -352,21 +352,11 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+:global([data-motion='reduced']) .stage:hover img,
+:global([data-motion='reduced']) .viewer button:active {
+  transform: none;
+}
 
-  .stage img, .viewer button {
-    transition: none;
-  }
-
-  .stage:hover img, .viewer button:active {
-    transform: none;
-  }
-
-  .dialog[open]::backdrop, .incoming, .outgoing {
-    animation: none;
-  }
-
-  .outgoing {
-    display: none;
-  }
+:global([data-motion='reduced']) .outgoing {
+  display: none;
 }

@@ -1,0 +1,19 @@
+{
+  "semantic": {
+    "duration": {
+      "$type": "duration",
+      "feedback": {
+        "$value": "{duration.quarter.quick}"
+      },
+      "reveal": {
+        "$value": "{duration.quarter.base}"
+      },
+      "handoff": {
+        "$value": "{duration.quarter.slow}"
+      },
+      "causal": {
+        "$value": "{duration.quarter.hop}"
+      }
+    }
+  }
+}

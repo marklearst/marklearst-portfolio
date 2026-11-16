@@ -47,3 +47,31 @@
   font-weight: 500;
   font-display: fallback;
 }
+
+/* A local sans sized to Wotfard's metrics, so text keeps its width, line breaks,
+ * and baseline while Wotfard loads. Arial, Helvetica, Liberation Sans, and Arimo
+ * share one set of advance widths, and Roboto's average is within half a percent
+ * of theirs. The overrides are Wotfard's ascent and descent divided by the size
+ * adjustment. */
+@font-face {
+  font-family: 'Wotfard fallback';
+  src: local('Arial'), local('ArialMT'), local('Helvetica'), local('Liberation Sans'), local('LiberationSans'), local('Arimo'), local('Arimo-Regular'), local('Roboto'), local('Roboto-Regular');
+  font-style: normal;
+  font-weight: 400;
+  size-adjust: 103.7%;
+  ascent-override: 94.6%;
+  descent-override: 23.5%;
+  line-gap-override: 0%;
+}
+
+/* The page turns font synthesis off, so emphasis needs a real italic here too. */
+@font-face {
+  font-family: 'Wotfard fallback';
+  src: local('Arial Italic'), local('Arial-ItalicMT'), local('Helvetica Oblique'), local('Helvetica-Oblique'), local('Liberation Sans Italic'), local('LiberationSans-Italic'), local('Arimo Italic'), local('Arimo-Italic');
+  font-style: italic;
+  font-weight: 400;
+  size-adjust: 104.4%;
+  ascent-override: 94%;
+  descent-override: 23.3%;
+  line-gap-override: 0%;
+}
