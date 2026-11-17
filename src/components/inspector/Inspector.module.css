@@ -12,11 +12,24 @@
   text-wrap: pretty;
 }
 
+.caption a {
+  display: inline-flex;
+  align-items: center;
+  min-height: calc(var(--space-10) + var(--space-1));
+  color: var(--color-ink-primary);
+  text-underline-offset: var(--space-1);
+}
+
 /* The slot keeps the dock's space, so nothing on the page moves when the dock leaves to follow the visitor. */
 .slot {
   position: relative;
   min-width: 0;
-  min-height: 608px;
+  --preview-height: calc(var(--space-16) * 9);
+  min-height: calc(var(--space-16) * 9);
+}
+
+.slot:not(:has(.brandPreview)) {
+  min-height: var(--preview-height);
 }
 
 .placeholder {
@@ -47,9 +60,10 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid var(--component-dock-border);
   border-radius: var(--radius-5);
   background: var(--component-dock-background);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   color: var(--color-ink-primary);
   font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
   text-align: left;
@@ -85,8 +99,7 @@
 
 .status {
   flex: none;
-  padding: var(--space-4) var(--space-4) var(--space-3);
-  border-bottom: 1px solid var(--component-dock-border);
+  padding: var(--space-5) var(--space-5) var(--space-4);
 }
 
 .statusLine {
@@ -133,18 +146,7 @@
 }
 
 .findings {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--duration-reveal) var(--ease-out);
-}
-
-.status[data-failed] .findings {
-  grid-template-rows: 1fr;
-}
-
-.findings > div {
-  min-height: 0;
-  overflow: hidden;
+  margin-bottom: var(--space-4);
 }
 
 .findingLine {
@@ -183,15 +185,157 @@
 
 .body {
   flex: 1 1 auto;
-  min-height: 0;
+  min-height: calc(var(--space-16) * 3);
   overflow-y: auto;
   overscroll-behavior: contain;
+  margin-inline: var(--space-2);
   padding: var(--space-4);
+  border-radius: calc(var(--radius-5) - var(--space-2));
+  background: var(--component-dock-inset);
+}
+
+/* Let the experiment grow with its contents. A second scroll area would
+   push the links out of view when a phone user focuses the hue control. */
+.dock[data-inspector-dock='inline']:has(.brandPreview) {
+  position: relative;
+  min-height: inherit;
+  overflow: visible;
+}
+
+.dock[data-inspector-dock='inline'] { padding-top: var(--space-2); }
+
+.body:has(.brandPreview) {
+  flex: 1 0 auto;
+  overflow: visible;
 }
 
 /* The resting chains, which the session's intro resolves row by row. */
-.preview {
+.brandPreview {
+  display: grid;
+  gap: var(--space-3);
   min-width: 0;
+}
+
+/* The illustration and its verb are one target. The two passes of the source
+   link share a transform, including during a quick reversal. */
+.brandSpecimen.brandSpecimen {
+  --separation: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-2) var(--space-4);
+  color: var(--color-ink-primary);
+}
+
+.colorLink {
+  display: block;
+  width: 100%;
+  max-width: calc(var(--space-16) * 5);
+  height: auto;
+}
+
+.sourceLink,
+.buttonLink {
+  transform-box: view-box;
+  transition: transform var(--duration-handoff) var(--ease-move);
+}
+
+.sourceLink {
+  transform-origin: 38% 50%;
+  transform: translateX(calc(-9% * var(--separation))) rotate(calc(-8deg * var(--separation)));
+}
+
+.buttonLink {
+  transform-origin: 62% 50%;
+  transform: translateX(calc(9% * var(--separation))) rotate(calc(10deg * var(--separation)));
+}
+
+.brandSpecimen[data-separated] { --separation: 1; }
+
+.colorLink { touch-action: pan-y; cursor: grab; }
+.colorLink[data-pulling] { cursor: grabbing; }
+.colorLink[data-pulling] :is(.sourceLink, .buttonLink) { transition: none; }
+
+.brandSpecimen > span {
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-2);
+  background: var(--component-button-accent-background);
+  color: var(--component-button-accent-text);
+  line-height: var(--leading-body);
+}
+
+.linkReadout {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-ink-secondary);
+}
+
+.linkReadout code {
+  margin-inline-start: var(--space-1);
+  color: var(--color-ink-muted);
+}
+
+.proof summary, .proof > a {
+  width: fit-content;
+  padding-block: var(--space-2);
+  color: var(--color-ink-primary);
+  cursor: pointer;
+}
+
+.proof summary:focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: 2px;
+}
+
+.proof > a { display: inline-block; }
+
+.actions > :only-child { grid-column: 1 / -1; }
+
+.brandControl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.brandRange {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1 0 calc(var(--space-16) * 3);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.brandReset {
+  min-height: calc(var(--space-10) + var(--space-1));
+  padding-inline: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-1);
+  background: transparent;
+  color: var(--color-ink-primary);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.brandReset:disabled {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  cursor: default;
+}
+
+.brandHelp {
+  margin: 0;
+  color: var(--color-ink-muted);
+  text-wrap: pretty;
 }
 
 .title {
@@ -285,7 +429,7 @@
 }
 
 .property + .property {
-  margin-top: var(--space-4);
+  margin-top: var(--space-3);
 }
 
 .propertyName {
@@ -305,7 +449,7 @@
 
 .where,
 .hint {
-  margin: var(--space-4) 0 0;
+  margin: var(--space-3) 0 0;
   color: var(--color-ink-muted);
   text-wrap: pretty;
 }
@@ -321,6 +465,15 @@
 }
 
 /* The chain: each row is one token, the line is the references between them. */
+
+.builtLight { display: none; }
+:global(html[data-theme='light']) .builtDark { display: none; }
+:global(html[data-theme='light']) .builtLight { display: block; }
+
+@media (prefers-color-scheme: light) {
+  :global(html:not([data-theme])) .builtDark { display: none; }
+  :global(html:not([data-theme])) .builtLight { display: block; }
+}
 
 .chain {
   position: relative;
@@ -422,7 +575,8 @@
   padding-left: var(--space-6);
 }
 
-.row::before {
+.row::before,
+.propagationNode {
   content: '';
   position: absolute;
   top: 13px;
@@ -432,7 +586,7 @@
   border: 1px solid var(--color-ink-muted);
   /* A square, like the swatches. A row of circles is what every status list uses. */
   border-radius: calc(var(--radius-1) / 2);
-  background: var(--component-dock-background);
+  background: var(--component-dock-inset);
 }
 
 .row[data-broken]::before {
@@ -466,6 +620,29 @@
 
 .token[data-lit] {
   background: var(--color-surface-raised);
+}
+
+.token > code {
+  display: inline-block;
+}
+
+.propagationNode,
+.propagationLink {
+  pointer-events: none;
+  background: var(--color-accent-text);
+}
+
+.propagationNode {
+  border-color: var(--color-accent-text);
+  opacity: 0;
+}
+
+.propagationLink {
+  position: absolute;
+  top: calc(var(--space-4) + var(--space-1) / 2);
+  left: calc(var(--space-3) / 2);
+  width: 1px;
+  transform-origin: bottom;
 }
 
 .row[data-broken] .token {
@@ -618,6 +795,11 @@
   animation-delay: calc(var(--duration-handoff) * 2 + var(--start) * var(--duration-causal));
 }
 
+.chain[data-propagation-read] .row,
+.chain[data-propagation-read]::before {
+  animation: none;
+}
+
 
 @keyframes row-in {
   from { opacity: 0; transform: translateY(6px); }
@@ -638,7 +820,6 @@
   display: grid;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-4) var(--space-4);
-  border-top: 1px solid var(--component-dock-border);
 }
 
 .actions {
@@ -649,7 +830,9 @@
 
 .actions > * {
   padding-inline: var(--space-2);
+  padding-block: var(--space-2);
   font-size: var(--text-caption);
+  white-space: normal;
 }
 
 /* The hue of the color a broken token used to follow */
@@ -757,6 +940,35 @@
 /* The toggle in the header */
 
 /* The toggle sits in the header's bar after the links. Its icon says it is an action, not a place. */
+.toggleWrap { position: relative; display: inline-flex; }
+.toggleHint {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  padding: var(--space-3) var(--space-4);
+  width: min(27ch, 80vw);
+  background: var(--color-surface-raised);
+  color: var(--color-ink-primary);
+  border-radius: var(--radius-3);
+  font: var(--font-weight-regular) var(--text-ui)/var(--leading-ui) var(--font-body);
+}
+.toggleWrap[data-hint]:has(:focus-visible) .toggleHint { display: block; }
+@media (hover: hover) and (pointer: fine) {
+  .toggleWrap[data-hint]:hover .toggleHint { display: block; }
+}
+.traceBack {
+  align-self: flex-start;
+  margin: var(--space-2) var(--space-5) 0;
+  min-height: var(--space-10);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
 .toggle {
   flex: none;
   border-radius: var(--radius-3);
@@ -766,6 +978,7 @@
 .toggle.toggle {
   --button-text: var(--color-ink-primary);
   padding-inline: var(--space-3);
+  font-size: var(--text-ui);
 }
 
 /* On, it is filled: nothing else in the bar is, so it can't be mistaken for the current page. */
@@ -784,12 +997,20 @@
   color: currentColor;
 }
 
+/* Recovery stays readable in the same mobile target that normally holds the icon. */
+.retryLabel {
+  font-size: var(--text-caption);
+}
+
 /* Outlines live in document coordinates, so they scroll with the page instead of chasing it. */
 
 .overlay {
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  /* Outlines may reach past an edge, but must never widen the document. */
+  overflow-x: clip;
   z-index: var(--layer-outline);
   pointer-events: none;
 }
@@ -820,6 +1041,11 @@
   border-color: var(--stranded);
 }
 
+/* Inactive outlines must not keep their old document coordinates in the scrollable area after a resize. */
+.overlay [data-visible='false'] {
+  display: none;
+}
+
 .overlay [data-visible='true'],
 .overlay [data-part='ghosts'] > div[data-visible='true'] {
   opacity: 1;
@@ -846,6 +1072,10 @@
   white-space: nowrap;
 }
 
+:global(body:has([data-inspector-dock='trace'])) .overlay [data-part='label'] {
+  visibility: hidden;
+}
+
 .overlay [data-part='label']:empty {
   display: none;
 }
@@ -866,6 +1096,10 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+
+  .dock [data-variant='secondary']:not(:disabled):hover {
+    --button-background: var(--color-canvas);
+  }
 
   .token:hover {
     background: var(--color-surface-raised);
@@ -923,20 +1157,8 @@
 /* raw: breakpoints can't read custom properties */
 @media (max-width: 959px) {
 
-  /* Inspecting always uses the sheet here, so the dock in the page only ever holds its resting content and can be as tall as that is. */
-  .slot {
-    min-height: 0;
-  }
-
-  .dock[data-inspector-dock='inline'] {
-    position: relative;
-    inset: auto;
-  }
-
-  .dock[data-inspector-dock='inline'] .body {
-    overflow-y: visible;
-  }
-
+  /* Keep the inline dock's footprint through loading, failure, and repair.
+     Its body scrolls just as it does on desktop, without moving the work below. */
   /* On a small screen the floating dock is a sheet along the bottom edge. */
   .dock[data-inspector-dock='floating'] {
     inset: auto 0 0;
@@ -951,7 +1173,7 @@
 }
 
 /* raw: breakpoints can't read custom properties */
-@media (max-width: 479px) {
+@media (max-width: 655px) {
 
   .toggleLabel {
     position: absolute;
@@ -973,12 +1195,12 @@
 
   /* On a short screen the status and the controls alone would fill the dock, so all of it scrolls as one. A sheet
      is only part of the screen's height, so it runs short sooner than a dock at the side does. */
-  .dock[data-inspector-dock='floating'] {
+  .dock {
     overflow-y: auto;
     overscroll-behavior: contain;
   }
 
-  .dock[data-inspector-dock='floating'] .body {
+  .dock .body {
     flex: none;
     overflow-y: visible;
   }
