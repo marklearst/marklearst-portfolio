@@ -3,11 +3,15 @@
 import type { ComponentProps } from 'react'
 import styles from './Slider.module.css'
 
-export interface SliderProps extends Omit<ComponentProps<'input'>, 'type' | 'value' | 'defaultValue' | 'children'> {
-  value: number
+interface SliderInputProps extends Omit<ComponentProps<'input'>, 'type' | 'value' | 'defaultValue' | 'children'> {
   /** Runs for every step the thumb takes. */
   onValueChange?: (value: number) => void
 }
+
+export type SliderProps = SliderInputProps & (
+  | { value: number; defaultValue?: never }
+  | { value?: never; defaultValue?: number }
+)
 
 /**
  * One number picked from a range. It is the browser's own range input, so the
