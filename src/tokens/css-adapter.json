@@ -8,6 +8,7 @@
     "--color-ink-secondary": "semantic.color.ink.secondary",
     "--color-ink-muted": "semantic.color.ink.muted",
     "--color-border-subtle": "semantic.color.border.subtle",
+    "--color-border-image": "semantic.color.border.image",
     "--color-accent-primary": "semantic.color.accent.primary",
     "--color-accent-text": "semantic.color.accent.text",
     "--color-on-accent": "semantic.color.ink.onAccent",
@@ -19,6 +20,9 @@
     "--font-display": "semantic.font.body",
     "--font-sans": "semantic.font.body",
     "--font-mono": "semantic.font.code",
+    "--text-specimen": { "token": "semantic.type.specimen.size", "css": "clamp(3.5rem, 15vw, {var})" },
+    "--leading-specimen": "semantic.type.specimen.leading",
+    "--tracking-specimen": { "token": "semantic.type.specimen.tracking", "css": "calc({var} * 1em)" },
     "--text-display": { "token": "semantic.type.display.size", "css": "clamp(3rem, 6vw, {var})" },
     "--text-title": { "token": "semantic.type.title.size", "css": "clamp(2.5rem, 4.5vw, {var})" },
     "--text-heading": { "token": "semantic.type.heading.size", "css": "clamp(2rem, 3vw, {var})" },
@@ -55,6 +59,7 @@
     "--spring-land": "semantic.spring.land"
   },
   "followSystem": {
+    "theme": { "light": "(prefers-color-scheme: light)" },
     "motion": { "reduced": "(prefers-reduced-motion: reduce)" }
   }
 }

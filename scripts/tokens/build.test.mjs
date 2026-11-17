@@ -5,6 +5,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import test from 'node:test'
+import postcss from 'postcss'
 
 const script = path.join(path.dirname(fileURLToPath(import.meta.url)), 'build.mjs')
 
@@ -106,6 +107,58 @@ test('--check passes on fresh output and names a stale file', async (t) => {
   assert.equal(run(root, '--check').status, 0)
 
   await writeFile(path.join(root, 'src/styles/generated/tokens.css'), '/* edited by hand */')
+  const stale = run(root, '--check')
+  assert.equal(stale.status, 1)
+  assert.match(stale.stderr, /missing or stale:\n- src\/styles\/generated\/tokens\.css/)
+})
+
+test('system theme and motion fallbacks stay independent of explicit combined contexts', async (t) => {
+  const inputs = sources()
+  const adapterPath = path.resolve(path.dirname(script), '../../src/tokens/css-adapter.json')
+  const { followSystem } = JSON.parse(await readFile(adapterPath, 'utf8'))
+  inputs['css-adapter.json'].followSystem = followSystem
+  inputs['base.tokens.json'].duration.slow = { $value: { value: 560, unit: 'ms' } }
+  inputs['motion.slow.tokens.json'] = { semantic: { feedback: { $type: 'duration', $value: '{duration.slow}' } } }
+  inputs['tokens.resolver.json'].modifiers.motion.contexts.slow = [{ $ref: 'motion.slow.tokens.json' }]
+  const root = await fixture(t, inputs)
+  const result = run(root)
+  assert.equal(result.status, 0, result.stderr)
+  assert.match(result.stdout, /Check passed: 8 tokens, 3 layers, 6 contexts, 0 findings\./)
+
+  const css = postcss.parse(await readFile(path.join(root, 'src/styles/generated/tokens.css'), 'utf8'))
+  const declarations = (rule) => Object.fromEntries(rule.nodes.map(({ prop, value }) => [prop, value]))
+  const rules = Object.fromEntries(css.nodes.filter((node) => node.type === 'rule').map((rule) => [rule.selector, declarations(rule)]))
+  const light = { '--semantic-text': 'var(--color-ink-900)' }
+  const reduced = { '--semantic-feedback': 'var(--duration-instant)' }
+  const slow = { '--semantic-feedback': 'var(--duration-slow)' }
+  const defaults = rules[':root']
+  assert.equal(defaults['--semantic-text'], 'var(--color-ink-100)')
+  assert.equal(defaults['--semantic-feedback'], 'var(--duration-quick)')
+  assert.equal(defaults['--component-button-text'], 'var(--semantic-text)')
+  assert.deepEqual(rules, {
+    ':root': defaults,
+    "[data-theme='light']": light,
+    "[data-motion='reduced']": reduced,
+    "[data-motion='slow']": slow,
+    "[data-theme='light'][data-motion='reduced']": { ...defaults, ...light, ...reduced },
+    "[data-theme='light'][data-motion='slow']": { ...defaults, ...light, ...slow },
+  })
+
+  // Each fallback excludes an explicit choice on its own axis, including the
+  // default choice (dark or default), and never resets the other axis or base.
+  const fallbacks = css.nodes.filter((node) => node.type === 'atrule')
+  assert.deepEqual(fallbacks.map(({ name, params, nodes }) => ({
+    name,
+    query: params,
+    rules: nodes.map((rule) => ({ selector: rule.selector, declarations: declarations(rule) })),
+  })), [
+    { name: 'media', query: '(prefers-color-scheme: light)', rules: [{ selector: ':root:not([data-theme])', declarations: light }] },
+    { name: 'media', query: '(prefers-reduced-motion: reduce)', rules: [{ selector: ':root:not([data-motion])', declarations: reduced }] },
+  ])
+
+  assert.equal(run(root, '--check').status, 0)
+  delete inputs['css-adapter.json'].followSystem.theme
+  await writeFile(path.join(root, 'src/tokens/css-adapter.json'), JSON.stringify(inputs['css-adapter.json']))
   const stale = run(root, '--check')
   assert.equal(stale.status, 1)
   assert.match(stale.stderr, /missing or stale:\n- src\/styles\/generated\/tokens\.css/)

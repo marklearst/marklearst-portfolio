@@ -27,6 +27,9 @@
         },
         "text": {
           "$value": "{semantic.color.ink.primary}"
+        },
+        "background": {
+          "$value": "{semantic.color.surface.base}"
         }
       },
       "motion": {
@@ -53,10 +56,38 @@
         "$value": "{semantic.duration.reveal}"
       }
     },
+    "glucose": {
+      "$type": "color",
+      "$description": "Chart paints, independent of the brand accent. Signal labels use neutral ink.",
+      "trace": {
+        "$value": "{semantic.color.data.trace}"
+      },
+      "low": {
+        "$value": "{semantic.color.status.fail}"
+      },
+      "inRange": {
+        "$value": "{semantic.color.status.pass}"
+      },
+      "high": {
+        "$value": "{semantic.color.status.warn}"
+      },
+      "grid": {
+        "$value": "{semantic.color.border.subtle}",
+        "$description": "Supporting grid lines. Neutral text labels carry the values."
+      },
+      "cursor": {
+        "$value": "{semantic.color.ink.primary}",
+        "$description": "The selected time, painted at full opacity."
+      },
+      "pointOutline": {
+        "$value": "{semantic.color.surface.base}",
+        "$description": "Separates the selected marker from the trace beneath it."
+      }
+    },
     "dock": {
       "background": {
         "$type": "color",
-        "$value": "{semantic.color.surface.base}"
+        "$value": "{semantic.color.surface.raised}"
       },
       "border": {
         "$type": "color",
@@ -65,6 +96,10 @@
       "motion": {
         "$type": "duration",
         "$value": "{semantic.duration.handoff}"
+      },
+      "inset": {
+        "$type": "color",
+        "$value": "{semantic.color.surface.base}"
       }
     }
   }

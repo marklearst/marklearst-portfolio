@@ -32,6 +32,9 @@
       "border": {
         "subtle": {
           "$value": "{color.neutral.800}"
+        },
+        "image": {
+          "$value": "{color.edge.light}"
         }
       },
       "accent": {
@@ -42,6 +45,13 @@
         "text": {
           "$value": "{color.brand.300}",
           "$description": "The accent when it is text, which needs more contrast than a mark does."
+        }
+      },
+      "data": {
+        "$description": "Data marks. A rebrand never moves these.",
+        "trace": {
+          "$value": "{color.cyan.300}",
+          "$description": "A continuous data trace, distinct from the independent status signals."
         }
       },
       "status": {
@@ -67,6 +77,11 @@
       }
     },
     "type": {
+      "specimen": {
+        "size": { "$type": "dimension", "$value": "{font.size.800}" },
+        "leading": { "$type": "number", "$value": "{font.leading.100}" },
+        "tracking": { "$type": "number", "$value": "{font.tracking.tight}" }
+      },
       "display": {
         "size": {
           "$type": "dimension",

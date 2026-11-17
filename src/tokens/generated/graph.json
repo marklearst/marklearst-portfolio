@@ -70,6 +70,10 @@
   "color.brand.300": "--color-brand-300",
   "color.brand.500": "--color-brand-500",
   "color.brand.700": "--color-brand-700",
+  "color.cyan.300": "--color-cyan-300",
+  "color.cyan.700": "--color-cyan-700",
+  "color.edge.dark": "--color-edge-dark",
+  "color.edge.light": "--color-edge-light",
   "color.green.300": "--color-green-300",
   "color.green.700": "--color-green-700",
   "color.neutral.0": "--color-neutral-0",
@@ -93,11 +97,20 @@
   "component.button.motion": "--component-button-motion",
   "component.button.primary.background": "--component-button-primary-background",
   "component.button.primary.text": "--component-button-primary-text",
+  "component.button.secondary.background": "--component-button-secondary-background",
   "component.button.secondary.border": "--component-button-secondary-border",
   "component.button.secondary.text": "--component-button-secondary-text",
   "component.dock.background": "--component-dock-background",
   "component.dock.border": "--component-dock-border",
+  "component.dock.inset": "--component-dock-inset",
   "component.dock.motion": "--component-dock-motion",
+  "component.glucose.cursor": "--component-glucose-cursor",
+  "component.glucose.grid": "--component-glucose-grid",
+  "component.glucose.high": "--component-glucose-high",
+  "component.glucose.inRange": "--component-glucose-inRange",
+  "component.glucose.low": "--component-glucose-low",
+  "component.glucose.pointOutline": "--component-glucose-pointOutline",
+  "component.glucose.trace": "--component-glucose-trace",
   "component.inspector.label.background": "--component-inspector-label-background",
   "component.inspector.label.text": "--component-inspector-label-text",
   "component.inspector.motion": "--component-inspector-motion",
@@ -131,12 +144,14 @@
   "font.size.500": "--font-size-500",
   "font.size.600": "--font-size-600",
   "font.size.700": "--font-size-700",
+  "font.size.800": "--font-size-800",
   "font.tracking.none": "--font-tracking-none",
   "font.tracking.snug": "--font-tracking-snug",
   "font.tracking.tight": "--font-tracking-tight",
   "font.weight.medium": "--font-weight-medium",
   "font.weight.regular": "--font-weight-regular",
   "layer.dock": "--layer-dock",
+  "layer.header": "--layer-header",
   "layer.outline": "--layer-outline",
   "radius.1": "--radius-1",
   "radius.2": "--radius-2",
@@ -145,7 +160,9 @@
   "radius.5": "--radius-5",
   "semantic.color.accent.primary": "--semantic-color-accent-primary",
   "semantic.color.accent.text": "--semantic-color-accent-text",
+  "semantic.color.border.image": "--semantic-color-border-image",
   "semantic.color.border.subtle": "--semantic-color-border-subtle",
+  "semantic.color.data.trace": "--semantic-color-data-trace",
   "semantic.color.ink.muted": "--semantic-color-ink-muted",
   "semantic.color.ink.onAccent": "--semantic-color-ink-onAccent",
   "semantic.color.ink.primary": "--semantic-color-ink-primary",
@@ -182,6 +199,9 @@
   "semantic.type.heading.tracking": "--semantic-type-heading-tracking",
   "semantic.type.lead.leading": "--semantic-type-lead-leading",
   "semantic.type.lead.size": "--semantic-type-lead-size",
+  "semantic.type.specimen.leading": "--semantic-type-specimen-leading",
+  "semantic.type.specimen.size": "--semantic-type-specimen-size",
+  "semantic.type.specimen.tracking": "--semantic-type-specimen-tracking",
   "semantic.type.subheading.leading": "--semantic-type-subheading-leading",
   "semantic.type.subheading.size": "--semantic-type-subheading-size",
   "semantic.type.title.leading": "--semantic-type-title-leading",
@@ -224,6 +244,9 @@
   "--color-border-subtle": {
    "token": "semantic.color.border.subtle"
   },
+  "--color-border-image": {
+   "token": "semantic.color.border.image"
+  },
   "--color-accent-primary": {
    "token": "semantic.color.accent.primary"
   },
@@ -256,6 +279,17 @@
   },
   "--font-mono": {
    "token": "semantic.font.code"
+  },
+  "--text-specimen": {
+   "token": "semantic.type.specimen.size",
+   "css": "clamp(3.5rem, 15vw, {var})"
+  },
+  "--leading-specimen": {
+   "token": "semantic.type.specimen.leading"
+  },
+  "--tracking-specimen": {
+   "token": "semantic.type.specimen.tracking",
+   "css": "calc({var} * 1em)"
   },
   "--text-display": {
    "token": "semantic.type.display.size",
@@ -364,8 +398,8 @@
  },
  "check": {
   "command": "primitree check",
-  "tokens": 136,
-  "references": 81,
+  "tokens": 156,
+  "references": 97,
   "layers": 3,
   "contexts": 6,
   "findings": [],
@@ -590,6 +624,172 @@
      {
       "uri": "src/tokens/base.tokens.json",
       "pointer": "/color/brand/700"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.cyan.300",
+    "sourceId": "source:site",
+    "name": "300",
+    "path": [
+     "color",
+     "cyan",
+     "300"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.4706,
+         0.8627,
+         0.9098
+        ],
+        "hex": "#78DCE8"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/cyan/300"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/cyan/300"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.cyan.700",
+    "sourceId": "source:site",
+    "name": "700",
+    "path": [
+     "color",
+     "cyan",
+     "700"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0.0314,
+         0.4941,
+         0.5451
+        ],
+        "hex": "#087E8B"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/cyan/700"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/cyan/700"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.edge.dark",
+    "sourceId": "source:site",
+    "name": "dark",
+    "path": [
+     "color",
+     "edge",
+     "dark"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0,
+         0,
+         0
+        ],
+        "alpha": 0.1,
+        "hex": "#000000"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/edge/dark"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/edge/dark"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.edge.light",
+    "sourceId": "source:site",
+    "name": "light",
+    "path": [
+     "color",
+     "edge",
+     "light"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         1,
+         1,
+         1
+        ],
+        "alpha": 0.1,
+        "hex": "#FFFFFF"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/edge/light"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/edge/light"
      }
     ]
    },
@@ -1501,6 +1701,40 @@
     ]
    },
    {
+    "id": "source:site/token:component.button.secondary.background",
+    "sourceId": "source:site",
+    "name": "background",
+    "path": [
+     "component",
+     "button",
+     "secondary",
+     "background"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.surface.base"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/button/secondary/background"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/button/secondary/background"
+     }
+    ]
+   },
+   {
     "id": "source:site/token:component.button.secondary.border",
     "sourceId": "source:site",
     "name": "border",
@@ -1582,7 +1816,7 @@
      {
       "value": {
        "kind": "reference",
-       "target": "source:site/token:semantic.color.surface.base"
+       "target": "source:site/token:semantic.color.surface.raised"
       },
       "conditions": {},
       "priority": 0,
@@ -1635,6 +1869,39 @@
     ]
    },
    {
+    "id": "source:site/token:component.dock.inset",
+    "sourceId": "source:site",
+    "name": "inset",
+    "path": [
+     "component",
+     "dock",
+     "inset"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.surface.base"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/dock/inset"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/dock/inset"
+     }
+    ]
+   },
+   {
     "id": "source:site/token:component.dock.motion",
     "sourceId": "source:site",
     "name": "motion",
@@ -1664,6 +1931,237 @@
      {
       "uri": "src/tokens/component.tokens.json",
       "pointer": "/component/dock/motion"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.glucose.cursor",
+    "sourceId": "source:site",
+    "name": "cursor",
+    "path": [
+     "component",
+     "glucose",
+     "cursor"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.ink.primary"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/glucose/cursor"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/glucose/cursor"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.glucose.grid",
+    "sourceId": "source:site",
+    "name": "grid",
+    "path": [
+     "component",
+     "glucose",
+     "grid"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.border.subtle"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/glucose/grid"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/glucose/grid"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.glucose.high",
+    "sourceId": "source:site",
+    "name": "high",
+    "path": [
+     "component",
+     "glucose",
+     "high"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.status.warn"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/glucose/high"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/glucose/high"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.glucose.inRange",
+    "sourceId": "source:site",
+    "name": "inRange",
+    "path": [
+     "component",
+     "glucose",
+     "inRange"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.status.pass"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/glucose/inRange"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/glucose/inRange"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.glucose.low",
+    "sourceId": "source:site",
+    "name": "low",
+    "path": [
+     "component",
+     "glucose",
+     "low"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.status.fail"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/glucose/low"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/glucose/low"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.glucose.pointOutline",
+    "sourceId": "source:site",
+    "name": "pointOutline",
+    "path": [
+     "component",
+     "glucose",
+     "pointOutline"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.surface.base"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/glucose/pointOutline"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/glucose/pointOutline"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:component.glucose.trace",
+    "sourceId": "source:site",
+    "name": "trace",
+    "path": [
+     "component",
+     "glucose",
+     "trace"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:semantic.color.data.trace"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/component.tokens.json",
+        "pointer": "/component/glucose/trace"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/component.tokens.json",
+      "pointer": "/component/glucose/trace"
      }
     ]
    },
@@ -2832,6 +3330,42 @@
     ]
    },
    {
+    "id": "source:site/token:font.size.800",
+    "sourceId": "source:site",
+    "name": "800",
+    "path": [
+     "font",
+     "size",
+     "800"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 11,
+        "unit": "rem"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/font/size/800"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/font/size/800"
+     }
+    ]
+   },
+   {
     "id": "source:site/token:font.tracking.none",
     "sourceId": "source:site",
     "name": "none",
@@ -3025,6 +3559,38 @@
      {
       "uri": "src/tokens/base.tokens.json",
       "pointer": "/layer/dock"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:layer.header",
+    "sourceId": "source:site",
+    "name": "header",
+    "path": [
+     "layer",
+     "header"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 40
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/layer/header"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/layer/header"
      }
     ]
    },
@@ -3336,6 +3902,56 @@
     ]
    },
    {
+    "id": "source:site/token:semantic.color.border.image",
+    "sourceId": "source:site",
+    "name": "image",
+    "path": [
+     "semantic",
+     "color",
+     "border",
+     "image"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.edge.light"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/border/image"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.edge.dark"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/border/image"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/border/image"
+     }
+    ]
+   },
+   {
     "id": "source:site/token:semantic.color.border.subtle",
     "sourceId": "source:site",
     "name": "subtle",
@@ -3382,6 +3998,56 @@
      {
       "uri": "src/tokens/semantic.tokens.json",
       "pointer": "/semantic/color/border/subtle"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.color.data.trace",
+    "sourceId": "source:site",
+    "name": "trace",
+    "path": [
+     "semantic",
+     "color",
+     "data",
+     "trace"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.cyan.300"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/data/trace"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.cyan.700"
+      },
+      "conditions": {
+       "theme": "light"
+      },
+      "priority": 1,
+      "provenance": [
+       {
+        "uri": "src/tokens/theme.light.tokens.json",
+        "pointer": "/semantic/color/data/trace"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/data/trace"
      }
     ]
    },
@@ -4883,6 +5549,108 @@
      {
       "uri": "src/tokens/semantic.tokens.json",
       "pointer": "/semantic/type/lead/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.specimen.leading",
+    "sourceId": "source:site",
+    "name": "leading",
+    "path": [
+     "semantic",
+     "type",
+     "specimen",
+     "leading"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.leading.100"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/specimen/leading"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/specimen/leading"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.specimen.size",
+    "sourceId": "source:site",
+    "name": "size",
+    "path": [
+     "semantic",
+     "type",
+     "specimen",
+     "size"
+    ],
+    "type": "dimension",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.size.800"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/specimen/size"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/specimen/size"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.type.specimen.tracking",
+    "sourceId": "source:site",
+    "name": "tracking",
+    "path": [
+     "semantic",
+     "type",
+     "specimen",
+     "tracking"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:font.tracking.tight"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/type/specimen/tracking"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/type/specimen/tracking"
      }
     ]
    },

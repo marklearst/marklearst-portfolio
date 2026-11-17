@@ -18,12 +18,16 @@
   --color-brand-300: color(srgb 1 0.2745 0.3176);
   --color-brand-500: color(srgb 0.8588 0.0941 0.2039);
   --color-brand-700: color(srgb 0.8353 0.0392 0.1843);
+  --color-cyan-300: color(srgb 0.4706 0.8627 0.9098);
+  --color-cyan-700: color(srgb 0.0314 0.4941 0.5451);
   --color-green-300: color(srgb 0.5725 0.7333 0.5412);
   --color-green-700: color(srgb 0.2353 0.4235 0.2039);
   --color-red-300: color(srgb 0.9333 0.5412 0.502);
   --color-red-700: color(srgb 0.6784 0.2235 0.1922);
   --color-amber-300: color(srgb 0.898 0.7412 0.3922);
   --color-amber-800: color(srgb 0.4627 0.3176 0.0353);
+  --color-edge-light: color(srgb 1 1 1 / 0.1);
+  --color-edge-dark: color(srgb 0 0 0 / 0.1);
   --font-family-sans: Wotfard, 'Wotfard fallback', Arial, sans-serif;
   --font-family-mono: MonoLisa, 'MonoLisa fallback', 'SF Mono', Consolas, monospace;
   --font-size-50: 0.8125rem;
@@ -34,6 +38,7 @@
   --font-size-500: 2.5rem;
   --font-size-600: 3.5rem;
   --font-size-700: 5.5rem;
+  --font-size-800: 11rem;
   --font-leading-100: 1.05;
   --font-leading-200: 1.15;
   --font-leading-300: 1.25;
@@ -62,6 +67,7 @@
   --radius-5: 16px;
   --layer-outline: 20;
   --layer-dock: 30;
+  --layer-header: 40;
   --duration-instant: 0ms;
   --duration-hop: 60ms;
   --duration-quick: 140ms;
@@ -85,13 +91,18 @@
   --semantic-color-ink-muted: var(--color-neutral-400);
   --semantic-color-ink-onAccent: var(--color-neutral-100);
   --semantic-color-border-subtle: var(--color-neutral-800);
+  --semantic-color-border-image: var(--color-edge-light);
   --semantic-color-accent-primary: var(--color-brand-500);
   --semantic-color-accent-text: var(--color-brand-300);
+  --semantic-color-data-trace: var(--color-cyan-300);
   --semantic-color-status-pass: var(--color-green-300);
   --semantic-color-status-warn: var(--color-amber-300);
   --semantic-color-status-fail: var(--color-red-300);
   --semantic-font-body: var(--font-family-sans);
   --semantic-font-code: var(--font-family-mono);
+  --semantic-type-specimen-size: var(--font-size-800);
+  --semantic-type-specimen-leading: var(--font-leading-100);
+  --semantic-type-specimen-tracking: var(--font-tracking-tight);
   --semantic-type-display-size: var(--font-size-700);
   --semantic-type-display-leading: var(--font-leading-100);
   --semantic-type-display-tracking: var(--font-tracking-tight);
@@ -129,14 +140,23 @@
   --component-button-accent-text: var(--semantic-color-ink-onAccent);
   --component-button-secondary-border: var(--semantic-color-border-subtle);
   --component-button-secondary-text: var(--semantic-color-ink-primary);
+  --component-button-secondary-background: var(--semantic-color-surface-base);
   --component-button-motion: var(--semantic-duration-feedback);
   --component-inspector-outline: var(--semantic-color-accent-primary);
   --component-inspector-label-background: var(--semantic-color-accent-primary);
   --component-inspector-label-text: var(--semantic-color-ink-onAccent);
   --component-inspector-motion: var(--semantic-duration-reveal);
-  --component-dock-background: var(--semantic-color-surface-base);
+  --component-glucose-trace: var(--semantic-color-data-trace);
+  --component-glucose-low: var(--semantic-color-status-fail);
+  --component-glucose-inRange: var(--semantic-color-status-pass);
+  --component-glucose-high: var(--semantic-color-status-warn);
+  --component-glucose-grid: var(--semantic-color-border-subtle);
+  --component-glucose-cursor: var(--semantic-color-ink-primary);
+  --component-glucose-pointOutline: var(--semantic-color-surface-base);
+  --component-dock-background: var(--semantic-color-surface-raised);
   --component-dock-border: var(--semantic-color-border-subtle);
   --component-dock-motion: var(--semantic-duration-handoff);
+  --component-dock-inset: var(--semantic-color-surface-base);
 }
 
 [data-motion='reduced'] {
@@ -162,8 +182,10 @@
   --semantic-color-ink-muted: var(--color-neutral-600);
   --semantic-color-ink-onAccent: var(--color-neutral-50);
   --semantic-color-border-subtle: var(--color-neutral-300);
+  --semantic-color-border-image: var(--color-edge-dark);
   --semantic-color-accent-primary: var(--color-brand-700);
   --semantic-color-accent-text: var(--color-brand-700);
+  --semantic-color-data-trace: var(--color-cyan-700);
   --semantic-color-status-pass: var(--color-green-700);
   --semantic-color-status-warn: var(--color-amber-800);
   --semantic-color-status-fail: var(--color-red-700);
@@ -187,12 +209,16 @@
   --color-brand-300: color(srgb 1 0.2745 0.3176);
   --color-brand-500: color(srgb 0.8588 0.0941 0.2039);
   --color-brand-700: color(srgb 0.8353 0.0392 0.1843);
+  --color-cyan-300: color(srgb 0.4706 0.8627 0.9098);
+  --color-cyan-700: color(srgb 0.0314 0.4941 0.5451);
   --color-green-300: color(srgb 0.5725 0.7333 0.5412);
   --color-green-700: color(srgb 0.2353 0.4235 0.2039);
   --color-red-300: color(srgb 0.9333 0.5412 0.502);
   --color-red-700: color(srgb 0.6784 0.2235 0.1922);
   --color-amber-300: color(srgb 0.898 0.7412 0.3922);
   --color-amber-800: color(srgb 0.4627 0.3176 0.0353);
+  --color-edge-light: color(srgb 1 1 1 / 0.1);
+  --color-edge-dark: color(srgb 0 0 0 / 0.1);
   --font-family-sans: Wotfard, 'Wotfard fallback', Arial, sans-serif;
   --font-family-mono: MonoLisa, 'MonoLisa fallback', 'SF Mono', Consolas, monospace;
   --font-size-50: 0.8125rem;
@@ -203,6 +229,7 @@
   --font-size-500: 2.5rem;
   --font-size-600: 3.5rem;
   --font-size-700: 5.5rem;
+  --font-size-800: 11rem;
   --font-leading-100: 1.05;
   --font-leading-200: 1.15;
   --font-leading-300: 1.25;
@@ -231,6 +258,7 @@
   --radius-5: 16px;
   --layer-outline: 20;
   --layer-dock: 30;
+  --layer-header: 40;
   --duration-instant: 0ms;
   --duration-hop: 60ms;
   --duration-quick: 140ms;
@@ -254,13 +282,18 @@
   --semantic-color-ink-muted: var(--color-neutral-600);
   --semantic-color-ink-onAccent: var(--color-neutral-50);
   --semantic-color-border-subtle: var(--color-neutral-300);
+  --semantic-color-border-image: var(--color-edge-dark);
   --semantic-color-accent-primary: var(--color-brand-700);
   --semantic-color-accent-text: var(--color-brand-700);
+  --semantic-color-data-trace: var(--color-cyan-700);
   --semantic-color-status-pass: var(--color-green-700);
   --semantic-color-status-warn: var(--color-amber-800);
   --semantic-color-status-fail: var(--color-red-700);
   --semantic-font-body: var(--font-family-sans);
   --semantic-font-code: var(--font-family-mono);
+  --semantic-type-specimen-size: var(--font-size-800);
+  --semantic-type-specimen-leading: var(--font-leading-100);
+  --semantic-type-specimen-tracking: var(--font-tracking-tight);
   --semantic-type-display-size: var(--font-size-700);
   --semantic-type-display-leading: var(--font-leading-100);
   --semantic-type-display-tracking: var(--font-tracking-tight);
@@ -298,14 +331,23 @@
   --component-button-accent-text: var(--semantic-color-ink-onAccent);
   --component-button-secondary-border: var(--semantic-color-border-subtle);
   --component-button-secondary-text: var(--semantic-color-ink-primary);
+  --component-button-secondary-background: var(--semantic-color-surface-base);
   --component-button-motion: var(--semantic-duration-feedback);
   --component-inspector-outline: var(--semantic-color-accent-primary);
   --component-inspector-label-background: var(--semantic-color-accent-primary);
   --component-inspector-label-text: var(--semantic-color-ink-onAccent);
   --component-inspector-motion: var(--semantic-duration-reveal);
-  --component-dock-background: var(--semantic-color-surface-base);
+  --component-glucose-trace: var(--semantic-color-data-trace);
+  --component-glucose-low: var(--semantic-color-status-fail);
+  --component-glucose-inRange: var(--semantic-color-status-pass);
+  --component-glucose-high: var(--semantic-color-status-warn);
+  --component-glucose-grid: var(--semantic-color-border-subtle);
+  --component-glucose-cursor: var(--semantic-color-ink-primary);
+  --component-glucose-pointOutline: var(--semantic-color-surface-base);
+  --component-dock-background: var(--semantic-color-surface-raised);
   --component-dock-border: var(--semantic-color-border-subtle);
   --component-dock-motion: var(--semantic-duration-handoff);
+  --component-dock-inset: var(--semantic-color-surface-base);
 }
 
 [data-theme='light'][data-motion='slow'] {
@@ -326,12 +368,16 @@
   --color-brand-300: color(srgb 1 0.2745 0.3176);
   --color-brand-500: color(srgb 0.8588 0.0941 0.2039);
   --color-brand-700: color(srgb 0.8353 0.0392 0.1843);
+  --color-cyan-300: color(srgb 0.4706 0.8627 0.9098);
+  --color-cyan-700: color(srgb 0.0314 0.4941 0.5451);
   --color-green-300: color(srgb 0.5725 0.7333 0.5412);
   --color-green-700: color(srgb 0.2353 0.4235 0.2039);
   --color-red-300: color(srgb 0.9333 0.5412 0.502);
   --color-red-700: color(srgb 0.6784 0.2235 0.1922);
   --color-amber-300: color(srgb 0.898 0.7412 0.3922);
   --color-amber-800: color(srgb 0.4627 0.3176 0.0353);
+  --color-edge-light: color(srgb 1 1 1 / 0.1);
+  --color-edge-dark: color(srgb 0 0 0 / 0.1);
   --font-family-sans: Wotfard, 'Wotfard fallback', Arial, sans-serif;
   --font-family-mono: MonoLisa, 'MonoLisa fallback', 'SF Mono', Consolas, monospace;
   --font-size-50: 0.8125rem;
@@ -342,6 +388,7 @@
   --font-size-500: 2.5rem;
   --font-size-600: 3.5rem;
   --font-size-700: 5.5rem;
+  --font-size-800: 11rem;
   --font-leading-100: 1.05;
   --font-leading-200: 1.15;
   --font-leading-300: 1.25;
@@ -370,6 +417,7 @@
   --radius-5: 16px;
   --layer-outline: 20;
   --layer-dock: 30;
+  --layer-header: 40;
   --duration-instant: 0ms;
   --duration-hop: 60ms;
   --duration-quick: 140ms;
@@ -393,13 +441,18 @@
   --semantic-color-ink-muted: var(--color-neutral-600);
   --semantic-color-ink-onAccent: var(--color-neutral-50);
   --semantic-color-border-subtle: var(--color-neutral-300);
+  --semantic-color-border-image: var(--color-edge-dark);
   --semantic-color-accent-primary: var(--color-brand-700);
   --semantic-color-accent-text: var(--color-brand-700);
+  --semantic-color-data-trace: var(--color-cyan-700);
   --semantic-color-status-pass: var(--color-green-700);
   --semantic-color-status-warn: var(--color-amber-800);
   --semantic-color-status-fail: var(--color-red-700);
   --semantic-font-body: var(--font-family-sans);
   --semantic-font-code: var(--font-family-mono);
+  --semantic-type-specimen-size: var(--font-size-800);
+  --semantic-type-specimen-leading: var(--font-leading-100);
+  --semantic-type-specimen-tracking: var(--font-tracking-tight);
   --semantic-type-display-size: var(--font-size-700);
   --semantic-type-display-leading: var(--font-leading-100);
   --semantic-type-display-tracking: var(--font-tracking-tight);
@@ -437,17 +490,46 @@
   --component-button-accent-text: var(--semantic-color-ink-onAccent);
   --component-button-secondary-border: var(--semantic-color-border-subtle);
   --component-button-secondary-text: var(--semantic-color-ink-primary);
+  --component-button-secondary-background: var(--semantic-color-surface-base);
   --component-button-motion: var(--semantic-duration-feedback);
   --component-inspector-outline: var(--semantic-color-accent-primary);
   --component-inspector-label-background: var(--semantic-color-accent-primary);
   --component-inspector-label-text: var(--semantic-color-ink-onAccent);
   --component-inspector-motion: var(--semantic-duration-reveal);
-  --component-dock-background: var(--semantic-color-surface-base);
+  --component-glucose-trace: var(--semantic-color-data-trace);
+  --component-glucose-low: var(--semantic-color-status-fail);
+  --component-glucose-inRange: var(--semantic-color-status-pass);
+  --component-glucose-high: var(--semantic-color-status-warn);
+  --component-glucose-grid: var(--semantic-color-border-subtle);
+  --component-glucose-cursor: var(--semantic-color-ink-primary);
+  --component-glucose-pointOutline: var(--semantic-color-surface-base);
+  --component-dock-background: var(--semantic-color-surface-raised);
   --component-dock-border: var(--semantic-color-border-subtle);
   --component-dock-motion: var(--semantic-duration-handoff);
+  --component-dock-inset: var(--semantic-color-surface-base);
 }
 
 /* Site adapter: follow the system setting before the attribute is set. */
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --semantic-color-surface-canvas: var(--color-neutral-50);
+    --semantic-color-surface-base: var(--color-neutral-0);
+    --semantic-color-surface-raised: var(--color-neutral-150);
+    --semantic-color-ink-primary: var(--color-neutral-925);
+    --semantic-color-ink-secondary: var(--color-neutral-700);
+    --semantic-color-ink-muted: var(--color-neutral-600);
+    --semantic-color-ink-onAccent: var(--color-neutral-50);
+    --semantic-color-border-subtle: var(--color-neutral-300);
+    --semantic-color-border-image: var(--color-edge-dark);
+    --semantic-color-accent-primary: var(--color-brand-700);
+    --semantic-color-accent-text: var(--color-brand-700);
+    --semantic-color-data-trace: var(--color-cyan-700);
+    --semantic-color-status-pass: var(--color-green-700);
+    --semantic-color-status-warn: var(--color-amber-800);
+    --semantic-color-status-fail: var(--color-red-700);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   :root:not([data-motion]) {

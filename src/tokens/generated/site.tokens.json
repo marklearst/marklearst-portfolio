@@ -198,6 +198,30 @@
       },
       "$description": "The accent, at one hue. Named for its job, not its color, because a rebrand changes the hue and nothing else. 500 is chosen. 300 and 700 are solved from its hue by the rule in src/lib/inspector/brand.ts."
     },
+    "cyan": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.4706,
+            0.8627,
+            0.9098
+          ],
+          "hex": "#78DCE8"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0314,
+            0.4941,
+            0.5451
+          ],
+          "hex": "#087E8B"
+        }
+      }
+    },
     "green": {
       "300": {
         "$value": {
@@ -267,6 +291,33 @@
             0.0353
           ],
           "hex": "#765109"
+        }
+      }
+    },
+    "edge": {
+      "$type": "color",
+      "light": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1
+          ],
+          "alpha": 0.1,
+          "hex": "#FFFFFF"
+        }
+      },
+      "dark": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "alpha": 0.1,
+          "hex": "#000000"
         }
       }
     }
@@ -340,6 +391,12 @@
       "700": {
         "$value": {
           "value": 5.5,
+          "unit": "rem"
+        }
+      },
+      "800": {
+        "$value": {
+          "value": 11,
           "unit": "rem"
         }
       },
@@ -494,6 +551,9 @@
     },
     "dock": {
       "$value": 30
+    },
+    "header": {
+      "$value": 40
     }
   },
   "duration": {
@@ -640,6 +700,9 @@
       "border": {
         "subtle": {
           "$value": "{color.neutral.800}"
+        },
+        "image": {
+          "$value": "{color.edge.light}"
         }
       },
       "accent": {
@@ -650,6 +713,13 @@
         "text": {
           "$value": "{color.brand.300}",
           "$description": "The accent when it is text, which needs more contrast than a mark does."
+        }
+      },
+      "data": {
+        "$description": "Data marks. A rebrand never moves these.",
+        "trace": {
+          "$value": "{color.cyan.300}",
+          "$description": "A continuous data trace, distinct from the independent status signals."
         }
       },
       "status": {
@@ -675,6 +745,20 @@
       }
     },
     "type": {
+      "specimen": {
+        "size": {
+          "$type": "dimension",
+          "$value": "{font.size.800}"
+        },
+        "leading": {
+          "$type": "number",
+          "$value": "{font.leading.100}"
+        },
+        "tracking": {
+          "$type": "number",
+          "$value": "{font.tracking.tight}"
+        }
+      },
       "display": {
         "size": {
           "$type": "dimension",
@@ -857,6 +941,9 @@
         },
         "text": {
           "$value": "{semantic.color.ink.primary}"
+        },
+        "background": {
+          "$value": "{semantic.color.surface.base}"
         }
       },
       "motion": {
@@ -883,10 +970,38 @@
         "$value": "{semantic.duration.reveal}"
       }
     },
+    "glucose": {
+      "$type": "color",
+      "$description": "Chart paints, independent of the brand accent. Signal labels use neutral ink.",
+      "trace": {
+        "$value": "{semantic.color.data.trace}"
+      },
+      "low": {
+        "$value": "{semantic.color.status.fail}"
+      },
+      "inRange": {
+        "$value": "{semantic.color.status.pass}"
+      },
+      "high": {
+        "$value": "{semantic.color.status.warn}"
+      },
+      "grid": {
+        "$value": "{semantic.color.border.subtle}",
+        "$description": "Supporting grid lines. Neutral text labels carry the values."
+      },
+      "cursor": {
+        "$value": "{semantic.color.ink.primary}",
+        "$description": "The selected time, painted at full opacity."
+      },
+      "pointOutline": {
+        "$value": "{semantic.color.surface.base}",
+        "$description": "Separates the selected marker from the trace beneath it."
+      }
+    },
     "dock": {
       "background": {
         "$type": "color",
-        "$value": "{semantic.color.surface.base}"
+        "$value": "{semantic.color.surface.raised}"
       },
       "border": {
         "$type": "color",
@@ -895,6 +1010,10 @@
       "motion": {
         "$type": "duration",
         "$value": "{semantic.duration.handoff}"
+      },
+      "inset": {
+        "$type": "color",
+        "$value": "{semantic.color.surface.base}"
       }
     }
   }
