@@ -3,6 +3,7 @@ import TrackedLink from '@/components/analytics/TrackedLink'
 import SectionViewTracker from '@/components/analytics/SectionViewTracker'
 import AnalyticsOptOutToggle from '@/components/analytics/AnalyticsOptOutToggle'
 import BuildLine from '@/components/inspector/BuildLine'
+import ThemeControl from './ThemeControl'
 import styles from './Footer.module.css'
 
 const roleEmail = 'mailto:jobs@marklearst.com?subject=Role%20inquiry&body=Hi%20Mark%2C%0D%0A%0D%0AI%20am%20reaching%20out%20about%20a%20role%20on%20our%20team.'
@@ -46,11 +47,14 @@ export default function Footer({ showPrivacyLink = true }: { showPrivacyLink?: b
               event={{ type: 'social', data: { platform: 'buy-me-a-coffee', href: coffeeUrl } }}>
               Buy Me a Coffee
             </TrackedLink>
-            <AnalyticsOptOutToggle />
             {showPrivacyLink && <TrackedLink href='/privacy'
               event={{ type: 'navigation', data: { action: 'privacy_page', to: '/privacy', location: 'footer' } }}>
               Privacy
             </TrackedLink>}
+          </div>
+          <div className={styles.preferences}>
+            <ThemeControl />
+            <AnalyticsOptOutToggle />
           </div>
         </div>
       </div>

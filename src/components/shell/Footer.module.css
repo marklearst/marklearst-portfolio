@@ -87,6 +87,16 @@
   font: var(--text-caption)/var(--leading-caption) var(--font-ui);
 }
 
+.preferences {
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  padding-top: var(--space-3);
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;

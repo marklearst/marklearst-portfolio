@@ -1,0 +1,17 @@
+.control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-ink-secondary);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+}
+
+.options {
+  background: var(--color-surface);
+}
+
+.option {
+  min-height: calc(var(--space-10) + var(--space-1));
+  padding-inline: var(--space-3);
+}
