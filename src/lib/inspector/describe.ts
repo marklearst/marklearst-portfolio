@@ -66,6 +66,11 @@ export function describe(element: Element): { label: string; source: string | nu
   const source = owner ? `${owner.module ? `${owner.module}.module.css ` : ''}.${owner.local}` : null
   const explicit = element.getAttribute('data-inspect')
   if (explicit) return { label: explicit, source }
+  if (tag === 'section' || tag === 'article') {
+    const ids = element.getAttribute('aria-labelledby')?.split(/\s+/) ?? []
+    const label = element.getAttribute('aria-label') || ids.map(id => element.ownerDocument.getElementById(id)?.textContent?.trim()).filter(Boolean).join(' ')
+    if (label) return { label, source }
+  }
   if (/^h[1-6]$/.test(tag)) return { label: `Heading ${tag[1]}`, source }
   if (NAMED[tag]) return { label: NAMED[tag], source }
   return { label: owner ? sentence(owner.local) : (GENERIC[tag] ?? sentence(tag)), source }

@@ -88,6 +88,7 @@ const MORE_COLOR = 1e-4
  * that comes closest on its worst requirement, so the miss is as small as it can be.
  */
 export function accentFor(hue: number, requirements: readonly Requirement[]): Tone {
+  const constraints = requirements.map(({ against, floor }) => ({ luminance: luminance(against), floor }))
   let best: Tone | undefined
   let most = -1
   let spare = Infinity
@@ -98,7 +99,12 @@ export function accentFor(hue: number, requirements: readonly Requirement[]): To
     const chroma = fitChroma(lightness, hue)
     const tone = toneAt(lightness, chroma, hue)
     // How well the worst requirement is met: 1 is exactly at its floor.
-    const worst = Math.min(...requirements.map(({ against, floor }) => contrast(tone.hex, against) / floor))
+    const candidate = luminance(tone.hex)
+    let worst = Infinity
+    for (const constraint of constraints) {
+      const ratio = (Math.max(candidate, constraint.luminance) + 0.05) / (Math.min(candidate, constraint.luminance) + 0.05)
+      worst = Math.min(worst, ratio / constraint.floor)
+    }
     if (worst > margin) {
       margin = worst
       closest = tone

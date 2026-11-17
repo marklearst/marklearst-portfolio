@@ -31,7 +31,9 @@ function requirementsFor(role: 'fill' | 'text', theme: string): Requirement[] {
 }
 
 /** Every base token the accent resolves to, with all its color has to hold in the themes that use it. */
+let builtPlan: Map<string, Requirement[]> | undefined
 function plan(): Map<string, Requirement[]> {
+  if (builtPlan) return builtPlan
   const held = new Map<string, Requirement[]>()
   for (const theme of CONTEXTS.theme.options) {
     for (const [path, role] of Object.entries(ROLES)) {
@@ -39,7 +41,8 @@ function plan(): Map<string, Requirement[]> {
       held.set(base, [...(held.get(base) ?? []), ...requirementsFor(role, theme)])
     }
   }
-  return held
+  builtPlan = held
+  return builtPlan
 }
 
 /** The hue the site ships with. Choosing it again is the same as resetting. */
@@ -68,4 +71,11 @@ export function rebrandLiterals(hue: number): Record<string, { colorSpace: 'srgb
       return [path, { colorSpace: 'srgb' as const, components, hex }]
     }),
   )
+}
+
+/** The report and applied literals share one solve, so they cannot disagree. */
+export function rebrand(hue: number, theme: string) {
+  if (hue === DEFAULT_HUE) return { literals: null, report: brandReport(hue, theme) }
+  const literals = rebrandLiterals(hue)
+  return { literals, report: { hue, hex: literals[baseOf(FILL, theme)].hex } }
 }
