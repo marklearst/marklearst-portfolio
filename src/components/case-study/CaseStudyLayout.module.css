@@ -53,6 +53,54 @@
   text-wrap: pretty;
 }
 
+/* The page opens on the same plate the list showed, so it is framed the way a plate is framed there. */
+.cover {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-10) 0 0;
+}
+
+.coverViewport {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-4);
+  background: var(--color-surface);
+}
+
+.coverViewport img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.coverCaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+  color: var(--color-ink-muted);
+  font: var(--text-caption) / var(--leading-caption) var(--font-body);
+  text-wrap: pretty;
+}
+
+.coverCaption span {
+  flex: 1 1 32ch;
+}
+
+.coverCaption a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-ink-secondary);
+  text-underline-offset: var(--space-1);
+}
+
+.coverCaption a svg {
+  color: var(--case-accent);
+}
+
 .meta {
   display: grid;
   grid-template-columns: 1fr 0.8fr 1.7fr;
