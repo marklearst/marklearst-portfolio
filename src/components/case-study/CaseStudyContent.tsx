@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
-import Image from 'next/image'
+import ChapterNav from '@/components/navigation/ChapterNav'
 import ProjectPlate from '@/components/transitions/ProjectPlate'
-import type { ProjectPlate as ProjectPlateData } from '@/data/project-plates'
+import { PROJECT_PREVIEWS } from '@/data/project-previews'
+import type { ReactNode } from 'react'
 import { ArrowLeftIcon, ArrowUpIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
 import DisclosureSummary from '@/components/ui/DisclosureSummary'
 import CaseStudyAnalytics from '@/components/analytics/CaseStudyAnalytics'
@@ -26,8 +26,6 @@ export interface CaseStudyContentProps {
   links?: readonly CaseStudyLinkInput[]
   sections?: CaseStudySectionData[]
   impact?: { metric: string; description: string }[]
-  /** The project's plate. The page opens on it, and the list's plate grows into it. */
-  cover?: ProjectPlateData
   children?: ReactNode
   relatedNavigation: ReactNode
 }
@@ -43,10 +41,10 @@ export default function CaseStudyContent({
   links = [],
   sections,
   impact,
-  cover,
   children,
   relatedNavigation,
 }: CaseStudyContentProps) {
+  const preview = PROJECT_PREVIEWS[slug]
   const pathname = `/work/${slug}`
   const resolvedSections = sections?.length ? sections : extractCaseStudySections(children)
 
@@ -73,10 +71,9 @@ export default function CaseStudyContent({
       <CaseStudyAnalytics slug={slug} category={category} />
       <main id='main-content'>
         <section data-case-study-hero className={styles.hero} aria-labelledby='case-study-title'>
-          <div className={`${styles.container} relative`}>
+          <div className={preview ? styles.spread : styles.container}>
             <TrackedLink
               href='/work'
-              transitionTypes={['nav-up']}
               className={styles.backLink}
               event={{ type: 'navigation', data: {
                 action: 'back_to_work',
@@ -88,96 +85,86 @@ export default function CaseStudyContent({
               <ArrowLeftIcon /> Back to work
             </TrackedLink>
 
-            <h1 id='case-study-title' className={styles.title}><ProjectTitle slug={slug}>{title}</ProjectTitle></h1>
-            <p className={styles.description}>{description}</p>
+            <div className={preview ? styles.opening : undefined}>
+              <div>
+                <h1 id='case-study-title' className={styles.title}><ProjectTitle slug={slug}>{title}</ProjectTitle></h1>
+                <div className={styles.heroGrid}>
+                  <div>
+                    <p className={styles.description}>{description}</p>
 
-            {links.length > 0 && (
-              <div className={styles.links}>
-                {links.map((link) => {
-                  const LinkIcon = link.icon ? caseStudyLinkIcons[link.icon] : null
-                  if (!link.href) {
-                    return (
-                      <span key={link.label} className={styles.disabledLink}>
-                        {LinkIcon && <LinkIcon />}{link.label}
-                      </span>
-                    )
-                  }
-                  return (
-                    <TrackedLink
-                      key={link.label}
-                      data-case-study-link={link.label}
-                      href={link.href}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className={styles.projectLink}
-                      event={{ type: 'case-study-link', data: {
-                        label: link.label,
-                        href: link.href,
-                        project: slug,
-                      } }}
-                    >
-                      {LinkIcon && <LinkIcon />}
-                      {link.label}
-                      <ArrowUpRightIcon className={styles.externalArrow} />
-                    </TrackedLink>
-                  )
-                })}
+                    {links.length > 0 && (
+                      <div className={styles.links}>
+                        {links.map((link) => {
+                          const LinkIcon = link.icon ? caseStudyLinkIcons[link.icon] : null
+                          if (!link.href) {
+                            return (
+                              <span key={link.label} className={styles.disabledLink}>
+                                {LinkIcon && <LinkIcon />}{link.label}
+                              </span>
+                            )
+                          }
+                          return (
+                            <TrackedLink
+                              key={link.label}
+                              data-case-study-link={link.label}
+                              href={link.href}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className={styles.projectLink}
+                              event={{ type: 'case-study-link', data: {
+                                label: link.label,
+                                href: link.href,
+                                project: slug,
+                              } }}
+                            >
+                              {LinkIcon && <LinkIcon />}
+                              {link.label}
+                              <ArrowUpRightIcon className={styles.externalArrow} />
+                            </TrackedLink>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.context}>
+                    <dl className={styles.meta}>
+                      <div>
+                        <dt>My role</dt>
+                        <dd>{role}</dd>
+                      </div>
+                      <div>
+                        <dt>Timeline</dt>
+                        <dd>{timeline}</dd>
+                      </div>
+                    </dl>
+                    {technologies.length > 0 && (
+                      <details className={styles.technologyDetails}>
+                        <DisclosureSummary>Built with</DisclosureSummary>
+                        <ul role='list' className={styles.technologies}>
+                          {technologies.map((tech) => <li key={tech}>{tech}</li>)}
+                        </ul>
+                      </details>
+                    )}
+                  </div>
+                </div>
               </div>
-            )}
-
-            {cover && (
-              <figure className={styles.cover}>
-                <ProjectPlate slug={slug}>
-                  <span className={styles.coverViewport}>
-                    <Image src={cover.src} alt={cover.alt} width={1280} height={720} loading='eager' fetchPriority='high' sizes='(max-width: 54rem) calc(100vw - 48px), 54rem' />
-                  </span>
-                </ProjectPlate>
-                <figcaption className={styles.coverCaption}>
-                  <span>{cover.caption}</span>
-                  <a href={cover.sourceUrl} target='_blank' rel='noopener noreferrer'>View original <ArrowUpRightIcon /></a>
-                </figcaption>
-              </figure>
-            )}
+              {preview && (
+                <figure className={styles.plate}>
+                  <ProjectPlate slug={slug} className={styles.plateImage} sizes='(min-width: 900px) 50vw, 90vw' eager />
+                  <figcaption>{preview.caption}</figcaption>
+                </figure>
+              )}
+            </div>
           </div>
         </section>
 
         <div className={styles.body}>
           <div className={styles.container}>
-            {resolvedSections[0] && renderSection(resolvedSections[0], 0)}
-
-            <dl className={styles.meta}>
-              <div>
-                <dt>My role</dt>
-                <dd>{role}</dd>
-              </div>
-              <div>
-                <dt>Timeline</dt>
-                <dd>{timeline}</dd>
-              </div>
-              <div>
-                <dt>Built with</dt>
-                <dd className={styles.technologies}>
-                  {technologies.map((tech) => <span key={tech}>{tech}</span>)}
-                </dd>
-              </div>
-            </dl>
-
             {resolvedSections.length > 2 && (
-              <details className={styles.contents}>
-                <DisclosureSummary>In this case study</DisclosureSummary>
-                <nav aria-label={`${title} case study contents`}>
-                  <ol>
-                    {resolvedSections.map((section, index) => (
-                      <li key={sectionId(index)}>
-                        <a href={`#${sectionId(index)}`}>{section.title}</a>
-                      </li>
-                    ))}
-                  </ol>
-                </nav>
-              </details>
+              <ChapterNav label='In this case study' chapters={resolvedSections.map((section, index) => ({ id: sectionId(index), label: section.title }))} />
             )}
 
-            {resolvedSections.slice(1).map((section, index) => renderSection(section, index + 1))}
+            {resolvedSections.map(renderSection)}
 
             {impact && impact.length > 0 && (
               <section
@@ -200,7 +187,7 @@ export default function CaseStudyContent({
               </section>
             )}
 
-            {relatedNavigation}
+            <div data-reading-end>{relatedNavigation}</div>
 
             <nav className={styles.endNavigation} aria-label='Case study controls'>
               <TrackedLink

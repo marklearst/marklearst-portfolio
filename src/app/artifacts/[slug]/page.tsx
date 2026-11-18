@@ -4,7 +4,7 @@ import { Children, cloneElement, isValidElement, type ReactNode } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Footer from '@/components/shell/Footer'
-import DisclosureSummary from '@/components/ui/DisclosureSummary'
+import ChapterNav from '@/components/navigation/ChapterNav'
 import RelatedNavigation from '@/components/navigation/RelatedNavigation'
 import { getArtifacts } from '@/lib/content/artifacts'
 import { getAdjacentContent } from '@/lib/content/adjacent-content'
@@ -73,35 +73,34 @@ export default async function ArtifactPage({ params }: ArtifactPageProps) {
       : null
 
   return (
-    <main className={styles.page}>
-      <article className={`${styles.container} ${styles.article}`}>
-        <Link href='/artifacts' className={styles.backLink}><span aria-hidden='true'><ArrowLeftIcon /></span> Back to artifacts</Link>
-        <header>
-          <div className={styles.articleMeta}><time dateTime={artifact.publishedAt.toISOString()}>{formatDate(artifact.publishedAt)}</time><span>{artifact.readingTime.minutes} min read</span></div>
-          <h1 id='article-title' className={styles.title}>{artifact.title}</h1>
-          <p className={styles.summary}>{artifact.summary}</p>
-          <ul className={styles.tags} aria-label='Topics'>{artifact.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
-        </header>
-        {headings.length > 1 && <details className={styles.outline}>
-          <DisclosureSummary>In this article</DisclosureSummary><nav aria-label='In this article'>
-          <ol>{headings.map((heading) => <li key={heading.id}><a href={`#${heading.id}`}>{heading.label}</a></li>)}</ol>
-        </nav></details>}
-        <div className={styles.content}>{content}</div>
-        <footer className={styles.articleEnd}>
-          {relatedProject && <><p>Related work</p><Link href={relatedProject.href}>{relatedProject.title} <span aria-hidden='true'><ArrowRightIcon /></span></Link></>}
-          <div className={styles.share}>{shareLinks.map((link) => <a key={link.label} href={link.href} target='_blank' rel='noopener noreferrer'>{link.label}</a>)}</div>
-        </footer>
-        <RelatedNavigation
-          itemType='article'
-          previous={previous ? { href: `/artifacts/${previous.slug}`, title: previous.title } : null}
-          next={next ? { href: `/artifacts/${next.slug}`, title: next.title } : null}
-        />
-        <nav className={styles.endNavigation} aria-label='Article controls'>
-          <Link href='/artifacts' className={styles.backLink}><ArrowLeftIcon /> Back to artifacts</Link>
-          <a href='#article-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
-        </nav>
-      </article>
+    <div className={styles.page}>
+      <main>
+        <article className={`${styles.container} ${styles.article}`}>
+          <Link href='/artifacts' className={styles.backLink}><span aria-hidden='true'><ArrowLeftIcon /></span> Back to artifacts</Link>
+          <header>
+            <div className={styles.articleMeta}><time dateTime={artifact.publishedAt.toISOString()}>{formatDate(artifact.publishedAt)}</time><span>{artifact.readingTime.minutes} min read</span></div>
+            <h1 id='article-title' className={styles.title}>{artifact.title}</h1>
+            <p className={styles.summary}>{artifact.summary}</p>
+            <ul className={styles.tags} aria-label='Topics'>{artifact.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+          </header>
+          {headings.length > 1 && <ChapterNav label='In this article' chapters={headings} />}
+          <div className={styles.content}>{content}</div>
+          <footer className={styles.articleEnd} data-reading-end>
+            {relatedProject && <><p>Related work</p><Link href={relatedProject.href}>{relatedProject.title} <span aria-hidden='true'><ArrowRightIcon /></span></Link></>}
+            <div className={styles.share}>{shareLinks.map((link) => <a key={link.label} href={link.href} target='_blank' rel='noopener noreferrer'>{link.label}</a>)}</div>
+          </footer>
+          <RelatedNavigation
+            itemType='article'
+            previous={previous ? { href: `/artifacts/${previous.slug}`, title: previous.title } : null}
+            next={next ? { href: `/artifacts/${next.slug}`, title: next.title } : null}
+          />
+          <nav className={styles.endNavigation} aria-label='Article controls'>
+            <Link href='/artifacts' className={styles.backLink}><ArrowLeftIcon /> Back to artifacts</Link>
+            <a href='#article-title' className={styles.backLink}>Back to top <ArrowUpIcon /></a>
+          </nav>
+        </article>
+      </main>
       <Footer />
-    </main>
+    </div>
   )
 }

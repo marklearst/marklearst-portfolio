@@ -3,8 +3,8 @@
 import { ArrowRightIcon } from '@/components/ui/Icon'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import Image from 'next/image'
 import ProjectPlate from '@/components/transitions/ProjectPlate'
+import { PROJECT_PREVIEWS } from '@/data/project-previews'
 import Link from 'next/link'
 import { PROJECTS_IN_DISPLAY_ORDER, type ProjectMeta } from '@/data/projects'
 import { trackCaseStudyClick, trackProjectCardHover, trackProjectCardImpression } from '@/lib/analytics'
@@ -22,17 +22,10 @@ const FILTERS = [
   { id: 'health-tech', label: 'Health tech', matches: (project: ProjectMeta) => project.category === 'HEALTH TECH' },
 ]
 
-const PREVIEWS: Record<string, { src: string; alt: string; caption: string }> = {
-  primitree: { src: '/images/primitree-playground-tokens.jpg', alt: 'Primitree Playground showing token collections and configuration.', caption: 'Token configuration in Primitree Playground' },
-  'a11y-companion': { src: '/images/a11y-audit-browser-demo.jpg', alt: 'a11y Companion browser demonstration with token audit results and Canvas Record.', caption: 'Token audit and Canvas Record · browser demo' },
-  skydio: { src: '/images/skydio-orbit-story.jpg', alt: 'Skydio Autonomy Widget Orbit Mode in Storybook.', caption: 'Orbit Mode · Storybook' },
-  glucoseiq: { src: '/images/glucoseiq-report-trace.jpg', alt: 'GlucoseIQ report on glucoseiq.dev with a latest reading of 99 mg/dL above a 24-hour glucose trace.', caption: 'Synthetic 14-day report · glucoseiq.dev' },
-}
-
 function ProjectRow({ project, index }: { project: ProjectMeta; index: number }) {
   const rowRef = useRef<HTMLElement>(null)
   const trackedHover = useRef(false)
-  const preview = PREVIEWS[project.slug]
+  const preview = PROJECT_PREVIEWS[project.slug]
 
   useEffect(() => {
     const element = rowRef.current
@@ -60,9 +53,7 @@ function ProjectRow({ project, index }: { project: ProjectMeta; index: number })
         <h2><Link href={project.route} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}><ProjectTitle slug={project.slug}>{project.cardTitle}</ProjectTitle><span aria-hidden='true'><ArrowRightIcon size={20} /></span></Link></h2>
         {preview && <figure className={styles.preview}>
           <Link className={styles.previewLink} href={project.route} aria-label={`${project.cardTitle} case study preview`} onClick={() => trackCaseStudyClick({ project: project.slug, category: project.category, route: project.route, source: 'work_catalog' })}>
-            <ProjectPlate slug={project.slug}>
-              <span className={styles.previewViewport}><Image src={preview.src} alt={preview.alt} width={1280} height={720} loading={index === 0 ? 'eager' : undefined} fetchPriority={index === 0 ? 'high' : undefined} sizes='(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 320px' /></span>
-            </ProjectPlate>
+            <ProjectPlate slug={project.slug} className={styles.previewViewport} eager={index === 0} sizes='(max-width: 640px) calc(100vw - 48px), (max-width: 1060px) 440px, 440px' />
             <span className={styles.previewAction} aria-hidden='true'><ArrowRightIcon size={18} /></span>
           </Link>
           <figcaption>{preview.caption}</figcaption>

@@ -1,16 +1,16 @@
 {
-  "total": 1170,
+  "total": 1149,
   "totals": {
-    "spacing": 680,
-    "font": 161,
+    "spacing": 666,
+    "font": 157,
     "font-size": 71,
-    "radius": 64,
+    "radius": 63,
     "line-height": 53,
     "font-weight": 41,
     "breakpoint": 30,
     "letter-spacing": 20,
-    "color": 19,
-    "shadow": 15,
+    "color": 18,
+    "shadow": 14,
     "tailwind-scale": 6,
     "font-family": 5,
     "tailwind-type": 4,
@@ -100,11 +100,9 @@
     },
     "src/components/case-study/CaseStudyLayout.module.css": {
       "breakpoint": 1,
-      "color": 1,
-      "font": 12,
-      "radius": 2,
-      "shadow": 1,
-      "spacing": 47
+      "font": 8,
+      "radius": 1,
+      "spacing": 33
     },
     "src/components/content/code-theme.ts": {
       "font-size": 2,

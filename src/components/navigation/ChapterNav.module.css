@@ -1,0 +1,61 @@
+.slot { margin-block: var(--space-8) var(--space-3); min-height: var(--space-12); }
+.menu {
+  position: relative;
+  color: var(--color-ink-primary);
+  background: var(--color-surface);
+  border-radius: var(--radius-3);
+}
+.menu summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--space-12);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  list-style: none;
+  font: var(--font-weight-medium) var(--text-ui)/var(--leading-ui) var(--font-body);
+}
+.menu summary::-webkit-details-marker { display: none; }
+.menu summary svg { transition: rotate var(--duration-feedback) var(--ease-out); }
+.menu[open] summary svg { rotate: 180deg; }
+.count { margin-inline-start: auto; color: var(--color-ink-muted); white-space: nowrap; font-size: var(--text-caption); font-variant-numeric: tabular-nums; }
+.ticks { display: flex; gap: calc(var(--space-1) / 2); flex-shrink: 0; max-width: var(--space-12); overflow: hidden; }
+.ticks i { width: 2px; height: var(--space-3); background: var(--color-border-image); }
+.ticks i[data-read] { background: var(--color-accent-text); }
+.menu ol { margin: 0; padding: 0 var(--space-4) var(--space-3); list-style: none; }
+.menu a { display: flex; align-items: center; min-height: calc(var(--space-10) + var(--space-1)); text-decoration: none; color: var(--color-ink-secondary); }
+.menu a[aria-current] { color: var(--color-accent-text); }
+.menu a:hover { text-decoration: underline; text-underline-offset: var(--space-1); }
+.current { display: none; }
+/* raw: on short landscape screens the contents stay inline to leave room for reading */
+@media (pointer: coarse) and (min-height: 420px) {
+  :global(html:not([data-inspecting])) .menu[data-floating] {
+    position: fixed;
+    z-index: var(--layer-dock);
+    inset: auto 0 max(env(safe-area-inset-bottom), var(--space-3));
+    margin-inline: auto;
+    width: min(calc(100% - var(--space-8)), 26rem);
+    background: var(--color-surface-raised);
+  }
+  .menu[data-floating] .context { display: none; }
+  .menu[data-floating] .current { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .menu[data-floating] nav {
+    position: absolute;
+    bottom: calc(100% + var(--space-1));
+    width: 100%;
+    max-height: 48dvh;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border-radius: var(--radius-3);
+    background: var(--color-surface-raised);
+  }
+  .menu[open][data-input='pointer'][data-floating] nav {
+    transform-origin: center bottom;
+    animation: open-chapters var(--duration-reveal) var(--ease-out);
+  }
+  @keyframes open-chapters {
+    from { opacity: 0; transform: translateY(var(--space-1)) scale(.985); }
+  }
+  .menu[data-floating] ol { padding-block: var(--space-2); }
+  :global(html[data-inspecting]) .menu[data-floating] { visibility: hidden; }
+}
