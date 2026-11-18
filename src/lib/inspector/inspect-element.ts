@@ -24,11 +24,14 @@ interface Group {
   declared: RegExp
   inherited: boolean
   family: Family
+  svgOnly?: boolean
 }
 
 const GROUPS: readonly Group[] = [
   { id: 'text', label: 'Text', props: ['color'], declared: /^color$/, inherited: true, family: 'paint' },
   { id: 'background', label: 'Background', props: ['background-color'], declared: /^background(-color)?$/, inherited: false, family: 'paint' },
+  { id: 'fill', label: 'Fill', props: ['fill'], declared: /^fill$/, inherited: true, family: 'paint', svgOnly: true },
+  { id: 'stroke', label: 'Stroke', props: ['stroke'], declared: /^stroke$/, inherited: true, family: 'paint', svgOnly: true },
   {
     id: 'border',
     label: 'Border',
@@ -38,6 +41,8 @@ const GROUPS: readonly Group[] = [
     family: 'paint',
   },
   { id: 'edge', label: 'Edge', props: ['box-shadow'], declared: /^box-shadow$/, inherited: false, family: 'paint' },
+  { id: 'outline', label: 'Outline', props: ['outline-color'], declared: /^outline(-color)?$/, inherited: false, family: 'paint' },
+  { id: 'padding', label: 'Top padding', props: ['padding-top'], declared: /^padding(?:-|$)/, inherited: false, family: 'type' },
   { id: 'size', label: 'Type size', props: ['font-size'], declared: /^font(-size)?$/, inherited: true, family: 'type' },
   { id: 'typeface', label: 'Typeface', props: ['font-family'], declared: /^font(-family)?$/, inherited: true, family: 'type' },
   { id: 'duration', label: 'Motion', props: ['transition-duration', 'animation-duration'], declared: /^(transition|animation)/, inherited: false, family: 'motion' },
@@ -49,6 +54,9 @@ const PROPS: Record<Family, readonly string[]> = {
   type: GROUPS.filter((group) => group.family === 'type').flatMap((group) => group.props),
   motion: GROUPS.filter((group) => group.family === 'motion').flatMap((group) => group.props),
 }
+
+const HTML_GROUPS = GROUPS.filter((group) => !group.svgOnly)
+const HTML_PAINT = HTML_GROUPS.filter((group) => group.family === 'paint').flatMap((group) => group.props)
 
 const SENTINEL: Record<string, { value: string; family: Family }> = {
   color: { value: 'rgb(1 2 3)', family: 'paint' },
@@ -124,7 +132,7 @@ export interface ElementInspector {
 }
 
 export function createElementInspector(index: readonly IndexedRule[], excluded: (element: Element) => boolean): ElementInspector {
-  const declarationCache = new WeakMap<Element, IndexedDeclaration[]>()
+  let declarationCache = new WeakMap<Element, IndexedDeclaration[]>()
   const declarations = (element: Element) => {
     let found = declarationCache.get(element)
     if (!found) declarationCache.set(element, (found = declarationsFor(element, index)))
@@ -164,7 +172,7 @@ export function createElementInspector(index: readonly IndexedRule[], excluded: 
   function entriesOn(host: Styled, observed: Styled, groups: readonly Group[], family: Family, into: Map<string, Entry[]>) {
     const vars = candidates(host, family)
     if (!vars.length) return
-    const props = PROPS[family]
+    const props = groups.flatMap((group) => group.props)
     const run = () => {
       const before = read(observed, props)
       for (const { name, value } of vars) {
@@ -183,11 +191,12 @@ export function createElementInspector(index: readonly IndexedRule[], excluded: 
 
   function entries(element: Styled) {
     const found = new Map<string, Entry[]>()
+    const groups = element instanceof SVGElement ? GROUPS : HTML_GROUPS
     for (const family of ['paint', 'type', 'motion'] as const) {
-      entriesOn(element, element, GROUPS.filter((group) => group.family === family), family, found)
+      entriesOn(element, element, groups.filter((group) => group.family === family), family, found)
     }
     // An inherited property is declared on an ancestor. Climb while the value is unchanged.
-    for (const group of GROUPS) {
+    for (const group of groups) {
       if (!group.inherited || found.has(group.id)) continue
       const own = read(element, group.props).join()
       for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
@@ -224,12 +233,23 @@ export function createElementInspector(index: readonly IndexedRule[], excluded: 
 
   function rawValue(group: Group, element: Styled): string | null {
     const style = getComputedStyle(element)
+    if (group.svgOnly) {
+      // Containers inherit paint for their children; they don't paint a shape themselves.
+      if (!['path', 'circle', 'rect', 'ellipse', 'line', 'polygon', 'polyline', 'text', 'tspan', 'use'].includes(element.localName)) return null
+      if (group.id === 'fill' && element.localName === 'line') return null
+      const color = toRgba(style.getPropertyValue(group.id))
+      return color && color.a > 0 ? `${toHex(color)}${color.a < 1 ? ` at ${Math.round(color.a * 100)}%` : ''}` : null
+    }
     if (group.id === 'background') {
       const color = toRgba(style.backgroundColor)
       if (!color || color.a === 0) return null
       return color.a < 1 ? `${toHex(color)} at ${Math.round(color.a * 100)}%` : toHex(color)
     }
     if (group.id === 'edge') return style.boxShadow === 'none' ? null : style.boxShadow
+    if (group.id === 'outline') {
+      const color = toRgba(style.outlineColor)
+      return outlineVisible(style) && color ? `${toHex(color)}${color.a < 1 ? ` at ${Math.round(color.a * 100)}%` : ''}` : null
+    }
     if (group.id === 'border') {
       const side = ['top', 'right', 'bottom', 'left'].find(
         (name) => style.getPropertyValue(`border-${name}-style`) !== 'none' && Number.parseFloat(style.getPropertyValue(`border-${name}-width`)) > 0,
@@ -247,6 +267,9 @@ export function createElementInspector(index: readonly IndexedRule[], excluded: 
   }
 
   function inspect(element: Element, graph: TokenGraph, selection: ContextSelection): Inspection {
+    // Selectors can change with classes, focus, or an ancestor's state between readings.
+    // Cache only within this inspection, where repeated ancestor probes share one snapshot.
+    declarationCache = new WeakMap()
     const styled = element as Styled
     const found = entries(styled)
     const style = getComputedStyle(styled)
@@ -254,11 +277,13 @@ export function createElementInspector(index: readonly IndexedRule[], excluded: 
     const hasText = Boolean(element.textContent?.trim())
     const properties: PropertyReport[] = []
     for (const group of GROUPS) {
+      if (group.svgOnly && !(element instanceof SVGElement)) continue
       const groupEntries = [...new Map((found.get(group.id) ?? []).map((entry) => [entry.name, entry])).values()]
       // Text properties mean nothing on an element that holds no text.
-      if ((group.family === 'type' || group.id === 'text') && !hasText && !isIcon) continue
+      if ((group.id === 'size' || group.id === 'typeface' || group.id === 'text') && !hasText && !isIcon) continue
       if (group.family === 'type' && isIcon) continue
       if (group.id === 'border' && !rawBorderVisible(style)) continue
+      if (group.id === 'outline' && !outlineVisible(style)) continue
       const chains = groupEntries.flatMap((entry): ResolvedChain[] => {
         const chain = graph.chain(tokenForVar(entry.name)!.token, selection)
         return chain ? [chain] : []
@@ -326,12 +351,13 @@ export function createElementInspector(index: readonly IndexedRule[], excluded: 
     }
     const users: Element[] = []
     for (const level of levels.values()) {
+      const properties = level.map((element) => sentinel.family === 'paint' && !(element instanceof SVGElement) ? HTML_PAINT : props)
       const run = () => {
-        const before = level.map((element) => read(element, props).join())
+        const before = level.map((element, i) => read(element, properties[i]).join())
         const previous = level.map((element) => [...found.get(element)!].map((name) => [name, element.style.getPropertyValue(name)] as const))
         level.forEach((element) => found.get(element)!.forEach((name) => element.style.setProperty(name, sentinelFor(name, sentinel.value)?.value ?? sentinel.value)))
         level.forEach((element, i) => {
-          if (read(element, props).join() !== before[i]) users.push(element)
+          if (read(element, properties[i]).join() !== before[i]) users.push(element)
         })
         level.forEach((element, i) => {
           for (const [name, value] of previous[i]) {
@@ -354,4 +380,8 @@ function rawBorderVisible(style: CSSStyleDeclaration): boolean {
   return ['top', 'right', 'bottom', 'left'].some(
     (side) => style.getPropertyValue(`border-${side}-style`) !== 'none' && Number.parseFloat(style.getPropertyValue(`border-${side}-width`)) > 0,
   )
+}
+
+function outlineVisible(style: CSSStyleDeclaration): boolean {
+  return style.outlineStyle !== 'none' && Number.parseFloat(style.outlineWidth) > 0 && (toRgba(style.outlineColor)?.a ?? 0) > 0
 }

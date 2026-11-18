@@ -1,9 +1,11 @@
 import { buildCssIndex } from './css-index'
 import { describe } from './describe'
-import { BREAK_PATH, editedGraph, editsCss, freeze, tokenGraph, type GraphEdits, type TokenGraph } from './graph'
+import { animateDock, stopDockMotion } from './dock-motion'
+import { BREAK_PATH, cssVar, editedGraph, editsCss, freeze, tokenGraph, type GraphEdits, type TokenGraph } from './graph'
 import { createElementInspector, type ElementInspector } from './inspect-element'
-import { brandReport, DEFAULT_HUE, rebrandLiterals, type BrandReport } from './rebrand'
+import { rebrand, type BrandReport } from './rebrand'
 import type { CheckSummary, ContextSelection, Inspection } from './types'
+import { traceTokens, type TokenTrace } from './trace'
 
 export interface Stranded {
   /** The literal the broken token holds. */
@@ -14,6 +16,8 @@ export interface Stranded {
 
 /** Everything the inspector computes. Loaded on first use, so the page ships without it. */
 export interface Engine {
+  animateDock: typeof animateDock
+  stopDockMotion: typeof stopDockMotion
   readonly broken: boolean
   /**
    * Breaks or restores the rule. Breaking freezes the token at the color it
@@ -38,6 +42,7 @@ export interface Engine {
   chain: TokenGraph['chain']
   /** The same chain in the graph as built, whatever the visitor has changed. */
   builtChain: TokenGraph['chain']
+  trace(path: string, selection: ContextSelection): TokenTrace
 }
 
 export function createEngine(excluded: (element: Element) => boolean): Engine {
@@ -84,6 +89,8 @@ export function createEngine(excluded: (element: Element) => boolean): Engine {
   }
 
   return {
+    animateDock,
+    stopDockMotion,
     get broken() {
       return Boolean(edits.frozen)
     },
@@ -91,8 +98,9 @@ export function createEngine(excluded: (element: Element) => boolean): Engine {
       apply({ ...edits, frozen: broken ? freeze(graph()) : null })
     },
     setBrand(hue) {
-      apply({ ...edits, literals: hue === DEFAULT_HUE ? null : rebrandLiterals(hue) })
-      return brandReport(hue, document.documentElement.dataset.theme === 'light' ? 'light' : 'dark')
+      const { literals, report } = rebrand(hue, document.documentElement.dataset.theme === 'light' ? 'light' : 'dark')
+      apply({ ...edits, literals })
+      return report
     },
     stranded(selection) {
       if (!edits.frozen) return null
@@ -109,5 +117,6 @@ export function createEngine(excluded: (element: Element) => boolean): Engine {
     usersOf: (path, selection, scope) => elements().usersOf(path, graph(), selection, scope),
     chain: (path, selection) => graph().chain(path, selection),
     builtChain: (path, selection) => tokenGraph().chain(path, selection),
+    trace: (path, selection) => traceTokens(graph(), tokenGraph(), path, selection, cssVar),
   }
 }

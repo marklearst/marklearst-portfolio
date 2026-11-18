@@ -64,6 +64,7 @@ export const tokenForVar = (name: string) => tokenByVar.get(name) ?? null
 /** Every CSS custom property that carries this token: Primitree's own name, then the site's adapter names. */
 export const varsFor = (path: string): readonly string[] => varsByToken.get(path) ?? []
 export const cssVar = (path: string) => data.cssVars[path] ?? null
+export const TOKEN_PATHS = data.fragment.tokens.map((token) => token.path.join('.')).sort()
 
 const selectionKey = (selection: ContextSelection) =>
   Object.keys(selection).sort().map((axis) => `${axis}=${selection[axis]}`).join('|')
