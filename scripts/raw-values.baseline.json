@@ -1,10 +1,10 @@
 {
-  "total": 1050,
+  "total": 1046,
   "totals": {
     "spacing": 600,
     "font": 136,
     "font-size": 71,
-    "radius": 58,
+    "radius": 54,
     "line-height": 53,
     "font-weight": 41,
     "breakpoint": 27,
@@ -177,7 +177,6 @@
     "src/components/home/A11yReadinessPreview.module.css": {
       "font": 23,
       "letter-spacing": 1,
-      "radius": 4,
       "spacing": 20
     },
     "src/components/home/FeaturedWork.module.css": {
