@@ -48,8 +48,12 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       <li>
         Time in Range (TIR) metrics implemented inconsistently across apps
       </li>
-      <li>No type-safe APIs for glucose data structures</li>
-      <li>Calculation errors that could affect patient care</li>
+      <li>
+        No type-safe APIs for glucose data structures
+      </li>
+      <li>
+        Calculation errors that could affect patient care
+      </li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
   </div>
@@ -67,10 +71,18 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       The Vitest suite covers:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Every formula, checked against known medical values</li>
-      <li>Edge cases like boundary values, negative numbers, and zero</li>
-      <li>Input validation and error handling</li>
-      <li>Precision and rounding behavior</li>
+      <li>
+        Every formula, checked against known medical values
+      </li>
+      <li>
+        Edge cases like boundary values, negative numbers, and zero
+      </li>
+      <li>
+        Input validation and error handling
+      </li>
+      <li>
+        Precision and rounding behavior
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>One API for explicit units</CaseStudySubheading>
@@ -108,10 +120,18 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       Type-safe functions for converting between mg/dL and mmol/L:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>mgDlToMmolL()</code> converts mg/dL to mmol/L and rounds the result</li>
-      <li><code>mmolLToMgDl()</code> converts mmol/L to mg/dL</li>
-      <li>Handles edge cases and validates input ranges</li>
-      <li>Uses the standard conversion factor (18.0182) from clinical guidelines</li>
+      <li>
+        <code>mgDlToMmolL()</code> converts mg/dL to mmol/L and rounds the result
+      </li>
+      <li>
+        <code>mmolLToMgDl()</code> converts mmol/L to mg/dL
+      </li>
+      <li>
+        Handles edge cases and validates input ranges
+      </li>
+      <li>
+        Uses the standard conversion factor (18.0182) from clinical guidelines
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>A1C calculations</CaseStudySubheading>
@@ -119,10 +139,18 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       Estimated A1C (eA1C) from average glucose, using the ADAG formula:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>calculateA1C()</code> converts average glucose to an estimated A1C percentage</li>
-      <li>Based on the ADAG Study formula, A1C = (avg_glucose + 46.7) / 28.7</li>
-      <li>Accepts mg/dL or mmol/L input</li>
-      <li>Returns A1C as a percentage (for example, 7.2%)</li>
+      <li>
+        <code>calculateA1C()</code> converts average glucose to an estimated A1C percentage
+      </li>
+      <li>
+        Based on the ADAG Study formula, A1C = (avg_glucose + 46.7) / 28.7
+      </li>
+      <li>
+        Accepts mg/dL or mmol/L input
+      </li>
+      <li>
+        Returns A1C as a percentage (for example, 7.2%)
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Time in Range (TIR)</CaseStudySubheading>
@@ -130,11 +158,21 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
       The TIR metrics follow the ADA/ATTD consensus guidelines:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>calculateTIR()</code> returns the percentage of readings in the target range (70-180 mg/dL)</li>
-      <li><code>calculateTBR()</code> returns time below range (hypoglycemia detection)</li>
-      <li><code>calculateTAR()</code> returns time above range (hyperglycemia detection)</li>
-      <li>Configurable target ranges for personalized therapy goals</li>
-      <li>Handles missing data and validates reading counts</li>
+      <li>
+        <code>calculateTIR()</code> returns the percentage of readings in the target range (70-180 mg/dL)
+      </li>
+      <li>
+        <code>calculateTBR()</code> returns time below range (hypoglycemia detection)
+      </li>
+      <li>
+        <code>calculateTAR()</code> returns time above range (hyperglycemia detection)
+      </li>
+      <li>
+        Configurable target ranges for personalized therapy goals
+      </li>
+      <li>
+        Handles missing data and validates reading counts
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Enhanced TIR (5-range)</CaseStudySubheading>
@@ -173,38 +211,70 @@ gradient: from-orange-500/20 via-yellow-500/10 to-transparent
     <CaseStudySubheading>Formula sources</CaseStudySubheading>
     <CaseStudyMutedText>Each formula is checked against a published clinical source:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>A1C uses the ADAG Study consensus formula</li>
-      <li>TIR ranges follow the ADA/ATTD 2019 guidelines</li>
-      <li>Conversion factors match international standards</li>
-      <li>Test cases come from published medical examples</li>
+      <li>
+        A1C uses the ADAG Study consensus formula
+      </li>
+      <li>
+        TIR ranges follow the ADA/ATTD 2019 guidelines
+      </li>
+      <li>
+        Conversion factors match international standards
+      </li>
+      <li>
+        Test cases come from published medical examples
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyDetails summary="TypeScript contracts, package format, and integrations">
     <CaseStudySubheading className="mt-0">TypeScript API</CaseStudySubheading>
     <CaseStudyMutedText>The API is typed throughout:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Typed glucose reading objects</li>
-      <li>Enum types for units (mg/dL, mmol/L)</li>
-      <li>Generic functions that accept either unit system</li>
-      <li>IntelliSense in the editor</li>
+      <li>
+        Typed glucose reading objects
+      </li>
+      <li>
+        Enum types for units (mg/dL, mmol/L)
+      </li>
+      <li>
+        Generic functions that accept either unit system
+      </li>
+      <li>
+        IntelliSense in the editor
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Package format</CaseStudySubheading>
     <CaseStudyMutedText>It's pure TypeScript with zero dependencies, and it ships with:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Tree-shakeable exports to keep bundles small</li>
-      <li>JSDoc documentation throughout</li>
-      <li>Semantic versioning on npm</li>
+      <li>
+        Tree-shakeable exports to keep bundles small
+      </li>
+      <li>
+        JSDoc documentation throughout
+      </li>
+      <li>
+        Semantic versioning on npm
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Use cases</CaseStudySubheading>
     <CaseStudyMutedText>It's written for:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>CGM (continuous glucose monitor) companion apps</li>
-      <li>Diabetes management dashboards</li>
-      <li>Apple Watch and wearable health apps, like the GlucoseIQ watch app I'm building</li>
-      <li>HealthKit integration layers</li>
-      <li>Clinical research data processing</li>
+      <li>
+        CGM (continuous glucose monitor) companion apps
+      </li>
+      <li>
+        Diabetes management dashboards
+      </li>
+      <li>
+        Apple Watch and wearable health apps, like the GlucoseIQ watch app I'm building
+      </li>
+      <li>
+        HealthKit integration layers
+      </li>
+      <li>
+        Clinical research data processing
+      </li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
   </div>

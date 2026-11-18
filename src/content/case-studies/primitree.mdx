@@ -34,6 +34,18 @@ impact:
 gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
 ---
 
+<CaseStudySection title="The system, running on this page">
+  <div className="space-y-6">
+    <CaseStudyParagraph>
+      This is the portfolio’s own token graph, resolved by Primitree. Follow a
+      reference from a raw value to its role in a component, then change the
+      accent to see the page follow it. Break a rule to see the reference it loses.
+    </CaseStudyParagraph>
+    <SiteTokenGraph />
+    <CaseStudyMutedText><a href="/system">Explore the full system page</a>, or use Inspect in the navigation to trace a value on the page itself.</CaseStudyMutedText>
+  </div>
+</CaseStudySection>
+
 <CaseStudySection title="When a semantic token holds a literal color">
   <div className="space-y-6">
     <CaseStudyMutedText>
@@ -65,6 +77,21 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
       Figma Variables into React. Primitree adds the architecture checks,
       change reports, and generated output, split across six packages.
     </CaseStudyParagraph>
+
+    <EvidenceGallery
+      label="Primitree Playground"
+      items={[
+        {
+          src: '/images/primitree-playground-tokens.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Resolved tokens',
+          alt: "Primitree Playground showing sample token colors, light and dark context controls, and a summary of 12 tokens and 12 generated files.",
+          caption: 'The built-in variables sample resolves in the browser. Switch contexts to inspect the tokens and generated output.',
+          sourceUrl: 'https://primitree.com/playground',
+        },
+      ]}
+    />
   </div>
 </CaseStudySection>
 
@@ -117,9 +144,15 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Renames, moves, removals, and type changes are classified as breaking</li>
-      <li><code>--fail-on-breaking</code> exits with code 2 so CI can block on it</li>
-      <li>Output as Markdown for review, or JSON for tooling</li>
+      <li>
+        Renames, moves, removals, and type changes are classified as breaking
+      </li>
+      <li>
+        <code>--fail-on-breaking</code> exits with code 2 so CI can block on it
+      </li>
+      <li>
+        Output as Markdown for review, or JSON for tooling
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
@@ -163,20 +196,38 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
     <CaseStudyMutedText>The configured pipeline produces four output formats:</CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>DTCG 2025.10 token files plus a resolver document for contexts</li>
-      <li>CSS custom properties, with contexts as selector axes</li>
-      <li>Tailwind theme output</li>
-      <li>Typed TypeScript token exports</li>
+      <li>
+        DTCG 2025.10 token files plus a resolver document for contexts
+      </li>
+      <li>
+        CSS custom properties, with contexts as selector axes
+      </li>
+      <li>
+        Tailwind theme output
+      </li>
+      <li>
+        Typed TypeScript token exports
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Transactional writes</CaseStudySubheading>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Output staged before it replaces anything installed</li>
-      <li>An interrupted run leaves its backup and cleanup sidecars in place, reports every retained path, and stops before writing over them</li>
-      <li>The output directory must sit under the config directory and cannot contain the source file</li>
-      <li>File identity is recorded before a read and compared after, so a path swapped mid-read gets rejected</li>
-      <li>The output directory and its ancestors are rechecked during a scan, which stops if one changes underneath</li>
+      <li>
+        Output staged before it replaces anything installed
+      </li>
+      <li>
+        An interrupted run leaves its backup and cleanup sidecars in place, reports every retained path, and stops before writing over them
+      </li>
+      <li>
+        The output directory must sit under the config directory and cannot contain the source file
+      </li>
+      <li>
+        File identity is recorded before a read and compared after, so a path swapped mid-read gets rejected
+      </li>
+      <li>
+        The output directory and its ancestors are rechecked during a scan, which stops if one changes underneath
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Input limits</CaseStudySubheading>
@@ -208,12 +259,24 @@ gradient: from-cyan-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li><code>primitree</code> for the unscoped CLI entry point</li>
-      <li><code>@primitree/core</code> for normalization, the token graph, diffing, and API access</li>
-      <li><code>@primitree/dtcg</code> for conversion and the CSS, Tailwind, and TypeScript emitters</li>
-      <li><code>@primitree/cli</code> for check, build, inspect, diff, and scaffolding</li>
-      <li><code>@primitree/hooks</code> for reading built tokens in React, or the live API with SWR</li>
-      <li><code>@primitree/mcp</code> for serving the graph to MCP clients</li>
+      <li>
+        <code>primitree</code> for the unscoped CLI entry point
+      </li>
+      <li>
+        <code>@primitree/core</code> for normalization, the token graph, diffing, and API access
+      </li>
+      <li>
+        <code>@primitree/dtcg</code> for conversion and the CSS, Tailwind, and TypeScript emitters
+      </li>
+      <li>
+        <code>@primitree/cli</code> for check, build, inspect, diff, and scaffolding
+      </li>
+      <li>
+        <code>@primitree/hooks</code> for reading built tokens in React, or the live API with SWR
+      </li>
+      <li>
+        <code>@primitree/mcp</code> for serving the graph to MCP clients
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>

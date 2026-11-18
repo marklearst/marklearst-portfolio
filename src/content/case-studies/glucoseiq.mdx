@@ -53,6 +53,15 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
       label="GlucoseIQ report on glucoseiq.dev"
       items={[
         {
+          src: '/images/glucoseiq-report-trace.jpg',
+          width: 1280,
+          height: 720,
+          title: '24-hour trace',
+          alt: 'glucoseiq.dev report card showing a latest reading of 99 mg/dL, steady and in range, above a 24-hour glucose trace inside the 70 to 180 mg/dL target band.',
+          caption: 'The homepage report comes from @glucoseiq/core, run during the docs build on a seeded 14-day synthetic fixture.',
+          sourceUrl: 'https://glucoseiq.dev/',
+        },
+        {
           src: '/images/glucoseiq-report-metrics.jpg',
           width: 1280,
           height: 720,
@@ -72,11 +81,21 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
     </CaseStudyParagraph>
 
     <CaseStudyMutedList className="space-y-3">
-      <li>Time in Range, AGP percentile bands, and variability metrics rewritten per project</li>
-      <li>Unit handling that silently mixes mg/dL and mmol/L in the same calculation</li>
-      <li>Analytics welded to a chart library, so the numbers can't be used anywhere else</li>
-      <li>Vendor exports from Dexcom, Libre, and Nightscout each parsed by hand</li>
-      <li>No way to test the pipeline without real patient data</li>
+      <li>
+        Time in Range, AGP percentile bands, and variability metrics rewritten per project
+      </li>
+      <li>
+        Unit handling that silently mixes mg/dL and mmol/L in the same calculation
+      </li>
+      <li>
+        Analytics welded to a chart library, so the numbers can't be used anywhere else
+      </li>
+      <li>
+        Vendor exports from Dexcom, Libre, and Nightscout each parsed by hand
+      </li>
+      <li>
+        No way to test the pipeline without real patient data
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyParagraph>
@@ -185,11 +204,21 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Connectors for Dexcom, Libre, and Nightscout, with declared capabilities per source</li>
-      <li>FHIR and Open mHealth output for systems that speak those standards</li>
-      <li>Mixed-unit-aware APIs normalize declared mg/dL and mmol/L before calculating</li>
-      <li>CSV parsing against an explicit contract for unfamiliar exports</li>
-      <li>A CLI that analyzes a mapped CSV file and can write the AGP chart as SVG, with no application code</li>
+      <li>
+        Connectors for Dexcom, Libre, and Nightscout, with declared capabilities per source
+      </li>
+      <li>
+        FHIR and Open mHealth output for systems that speak those standards
+      </li>
+      <li>
+        Mixed-unit-aware APIs normalize declared mg/dL and mmol/L before calculating
+      </li>
+      <li>
+        CSV parsing against an explicit contract for unfamiliar exports
+      </li>
+      <li>
+        A CLI that analyzes a mapped CSV file and can write the AGP chart as SVG, with no application code
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
@@ -217,10 +246,18 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Vitest thresholds at 100% for lines, functions, branches, and statements</li>
-      <li>A gzip budget on the reachable core ESM that fails the build when it's exceeded</li>
-      <li>Packed-package consumer tests, so what publishes is what gets tested</li>
-      <li>Releases wait on build, lint, type checking, coverage, size, consumer tests, and the docs build</li>
+      <li>
+        Vitest thresholds at 100% for lines, functions, branches, and statements
+      </li>
+      <li>
+        A gzip budget on the reachable core ESM that fails the build when it's exceeded
+      </li>
+      <li>
+        Packed-package consumer tests, so what publishes is what gets tested
+      </li>
+      <li>
+        Releases wait on build, lint, type checking, coverage, size, consumer tests, and the docs build
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyParagraph>
@@ -301,20 +338,38 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>AGP percentile profiles, Time in Range, and time-above and time-below episodes</li>
-      <li>Variability: MAGE, CONGA, MODD, ADRR, J-Index, M-value, GVI and PGS</li>
-      <li>Risk and control indices: GRI, GRADE, IGC, BGI, AUC</li>
-      <li>Meal response, curve shape, and active sensor percentage</li>
+      <li>
+        AGP percentile profiles, Time in Range, and time-above and time-below episodes
+      </li>
+      <li>
+        Variability: MAGE, CONGA, MODD, ADRR, J-Index, M-value, GVI and PGS
+      </li>
+      <li>
+        Risk and control indices: GRI, GRADE, IGC, BGI, AUC
+      </li>
+      <li>
+        Meal response, curve shape, and active sensor percentage
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Five packages</CaseStudySubheading>
 
     <CaseStudyMutedList className="space-y-2">
-      <li><code>@glucoseiq/core</code> for analytics, connectors, interop, and SVG renderers</li>
-      <li><code>@glucoseiq/react</code> for memoized hooks and SVG components, React 18 or newer</li>
-      <li><code>@glucoseiq/tokens</code> for the five-zone glucose palette, thresholds, CSS variables, and trend glyphs</li>
-      <li><code>@glucoseiq/testing</code> for fixed-seed synthetic data and scenario fixtures</li>
-      <li><code>@glucoseiq/cli</code> for analyzing mapped CSV without writing any application code</li>
+      <li>
+        <code>@glucoseiq/core</code> for analytics, connectors, interop, and SVG renderers
+      </li>
+      <li>
+        <code>@glucoseiq/react</code> for memoized hooks and SVG components, React 18 or newer
+      </li>
+      <li>
+        <code>@glucoseiq/tokens</code> for the five-zone glucose palette, thresholds, CSS variables, and trend glyphs
+      </li>
+      <li>
+        <code>@glucoseiq/testing</code> for fixed-seed synthetic data and scenario fixtures
+      </li>
+      <li>
+        <code>@glucoseiq/cli</code> for analyzing mapped CSV without writing any application code
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Input contracts</CaseStudySubheading>
@@ -324,10 +379,18 @@ gradient: from-pink-500/20 via-rose-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>A custom delimiter must be exactly one UTF-16 code unit, and double quote, NUL, carriage return, and line feed are rejected</li>
-      <li>Blank or BOM-only input returns an empty result, and so does a valid header-only file</li>
-      <li>Missing required headers throw, and individually invalid rows are skipped</li>
-      <li>Renderer dimensions must be finite positive numbers, and text values are escaped</li>
+      <li>
+        A custom delimiter must be exactly one UTF-16 code unit, and double quote, NUL, carriage return, and line feed are rejected
+      </li>
+      <li>
+        Blank or BOM-only input returns an empty result, and so does a valid header-only file
+      </li>
+      <li>
+        Missing required headers throw, and individually invalid rows are skipped
+      </li>
+      <li>
+        Renderer dimensions must be finite positive numbers, and text values are escaped
+      </li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
   </div>
