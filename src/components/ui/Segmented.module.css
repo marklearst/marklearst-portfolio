@@ -4,7 +4,7 @@
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 1fr);
   padding: calc(var(--space-1) / 2);
-  border: 1px solid var(--color-ink-muted);
+  border: 1px solid transparent;
   border-radius: var(--radius-2);
   background: var(--color-canvas);
 }

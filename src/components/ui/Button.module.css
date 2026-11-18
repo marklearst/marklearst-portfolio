@@ -43,7 +43,7 @@
 }
 
 .button[data-variant='secondary'] {
-  --button-border: var(--component-button-secondary-border);
+  --button-background: var(--component-button-secondary-background);
   --button-text: var(--component-button-secondary-text);
 }
 
@@ -75,20 +75,20 @@
 
 @media (hover: hover) and (pointer: fine) {
 
-  .button[data-variant='primary']:hover {
+  .button[data-variant='primary']:not(:disabled):hover {
     --button-background: var(--color-ink-secondary);
   }
 
-  .button[data-variant='accent']:hover {
+  .button[data-variant='accent']:not(:disabled):hover {
     /* Its label is light in both themes, so hover takes the fill a step darker and the label only gains contrast. */
     --button-background: oklch(from var(--component-button-accent-background) calc(l - .04) c h);
   }
 
-  .button[data-variant='secondary']:not([aria-pressed='true']):hover {
-    --button-border: var(--color-ink-muted);
+  .button[data-variant='secondary']:not(:disabled):hover {
+    --button-background: var(--color-surface-raised);
   }
 
-  .button[data-variant='ghost']:hover {
+  .button[data-variant='ghost']:not(:disabled):hover {
     --button-text: var(--color-ink-primary);
   }
 }
