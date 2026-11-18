@@ -1,12 +1,14 @@
 import { analyzeGlucose, type GlucoseReading } from '@glucoseiq/core'
 import { generateCGMSeries } from '@glucoseiq/testing'
 
+import { GLUCOSE_DEMO_START, GLUCOSE_DEMO_END, GLUCOSE_DEMO_INTERVAL, GLUCOSE_DEMO_TRACE_START } from './glucose-demo-model.mjs'
+
+export { GLUCOSE_DEMO_START, GLUCOSE_DEMO_END, GLUCOSE_DEMO_INTERVAL, GLUCOSE_DEMO_TRACE_START } from './glucose-demo-model.mjs'
+
 export type GlucoseDemoScenario = 'complete' | 'missing' | 'empty'
 
-export const GLUCOSE_DEMO_START = Date.parse('2026-05-01T00:00:00.000Z')
-export const GLUCOSE_DEMO_END = GLUCOSE_DEMO_START + 14 * 86_400_000
-export const GLUCOSE_DEMO_INTERVAL = 5 * 60_000
-export const GLUCOSE_DEMO_TRACE_START = GLUCOSE_DEMO_END - 86_400_000
+/** Only the visible report crosses the server boundary, never the full generated fixture. */
+export type GlucoseDemoData = ReturnType<typeof getGlucoseDemoData>
 
 // Include both boundaries of an exact 14-day window. The generator produces
 // end-exclusive days; stopping at its 14th day would be five minutes short.
@@ -61,4 +63,14 @@ export function getGlucoseDemoScenario(scenario: GlucoseDemoScenario) {
     traceSegments: splitGlucoseTrace(traceReadings),
     latest: readings.at(-1)?.value ?? null,
   }
+}
+
+/** The fixed interval is shared by the chart, so the payload needs values and positions, not repeated timestamps or units. */
+export function getGlucoseDemoData(scenario: GlucoseDemoScenario) {
+  const { report, traceReadings, latest } = getGlucoseDemoScenario(scenario)
+  const trace = traceReadings.map(({ timestamp, value }) => [
+    (Date.parse(timestamp) - GLUCOSE_DEMO_TRACE_START) / GLUCOSE_DEMO_INTERVAL,
+    value,
+  ] as const)
+  return { report, trace, latest }
 }
