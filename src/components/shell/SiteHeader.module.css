@@ -1,7 +1,9 @@
 .header {
-  position: fixed;
+  position: sticky;
   inset: 0 0 auto;
-  z-index: 40;
+  /* Keep the usual page position; additional rows reserve their own space. */
+  margin-bottom: calc(-1 * var(--site-header-rest-height));
+  z-index: var(--layer-header);
   background: color-mix(in srgb, var(--color-canvas) 70%, transparent);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
@@ -9,6 +11,7 @@
 
 .inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -23,7 +26,8 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--space-2);
-  min-width: 0;
+  min-width: min-content;
+  max-width: 100%;
 }
 
 @media (max-width: 1060px) {
@@ -40,15 +44,19 @@
   }
 }
 
+/* raw: media queries cannot read tokens; the full header needs 656px to fit its content and gutters. */
+@media (max-width: 655px) {
+
+  .controls {
+    flex: 1 1 0;
+  }
+}
+
 @media (max-width: 479px) {
 
   .inner {
     width: calc(100% - 32px);
     min-height: 72px;
     gap: 8px;
-  }
-
-  .controls {
-    flex: 1 1 0;
   }
 }

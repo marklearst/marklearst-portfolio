@@ -55,7 +55,7 @@ A literal in the meaning layer is PT1003. A component token that skips the meani
 
 | Output | For |
 |---|---|
-| `src/styles/generated/tokens.css` | Primitree's CSS: defaults on `:root`, `[data-theme='light']`, `[data-motion='reduced']`, `[data-motion='slow']`, and the site's media query fallback for reduced motion |
+| `src/styles/generated/tokens.css` | Primitree's CSS: defaults on `:root`, `[data-theme='light']`, `[data-motion='reduced']`, `[data-motion='slow']`, and media query fallbacks for system light appearance and reduced motion |
 | `src/styles/generated/theme.css` | The adapter names, as a Tailwind theme and as plain custom properties |
 | `src/tokens/generated/tokens.ts` | Primitree's TypeScript: `TokenPath`, `tokenVars`, `tokenValues` |
 | `src/tokens/generated/site.tokens.json` | The default context as one document, which `primitree check` and `primitree inspect` read |
@@ -76,7 +76,7 @@ Two site adapters cover what Primitree doesn't emit yet. Both are small, and bot
 
 Letter spacing is stored as a number, a multiple of the font size, because DTCG dimensions take px or rem. The adapter multiplies it by `1em`.
 
-The light theme's tokens pass the policy, but nothing sets `data-theme` yet. Code that still assumes a dark page has to move onto tokens before the switch ships.
+The footer exposes System, Light and Dark. The layout applies the saved choice or system preference before body paint; the controller follows later preference changes and resolves active inspection evidence again. System removes the stored override. `css-adapter.json` supplies independent theme and motion media query fallbacks when their data attributes are absent, so an explicit context always wins.
 
 ## The inspector reads this
 

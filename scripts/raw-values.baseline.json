@@ -1,7 +1,7 @@
 {
-  "total": 1173,
+  "total": 1170,
   "totals": {
-    "spacing": 682,
+    "spacing": 680,
     "font": 161,
     "font-size": 71,
     "radius": 64,
@@ -14,7 +14,7 @@
     "tailwind-scale": 6,
     "font-family": 5,
     "tailwind-type": 4,
-    "z-index": 2
+    "z-index": 1
   },
   "files": {
     "src/app/artifacts/[slug]/opengraph-image.tsx": {
@@ -234,8 +234,7 @@
     },
     "src/components/shell/SiteHeader.module.css": {
       "breakpoint": 3,
-      "spacing": 2,
-      "z-index": 1
+      "spacing": 2
     },
     "src/components/ui/DisclosureSummary.module.css": {
       "font": 2,
@@ -259,7 +258,7 @@
       "font-weight": 1,
       "line-height": 1,
       "radius": 1,
-      "spacing": 4,
+      "spacing": 2,
       "tailwind-scale": 1,
       "tailwind-type": 1,
       "z-index": 1
