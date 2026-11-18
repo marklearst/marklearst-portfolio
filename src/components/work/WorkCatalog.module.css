@@ -90,7 +90,7 @@
 
 .withPreview .projectBody {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, .96fr);
   column-gap: 36px;
 }
 
