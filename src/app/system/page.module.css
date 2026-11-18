@@ -1,0 +1,13 @@
+.page { padding: calc(var(--space-16) * 2) var(--space-10) var(--space-16); }
+.container { width: min(100%, calc(var(--space-16) * 20)); margin-inline: auto; }
+.introduction { max-width: calc(var(--space-16) * 12); margin-bottom: var(--space-12); }
+.introduction h1 { margin: 0; font: var(--font-weight-medium) var(--text-title)/var(--leading-title) var(--font-body); letter-spacing: var(--tracking-title); text-wrap: balance; }
+.introduction p { margin: var(--space-6) 0 0; color: var(--color-ink-secondary); font: var(--font-weight-regular) var(--text-body)/var(--leading-body) var(--font-body); text-wrap: pretty; }
+.notes { display: grid; gap: var(--space-4); max-width: calc(var(--space-16) * 12); padding-top: var(--space-8); color: var(--color-ink-secondary); font: var(--font-weight-regular) var(--text-body)/var(--leading-body) var(--font-body); }
+.notes p { margin: 0; }
+.notes nav { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); }
+.notes a { display: inline-flex; align-items: center; gap: var(--space-2); min-height: calc(var(--space-10) + var(--space-1)); color: var(--color-ink-primary); font-size: var(--text-ui); text-decoration: none; }
+.notes a:focus-visible { outline: 2px solid var(--color-ink-primary); outline-offset: var(--space-1); }
+@media (hover: hover) and (pointer: fine) { .notes a:hover { text-decoration: underline; text-underline-offset: var(--space-1); } }
+/* raw: viewport breakpoints cannot read tokens */
+@media (max-width: 800px) { .page { padding: calc(var(--space-16) + var(--space-12)) var(--space-6) var(--space-12); } }

@@ -1,0 +1,100 @@
+.workbench {
+  container: token-graph / inline-size;
+  overflow: hidden;
+  border-radius: var(--radius-5);
+  background: var(--color-surface-raised);
+  color: var(--color-ink-primary);
+  font: var(--font-weight-regular) var(--text-caption)/var(--leading-caption) var(--font-body);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-5) var(--space-5) 0;
+}
+
+.toolbar label { font-weight: var(--font-weight-medium); }
+.toolbar select {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  min-height: calc(var(--space-10) + var(--space-1));
+  padding-inline: var(--space-3);
+  border: 1px solid var(--color-ink-muted);
+  border-radius: var(--radius-2);
+  background: var(--color-surface);
+  color: var(--color-ink-primary);
+  font: var(--font-weight-regular) var(--text-ui)/var(--leading-ui) var(--font-body);
+}
+
+.context { margin: 0; color: var(--color-ink-muted); }
+.help { margin: var(--space-3) var(--space-5) var(--space-5); color: var(--color-ink-secondary); text-wrap: pretty; }
+.stage {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-10);
+  min-height: calc(var(--space-16) * 5);
+  margin: var(--space-2);
+  padding: var(--space-5);
+  border-radius: calc(var(--radius-5) - var(--space-2));
+  background: var(--color-canvas);
+}
+.stage[hidden] { display: none; }
+.builtLight { display: none; }
+:global(html[data-theme='light']) .builtDark { display: none; }
+:global(html[data-theme='light']) .builtLight { display: block; }
+@media (prefers-color-scheme: light) {
+  :global(html:not([data-theme])) .builtDark { display: none; }
+  :global(html:not([data-theme])) .builtLight { display: block; }
+}
+
+.wires { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.wires path { fill: none; stroke: var(--color-accent-primary); stroke-width: 1.5; stroke-dasharray: 1; }
+.wires path[data-broken] { stroke: var(--color-accent-danger); stroke-dasharray: .06 .04; }
+.wires path[data-propagation] { stroke: var(--color-ink-primary); stroke-width: 3; stroke-dasharray: .15 1; opacity: 0; }
+.column { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.layerHeading h3 { margin: 0; font: var(--font-weight-medium) var(--text-ui)/var(--leading-ui) var(--font-body); }
+.layerHeading p { margin: 0; color: var(--color-ink-muted); }
+.nodes { display: grid; align-content: center; flex: 1; gap: var(--space-3); padding-top: var(--space-5); }
+.node {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: calc(var(--space-10) + var(--space-1));
+  padding: var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-2);
+  background: var(--color-surface-raised);
+  color: var(--color-ink-primary);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color var(--duration-feedback) var(--ease-out);
+}
+
+.node[aria-pressed='true'], .node[data-selected] { border-color: var(--color-ink-primary); }
+.node[data-static] { cursor: default; }
+.node code { padding: 0; background: none; color: inherit; font: var(--font-weight-regular) var(--text-code)/var(--leading-code) var(--font-mono); overflow-wrap: anywhere; }
+.value { display: flex; align-items: center; gap: var(--space-2); color: var(--color-ink-secondary); }
+.swatch { flex: none; width: var(--space-3); height: var(--space-3); border-radius: calc(var(--radius-1) / 2); }
+.finding { color: var(--color-accent-danger); }
+.empty { margin: 0; color: var(--color-ink-muted); }
+.summary { margin: var(--space-4) var(--space-5); color: var(--color-ink-muted); font-variant-numeric: tabular-nums; }
+.experiment { display: grid; gap: var(--space-2); padding: 0 var(--space-5) var(--space-3); }
+.workbench :is(button, select):focus-visible { outline: 2px solid var(--color-ink-primary); outline-offset: 2px; }
+
+@media (hover: hover) and (pointer: fine) {
+  button.node:hover { background: var(--color-surface); }
+}
+
+/* raw: container breakpoints cannot read tokens */
+@container token-graph (max-width: 640px) {
+  .stage { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+  .nodes { padding-top: var(--space-3); }
+  .toolbar select { flex-basis: 100%; }
+}
