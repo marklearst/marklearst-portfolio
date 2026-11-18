@@ -9,6 +9,8 @@ const withMDX = createMDX({
 })
 
 const nextConfig: NextConfig = {
+  // Keep production verification separate from a running development server.
+  distDir: process.env.PORTFOLIO_BUILD_DIR ?? '.next',
   agentRules: false,
   reactCompiler: true,
   pageExtensions: ['ts', 'tsx', 'mdx'],
