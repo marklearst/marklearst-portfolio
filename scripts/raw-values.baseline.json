@@ -1,13 +1,13 @@
 {
-  "total": 1149,
+  "total": 1134,
   "totals": {
-    "spacing": 666,
+    "spacing": 654,
     "font": 157,
     "font-size": 71,
-    "radius": 63,
+    "radius": 62,
     "line-height": 53,
     "font-weight": 41,
-    "breakpoint": 30,
+    "breakpoint": 28,
     "letter-spacing": 20,
     "color": 18,
     "shadow": 14,
@@ -188,9 +188,8 @@
       "spacing": 54
     },
     "src/components/home/Hero.module.css": {
-      "breakpoint": 4,
-      "radius": 1,
-      "spacing": 17
+      "breakpoint": 2,
+      "spacing": 5
     },
     "src/components/home/Testimonials.module.css": {
       "breakpoint": 1,
