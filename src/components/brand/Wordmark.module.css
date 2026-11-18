@@ -69,14 +69,10 @@
   width: var(--width);
   opacity: var(--presence);
   filter: var(--veil);
-  transition:
-    width var(--travel) var(--curve),
-    opacity var(--fade) var(--ease-out),
-    filter var(--fade) var(--ease-out);
-  transition-delay: calc(var(--in) * var(--step-in) + var(--out) * var(--step-out));
 }
 
-@media (min-width: 480px) {
+/* Expand with the full navigation only when both fit inside the header gutters. */
+@media (min-width: 656px) {
 
   .link {
     width: 168px;
@@ -86,6 +82,15 @@
 
   .wordmark {
     gap: 4px;
+  }
+
+  /* Animate only while the link reserves room for the full name. A compact header must fold immediately. */
+  .arriving {
+    transition:
+      width var(--travel) var(--curve),
+      opacity var(--fade) var(--ease-out),
+      filter var(--fade) var(--ease-out);
+    transition-delay: calc(var(--in) * var(--step-in) + var(--out) * var(--step-out));
   }
 
   /* Written out: at the top of a page, and whenever the folded wordmark takes keyboard focus. The letters beside
@@ -103,7 +108,7 @@
   }
 }
 
-@media (hover: hover) and (pointer: fine) and (min-width: 480px) {
+@media (hover: hover) and (pointer: fine) and (min-width: 656px) {
 
   /* Pointing at the folded wordmark opens it. */
   .link[data-folded]:hover {

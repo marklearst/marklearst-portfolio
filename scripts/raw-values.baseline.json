@@ -1,18 +1,18 @@
 {
-  "total": 1037,
+  "total": 1026,
   "totals": {
     "spacing": 600,
-    "font": 136,
+    "font": 134,
     "font-size": 71,
     "radius": 54,
     "line-height": 53,
     "font-weight": 41,
     "breakpoint": 27,
     "letter-spacing": 20,
-    "shadow": 10,
-    "color": 9,
     "tailwind-scale": 6,
+    "color": 5,
     "font-family": 5,
+    "shadow": 5,
     "tailwind-type": 4,
     "z-index": 1
   },
@@ -193,11 +193,8 @@
     },
     "src/components/navigation/PrimaryNav.module.css": {
       "breakpoint": 1,
-      "color": 4,
-      "font": 2,
       "font-size": 1,
       "letter-spacing": 1,
-      "shadow": 5,
       "spacing": 2
     },
     "src/components/navigation/RelatedNavigation.module.css": {
