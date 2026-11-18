@@ -1,5 +1,5 @@
 {
-  "total": 1046,
+  "total": 1037,
   "totals": {
     "spacing": 600,
     "font": 136,
@@ -9,8 +9,8 @@
     "font-weight": 41,
     "breakpoint": 27,
     "letter-spacing": 20,
-    "color": 18,
     "shadow": 10,
+    "color": 9,
     "tailwind-scale": 6,
     "font-family": 5,
     "tailwind-type": 4,
@@ -170,9 +170,6 @@
       "radius": 9,
       "shadow": 2,
       "spacing": 90
-    },
-    "src/components/glucose/GlucoseDemo.tsx": {
-      "color": 9
     },
     "src/components/home/A11yReadinessPreview.module.css": {
       "font": 23,

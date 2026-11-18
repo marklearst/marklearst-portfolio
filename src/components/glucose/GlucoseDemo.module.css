@@ -151,6 +151,7 @@
 }
 
 .chart svg {
+  stroke: none;
   display: block;
   width: 100%;
   height: auto;
@@ -159,16 +160,39 @@
 }
 
 .chart svg text {
+  stroke: none;
   fill: var(--demo-muted);
   font-size: 10px;
   font-family: var(--font-ui);
   font-variant-numeric: tabular-nums;
 }
 
+.chart svg.inspectableChart {
+  stroke: var(--component-glucose-trace);
+}
+
 .chart svg .chartAnnotation {
   fill: var(--color-ink-secondary);
   font-size: 12px;
   font-family: var(--font-body);
+}
+
+.targetZone {
+  fill: var(--component-glucose-inRange);
+  stroke: none;
+}
+
+.gridLine {
+  stroke: var(--component-glucose-grid);
+}
+
+.chartCursor {
+  stroke: var(--component-glucose-cursor);
+}
+
+.selectedReading {
+  fill: var(--component-glucose-trace);
+  stroke: var(--component-glucose-pointOutline);
 }
 
 .chart figcaption {
@@ -678,4 +702,18 @@
 
 :global([data-motion='reduced']) .controls button:active {
   transform: none;
+}
+
+/* Loading and download failures describe the request, not the quality of the previous report. */
+.demo[data-request] .status {
+  background: var(--color-surface);
+}
+
+.demo[data-request] .statusIcon {
+  border-color: var(--color-border-subtle);
+  color: var(--color-ink-secondary);
+}
+
+.demo[data-request] .status p, .demo[data-request] .coverage {
+  color: var(--color-ink-secondary);
 }

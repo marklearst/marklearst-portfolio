@@ -3,17 +3,17 @@
 import { ActivityIcon } from '@/components/ui/Icon'
 import DisclosureSummary from '@/components/ui/DisclosureSummary'
 
-import { useId, useMemo, useState, type PointerEvent } from 'react'
+import { useId, useMemo, useRef, useState, type PointerEvent } from 'react'
 import {
-  getGlucoseDemoScenario,
   GLUCOSE_DEMO_END,
   GLUCOSE_DEMO_INTERVAL,
   GLUCOSE_DEMO_TRACE_START,
-  type GlucoseDemoScenario,
-} from '@/lib/glucose-demo'
+} from '@/lib/glucose-demo-model.mjs'
+import type { GlucoseDemoData, GlucoseDemoScenario } from '@/lib/glucose-demo'
 import styles from './GlucoseDemo.module.css'
 
 interface GlucoseDemoProps {
+  initial: GlucoseDemoData
   compact?: boolean
   className?: string
 }
@@ -31,9 +31,7 @@ const formatNumber = (value: number | null, digits = 0) => (
 const plot = { left: 34, top: 14, width: 514, height: 139 }
 const traceDuration = GLUCOSE_DEMO_END - GLUCOSE_DEMO_TRACE_START
 const traceIntervals = traceDuration / GLUCOSE_DEMO_INTERVAL
-const xAt = (timestamp: string) => (
-  plot.left + ((Date.parse(timestamp) - GLUCOSE_DEMO_TRACE_START) / traceDuration) * plot.width
-)
+const xAt = (interval: number) => plot.left + (interval / traceIntervals) * plot.width
 const yAt = (value: number, height: number) => plot.top + ((260 - value) / 220) * height
 const inspectionTime = new Intl.DateTimeFormat('en-US', {
   month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC',
@@ -45,7 +43,7 @@ function GlucoseTrace({
   scenario,
   summary,
 }: {
-  demo: ReturnType<typeof getGlucoseDemoScenario>
+  demo: GlucoseDemoData
   compact: boolean
   scenario: GlucoseDemoScenario
   summary: string
@@ -54,19 +52,23 @@ function GlucoseTrace({
   const [selectedInterval, setSelectedInterval] = useState(traceIntervals)
   const height = compact ? 96 : plot.height
   const valid = demo.report.valid
-  const readingsByTime = useMemo(
-    () => new Map(demo.traceReadings.map((reading) => [Date.parse(reading.timestamp), reading])),
-    [demo.traceReadings],
-  )
-  const paths = useMemo(() => demo.traceSegments.map((segment) => ({
-    timestamp: segment[0].timestamp,
-    d: segment.map((reading, index) => `${index === 0 ? 'M' : 'L'}${xAt(reading.timestamp).toFixed(2)},${yAt(reading.value, height).toFixed(2)}`).join(' '),
-  })), [demo.traceSegments, height])
+  const readingsByInterval = useMemo(() => new Map(demo.trace), [demo.trace])
+  const paths = useMemo(() => {
+    const segments: { interval: number; d: string }[] = []
+    let previous = -Infinity
+    for (const [interval, value] of demo.trace) {
+      const point = `${xAt(interval).toFixed(2)},${yAt(value, height).toFixed(2)}`
+      if (interval - previous > 1) segments.push({ interval, d: `M${point}` })
+      else segments[segments.length - 1].d += ` L${point}`
+      previous = interval
+    }
+    return segments
+  }, [demo.trace, height])
   const timestamp = GLUCOSE_DEMO_TRACE_START + selectedInterval * GLUCOSE_DEMO_INTERVAL
-  const selectedReading = readingsByTime.get(timestamp)
+  const selectedReading = readingsByInterval.get(selectedInterval)
   const selectedX = plot.left + (selectedInterval / traceIntervals) * plot.width
   const selectedTime = `${inspectionTime.format(timestamp)} UTC`
-  const selectedValue = selectedReading ? `${selectedReading.value} mg/dL` : 'No reading'
+  const selectedValue = selectedReading !== undefined ? `${selectedReading} mg/dL` : 'No reading'
 
   function inspectPointer(event: PointerEvent<SVGSVGElement>) {
     if (!valid || event.pointerType !== 'mouse') return
@@ -86,16 +88,17 @@ function GlucoseTrace({
       <svg
         viewBox={`0 0 560 ${height + 45}`}
         role="img"
+        data-inspect="Glucose trace"
         aria-labelledby={`${id}-chart-title ${id}-chart-desc`}
         onPointerMove={inspectPointer}
-        className={valid ? styles.inspectableChart : undefined}
+        className={demo.trace.length ? styles.inspectableChart : undefined}
       >
         <title id={`${id}-chart-title`}>Synthetic glucose trace</title>
         <desc id={`${id}-chart-desc`}>{summary}</desc>
-        <rect x={plot.left} y={yAt(180, height)} width={plot.width} height={yAt(70, height) - yAt(180, height)} fill="#a9dc76" fillOpacity="0.045" />
+        <rect className={styles.targetZone} x={plot.left} y={yAt(180, height)} width={plot.width} height={yAt(70, height) - yAt(180, height)} fillOpacity="0.045" />
         {[250, 180, 70].map((value) => (
           <g key={value}>
-            <line x1={plot.left} x2={plot.left + plot.width} y1={yAt(value, height)} y2={yAt(value, height)} stroke="#ffffff" strokeOpacity="0.12" strokeDasharray={value === 250 ? undefined : '3 5'} />
+            <line className={styles.gridLine} x1={plot.left} x2={plot.left + plot.width} y1={yAt(value, height)} y2={yAt(value, height)} strokeDasharray={value === 250 ? undefined : '3 5'} />
             <text x="24" y={yAt(value, height) + 3} textAnchor="end">{value}</text>
           </g>
         ))}
@@ -106,10 +109,9 @@ function GlucoseTrace({
         ))}
         {paths.map((path) => (
           <path
-            key={path.timestamp}
+            key={path.interval}
             d={path.d}
             fill="none"
-            stroke="#78dce8"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -120,8 +122,8 @@ function GlucoseTrace({
         {!valid && <text className={styles.chartAnnotation} x={plot.left + plot.width / 2} y={height / 2 + 18} textAnchor="middle">No readings in this sample</text>}
         {valid && (
           <g aria-hidden="true" pointerEvents="none">
-            <line x1={selectedX} x2={selectedX} y1={plot.top} y2={plot.top + height} stroke="#f3f5f4" strokeOpacity="0.35" strokeDasharray="3 4" vectorEffect="non-scaling-stroke" />
-            {selectedReading && <circle cx={selectedX} cy={yAt(selectedReading.value, height)} r="4" fill="#78dce8" stroke="#131719" strokeWidth="2" vectorEffect="non-scaling-stroke" />}
+            <line className={styles.chartCursor} x1={selectedX} x2={selectedX} y1={plot.top} y2={plot.top + height} strokeDasharray="3 4" vectorEffect="non-scaling-stroke" />
+            {selectedReading !== undefined && <circle className={styles.selectedReading} cx={selectedX} cy={yAt(selectedReading, height)} r="4" strokeWidth="2" vectorEffect="non-scaling-stroke" />}
           </g>
         )}
       </svg>
@@ -150,24 +152,58 @@ function GlucoseTrace({
   )
 }
 
-export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProps) {
-  const [scenario, setScenario] = useState<GlucoseDemoScenario>('complete')
+export default function GlucoseDemo({ initial, compact = false, className = '' }: GlucoseDemoProps) {
+  const [{ scenario, demo }, setSample] = useState({ scenario: 'complete' as GlucoseDemoScenario, demo: initial })
   const [hasInteracted, setHasInteracted] = useState(false)
-  const demo = useMemo(() => getGlucoseDemoScenario(scenario), [scenario])
+  const [pending, setPending] = useState<GlucoseDemoScenario | null>(null)
+  const [loadError, setLoadError] = useState(false)
+  const request = useRef(0)
+  const root = useRef<HTMLElement>(null)
+
+  async function selectScenario(next: GlucoseDemoScenario, trigger: HTMLButtonElement) {
+    const ticket = ++request.current
+    setLoadError(false)
+    if (next === scenario) {
+      setPending(null)
+      return
+    }
+    setPending(next)
+    try {
+      const { getGlucoseDemoData } = await import('@/lib/glucose-demo')
+      if (ticket !== request.current) return
+      const nextDemo = getGlucoseDemoData(next)
+      // A visitor may have reached the chart while its next sample loaded.
+      // Keep that control mounted; if the result disables it, return to the choice that requested it.
+      const focused = document.activeElement
+      if (!nextDemo.report.valid && focused instanceof HTMLInputElement && focused.type === 'range' && root.current?.contains(focused)) {
+        trigger.focus({ preventScroll: true })
+      }
+      setSample({ scenario: next, demo: nextDemo })
+      setHasInteracted(true)
+    } catch {
+      if (ticket === request.current) setLoadError(true)
+    } finally {
+      if (ticket === request.current) setPending(null)
+    }
+  }
   const { report } = demo
   const valid = report.valid
   const coverage = valid ? report.dataSufficiency.activePercent : 0
   const range = report.timeInRange
   const bands = [
-    { label: 'Below 70', value: range ? range.veryLow.percentage + range.low.percentage : 0, color: '#ff6188' },
-    { label: '70–180', value: range?.inRange.percentage ?? 0, color: '#a9dc76' },
-    { label: 'Above 180', value: range ? range.high.percentage + range.veryHigh.percentage : 0, color: '#ffd866' },
+    { label: 'Below 70', value: range ? range.veryLow.percentage + range.low.percentage : 0, color: 'var(--component-glucose-low)' },
+    { label: '70–180', value: range?.inRange.percentage ?? 0, color: 'var(--component-glucose-inRange)' },
+    { label: 'Above 180', value: range ? range.high.percentage + range.veryHigh.percentage : 0, color: 'var(--component-glucose-high)' },
   ]
-  const statusTitle = !valid
-    ? 'No readings to analyze'
-    : report.dataSufficiency.meetsCGMStandard
-      ? 'Enough data for a 14-day report'
-      : 'Usable readings. Incomplete coverage.'
+  const statusTitle = pending
+    ? 'Loading sample…'
+    : loadError
+      ? 'Sample could not load. Choose it again to retry.'
+      : !valid
+        ? 'No readings to analyze'
+        : report.dataSufficiency.meetsCGMStandard
+          ? 'Enough data for a 14-day report'
+          : 'Usable readings. Incomplete coverage.'
   const statusDetail = !valid
     ? 'Values stay empty until readings are available.'
     : scenario === 'missing'
@@ -175,13 +211,15 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
       : 'All expected readings are present in this synthetic sample.'
   const chartSummary = !valid
     ? 'No glucose readings are available. The chart is empty.'
-    : `The final 24 hours of a 14-day synthetic sample, in mg/dL. ${demo.traceReadings.length} readings are shown. ${scenario === 'missing' ? 'The line is interrupted from 06:00 to 14:00 UTC because readings are missing.' : 'The line contains no missing intervals.'} The latest reading is ${demo.latest} mg/dL.`
+    : `The final 24 hours of a 14-day synthetic sample, in mg/dL. ${demo.trace.length} readings are shown. ${scenario === 'missing' ? 'The line is interrupted from 06:00 to 14:00 UTC because readings are missing.' : 'The line contains no missing intervals.'} The latest reading is ${demo.latest} mg/dL.`
 
   return (
     <section
+      ref={root}
       className={`${styles.demo} ${compact ? styles.compact : ''} ${className}`}
       aria-label="Interactive GlucoseIQ example"
       data-scenario={scenario}
+      data-request={pending ? 'loading' : loadError ? 'failed' : undefined}
     >
       <div className={styles.heading}>
         <div className={styles.headingLabel}>
@@ -191,24 +229,25 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
         <span className={styles.synthetic}>Synthetic data</span>
       </div>
 
-      <div className={styles.controls} role="group" aria-label="Choose a sample data scenario">
+      <div className={styles.controls} role="group" aria-label="Choose a sample data scenario" aria-busy={pending !== null}>
         {scenarios.map((option) => (
           <button
             key={option.id}
             type="button"
             aria-pressed={scenario === option.id}
-            onClick={() => {
-              if (scenario === option.id) return
-              setHasInteracted(true)
-              setScenario(option.id)
-            }}
+            onClick={event => void selectScenario(option.id, event.currentTarget)}
           >
             {option.label}
           </button>
         ))}
       </div>
 
-      <div key={scenario} className={hasInteracted ? styles.changed : undefined}>
+      <div
+        className={hasInteracted ? styles.changed : undefined}
+        onAnimationEnd={event => {
+          if (event.target === event.currentTarget) setHasInteracted(false)
+        }}
+      >
         <dl className={styles.metrics}>
           <div className={styles.primaryMetric}>
             <dt>Latest reading</dt>
@@ -243,7 +282,7 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
       </div>
 
       <div className={styles.status} role="status" aria-live="polite" aria-atomic="true">
-        <span className={styles.statusIcon} aria-hidden="true">{!valid ? '○' : report.dataSufficiency.meetsCGMStandard ? '✓' : '!'}</span>
+        <span className={styles.statusIcon} aria-hidden="true">{pending ? '…' : loadError ? '!' : !valid ? '○' : report.dataSufficiency.meetsCGMStandard ? '✓' : '!'}</span>
         <div>
           <p>{statusTitle}</p>
           {!compact && <p className={styles.statusDetail}>{statusDetail}</p>}
@@ -256,12 +295,10 @@ export function GlucoseDemo({ compact = false, className = '' }: GlucoseDemoProp
           <DisclosureSummary>Inspect the computed report</DisclosureSummary>
           <div className={styles.reportBody}>
             <p>Output from <code>analyzeGlucose()</code> using a fixed seed and a 14-day UTC window. No patient data. Non-finite numbers appear as null in JSON. The optional percentile profile is disabled for this example.</p>
-            <pre tabIndex={0} aria-label="Computed GlucoseIQ report in JSON"><code>{JSON.stringify(report, null, 2)}</code></pre>
+            <pre tabIndex={0} role="group" aria-label="Computed GlucoseIQ report in JSON"><code>{JSON.stringify(report, null, 2)}</code></pre>
           </div>
         </details>
       )}
     </section>
   )
 }
-
-export default GlucoseDemo

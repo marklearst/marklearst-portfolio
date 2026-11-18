@@ -2,6 +2,8 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
   getGlucoseDemoScenario,
+  getGlucoseDemoData,
+  GLUCOSE_DEMO_TRACE_START,
   GLUCOSE_DEMO_INTERVAL,
   splitGlucoseTrace,
 } from './glucose-demo.ts'
@@ -47,3 +49,21 @@ test('trace breaks at even one absent sample', () => {
   const segments = splitGlucoseTrace([traceReadings[0], traceReadings[2]])
   assert.equal(segments.length, 2)
 })
+
+for (const scenario of ['complete', 'missing', 'empty']) {
+  test(`${scenario}: the visible payload preserves every plotted reading and gap`, () => {
+    const full = getGlucoseDemoScenario(scenario)
+    const visible = getGlucoseDemoData(scenario)
+    assert.deepEqual(visible.report, full.report)
+    assert.equal(visible.latest, full.latest)
+    assert.deepEqual(
+      visible.trace.map(([interval, value]) => ({
+        timestamp: new Date(GLUCOSE_DEMO_TRACE_START + interval * GLUCOSE_DEMO_INTERVAL).toISOString(),
+        value,
+      })),
+      full.traceReadings.map(({ timestamp, value }) => ({ timestamp, value })),
+    )
+    assert.equal('readings' in visible, false)
+    assert.equal('traceSegments' in visible, false)
+  })
+}
