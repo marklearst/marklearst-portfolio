@@ -95,7 +95,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
                 <div className={styles.sourceTitle}><span>Source token</span><span>tokens.json</span></div>
                 {!compact && <>
                   <code className={styles.tokenPath}>semantic.action</code>
-                  <pre className={styles.tokenCode} tabIndex={0} aria-label="Semantic action token input"><code>{JSON.stringify(scenario.tokens.semantic.action, null, 2)}</code></pre>
+                  <pre className={styles.tokenCode} tabIndex={0} role="group" aria-label="Semantic action token input"><code>{JSON.stringify(scenario.tokens.semantic.action, null, 2)}</code></pre>
                 </>}
                 <TokenTrace scenario={scenario} />
               </div>
@@ -119,7 +119,7 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
                 ) : (
                   <>
                     <div className={styles.outputTitle}>{compact ? 'Generated CSS excerpt' : 'generated/css/tokens.css'}</div>
-                    <pre className={styles.cssOutput} tabIndex={0} aria-label="Generated CSS excerpt"><code>{visibleCss}</code></pre>
+                    <pre className={styles.cssOutput} tabIndex={0} role="group" aria-label="Generated CSS excerpt"><code>{visibleCss}</code></pre>
                     {!compact && <p className={styles.consequence}>The emitted CSS keeps the semantic reference.</p>}
                   </>
                 )}
@@ -135,21 +135,21 @@ export function PrimitreeGuardrailDemo({ className = '', compact = false }: Prim
           <p>The two runs use the same configuration. Only <code>semantic.action.$value</code> changes.</p>
           <div className={styles.inspectFile}>
             <span><code>primitree.config.ts</code></span>
-            <pre tabIndex={0} aria-label="Full Primitree configuration"><code>{PRIMITREE_DEMO.configSource}</code></pre>
+            <pre tabIndex={0} role="group" aria-label="Full Primitree configuration"><code>{PRIMITREE_DEMO.configSource}</code></pre>
           </div>
           <div className={styles.inspectFile}>
             <span><code>tokens.json</code> <span className={styles.separator}>·</span> {labels[selectedId]}</span>
-            <pre tabIndex={0} aria-label="Full token input"><code>{selected.tokensSource}</code></pre>
+            <pre tabIndex={0} role="group" aria-label="Full token input"><code>{selected.tokensSource}</code></pre>
           </div>
           <div className={styles.inspectFile}>
             <span><code>primitree check --format json</code> <span className={styles.separator}>·</span> <code>exit {selected.check.exitCode}</code></span>
-            <pre tabIndex={0} aria-label="Recorded Primitree check result"><code>{JSON.stringify(selected.checkReport, null, 2)}</code></pre>
+            <pre tabIndex={0} role="group" aria-label="Recorded Primitree check result"><code>{JSON.stringify(selected.checkReport, null, 2)}</code></pre>
           </div>
           <div className={styles.inspectFile}>
             <span><code>primitree build</code> <span className={styles.separator}>·</span> <code>exit {selected.build.exitCode}</code></span>
-            <pre tabIndex={0} aria-label="Recorded Primitree build output"><code>{selected.build.stdout || selected.build.stderr}</code></pre>
+            <pre tabIndex={0} role="group" aria-label="Recorded Primitree build output"><code>{selected.build.stdout || selected.build.stderr}</code></pre>
           </div>
-          {selected.css && <div className={styles.inspectFile}><span><code>generated/css/tokens.css</code> <span className={styles.separator}>·</span> complete file</span><pre tabIndex={0} aria-label="Complete generated CSS"><code>{selected.css}</code></pre></div>}
+          {selected.css && <div className={styles.inspectFile}><span><code>generated/css/tokens.css</code> <span className={styles.separator}>·</span> complete file</span><pre tabIndex={0} role="group" aria-label="Complete generated CSS"><code>{selected.css}</code></pre></div>}
         </div>
       </details>
 

@@ -12,15 +12,17 @@ export const metadata: Metadata = {
 export default async function ArtifactsPage() {
   const artifacts = await getArtifacts()
   return (
-    <main className={styles.page}>
-      <div className={`${styles.container} ${styles.index}`}>
-        <header className={styles.indexHeader}>
-          <h1>Artifacts</h1>
-          <p>Notes from building: token contracts, accessibility tooling, motion, and agent workflows.</p>
-        </header>
-        <div>{artifacts.map((artifact) => <ArtifactCard key={artifact.slug} slug={artifact.slug} title={artifact.title} summary={artifact.summary} tags={artifact.tags} readingTimeMinutes={artifact.readingTime.minutes} publishedAt={artifact.publishedAt} pinned={artifact.pinned} />)}</div>
-      </div>
+    <div className={styles.page}>
+      <main>
+        <div className={`${styles.container} ${styles.index}`}>
+          <header className={styles.indexHeader}>
+            <h1>Artifacts</h1>
+            <p>Notes from building: token contracts, accessibility tooling, motion, and agent workflows.</p>
+          </header>
+          <div>{artifacts.map((artifact) => <ArtifactCard key={artifact.slug} slug={artifact.slug} title={artifact.title} summary={artifact.summary} tags={artifact.tags} readingTimeMinutes={artifact.readingTime.minutes} publishedAt={artifact.publishedAt} pinned={artifact.pinned} />)}</div>
+        </div>
+      </main>
       <Footer />
-    </main>
+    </div>
   )
 }

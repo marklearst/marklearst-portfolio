@@ -165,6 +165,11 @@ a {
   outline: 2px solid var(--color-ink-primary);
   outline-offset: 4px;
 }
+/* Scrolling tables keep their focus ring inside the clipped surface. */
+:where(table[tabindex]):focus-visible {
+  outline: 2px solid var(--color-ink-primary);
+  outline-offset: -2px;
+}
 a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 [data-brand-icon] { color: var(--color-accent-primary); }
 [data-action-icon] { overflow: visible; }
