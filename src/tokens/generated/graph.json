@@ -78,6 +78,7 @@
   "color.green.700": "--color-green-700",
   "color.neutral.0": "--color-neutral-0",
   "color.neutral.100": "--color-neutral-100",
+  "color.neutral.1000": "--color-neutral-1000",
   "color.neutral.150": "--color-neutral-150",
   "color.neutral.200": "--color-neutral-200",
   "color.neutral.300": "--color-neutral-300",
@@ -174,6 +175,7 @@
   "semantic.color.surface.base": "--semantic-color-surface-base",
   "semantic.color.surface.canvas": "--semantic-color-surface-canvas",
   "semantic.color.surface.raised": "--semantic-color-surface-raised",
+  "semantic.color.surface.underprint": "--semantic-color-surface-underprint",
   "semantic.duration.causal": "--semantic-duration-causal",
   "semantic.duration.feedback": "--semantic-duration-feedback",
   "semantic.duration.handoff": "--semantic-duration-handoff",
@@ -186,6 +188,8 @@
   "semantic.font.body": "--semantic-font-body",
   "semantic.font.code": "--semantic-font-code",
   "semantic.spring.land": "--semantic-spring-land",
+  "semantic.spring.letter.damping": "--semantic-spring-letter-damping",
+  "semantic.spring.letter.stiffness": "--semantic-spring-letter-stiffness",
   "semantic.type.body.leading": "--semantic-type-body-leading",
   "semantic.type.body.size": "--semantic-type-body-size",
   "semantic.type.body.tracking": "--semantic-type-body-tracking",
@@ -222,7 +226,9 @@
   "space.6": "--space-6",
   "space.8": "--space-8",
   "spring.bounce.none": "--spring-bounce-none",
-  "spring.bounce.soft": "--spring-bounce-soft"
+  "spring.bounce.soft": "--spring-bounce-soft",
+  "spring.letter.damping": "--spring-letter-damping",
+  "spring.letter.stiffness": "--spring-letter-stiffness"
  },
  "aliases": {
   "--color-canvas": {
@@ -403,8 +409,8 @@
  },
  "check": {
   "command": "primitree check",
-  "tokens": 158,
-  "references": 100,
+  "tokens": 164,
+  "references": 103,
   "layers": 3,
   "contexts": 6,
   "findings": [],
@@ -959,6 +965,47 @@
      {
       "uri": "src/tokens/base.tokens.json",
       "pointer": "/color/neutral/100"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:color.neutral.1000",
+    "sourceId": "source:site",
+    "name": "1000",
+    "path": [
+     "color",
+     "neutral",
+     "1000"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "colorSpace": "srgb",
+        "components": [
+         0,
+         0,
+         0
+        ],
+        "hex": "#000000"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/color/neutral/1000"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/color/neutral/1000"
      }
     ]
    },
@@ -4592,6 +4639,40 @@
     ]
    },
    {
+    "id": "source:site/token:semantic.color.surface.underprint",
+    "sourceId": "source:site",
+    "name": "underprint",
+    "path": [
+     "semantic",
+     "color",
+     "surface",
+     "underprint"
+    ],
+    "type": "color",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:color.neutral.1000"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/color/surface/underprint"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/color/surface/underprint"
+     }
+    ]
+   },
+   {
     "id": "source:site/token:semantic.duration.causal",
     "sourceId": "source:site",
     "name": "causal",
@@ -5144,6 +5225,74 @@
      {
       "uri": "src/tokens/semantic.tokens.json",
       "pointer": "/semantic/spring/land"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.spring.letter.damping",
+    "sourceId": "source:site",
+    "name": "damping",
+    "path": [
+     "semantic",
+     "spring",
+     "letter",
+     "damping"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:spring.letter.damping"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/spring/letter/damping"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/spring/letter/damping"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.spring.letter.stiffness",
+    "sourceId": "source:site",
+    "name": "stiffness",
+    "path": [
+     "semantic",
+     "spring",
+     "letter",
+     "stiffness"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:spring.letter.stiffness"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/spring/letter/stiffness"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/spring/letter/stiffness"
      }
     ]
    },
@@ -6410,6 +6559,72 @@
      {
       "uri": "src/tokens/base.tokens.json",
       "pointer": "/spring/bounce/soft"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:spring.letter.damping",
+    "sourceId": "source:site",
+    "name": "damping",
+    "path": [
+     "spring",
+     "letter",
+     "damping"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 30
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/spring/letter/damping"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/spring/letter/damping"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:spring.letter.stiffness",
+    "sourceId": "source:site",
+    "name": "stiffness",
+    "path": [
+     "spring",
+     "letter",
+     "stiffness"
+    ],
+    "type": "number",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": 250
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/spring/letter/stiffness"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/spring/letter/stiffness"
      }
     ]
    }

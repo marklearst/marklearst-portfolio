@@ -17,6 +17,7 @@ export type TokenPath =
   | "color.green.700"
   | "color.neutral.0"
   | "color.neutral.100"
+  | "color.neutral.1000"
   | "color.neutral.150"
   | "color.neutral.200"
   | "color.neutral.300"
@@ -113,6 +114,7 @@ export type TokenPath =
   | "semantic.color.surface.base"
   | "semantic.color.surface.canvas"
   | "semantic.color.surface.raised"
+  | "semantic.color.surface.underprint"
   | "semantic.duration.causal"
   | "semantic.duration.feedback"
   | "semantic.duration.handoff"
@@ -125,6 +127,8 @@ export type TokenPath =
   | "semantic.font.body"
   | "semantic.font.code"
   | "semantic.spring.land"
+  | "semantic.spring.letter.damping"
+  | "semantic.spring.letter.stiffness"
   | "semantic.type.body.leading"
   | "semantic.type.body.size"
   | "semantic.type.body.tracking"
@@ -162,6 +166,8 @@ export type TokenPath =
   | "space.8"
   | "spring.bounce.none"
   | "spring.bounce.soft"
+  | "spring.letter.damping"
+  | "spring.letter.stiffness"
 
 /** CSS variable references for each token path. */
 export const tokenVars = {
@@ -178,6 +184,7 @@ export const tokenVars = {
   ["color.green.700"]: "var(--color-green-700)",
   ["color.neutral.0"]: "var(--color-neutral-0)",
   ["color.neutral.100"]: "var(--color-neutral-100)",
+  ["color.neutral.1000"]: "var(--color-neutral-1000)",
   ["color.neutral.150"]: "var(--color-neutral-150)",
   ["color.neutral.200"]: "var(--color-neutral-200)",
   ["color.neutral.300"]: "var(--color-neutral-300)",
@@ -274,6 +281,7 @@ export const tokenVars = {
   ["semantic.color.surface.base"]: "var(--semantic-color-surface-base)",
   ["semantic.color.surface.canvas"]: "var(--semantic-color-surface-canvas)",
   ["semantic.color.surface.raised"]: "var(--semantic-color-surface-raised)",
+  ["semantic.color.surface.underprint"]: "var(--semantic-color-surface-underprint)",
   ["semantic.duration.causal"]: "var(--semantic-duration-causal)",
   ["semantic.duration.feedback"]: "var(--semantic-duration-feedback)",
   ["semantic.duration.handoff"]: "var(--semantic-duration-handoff)",
@@ -286,6 +294,8 @@ export const tokenVars = {
   ["semantic.font.body"]: "var(--semantic-font-body)",
   ["semantic.font.code"]: "var(--semantic-font-code)",
   ["semantic.spring.land"]: "var(--semantic-spring-land)",
+  ["semantic.spring.letter.damping"]: "var(--semantic-spring-letter-damping)",
+  ["semantic.spring.letter.stiffness"]: "var(--semantic-spring-letter-stiffness)",
   ["semantic.type.body.leading"]: "var(--semantic-type-body-leading)",
   ["semantic.type.body.size"]: "var(--semantic-type-body-size)",
   ["semantic.type.body.tracking"]: "var(--semantic-type-body-tracking)",
@@ -323,6 +333,8 @@ export const tokenVars = {
   ["space.8"]: "var(--space-8)",
   ["spring.bounce.none"]: "var(--spring-bounce-none)",
   ["spring.bounce.soft"]: "var(--spring-bounce-soft)",
+  ["spring.letter.damping"]: "var(--spring-letter-damping)",
+  ["spring.letter.stiffness"]: "var(--spring-letter-stiffness)",
 } as const satisfies Record<TokenPath, string>
 
 /** Values resolved for the default contexts. */
@@ -340,6 +352,7 @@ export const tokenValues = {
   ["color.green.700"]: "color(srgb 0.2353 0.4235 0.2039)",
   ["color.neutral.0"]: "color(srgb 1 1 1)",
   ["color.neutral.100"]: "color(srgb 0.9569 0.9569 0.949)",
+  ["color.neutral.1000"]: "color(srgb 0 0 0)",
   ["color.neutral.150"]: "color(srgb 0.9255 0.9255 0.902)",
   ["color.neutral.200"]: "color(srgb 0.8902 0.8902 0.8745)",
   ["color.neutral.300"]: "color(srgb 0.8196 0.8196 0.7843)",
@@ -436,6 +449,7 @@ export const tokenValues = {
   ["semantic.color.surface.base"]: "color(srgb 0.102 0.102 0.102)",
   ["semantic.color.surface.canvas"]: "color(srgb 0.0784 0.0784 0.0784)",
   ["semantic.color.surface.raised"]: "color(srgb 0.149 0.149 0.149)",
+  ["semantic.color.surface.underprint"]: "color(srgb 0 0 0)",
   ["semantic.duration.causal"]: "60ms",
   ["semantic.duration.feedback"]: "140ms",
   ["semantic.duration.handoff"]: "280ms",
@@ -448,6 +462,8 @@ export const tokenValues = {
   ["semantic.font.body"]: ["Wotfard","Wotfard fallback","Arial","sans-serif"],
   ["semantic.font.code"]: ["MonoLisa","MonoLisa fallback","SF Mono","Consolas","monospace"],
   ["semantic.spring.land"]: "0.2",
+  ["semantic.spring.letter.damping"]: "30",
+  ["semantic.spring.letter.stiffness"]: "250",
   ["semantic.type.body.leading"]: "1.5",
   ["semantic.type.body.size"]: "1.25rem",
   ["semantic.type.body.tracking"]: "0",
@@ -485,4 +501,6 @@ export const tokenValues = {
   ["space.8"]: "32px",
   ["spring.bounce.none"]: "0",
   ["spring.bounce.soft"]: "0.2",
+  ["spring.letter.damping"]: "30",
+  ["spring.letter.stiffness"]: "250",
 } as const
