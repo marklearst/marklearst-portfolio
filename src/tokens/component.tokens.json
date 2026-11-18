@@ -34,7 +34,7 @@
       },
       "motion": {
         "$type": "duration",
-        "$value": "{semantic.duration.feedback}"
+        "$value": "{semantic.duration.hover}"
       }
     },
     "inspector": {

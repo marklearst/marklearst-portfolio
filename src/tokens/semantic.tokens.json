@@ -194,7 +194,11 @@
       "$description": "Named for the job. The reduced motion context routes every one of these to duration.instant.",
       "feedback": {
         "$value": "{duration.quick}",
-        "$description": "Hover and press."
+        "$description": "Immediate feedback on a press."
+      },
+      "hover": {
+        "$value": "{duration.deliberate}",
+        "$description": "A control changing appearance as the pointer enters or leaves."
       },
       "reveal": {
         "$value": "{duration.base}",

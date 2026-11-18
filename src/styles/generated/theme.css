@@ -47,7 +47,7 @@
   --tracking-title: calc(var(--semantic-type-title-tracking) * 1em);
   --tracking-heading: calc(var(--semantic-type-heading-tracking) * 1em);
   --tracking-body: calc(var(--semantic-type-body-tracking) * 1em);
-  --default-transition-duration: var(--semantic-duration-feedback);
+  --default-transition-duration: var(--semantic-duration-hover);
   --default-transition-timing-function: var(--semantic-easing-enter);
   --ease-out: var(--semantic-easing-enter);
   --ease-move: var(--semantic-easing-move);
@@ -100,11 +100,12 @@
   --tracking-title: calc(var(--semantic-type-title-tracking) * 1em);
   --tracking-heading: calc(var(--semantic-type-heading-tracking) * 1em);
   --tracking-body: calc(var(--semantic-type-body-tracking) * 1em);
-  --default-transition-duration: var(--semantic-duration-feedback);
+  --default-transition-duration: var(--semantic-duration-hover);
   --default-transition-timing-function: var(--semantic-easing-enter);
   --ease-out: var(--semantic-easing-enter);
   --ease-move: var(--semantic-easing-move);
   --ease-settle: var(--semantic-easing-settle);
+  --duration-hover: var(--semantic-duration-hover);
   --duration-feedback: var(--semantic-duration-feedback);
   --duration-reveal: var(--semantic-duration-reveal);
   --duration-handoff: var(--semantic-duration-handoff);

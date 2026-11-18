@@ -5,6 +5,9 @@
       "feedback": {
         "$value": "{duration.instant}"
       },
+      "hover": {
+        "$value": "{duration.instant}"
+      },
       "reveal": {
         "$value": "{duration.instant}"
       },

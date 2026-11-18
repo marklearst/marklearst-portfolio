@@ -45,13 +45,14 @@
     "--tracking-title": { "token": "semantic.type.title.tracking", "css": "calc({var} * 1em)" },
     "--tracking-heading": { "token": "semantic.type.heading.tracking", "css": "calc({var} * 1em)" },
     "--tracking-body": { "token": "semantic.type.body.tracking", "css": "calc({var} * 1em)" },
-    "--default-transition-duration": "semantic.duration.feedback",
+    "--default-transition-duration": "semantic.duration.hover",
     "--default-transition-timing-function": "semantic.easing.enter",
     "--ease-out": "semantic.easing.enter",
     "--ease-move": "semantic.easing.move",
     "--ease-settle": "semantic.easing.settle"
   },
   "root": {
+    "--duration-hover": "semantic.duration.hover",
     "--duration-feedback": "semantic.duration.feedback",
     "--duration-reveal": "semantic.duration.reveal",
     "--duration-handoff": "semantic.duration.handoff",

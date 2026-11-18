@@ -586,8 +586,14 @@
         "unit": "ms"
       }
     },
+    "deliberate": {
+      "$value": {
+        "value": 360,
+        "unit": "ms"
+      }
+    },
     "quarter": {
-      "$description": "The same four steps at a quarter of their speed, for watching motion closely.",
+      "$description": "Four extended steps, for watching motion closely.",
       "hop": {
         "$value": {
           "value": 240,
