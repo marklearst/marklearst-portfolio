@@ -1,35 +1,52 @@
 'use client'
 
-import { ViewTransition, type ReactNode } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import { useRouteInput } from './useRouteInput'
 import styles from './PageTransition.module.css'
 
 /**
- * Hands one route over to the next. A navigation is a React transition, so
- * the leaving page exits and the arriving one enters as a view transition:
- * the old page fades where it stands and the new one settles in from the top.
- * A link can say where the next page sits: `nav-next` and `nav-previous` step
- * along an ordered sequence, and `nav-up` returns to the index a page came from.
- *
- * The motion lives in globals.css on the `page-exit` and `page-enter` classes.
- * It runs for pointer navigation only. Keyboard and history moves, and the
- * reduced motion context, swap the page at once.
+ * The incoming page stays live while it settles. Shared project titles own
+ * their view transitions; taking a snapshot of the whole page would also
+ * freeze its controls. Header and inspector stay outside both animations.
  */
 export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  useRouteInput()
+  const previousPath = useRef(pathname)
+  const page = useRef<HTMLDivElement>(null)
+  useRouteInput(page)
+
+  useLayoutEffect(() => {
+    if (previousPath.current === pathname) return
+    previousPath.current = pathname
+    const node = page.current
+    const root = document.documentElement
+    if (!node || root.dataset.routeInput !== 'pointer') return
+
+    // React captures shared titles during this commit. Give that handoff the
+    // stage, keeping the new page still so its target geometry does not drift.
+    // Older View Transition engines without the selector keep the still page.
+    const sharedTransition = CSS.supports('selector(:active-view-transition)')
+      ? root.matches(':active-view-transition')
+      : 'startViewTransition' in document
+    if (sharedTransition) return
+
+    node.dataset.arriving = ''
+    return () => { delete node.dataset.arriving }
+  }, [pathname])
 
   return (
     <div id='page-content' className={styles.surface} data-route={pathname} tabIndex={-1}>
-      <ViewTransition
+      <div
         key={pathname}
-        enter={{ 'nav-next': 'page-from-next', 'nav-previous': 'page-from-previous', 'nav-up': 'page-from-above', default: 'page-enter' }}
-        exit={{ 'nav-next': 'page-to-previous', 'nav-previous': 'page-to-next', 'nav-up': 'page-to-below', default: 'page-exit' }}
-        default='none'
+        ref={page}
+        className={styles.page}
+        onAnimationEnd={event => {
+          if (event.target === event.currentTarget) delete event.currentTarget.dataset.arriving
+        }}
       >
-        <div>{children}</div>
-      </ViewTransition>
+        {children}
+      </div>
     </div>
   )
 }

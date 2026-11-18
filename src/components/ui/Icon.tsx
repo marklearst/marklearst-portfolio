@@ -46,11 +46,15 @@ function icon(Component: IconType, options: { brand?: boolean; action?: string }
   }
 }
 
+function TravelingStroke({ d }: { d: string }) {
+  return <><path className='outgoing-stroke' d={d} /><path className='incoming-stroke' d={d} /></>
+}
+
 export function ArrowUpRightIcon({ size = 18, style, ...props }: IconProps) {
-  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' data-action-icon='external' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path className='icon-arrow' d='M6 18 18 6M7 6h11v11' /></svg>
+  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' data-action-icon='external' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><TravelingStroke d='M6 18 18 6M7 6h11v11' /></svg>
 }
 export function ArrowRightIcon({ size = 18, style, ...props }: IconProps) {
-  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' data-action-icon='forward' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path className='icon-arrow' d='M4 12h15m-6-6 6 6-6 6' /></svg>
+  return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' data-action-icon='forward' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><TravelingStroke d='M4 12h15m-6-6 6 6-6 6' /></svg>
 }
 export function InspectIcon({ size = 18, style, ...props }: IconProps) {
   return <svg aria-hidden='true' focusable='false' width={size} height={size} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' {...props} style={{ display: 'inline-block', flexShrink: 0, verticalAlign: '-0.15em', ...style }}><path d='M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4' /><circle cx='12' cy='12' r='2' fill='currentColor' stroke='none' /></svg>

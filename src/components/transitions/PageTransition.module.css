@@ -4,3 +4,12 @@
 .surface:focus {
   outline: none;
 }
+
+/* The motion context controls this CSS animation live, including a change to Reduced during arrival. */
+:global(html[data-route-input='pointer']) .page[data-arriving] {
+  animation: arrive var(--semantic-duration-handoff) var(--semantic-easing-enter);
+}
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(var(--space-2)); }
+}
