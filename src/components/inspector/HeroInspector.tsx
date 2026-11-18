@@ -1,48 +1,26 @@
-import { contrast } from '@/lib/inspector/brand'
 import { DEFAULT_SELECTION, tokenGraph } from '@/lib/inspector/graph'
-import type { Preview } from './inspector-controller'
-import { InspectorBody, InspectorControls, InspectorDock, InspectorSlot, InspectorStatus } from './InspectorDock'
+import { InspectorBody, InspectorBrandPreview, InspectorControls, InspectorDock, InspectorSlot, InspectorStatus } from './InspectorDock'
 
-// What the dock shows before anyone inspects: the tokens behind the hero's
-// heading, which the page outlines. Resolved on the server from the same graph
-// the build checked, so the first paint already holds real chains, and they are
-// the ones inspecting that heading will show.
-const PREVIEW = {
-  label: 'Heading 1',
-  properties: [
-    { id: 'color', label: 'Text', path: 'semantic.color.ink.primary', on: 'semantic.color.surface.canvas' },
-    { id: 'font-size', label: 'Type size', path: 'semantic.type.display.size' },
-  ],
-}
-
-/** WCAG AA for large text, which a heading this size is. */
-const LARGE_TEXT_FLOOR = 3
+const ACCENT = 'component.button.accent.background'
 
 export default function HeroInspector() {
   const graph = tokenGraph()
-  const resolve = (path: string) => {
-    const chain = graph.chain(path, DEFAULT_SELECTION)
-    if (!chain) throw new Error(`The hero preview names ${path}, which is not a token.`)
-    return chain
-  }
-  const preview: Preview = {
-    label: PREVIEW.label,
-    properties: PREVIEW.properties.map(({ on, ...property }) => {
-      const chain = resolve(property.path)
-      return {
-        ...property,
-        chain,
-        contrast: on ? { ratio: contrast(chain.value.text, resolve(on).value.text), floor: LARGE_TEXT_FLOOR } : undefined,
-      }
-    }),
+  const preview = (theme: 'dark' | 'light') => {
+    const selection = { ...DEFAULT_SELECTION, theme }
+    const chain = graph.chain(ACCENT, selection)
+    const foreground = graph.chain('component.button.accent.text', selection)
+    if (!chain || !foreground) throw new Error('The hero accent must resolve in every theme.')
+    return { chain, foreground: foreground.value.text }
   }
 
   return (
-    <InspectorSlot caption='Motion on this site is all tokens, and color and type mostly are. Primitree checks the graph on every build. Inspect anything to trace a value to its source, and where one is still raw the inspector says so.'>
+    <InspectorSlot>
       <InspectorDock placement='inline'>
+        <InspectorBody>
+          <InspectorBrandPreview built={{ dark: preview('dark'), light: preview('light') }} />
+        </InspectorBody>
         <InspectorStatus />
-        <InspectorBody preview={preview} />
-        <InspectorControls />
+        <InspectorControls ruleInPreview />
       </InspectorDock>
     </InspectorSlot>
   )

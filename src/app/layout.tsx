@@ -10,6 +10,7 @@ import { brandReport, DEFAULT_HUE, MAX_HUE } from '@/lib/inspector/rebrand'
 import PageTransition from '@/components/transitions/PageTransition'
 import AnalyticsManager from '@/components/analytics/AnalyticsManager'
 import NavigationHistoryTracker from '@/components/navigation/NavigationHistoryTracker'
+import { initializeTheme } from '@/lib/theme-preference.mjs'
 
 // Production builds replace NODE_ENV, so these imports and the inspector's
 // dependencies drop out of the production bundle.
@@ -33,6 +34,10 @@ const reveal = { default: revealUnder('default'), reduced: revealUnder('reduced'
 
 // The accent as built, so the dock can say what it started as before the engine loads.
 const brand = { built: brandReport(DEFAULT_HUE, CONTEXTS.theme.default), max: MAX_HUE }
+const themeColors = {
+  dark: tokenGraph().chain('semantic.color.surface.canvas', { ...DEFAULT_SELECTION, theme: 'dark' })!.value.text,
+  light: tokenGraph().chain('semantic.color.surface.canvas', { ...DEFAULT_SELECTION, theme: 'light' })!.value.text,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marklearst.com'),
@@ -58,8 +63,7 @@ export const metadata: Metadata = {
 
 // The browser's own chrome takes the page's color, read from the token graph like everything else.
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: tokenGraph().chain('semantic.color.surface.canvas', DEFAULT_SELECTION)?.value.text,
+  colorScheme: 'dark light',
 }
 
 export default function RootLayout({
@@ -70,14 +74,17 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
+        {/* Persistent ownership keeps route metadata from undoing an explicit appearance choice. */}
+        <meta name='theme-color' media='(prefers-color-scheme: dark)' content={themeColors.dark} />
+        <meta name='theme-color' media='(prefers-color-scheme: light)' content={themeColors.light} />
+        <script dangerouslySetInnerHTML={{ __html: `(${initializeTheme.toString()})(${JSON.stringify(themeColors)})` }} />
         <script dangerouslySetInnerHTML={{ __html: contextScript }} />
-        <link rel='preload' href='/fonts/wotfard/wotfard-regular-webfont.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
         <link rel='preload' href='/fonts/wotfard/wotfard-medium-webfont.woff2' as='font' type='font/woff2' crossOrigin='anonymous' />
       </head>
       <body>
         <a className='skip-link' href='#page-content'>Skip to content</a>
 
-        <InspectorProvider check={BUILD_CHECK} reveal={reveal} brand={brand}>
+        <InspectorProvider check={BUILD_CHECK} reveal={reveal} brand={brand} themeColors={themeColors}>
           <SiteHeader />
           <PageTransition>{children}</PageTransition>
           <FloatingInspector />

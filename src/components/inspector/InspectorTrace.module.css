@@ -1,0 +1,43 @@
+.reader {
+  position: fixed;
+  z-index: var(--layer-dock);
+  width: min(calc(var(--space-16) * 5), calc(100vw - var(--space-8)));
+  max-height: calc(100dvh - var(--site-header-height) - var(--space-8));
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-4);
+  background: var(--color-surface-raised);
+  color: var(--color-ink-primary);
+  font: var(--font-weight-regular) var(--text-ui)/var(--leading-ui) var(--font-body);
+}
+.top { display: flex; justify-content: space-between; align-items: start; gap: var(--space-2); }
+.top h2, .top p, .path, .empty { margin: 0; }
+.top h2 { font: var(--font-weight-medium) var(--text-lead)/var(--leading-lead) var(--font-body); }
+.top p, .path li > span { color: var(--color-ink-secondary); font-size: var(--text-caption); }
+.reader button { border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.top button { display: grid; place-items: center; width: var(--space-8); height: var(--space-8); }
+.path { list-style: none; padding: var(--space-4) 0; }
+.path li { position: relative; display: grid; padding: 0 0 var(--space-3) var(--space-5); }
+.path li::before { content: ''; position: absolute; inset: 0 auto 0 var(--space-1); border-left: 1px solid var(--color-ink-muted); }
+.path li::after { content: ''; position: absolute; top: var(--space-3); left: var(--space-1); width: var(--space-2); border-top: 1px solid var(--color-ink-muted); }
+.path li:first-child::before { top: var(--space-3); }
+.path li:last-child::before { bottom: auto; height: var(--space-3); }
+.path .value { display: flex; align-items: center; gap: var(--space-2); padding-bottom: 0; }
+.path code, .empty code { font: var(--font-weight-regular) var(--text-code)/var(--leading-code) var(--font-mono); overflow-wrap: anywhere; background: transparent; padding: 0; }
+.value i { width: var(--space-4); height: var(--space-4); border-radius: var(--radius-1); border: 1px solid var(--color-border-subtle); }
+.path[data-animate] li { animation: resolve var(--duration-reveal) var(--ease-out) backwards; animation-delay: calc(var(--step) * var(--duration-causal)); }
+@keyframes resolve { from { opacity: 0; transform: translateY(var(--space-1)); } }
+.empty { padding-block: var(--space-4); }
+.reader .more { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: var(--space-10); padding: 0; text-align: left; }
+.more span { color: var(--color-accent-primary); }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+/* raw: the inspector runtime uses this breakpoint for the touch sheet. */
+@media (max-width: 959px) {
+  .reader { inset: auto var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom)) auto; max-height: 48dvh; }
+  .reader[data-above] { bottom: auto; top: calc(var(--site-header-height) + var(--space-2)); }
+  .path { padding-block: var(--space-2); }
+  .path li { padding-bottom: var(--space-1); }
+  .top button, .reader .more { min-height: 44px; }
+}
