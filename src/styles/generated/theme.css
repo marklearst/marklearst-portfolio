@@ -10,6 +10,7 @@
   --color-ink-secondary: var(--semantic-color-ink-secondary);
   --color-ink-muted: var(--semantic-color-ink-muted);
   --color-border-subtle: var(--semantic-color-border-subtle);
+  --color-border-image: var(--semantic-color-border-image);
   --color-accent-primary: var(--semantic-color-accent-primary);
   --color-accent-text: var(--semantic-color-accent-text);
   --color-on-accent: var(--semantic-color-ink-onAccent);
@@ -21,6 +22,9 @@
   --font-display: var(--semantic-font-body);
   --font-sans: var(--semantic-font-body);
   --font-mono: var(--semantic-font-code);
+  --text-specimen: clamp(3.5rem, 15vw, var(--semantic-type-specimen-size));
+  --leading-specimen: var(--semantic-type-specimen-leading);
+  --tracking-specimen: calc(var(--semantic-type-specimen-tracking) * 1em);
   --text-display: clamp(3rem, 6vw, var(--semantic-type-display-size));
   --text-title: clamp(2.5rem, 4.5vw, var(--semantic-type-title-size));
   --text-heading: clamp(2rem, 3vw, var(--semantic-type-heading-size));
@@ -59,6 +63,7 @@
   --color-ink-secondary: var(--semantic-color-ink-secondary);
   --color-ink-muted: var(--semantic-color-ink-muted);
   --color-border-subtle: var(--semantic-color-border-subtle);
+  --color-border-image: var(--semantic-color-border-image);
   --color-accent-primary: var(--semantic-color-accent-primary);
   --color-accent-text: var(--semantic-color-accent-text);
   --color-on-accent: var(--semantic-color-ink-onAccent);
@@ -70,6 +75,9 @@
   --font-display: var(--semantic-font-body);
   --font-sans: var(--semantic-font-body);
   --font-mono: var(--semantic-font-code);
+  --text-specimen: clamp(3.5rem, 15vw, var(--semantic-type-specimen-size));
+  --leading-specimen: var(--semantic-type-specimen-leading);
+  --tracking-specimen: calc(var(--semantic-type-specimen-tracking) * 1em);
   --text-display: clamp(3rem, 6vw, var(--semantic-type-display-size));
   --text-title: clamp(2.5rem, 4.5vw, var(--semantic-type-title-size));
   --text-heading: clamp(2rem, 3vw, var(--semantic-type-heading-size));

@@ -30,6 +30,9 @@
       "border": {
         "subtle": {
           "$value": "{color.neutral.300}"
+        },
+        "image": {
+          "$value": "{color.edge.dark}"
         }
       },
       "accent": {
@@ -38,6 +41,11 @@
         },
         "text": {
           "$value": "{color.brand.700}"
+        }
+      },
+      "data": {
+        "trace": {
+          "$value": "{color.cyan.700}"
         }
       },
       "status": {

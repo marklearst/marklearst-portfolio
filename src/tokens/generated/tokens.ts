@@ -9,6 +9,10 @@ export type TokenPath =
   | "color.brand.300"
   | "color.brand.500"
   | "color.brand.700"
+  | "color.cyan.300"
+  | "color.cyan.700"
+  | "color.edge.dark"
+  | "color.edge.light"
   | "color.green.300"
   | "color.green.700"
   | "color.neutral.0"
@@ -32,11 +36,20 @@ export type TokenPath =
   | "component.button.motion"
   | "component.button.primary.background"
   | "component.button.primary.text"
+  | "component.button.secondary.background"
   | "component.button.secondary.border"
   | "component.button.secondary.text"
   | "component.dock.background"
   | "component.dock.border"
+  | "component.dock.inset"
   | "component.dock.motion"
+  | "component.glucose.cursor"
+  | "component.glucose.grid"
+  | "component.glucose.high"
+  | "component.glucose.inRange"
+  | "component.glucose.low"
+  | "component.glucose.pointOutline"
+  | "component.glucose.trace"
   | "component.inspector.label.background"
   | "component.inspector.label.text"
   | "component.inspector.motion"
@@ -70,12 +83,14 @@ export type TokenPath =
   | "font.size.500"
   | "font.size.600"
   | "font.size.700"
+  | "font.size.800"
   | "font.tracking.none"
   | "font.tracking.snug"
   | "font.tracking.tight"
   | "font.weight.medium"
   | "font.weight.regular"
   | "layer.dock"
+  | "layer.header"
   | "layer.outline"
   | "radius.1"
   | "radius.2"
@@ -84,7 +99,9 @@ export type TokenPath =
   | "radius.5"
   | "semantic.color.accent.primary"
   | "semantic.color.accent.text"
+  | "semantic.color.border.image"
   | "semantic.color.border.subtle"
+  | "semantic.color.data.trace"
   | "semantic.color.ink.muted"
   | "semantic.color.ink.onAccent"
   | "semantic.color.ink.primary"
@@ -121,6 +138,9 @@ export type TokenPath =
   | "semantic.type.heading.tracking"
   | "semantic.type.lead.leading"
   | "semantic.type.lead.size"
+  | "semantic.type.specimen.leading"
+  | "semantic.type.specimen.size"
+  | "semantic.type.specimen.tracking"
   | "semantic.type.subheading.leading"
   | "semantic.type.subheading.size"
   | "semantic.type.title.leading"
@@ -148,6 +168,10 @@ export const tokenVars = {
   ["color.brand.300"]: "var(--color-brand-300)",
   ["color.brand.500"]: "var(--color-brand-500)",
   ["color.brand.700"]: "var(--color-brand-700)",
+  ["color.cyan.300"]: "var(--color-cyan-300)",
+  ["color.cyan.700"]: "var(--color-cyan-700)",
+  ["color.edge.dark"]: "var(--color-edge-dark)",
+  ["color.edge.light"]: "var(--color-edge-light)",
   ["color.green.300"]: "var(--color-green-300)",
   ["color.green.700"]: "var(--color-green-700)",
   ["color.neutral.0"]: "var(--color-neutral-0)",
@@ -171,11 +195,20 @@ export const tokenVars = {
   ["component.button.motion"]: "var(--component-button-motion)",
   ["component.button.primary.background"]: "var(--component-button-primary-background)",
   ["component.button.primary.text"]: "var(--component-button-primary-text)",
+  ["component.button.secondary.background"]: "var(--component-button-secondary-background)",
   ["component.button.secondary.border"]: "var(--component-button-secondary-border)",
   ["component.button.secondary.text"]: "var(--component-button-secondary-text)",
   ["component.dock.background"]: "var(--component-dock-background)",
   ["component.dock.border"]: "var(--component-dock-border)",
+  ["component.dock.inset"]: "var(--component-dock-inset)",
   ["component.dock.motion"]: "var(--component-dock-motion)",
+  ["component.glucose.cursor"]: "var(--component-glucose-cursor)",
+  ["component.glucose.grid"]: "var(--component-glucose-grid)",
+  ["component.glucose.high"]: "var(--component-glucose-high)",
+  ["component.glucose.inRange"]: "var(--component-glucose-inRange)",
+  ["component.glucose.low"]: "var(--component-glucose-low)",
+  ["component.glucose.pointOutline"]: "var(--component-glucose-pointOutline)",
+  ["component.glucose.trace"]: "var(--component-glucose-trace)",
   ["component.inspector.label.background"]: "var(--component-inspector-label-background)",
   ["component.inspector.label.text"]: "var(--component-inspector-label-text)",
   ["component.inspector.motion"]: "var(--component-inspector-motion)",
@@ -209,12 +242,14 @@ export const tokenVars = {
   ["font.size.500"]: "var(--font-size-500)",
   ["font.size.600"]: "var(--font-size-600)",
   ["font.size.700"]: "var(--font-size-700)",
+  ["font.size.800"]: "var(--font-size-800)",
   ["font.tracking.none"]: "var(--font-tracking-none)",
   ["font.tracking.snug"]: "var(--font-tracking-snug)",
   ["font.tracking.tight"]: "var(--font-tracking-tight)",
   ["font.weight.medium"]: "var(--font-weight-medium)",
   ["font.weight.regular"]: "var(--font-weight-regular)",
   ["layer.dock"]: "var(--layer-dock)",
+  ["layer.header"]: "var(--layer-header)",
   ["layer.outline"]: "var(--layer-outline)",
   ["radius.1"]: "var(--radius-1)",
   ["radius.2"]: "var(--radius-2)",
@@ -223,7 +258,9 @@ export const tokenVars = {
   ["radius.5"]: "var(--radius-5)",
   ["semantic.color.accent.primary"]: "var(--semantic-color-accent-primary)",
   ["semantic.color.accent.text"]: "var(--semantic-color-accent-text)",
+  ["semantic.color.border.image"]: "var(--semantic-color-border-image)",
   ["semantic.color.border.subtle"]: "var(--semantic-color-border-subtle)",
+  ["semantic.color.data.trace"]: "var(--semantic-color-data-trace)",
   ["semantic.color.ink.muted"]: "var(--semantic-color-ink-muted)",
   ["semantic.color.ink.onAccent"]: "var(--semantic-color-ink-onAccent)",
   ["semantic.color.ink.primary"]: "var(--semantic-color-ink-primary)",
@@ -260,6 +297,9 @@ export const tokenVars = {
   ["semantic.type.heading.tracking"]: "var(--semantic-type-heading-tracking)",
   ["semantic.type.lead.leading"]: "var(--semantic-type-lead-leading)",
   ["semantic.type.lead.size"]: "var(--semantic-type-lead-size)",
+  ["semantic.type.specimen.leading"]: "var(--semantic-type-specimen-leading)",
+  ["semantic.type.specimen.size"]: "var(--semantic-type-specimen-size)",
+  ["semantic.type.specimen.tracking"]: "var(--semantic-type-specimen-tracking)",
   ["semantic.type.subheading.leading"]: "var(--semantic-type-subheading-leading)",
   ["semantic.type.subheading.size"]: "var(--semantic-type-subheading-size)",
   ["semantic.type.title.leading"]: "var(--semantic-type-title-leading)",
@@ -288,6 +328,10 @@ export const tokenValues = {
   ["color.brand.300"]: "color(srgb 1 0.2745 0.3176)",
   ["color.brand.500"]: "color(srgb 0.8588 0.0941 0.2039)",
   ["color.brand.700"]: "color(srgb 0.8353 0.0392 0.1843)",
+  ["color.cyan.300"]: "color(srgb 0.4706 0.8627 0.9098)",
+  ["color.cyan.700"]: "color(srgb 0.0314 0.4941 0.5451)",
+  ["color.edge.dark"]: "color(srgb 0 0 0 / 0.1)",
+  ["color.edge.light"]: "color(srgb 1 1 1 / 0.1)",
   ["color.green.300"]: "color(srgb 0.5725 0.7333 0.5412)",
   ["color.green.700"]: "color(srgb 0.2353 0.4235 0.2039)",
   ["color.neutral.0"]: "color(srgb 1 1 1)",
@@ -311,11 +355,20 @@ export const tokenValues = {
   ["component.button.motion"]: "140ms",
   ["component.button.primary.background"]: "color(srgb 0.9569 0.9569 0.949)",
   ["component.button.primary.text"]: "color(srgb 0.0784 0.0784 0.0784)",
+  ["component.button.secondary.background"]: "color(srgb 0.102 0.102 0.102)",
   ["component.button.secondary.border"]: "color(srgb 0.2039 0.2039 0.1961)",
   ["component.button.secondary.text"]: "color(srgb 0.9569 0.9569 0.949)",
-  ["component.dock.background"]: "color(srgb 0.102 0.102 0.102)",
+  ["component.dock.background"]: "color(srgb 0.149 0.149 0.149)",
   ["component.dock.border"]: "color(srgb 0.2039 0.2039 0.1961)",
+  ["component.dock.inset"]: "color(srgb 0.102 0.102 0.102)",
   ["component.dock.motion"]: "280ms",
+  ["component.glucose.cursor"]: "color(srgb 0.9569 0.9569 0.949)",
+  ["component.glucose.grid"]: "color(srgb 0.2039 0.2039 0.1961)",
+  ["component.glucose.high"]: "color(srgb 0.898 0.7412 0.3922)",
+  ["component.glucose.inRange"]: "color(srgb 0.5725 0.7333 0.5412)",
+  ["component.glucose.low"]: "color(srgb 0.9333 0.5412 0.502)",
+  ["component.glucose.pointOutline"]: "color(srgb 0.102 0.102 0.102)",
+  ["component.glucose.trace"]: "color(srgb 0.4706 0.8627 0.9098)",
   ["component.inspector.label.background"]: "color(srgb 0.8588 0.0941 0.2039)",
   ["component.inspector.label.text"]: "color(srgb 0.9569 0.9569 0.949)",
   ["component.inspector.motion"]: "180ms",
@@ -349,12 +402,14 @@ export const tokenValues = {
   ["font.size.500"]: "2.5rem",
   ["font.size.600"]: "3.5rem",
   ["font.size.700"]: "5.5rem",
+  ["font.size.800"]: "11rem",
   ["font.tracking.none"]: "0",
   ["font.tracking.snug"]: "-0.01",
   ["font.tracking.tight"]: "-0.015",
   ["font.weight.medium"]: "500",
   ["font.weight.regular"]: "400",
   ["layer.dock"]: "30",
+  ["layer.header"]: "40",
   ["layer.outline"]: "20",
   ["radius.1"]: "4px",
   ["radius.2"]: "6px",
@@ -363,7 +418,9 @@ export const tokenValues = {
   ["radius.5"]: "16px",
   ["semantic.color.accent.primary"]: "color(srgb 0.8588 0.0941 0.2039)",
   ["semantic.color.accent.text"]: "color(srgb 1 0.2745 0.3176)",
+  ["semantic.color.border.image"]: "color(srgb 1 1 1 / 0.1)",
   ["semantic.color.border.subtle"]: "color(srgb 0.2039 0.2039 0.1961)",
+  ["semantic.color.data.trace"]: "color(srgb 0.4706 0.8627 0.9098)",
   ["semantic.color.ink.muted"]: "color(srgb 0.6667 0.6667 0.6431)",
   ["semantic.color.ink.onAccent"]: "color(srgb 0.9569 0.9569 0.949)",
   ["semantic.color.ink.primary"]: "color(srgb 0.9569 0.9569 0.949)",
@@ -400,6 +457,9 @@ export const tokenValues = {
   ["semantic.type.heading.tracking"]: "-0.01",
   ["semantic.type.lead.leading"]: "1.5",
   ["semantic.type.lead.size"]: "1.25rem",
+  ["semantic.type.specimen.leading"]: "1.05",
+  ["semantic.type.specimen.size"]: "11rem",
+  ["semantic.type.specimen.tracking"]: "-0.015",
   ["semantic.type.subheading.leading"]: "1.35",
   ["semantic.type.subheading.size"]: "1.5rem",
   ["semantic.type.title.leading"]: "1.15",

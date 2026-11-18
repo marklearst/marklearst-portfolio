@@ -198,6 +198,30 @@
       },
       "$description": "The accent, at one hue. Named for its job, not its color, because a rebrand changes the hue and nothing else. 500 is chosen. 300 and 700 are solved from its hue by the rule in src/lib/inspector/brand.ts."
     },
+    "cyan": {
+      "300": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.4706,
+            0.8627,
+            0.9098
+          ],
+          "hex": "#78DCE8"
+        }
+      },
+      "700": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.0314,
+            0.4941,
+            0.5451
+          ],
+          "hex": "#087E8B"
+        }
+      }
+    },
     "green": {
       "300": {
         "$value": {
@@ -267,6 +291,33 @@
             0.0353
           ],
           "hex": "#765109"
+        }
+      }
+    },
+    "edge": {
+      "$type": "color",
+      "light": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1
+          ],
+          "alpha": 0.1,
+          "hex": "#FFFFFF"
+        }
+      },
+      "dark": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "alpha": 0.1,
+          "hex": "#000000"
         }
       }
     }
@@ -342,6 +393,9 @@
           "value": 5.5,
           "unit": "rem"
         }
+      },
+      "800": {
+        "$value": { "value": 11, "unit": "rem" }
       },
       "$type": "dimension"
     },
@@ -494,6 +548,9 @@
     },
     "dock": {
       "$value": 30
+    },
+    "header": {
+      "$value": 40
     }
   },
   "duration": {
