@@ -381,7 +381,7 @@
   font: inherit;
   cursor: pointer;
   touch-action: manipulation;
-  transition: border-color var(--duration-feedback) var(--ease-out);
+  transition: border-color var(--duration-hover) var(--ease-out);
 }
 
 .pin[data-pinned] {
@@ -400,7 +400,7 @@
   background: transparent;
   color: var(--color-ink-primary);
   cursor: pointer;
-  transition: border-color var(--duration-feedback) var(--ease-out);
+  transition: border-color var(--duration-hover) var(--ease-out);
 }
 
 /* The control looks 36px and takes a 44px touch. The inset is measured from inside the 1px border. */
@@ -615,7 +615,7 @@
   text-align: left;
   overflow-wrap: break-word;
   cursor: pointer;
-  transition: background-color var(--duration-feedback) var(--ease-out);
+  transition: background-color var(--duration-hover) var(--ease-out);
 }
 
 .token[data-lit] {
@@ -1070,10 +1070,6 @@
   color: var(--component-inspector-label-text);
   font: var(--font-weight-medium) var(--text-code)/var(--font-leading-200) var(--font-body);
   white-space: nowrap;
-}
-
-:global(body:has([data-inspector-dock='trace'])) .overlay [data-part='label'] {
-  visibility: hidden;
 }
 
 .overlay [data-part='label']:empty {

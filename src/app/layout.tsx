@@ -28,9 +28,9 @@ const FigmaVarsDebug = isDev ? dynamic(() => import('@/components/dev/FigmaVarsD
 // from the system's preference, and only the stored choice and the intro are skipped.
 const contextScript = `(function(){var d=document.documentElement,m=null;try{m=localStorage.getItem('ml:motion')}catch(e){}d.dataset.motion=m==='reduced'||m==='default'?m:matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'default';try{if(!sessionStorage.getItem('ml:intro')){sessionStorage.setItem('ml:intro','1');d.dataset.intro=''}}catch(e){}})()`
 
-const revealUnder = (motion: string) =>
-  tokenGraph().chain('semantic.duration.reveal', { ...DEFAULT_SELECTION, motion })?.value.text ?? ''
-const reveal = { default: revealUnder('default'), reduced: revealUnder('reduced'), slow: revealUnder('slow') }
+const hoverUnder = (motion: string) =>
+  tokenGraph().chain('semantic.duration.hover', { ...DEFAULT_SELECTION, motion })?.value.text ?? ''
+const hoverDuration = { default: hoverUnder('default'), reduced: hoverUnder('reduced'), slow: hoverUnder('slow') }
 
 // The accent as built, so the dock can say what it started as before the engine loads.
 const brand = { built: brandReport(DEFAULT_HUE, CONTEXTS.theme.default), max: MAX_HUE }
@@ -84,7 +84,7 @@ export default function RootLayout({
       <body>
         <a className='skip-link' href='#page-content'>Skip to content</a>
 
-        <InspectorProvider check={BUILD_CHECK} reveal={reveal} brand={brand} themeColors={themeColors}>
+        <InspectorProvider check={BUILD_CHECK} hoverDuration={hoverDuration} brand={brand} themeColors={themeColors}>
           <SiteHeader />
           <PageTransition>{children}</PageTransition>
           <FloatingInspector />
