@@ -10,6 +10,7 @@ Design systems, React component libraries, developer tools, and working interfac
 - CSS Modules for component styles, Tailwind CSS 4 for existing utilities
 - Primitree for the tokens: DTCG 2025.10 sources with a Resolver, checked against layer rules on every build
 - An inspector on every page that traces any element to its tokens through the same graph the build checked
+- A live graph at `/system`, also embedded in the Primitree case study, with real references, color changes, and policy failures
 - Wotfard for reading and MonoLisa for code
 - GlucoseIQ for the interactive glucose example
 
@@ -34,6 +35,8 @@ pnpm build
 ```
 
 `check` runs ESLint, TypeScript, behavior tests, the Primitree check (`primitree check` plus the same policy across every context), stale-output detection, and the raw value ratchet. `build` also verifies the licensed fonts before building every route.
+
+If the development server is running, use `PORTFOLIO_BUILD_DIR=.next-verify pnpm build` to keep its output separate.
 
 ```sh
 pnpm tokens:build              # rebuild generated CSS, TypeScript, and the inspector's graph

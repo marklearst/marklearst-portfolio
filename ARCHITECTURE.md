@@ -12,6 +12,7 @@ src/
     navigation/         Primary/adjacent links, the header bar they share with actions, and navigation history
     home/               Hero with its X-ray, the a11y Companion band, selected work, testimonials
     inspector/          The token inspector: provider, dock parts, toggle, build line
+    tokens/             The live token graph and shared token path presentation
     about/              About layout and contact presentation
     work/               Filterable project catalog
     case-study/         Server page composition, sections, and project links
@@ -49,25 +50,51 @@ Pages, narrative content, the hero, selected work, and footer render on the serv
 
 The FigmaVars provider wraps its development inspector only. Production pages read generated CSS and do not mount that runtime provider.
 
-`PageTransition` keeps one stable content wrapper and hands each route to the next with React's `<ViewTransition>`. The leaving page fades where it stands and the arriving one settles in. Its rules live in `globals.css`, read motion tokens, and run for pointer navigation only: keyboard and history moves, and the reduced motion context, swap the page at once. The header and the floating inspector dock carry their own transition names, so they hold still while the page changes.
+The GlucoseIQ sample renders its initial report during the build. Only the visible report and trace are included in the initial client payload. The complete fixture is regenerated in the browser when a visitor changes the sample. Scenario changes load the real analysis library on demand, preserve the previous report while loading, and honor the latest selection. The chart slider is interactive immediately. Wotfard Medium is the single font preload because it paints the hero heading and navigation; other faces load when used.
+
+Glucose chart paints read `component.glucose` roles. The cyan trace has a light theme tone; low, in range and high follow the fixed signal palette. These roles do not depend on the brand accent, so retuning the site preserves the meaning of its data. The inspector reports SVG stroke and fill tokens as paint properties. The chart owns its trace stroke on the SVG container and lets its data paths inherit it, making that trace available to Inspect without selecting a thin path.
+
+`PageTransition` keeps one stable content wrapper. Pointer navigation gives the arriving, live page a CSS entrance driven by motion tokens; keyboard and history navigation arrive immediately, and the reduced motion context resolves its duration to zero. Shared project titles retain React's `<ViewTransition>` handoff. When a shared transition is already active during the commit, the page stays still so the title's destination does not move. Initial loads do not play a route entrance. Engines with View Transitions but without the selector for an active transition keep the page still.
+
+The document root, header, and floating inspector are not named transition snapshots. Their controls remain live while shared project elements move above the page. `::view-transition` passes pointer events through. Snapshotting the header, even with its animation disabled, made its visible links unavailable during rapid route reversals. Page entrance rules belong to `PageTransition.module.css`; shared title rules remain in `globals.css`.
+
+`TrackedLink` retains the router for route navigation. `TrackedFragmentLink` focuses and scrolls to its destination through `onNavigate`, while Next owns fragment history. Explicit scrolling also handles repeated clicks on the current fragment. A native fragment anchor created a history entry the router could not restore when returning from a case study. Selected work is a named region with `tabIndex={-1}`; its heading shows keyboard focus and the next Tab reaches All projects. Modified clicks keep the browser's usual behavior because they do not call `onNavigate`.
+
+The homepage work browser remembers its last selected project in client module memory. Returning from a case study restores that preview without an entrance animation. Input handlers update the memory; rendering never writes it. A full reload resets the selection, and no browser storage or route history fields are changed.
+
+One decorative surface moves between the project tabs. Its transform and clipping use measured tab bounds, its corners follow the tab's computed radius, and its timing reads Primitree's handoff and enter tokens. The actual labels and focus outlines stay still. Keyboard, rapid selection, Reduced, Inspect, resize, and context changes place it immediately. Focus changes refresh its shape; teardown invalidates pending completion before releasing styles and observers. The original selected background remains the server rendered fallback.
+
+The same preview accepts a contained horizontal drag. Direction locks after a small movement; vertical scrolling and pinch zoom remain browser gestures. Neighboring server-rendered panels follow the pointer through transforms, while only the selected panel is exposed to assistive technology. Release distance and recent velocity decide one neighboring project, with resistance at the ends. Input tolerances are independent of motion preferences; the landing reads the Primitree handoff duration and easing through the Web Animations API. Reduced keeps direct manipulation and makes release immediate. Keyboard, selection, context changes, resize, capture loss, and unmount cancel motion and restore owned styles. A drag suppresses its own link click; a fresh pointer action starts with normal link behavior.
 
 ## The inspector
 
-`InspectorProvider` sits in the root layout and owns one `InspectorController` for the whole site, so inspect mode and the floating dock carry across routes. The controller is plain TypeScript: it holds the state, listens to the page, and moves the outlines. React renders the dock from that state through `useInspector(selector)`.
+`InspectorProvider` sits in the root layout and owns one `InspectorController` for the whole site, so inspect mode and the floating dock carry across routes. The small initial controller owns the shared state, motion preferences, intro lifetime, and loading feedback. `InspectorRuntime` downloads on intent or an explicit action and owns selection, outlines, keyboard inspection, rule effects, and dock handoffs. Both use one store; React reads it through `useInspector(selector)`.
+
+The floating panel is a separate client chunk. Routes without the inline demo or token graph do not include its full presentation in their initial JavaScript. Focus or pointer intent requests the runtime, which preloads the panel and engine together. Activation waits for them before handing over the inline dock, so its controls retain focus during loading. Escape cancels even while the runtime itself downloads, and a failed request returns the header control to a visible Retry action. Activation and owner counters prevent an obsolete download from reopening the panel or attaching to a disposed owner. Latest route, slot and hue requests carry through loading. Motion remains available without the runtime. Dock focus follows a stable control key rather than its position, since the floating placement has additional controls. The homepage still renders its real inline inspector immediately.
 
 The dock is composed from parts, each reading the same controller:
 
 ```tsx
 <InspectorDock placement='inline'>
   <InspectorStatus />
-  <InspectorBody preview={preview} />
+  <InspectorBody>
+    <InspectorBrandPreview built={accent} />
+  </InspectorBody>
   <InspectorControls />
 </InspectorDock>
 ```
 
-The home page renders that composition on the server inside `InspectorSlot`, with the hero heading's chains resolved from the build's graph, so the first paint holds real token chains and ships no inspector code. The page marks that heading with `data-inspect-preview`, so it is also the first thing selected when inspecting starts. `FloatingInspector` renders the same parts in the layout while a visitor inspects away from that slot. It has a set height, so it never resizes as the selection changes, and it crosses to the other side of the screen when it would cover what has keyboard focus.
+The home page renders that composition inside `InspectorSlot`, with the accent button's background and foreground resolved on the server from the build's graph for both themes. Its first paint contains a real token chain and contrast result. A native hue input retunes the accent before Inspect is opened. The controller coalesces color solving, CSS writes, and the preview snapshot into one frame; React reads that snapshot rather than querying a mutable engine during render. The page marks its heading with `data-inspect-preview`, so it is the first thing selected when inspecting starts. `FloatingInspector` renders the same parts in the layout while a visitor inspects away from that slot. It has a set height, so it never resizes as the selection changes, and it crosses to the other side of the screen when it would cover what has keyboard focus.
+
+Appearance is a native System, Light, Dark radio group in the footer. System follows the OS; an explicit choice is stored under `ml:theme`, and returning to System removes it. A self contained head script applies the effective theme before body paint. The generated token CSS also follows a light OS when no theme attribute exists. Browser color scheme follows the same context; persistent `theme-color` tags retain the chosen palette across route changes. The controller handles OS and preference changes across tabs without downloading the inspection engine.
+
+The initial homepage emits both built token chains and CSS selects the visible context before hydration. Once retuned, the live chain replaces that initial evidence. The graph also renders a static diagram per built context until the controller has read the effective preferences. The matching interactive diagram then takes over, without loading the engine for its initial trace under Default motion. Other contexts use the matching built theme while resolution is pending. An active engine resolves the accent report, severed reference and highlighted users again on theme changes, retaining or recovering token row focus. Theme swaps disable transitions briefly so controls do not interpolate through colors outside either palette.
 
 The engine in `src/lib/inspector` loads on first use. It runs `@primitree/core` on the build's graph, indexes the document's stylesheets for rules that read a custom property, and decides which token paints a property by setting each candidate to a sentinel and reading the computed style. `src/tokens/README.md` has the detail.
+
+Selected-element details and the broken-rule view load separately from the resting dock. The initial token chain, contrast, and hue input still render with the page. Intent warming and activation share one retryable detail-module request; Inspect waits for both the floating panel and the details before moving focus into either dock. Break a rule loads its details before mutating the graph, keeps its button focusable while busy, ignores duplicate pending requests, and exposes a retry if loading fails. Focus that entered the preview during loading moves to the surviving rule button before the body is replaced. A dock handoff retains its pending focus identity through a quick reversal before the floating panel mounts. Shared token rows accept the severed reference as composed content, so the initial preview does not pull that interaction into the first load.
+
+The detail loader publishes its resolved component before activation updates the store. The first ready render uses that component directly, avoiding a second loading fallback that would collapse the inline body. The inline slot retains its token-based height on mobile as well as desktop. Findings live inside the scrollable report; the verdict, exit code, count, and controls stay outside it. Short viewports scroll the entire dock so its content remains reachable.
 
 Keyboard: Tab moves through the page and selects each stop. Enter steps into the dock at the selection's first token. Escape steps back to the element, and from the page it stops inspecting. Focus is never left on a control that has gone.
 
@@ -84,7 +111,19 @@ The hero's introduction renders twice from one function in `Hero.tsx`: as the pa
 
 Break a rule makes one token hold a literal. On the page, everything that token paints comes unhooked: it tilts from a corner inside its outline (the motion is CSS in `globals.css`). In the dock, the verdict is spelled out a letter at a time, the literal's own characters drop away from the cut, and the token it was cut from hangs under the cut with a hue control, so a visitor can change the brand color and see that the broken token's elements do not follow.
 
+Restoring a rule updates the real values immediately. If repair changes the held color, the dock's existing propagation signal travels from base through meaning to component and the specimen. The observer survives replacement of the broken body by reading its current host at playback. Unchanged repairs stay quiet; keyboard, Reduced, inspecting mode, selection, theme, and dock changes cancel playback.
+
 The selection outline rides a spring (`src/lib/spring.ts`) instead of a CSS transition, because the pointer redirects it mid flight and it should keep its speed. The spring takes its duration from a motion token, so the reduced motion context stops it like everything else, and how far it passes its target from a number token (`semantic.spring.land`). A thrown dock lands on the same spring.
+
+Dock handoffs use Motion's Mini entry through the lazy inspector engine. `dock-motion.ts` owns cancellation and returns transient inline styles to the dock after completion or interruption. `motion-tokens.ts` converts live duration tokens from milliseconds to seconds and CSS Bezier functions to Motion tuples. A zero duration bypasses the animation.
+
+## The live token graph
+
+`SiteTokenGraph` resolves an initial trace on the server. The same composition appears at `/system` and in the Primitree case study; the homepage inspector links to the full page. It uses the current site graph rather than a separate example document.
+
+`traceTokens` follows a selected token's ancestors and transitive dependents in the active context. A broken reference retains its former edge from the built graph, so changing a base color visibly separates it from the held literal. Nodes show the actual resolved values and generated CSS variables. The client uses native selection and buttons with arrow navigation, measures DOM nodes for SVG connectors, and stacks the layers on narrow screens. Pointer selections draw the connectors with Mini; keyboard selections and reduced motion update immediately.
+
+When a pointer changes a color, the graph compares settled resolved traces and follows changed values from base tokens through intact references. A short signal travels those existing connectors and the corresponding value rows move in dependency order. Values update immediately. Broken or unchanged branches stay still. One sequence can be active per graph; repeated changes with the same paths reuse it. Keyboard input, context or selection changes, resized connectors, errors, and unmount cancel it. Offscreen graphs skip new sequences, and Reduced resolves their timing to zero.
 
 ## Component contracts
 
@@ -124,6 +163,8 @@ Components read the adapter names (`--color-ink-primary`, `--text-body`, `--dura
 
 Motion is tokenized: four durations named for the job (feedback, reveal, handoff, causal) and four easings (enter, move, linear, and settle, which passes its target a little and comes back). Motion is a context with three settings, not a media query in each component. `layout.tsx` sets `data-motion` before first paint. In the reduced context every duration resolves to zero, and in the slow one every duration runs at a quarter of its speed, which is there so anyone can watch the site's motion closely. Scripted animation reads the live value through `src/lib/motion-tokens.ts`.
 
+The system page's motion bench resolves three timing roles on the server with Primitree, including each duration's reference chain under Default, Slow, and Reduced. Playback reads those generated CSS variables through Motion mini. A native range control scrubs elapsed time; a bounded Bezier inversion maps that time to eased progress. Frame updates write to the sample, range, and plot refs without rendering React on every frame. New playback, scrubbing, resizing, role/context changes, and unmount cancel prior work; completion callbacks check the animation's identity. Reduced has no playback duration and shows the end state. The existing site motion controller owns the context, so this is one system setting shared with the inspector. `Slider` supports either a controlled `value` or native `defaultValue`, with both modes using the same input and visual treatment.
+
 `pnpm tokens:raw` counts the design values components still write as literals, per file and category, against a ratcheting baseline in `scripts/raw-values.baseline.json`. A file can lose raw values but not gain them, and a new file starts at zero. It parses rather than pattern matches: postcss and postcss-value-parser for CSS, the TypeScript compiler for TS and TSX, and remark-mdx for MDX (`scripts/raw-values`).
 
 What still bypasses the tokens:
@@ -133,12 +174,14 @@ What still bypasses the tokens:
 - Hardcoded hex in the GlucoseIQ chart's SVG
 - `src/lib/monokai-colors.ts`, which resolves hex values from Primitree's output for the Open Graph images. Those images also write literal colors inline, and the Monokai name is due to retire.
 
-The light theme's tokens pass the policy, but nothing sets `data-theme` yet. The code above that assumes a dark page moves onto tokens first.
+Both theme contexts pass token policy. The appearance control and bootstrap set `data-theme`; generated CSS supplies the OS fallback when that attribute is absent.
 
 ESLint rejects route imports from components and UI imports from data/library modules. These checks support the ownership rules; review relative imports and new boundaries as part of code review too.
 
 ## Verification and release
 
 Run `pnpm check` and `pnpm build`. For layout or client behavior changes, also check desktop/mobile rendering, pointer and keyboard paths, reduced motion, route history, and any changed demo or dialog against the previous preview.
+
+With a development server already running, use `PORTFOLIO_BUILD_DIR=.next-verify pnpm build` so production verification does not replace the development server's generated files.
 
 Keep licensed font binaries out of the public repository. Builds require the separately supplied originals. Preview deployment and production promotion are separate actions.
