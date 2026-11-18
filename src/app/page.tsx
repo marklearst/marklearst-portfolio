@@ -1,5 +1,4 @@
 import Hero from '@/components/home/Hero'
-import A11yBand from '@/components/home/A11yBand'
 import FeaturedWork from '@/components/home/FeaturedWork'
 import Testimonials from '@/components/home/Testimonials'
 import Footer from '@/components/shell/Footer'
@@ -33,14 +32,15 @@ const structuredData = {
 
 export default function Home() {
   return (
-    <main className='relative'>
-      {/* A "<" is escaped so nothing in the data can close the script element. */}
-      <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
-      <Hero />
-      <A11yBand />
-      <FeaturedWork />
-      <Testimonials />
+    <div className='relative'>
+      <main>
+        {/* A "<" is escaped so nothing in the data can close the script element. */}
+        <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
+        <Hero />
+        <FeaturedWork />
+        <Testimonials />
+      </main>
       <Footer />
-    </main>
+    </div>
   )
 }

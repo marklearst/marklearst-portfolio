@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import StaticImage from '@/components/media/StaticImage'
 import SectionViewTracker from '@/components/analytics/SectionViewTracker'
 import styles from './Testimonials.module.css'
 
@@ -62,7 +62,7 @@ export default function Testimonials() {
 
               <figcaption className={styles.author}>
                 {testimonial.image && (
-                  <Image
+                  <StaticImage
                     src={testimonial.image}
                     alt=''
                     width={44}

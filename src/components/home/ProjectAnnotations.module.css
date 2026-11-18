@@ -1,0 +1,85 @@
+.study { min-width: 0; }
+.plate {
+  --sample-x: var(--free-x, var(--stop-x));
+  --sample-y: var(--free-y, var(--stop-y));
+  --inset: calc(var(--radius) + 2);
+  --glass-x: clamp(var(--inset), var(--sample-x), var(--plate-width) - var(--inset));
+  --glass-y: clamp(var(--inset), var(--sample-y), var(--plate-height) - var(--inset));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-3);
+  background: var(--color-neutral-100);
+}
+.art { display: block; width: 100%; height: auto; }
+.glass { transform: translate(calc(var(--glass-x) * 1px), calc(var(--glass-y) * 1px)); }
+.detail { transform: scale(var(--magnification)) translate(calc(var(--sample-x) * -1px), calc(var(--sample-y) * -1px)); }
+.glass, .detail { transition: transform var(--duration-handoff) var(--ease-move); }
+.dimension { color: var(--color-brand-700); }
+.dimension path { fill: none; stroke: currentColor; }
+.dimension text {
+  fill: currentColor;
+  paint-order: stroke;
+  stroke: var(--color-neutral-0);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  font: var(--font-weight-medium) var(--text-caption) var(--font-body);
+}
+.paper { fill: var(--color-neutral-0); }
+.rim, .sight { fill: none; stroke: var(--color-brand-700); }
+.rim { stroke-width: 1.5; }
+.grip {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: calc(200% * var(--radius) / var(--plate-width));
+  aspect-ratio: 1;
+  transform: translate(calc(var(--glass-x) / var(--radius) * 50% - 50%), calc(var(--glass-y) / var(--radius) * 50% - 50%));
+  transition: transform var(--duration-handoff) var(--ease-move);
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+.grip:active { cursor: grabbing; }
+.grip:focus-visible { outline: 2px solid var(--color-brand-700); outline-offset: calc(-1 * var(--space-1)); }
+.plate[data-free] :is(.glass, .detail, .grip) { transition: none; }
+.stops { display: flex; align-items: stretch; gap: var(--space-5); margin-top: var(--space-2); }
+.stops button {
+  position: relative;
+  min-height: calc(var(--space-10) + var(--space-1));
+  border: 0;
+  background: none;
+  padding: var(--space-2) 0;
+  color: var(--color-ink-muted);
+  font: var(--font-weight-medium) var(--text-ui)/var(--leading-ui) var(--font-body);
+  cursor: pointer;
+}
+.stops button::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 var(--space-1);
+  height: 2px;
+  background: var(--color-accent-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-feedback) var(--ease-out);
+}
+.stops button[aria-pressed='true'], .stops button:hover { color: var(--color-ink-primary); }
+.stops button[aria-pressed='true']::after { transform: scaleX(1); }
+.stops button:focus-visible { outline: 2px solid var(--color-accent-text); outline-offset: 2px; }
+.note {
+  margin: var(--space-2) 0 0;
+  min-height: 2lh;
+  max-width: 54ch;
+  color: var(--color-ink-secondary);
+  font: var(--font-weight-regular) var(--text-ui)/var(--leading-ui) var(--font-body);
+}
+.note span { display: block; animation: arrive var(--duration-reveal) var(--ease-out) var(--duration-causal) backwards; }
+@keyframes arrive { from { opacity: .45; } }
+/* raw: keep the note choices on one line at phone widths. */
+@media (max-width: 480px) {
+  .stops { gap: var(--space-4); }
+  .stops button { font-size: var(--text-caption); }
+}
