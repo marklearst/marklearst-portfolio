@@ -29,6 +29,7 @@
 .label {
   display: grid;
   place-items: center;
+  pointer-events: none;
   min-height: var(--space-8);
   padding: 0 var(--space-2);
   /* The frame's radius less the padding inside it. */
@@ -36,7 +37,7 @@
   color: var(--color-ink-secondary);
   font: var(--font-weight-medium) var(--text-caption)/var(--font-leading-200) var(--font-body);
   white-space: nowrap;
-  transition: background-color var(--duration-feedback) var(--ease-out), color var(--duration-feedback) var(--ease-out), scale var(--duration-feedback) var(--ease-out);
+  transition: background-color var(--duration-hover) var(--ease-out), color var(--duration-hover) var(--ease-out), scale var(--duration-feedback) var(--ease-out);
 }
 
 .input:checked + .label {

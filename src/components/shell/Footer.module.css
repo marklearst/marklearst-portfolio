@@ -38,7 +38,7 @@
 .contactHeading a span {
   display: inline-flex;
   flex-shrink: 0;
-  transition: transform var(--duration-reveal) var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-out);
 }
 
 .availability {
