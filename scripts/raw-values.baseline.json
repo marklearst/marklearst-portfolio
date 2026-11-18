@@ -1,16 +1,16 @@
 {
-  "total": 1134,
+  "total": 1050,
   "totals": {
-    "spacing": 654,
-    "font": 157,
+    "spacing": 600,
+    "font": 136,
     "font-size": 71,
-    "radius": 62,
+    "radius": 58,
     "line-height": 53,
     "font-weight": 41,
-    "breakpoint": 28,
+    "breakpoint": 27,
     "letter-spacing": 20,
     "color": 18,
-    "shadow": 14,
+    "shadow": 10,
     "tailwind-scale": 6,
     "font-family": 5,
     "tailwind-type": 4,
@@ -181,11 +181,7 @@
       "spacing": 20
     },
     "src/components/home/FeaturedWork.module.css": {
-      "breakpoint": 3,
-      "font": 21,
-      "radius": 4,
-      "shadow": 4,
-      "spacing": 54
+      "breakpoint": 2
     },
     "src/components/home/Hero.module.css": {
       "breakpoint": 2,
