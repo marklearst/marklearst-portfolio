@@ -1,43 +1,37 @@
-import { ArrowRightIcon, ArrowUpRightIcon } from '@/components/ui/Icon'
+import { ArrowRightIcon } from '@/components/ui/Icon'
 
+import ProjectPlate from '@/components/transitions/ProjectPlate'
+import { PROJECT_PREVIEWS } from '@/data/project-previews'
 import Link from 'next/link'
-import GlucoseDemo from '@/components/glucose/GlucoseDemo'
 import { getProjectBySlug, type ProjectMeta } from '@/data/projects'
 import TrackedLink from '@/components/analytics/TrackedLink'
 import SectionViewTracker from '@/components/analytics/SectionViewTracker'
-import AuroraArchitecture from '@/components/evidence/AuroraArchitecture'
-import ProjectPlate from '@/components/transitions/ProjectPlate'
 import ProjectTitle from '@/components/transitions/ProjectTitle'
+import WorkBrowser from './WorkBrowser'
 import styles from '@/components/home/FeaturedWork.module.css'
 
-// Titles and summaries come from PROJECTS, the same copy the Work index shows.
-// Only the homepage presentation lives here.
+// Project identity comes from PROJECTS. Each homepage story leads with a
+// specific engineering decision, then links to its evidence in the case study.
 const SHOWCASES = [
   {
     project: getProjectBySlug('primitree'),
-    note: 'Creator & maintainer · TypeScript / CLI',
-    image: '/images/primitree-playground-tokens.jpg',
-    alt: 'Primitree Playground displaying token collections and configuration.',
-    caption: 'Primitree Playground · token configuration',
+    discipline: 'Design tokens and developer tooling',
+    summary: 'I built Primitree to check which layers own values and which must reference them. It governs this site, from the accent you can change to the motion you can reduce.',
+    note: 'Creator and maintainer · TypeScript and design tokens',
   },
   {
     project: getProjectBySlug('skydio'),
+    discipline: 'React component architecture',
+    summary: 'I built the component architecture for Skydio’s Autonomy Widget. Typed configuration decides the controls; a provider lets the widget or its host own state. The widget shipped in a Skydio software release.',
     note: 'Frontend consultant · Component architecture & Storybook',
-    image: '/images/skydio-orbit-story.jpg',
-    alt: 'Skydio Autonomy Widget Orbit Mode in Storybook.',
-    caption: 'Orbit Mode · Storybook',
   },
   {
     project: getProjectBySlug('a11y-companion'),
-    note: 'Creator & maintainer · 450+ users on Figma Community',
-    image: '/images/a11y-audit-browser-demo.jpg',
-    alt: 'a11y Companion browser demonstration showing token contrast audit results alongside the Canvas Record.',
-    caption: 'Product-site browser demo · token audit and Canvas Record',
+    discipline: 'Accessibility in Figma and FigJam',
+    summary: 'I built a11y Companion to keep accessibility evidence in Figma and FigJam. Each approval records the checklist state, so changed evidence asks for another review.',
+    note: 'Creator and maintainer · Figma and FigJam',
   },
 ]
-
-const AURORA = getProjectBySlug('aurora-gm')
-const GLUCOSEIQ = getProjectBySlug('glucoseiq')
 
 function projectClickEvent(project: ProjectMeta) {
   return { type: 'case-study' as const, data: { project: project.slug, category: project.category, route: project.route, source: 'featured_work' } }
@@ -45,62 +39,37 @@ function projectClickEvent(project: ProjectMeta) {
 
 export default function FeaturedWork() {
   return (
-    <section id='work' className={styles.work} aria-labelledby='selected-work-heading'>
+    <section id='work' tabIndex={-1} className={styles.work} aria-labelledby='selected-work-heading'>
       <SectionViewTracker targetId='work' section='featured_work' location='home' />
       <div className={styles.container}>
         <div className={styles.sectionHeading}>
           <h2 id='selected-work-heading'>Selected work</h2>
           <Link href='/work'>All projects <span aria-hidden='true'><ArrowRightIcon /></span></Link>
         </div>
-        <div className={styles.projectGrid}>
-        {SHOWCASES.map(({ project, note, caption }, index) => (
-          <article key={project.slug} className={`${styles.project} ${index === 0 ? styles.projectFeatured : ''}`}>
-            <h3 className={styles.projectTitle}><ProjectTitle slug={project.slug}>{project.cardTitle}</ProjectTitle></h3>
-            <figure className={styles.figure}>
-              <TrackedLink className={styles.imageLink} href={project.route} aria-label={`Explore ${project.cardTitle}`} event={projectClickEvent(project)}>
-                <span className={styles.plate}>
-                  <ProjectPlate slug={project.slug} className={styles.imageViewport} sizes={index === 0 ? '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 60vw, 770px' : '(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 45vw, 600px'} />
-                </span>
-                <span className={styles.imageAction} aria-hidden='true'><ArrowRightIcon size={20} /></span>
-              </TrackedLink>
-              <figcaption className={styles.caption}>{caption}</figcaption>
-            </figure>
-            <div className={styles.projectContent}>
-              <p className={styles.projectSummary}>{project.summary}</p>
-              <p className={styles.projectNote}>{note}</p>
-              <TrackedLink className={styles.caseLink} href={project.route} event={projectClickEvent(project)}>View case study <span aria-hidden='true'><ArrowRightIcon /></span></TrackedLink>
-            </div>
-          </article>
-        ))}
-        </div>
-        <article className={styles.enterprise}>
-          <div className={styles.projectContent}>
-            <h3><ProjectTitle slug={AURORA.slug}>{AURORA.cardTitle}</ProjectTitle></h3>
-            <p className={styles.projectSummary}>{AURORA.summary}</p>
-            <TrackedLink href={AURORA.route} className={styles.caseLink} event={projectClickEvent(AURORA)}>Inside Aurora <span aria-hidden='true'><ArrowRightIcon /></span></TrackedLink>
-          </div>
-          <AuroraArchitecture />
-        </article>
-        <article className={styles.librarySample} aria-labelledby='glucose-sample-heading'>
-          <div className={styles.projectContent}>
-            <p className={styles.eyebrow}>My library, running here</p>
-            <h3 id='glucose-sample-heading'><ProjectTitle slug={GLUCOSEIQ.slug}>{GLUCOSEIQ.cardTitle}</ProjectTitle></h3>
-            <p className={styles.projectSummary}>{GLUCOSEIQ.summary}</p>
-            <TrackedLink href={GLUCOSEIQ.route} className={styles.caseLink} event={projectClickEvent(GLUCOSEIQ)}>{GLUCOSEIQ.cardTitle} case study <ArrowRightIcon /></TrackedLink>
-          </div>
-          <div className={styles.livePreview}>
-            <GlucoseDemo compact />
-            <a href='https://github.com/marklearst/marklearst-portfolio/blob/7b19f1b586a87cc8a8a615e049deb4cafe55fb99/src/lib/glucose-demo.ts' target='_blank' rel='noopener noreferrer' className={styles.previewLink}>View sample source <ArrowUpRightIcon /></a>
-          </div>
-        </article>
-        <div className={styles.moreWork}>
-          <span>More to explore</span>
-          <Link href='/work/figmavars-hooks'>FigmaVars Hooks <span aria-hidden='true'><ArrowRightIcon /></span></Link>
-          <Link href='/work/hailstorm'>Hailstorm <span aria-hidden='true'><ArrowRightIcon /></span></Link>
-          <Link href='/work/variable-design-standard'>Variable Design Standard <span aria-hidden='true'><ArrowRightIcon /></span></Link>
-          <Link href='/work/diabetic-utils'>Diabetic Utils <span aria-hidden='true'><ArrowRightIcon /></span></Link>
-          <Link href='/artifacts/agentic-workflows'>How I use agents <span aria-hidden='true'><ArrowRightIcon /></span></Link>
-        </div>
+        <WorkBrowser items={SHOWCASES.map(({ project, discipline, summary, note }) => ({
+          id: project.slug,
+          label: project.cardTitle,
+          discipline,
+          title: <ProjectTitle slug={project.slug}>{project.cardTitle}</ProjectTitle>,
+          panel: (
+            <>
+              <figure className={styles.figure}>
+                <TrackedLink data-work-preview className={styles.imageLink} href={project.route} aria-label={`View case study: ${project.cardTitle}`} event={projectClickEvent(project)}>
+                  <ProjectPlate slug={project.slug} className={styles.imageViewport} sizes='(max-width: 800px) calc(100vw - 48px), (max-width: 1360px) 64vw, 816px' />
+                  <span className={styles.imageAction} aria-hidden='true'><ArrowRightIcon size={20} /></span>
+                </TrackedLink>
+                <figcaption className={styles.caption}>{PROJECT_PREVIEWS[project.slug]?.caption}</figcaption>
+              </figure>
+              <div className={styles.projectContent}>
+                <p className={styles.projectSummary}>{summary}</p>
+                <div className={styles.projectFoot}>
+                  <p className={styles.projectNote}>{note}</p>
+                  <TrackedLink className={styles.caseLink} href={project.route} aria-label={`Read the case study: ${project.cardTitle}`} event={projectClickEvent(project)}>Read the case study <span aria-hidden='true'><ArrowRightIcon /></span></TrackedLink>
+                </div>
+              </div>
+            </>
+          ),
+        }))} />
       </div>
     </section>
   )
