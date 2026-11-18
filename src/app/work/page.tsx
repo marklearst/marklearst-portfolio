@@ -9,5 +9,10 @@ export const metadata: Metadata = {
 }
 
 export default function WorkPage() {
-  return <main className={styles.page}><WorkCatalog /><Footer /></main>
+  return (
+    <div className={styles.page}>
+      <main><WorkCatalog /></main>
+      <Footer />
+    </div>
+  )
 }

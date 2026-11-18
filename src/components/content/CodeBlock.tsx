@@ -18,7 +18,7 @@ export default function CodeBlock({
 }: CodeBlockProps) {
   return (
     <CodeBlockFrame code={code} language={language} analyticsLabel={analyticsLabel}>
-      <div className={styles.source} tabIndex={0} role='region' aria-label={language + ' code'}>
+      <div className={styles.source} tabIndex={0} role='group' aria-label={language + ' code'}>
         <SyntaxHighlighter
           language={language}
           style={codeTheme}

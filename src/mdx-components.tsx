@@ -7,6 +7,7 @@ export function useMDXComponents(components: MDXComponents = {}) {
     table: ({ children, ...props }: ComponentPropsWithoutRef<'table'>) => (
       <div className="my-8 overflow-x-auto rounded-lg border border-ink-primary/8 bg-surface">
         <table
+          tabIndex={0}
           className="w-full border-collapse text-sm"
           {...props}
         >

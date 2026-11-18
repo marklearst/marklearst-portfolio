@@ -14,14 +14,16 @@ export default function AboutLayout({
   children: ReactNode
 }) {
   return (
-    <main id='main-content' className={styles.page}>
-      <header className={`${styles.container} ${styles.hero}`}>
-        {tagline && <p className={styles.tagline}>{tagline}</p>}
-        <h1 className={styles.title}>{title}</h1>
-        <p className={styles.summary}>{summary}</p>
-      </header>
-      <div className={`${styles.container} ${styles.content}`}>{children}</div>
+    <div className={styles.page}>
+      <main id='main-content'>
+        <header className={`${styles.container} ${styles.hero}`}>
+          {tagline && <p className={styles.tagline}>{tagline}</p>}
+          <h1 className={styles.title}>{title}</h1>
+          <p className={styles.summary}>{summary}</p>
+        </header>
+        <div className={`${styles.container} ${styles.content}`}>{children}</div>
+      </main>
       <Footer />
-    </main>
+    </div>
   )
 }
