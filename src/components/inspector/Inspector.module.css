@@ -1097,10 +1097,6 @@
 
 @media (hover: hover) and (pointer: fine) {
 
-  .dock [data-variant='secondary']:not(:disabled):hover {
-    --button-background: var(--color-canvas);
-  }
-
   .token:hover {
     background: var(--color-surface-raised);
   }

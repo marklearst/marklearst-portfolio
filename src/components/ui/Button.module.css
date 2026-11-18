@@ -86,7 +86,7 @@
   }
 
   .button[data-variant='secondary']:not(:disabled):hover {
-    --button-background: var(--color-surface-raised);
+    --button-background: color-mix(in srgb, var(--component-button-secondary-text) 16%, var(--component-button-secondary-background));
   }
 
   .button[data-variant='ghost']:not(:disabled):hover {
