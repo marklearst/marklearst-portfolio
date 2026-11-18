@@ -35,6 +35,15 @@ gradient: from-cyan-500/20 via-blue-500/10 to-transparent
       label="Skydio Autonomy Widget in Storybook"
       items={[
         {
+          src: '/images/skydio-orbit-story.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Orbit mode',
+          alt: 'Skydio Autonomy Widget Orbit Mode story in Storybook, showing Orbiting status, a circular timer at 1:57, a red Pause control, and the orbit progress control.',
+          caption: 'Orbit Mode in the public Storybook. The small marker is the fixed orbit reference, and the carets move the progress indicator in 5% steps.',
+          sourceUrl: 'https://skydio-autonomy-widget.vercel.app/?path=/story/components-autonomywidget--orbit-mode',
+        },
+        {
           src: '/images/skydio-config-explorer.jpg',
           width: 1280,
           height: 720,
@@ -148,11 +157,21 @@ export const ACTION_CONFIGS: Record<ActionType, ActionConfig> = {
 
     <CaseStudyMutedText>The widget's main components:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>Timer</code>: a countdown ring with a text and icon transition, and a completion callback</li>
-      <li><code>OrbitSlider</code>: a fixed center reference and a progress indicator that two native caret buttons move in 5% steps</li>
-      <li><code>Button</code>: native buttons in a closed set of variants (default, action, play, stop, caret), with hover and focus tooltips</li>
-      <li><code>StatusMessage</code>: the one-line mission status, announced through a polite live region</li>
-      <li><code>Tooltip</code>: opens on hover or focus and closes with Escape</li>
+      <li>
+        <code>Timer</code>: a countdown ring with a text and icon transition, and a completion callback
+      </li>
+      <li>
+        <code>OrbitSlider</code>: a fixed center reference and a progress indicator that two native caret buttons move in 5% steps
+      </li>
+      <li>
+        <code>Button</code>: native buttons in a closed set of variants (default, action, play, stop, caret), with hover and focus tooltips
+      </li>
+      <li>
+        <code>StatusMessage</code>: the one-line mission status, announced through a polite live region
+      </li>
+      <li>
+        <code>Tooltip</code>: opens on hover or focus and closes with Escape
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Docs and tests in Storybook</CaseStudySubheading>

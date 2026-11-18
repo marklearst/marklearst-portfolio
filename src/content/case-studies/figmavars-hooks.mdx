@@ -41,11 +41,21 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
 
     <CaseStudyDetails summary="Token synchronization problems">
     <CaseStudyMutedList className="space-y-3">
-      <li>Manual copy-paste workflows to sync design tokens from Figma to code</li>
-      <li>Version drift between Figma variables and application code</li>
-      <li>No way to validate variables at runtime in React apps</li>
-      <li>No way to load Figma variables live in Storybook or dev tools</li>
-      <li>Token export tools that didn't use the official APIs</li>
+      <li>
+        Manual copy-paste workflows to sync design tokens from Figma to code
+      </li>
+      <li>
+        Version drift between Figma variables and application code
+      </li>
+      <li>
+        No way to validate variables at runtime in React apps
+      </li>
+      <li>
+        No way to load Figma variables live in Storybook or dev tools
+      </li>
+      <li>
+        Token export tools that didn't use the official APIs
+      </li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
   </div>
@@ -134,12 +144,24 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       The hooks fetch and cache Figma variables at runtime:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li><code>useVariables()</code> fetches all variables from a Figma file</li>
-      <li><code>useVariableById()</code> gets one variable by ID</li>
-      <li><code>useVariableCollections()</code> reads variable collections</li>
-      <li>Built-in caching and request deduplication</li>
-      <li>Exported response types and type guards</li>
-      <li>SWR configuration for revalidation, retry, and cache control</li>
+      <li>
+        <code>useVariables()</code> fetches all variables from a Figma file
+      </li>
+      <li>
+        <code>useVariableById()</code> gets one variable by ID
+      </li>
+      <li>
+        <code>useVariableCollections()</code> reads variable collections
+      </li>
+      <li>
+        Built-in caching and request deduplication
+      </li>
+      <li>
+        Exported response types and type guards
+      </li>
+      <li>
+        SWR configuration for revalidation, retry, and cache control
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>CLI export</CaseStudySubheading>
@@ -148,10 +170,18 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       CI/CD pipelines:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Runs in GitHub Actions or any CI environment</li>
-      <li>Writes JSON that Style Dictionary can read</li>
-      <li>Filters by collection, mode, or variable name</li>
-      <li>Validates exported data with runtime guards before writing</li>
+      <li>
+        Runs in GitHub Actions or any CI environment
+      </li>
+      <li>
+        Writes JSON that Style Dictionary can read
+      </li>
+      <li>
+        Filters by collection, mode, or variable name
+      </li>
+      <li>
+        Validates exported data with runtime guards before writing
+      </li>
     </CaseStudyMutedList>
     <CodeBlock
       language="bash"
@@ -201,10 +231,18 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
     <CaseStudySubheading>Runtime guards and errors</CaseStudySubheading>
 
     <CaseStudyMutedList className="space-y-2">
-      <li><code>isLocalVariablesResponse()</code> validates local responses</li>
-      <li><code>isPublishedVariablesResponse()</code> validates published data</li>
-      <li><code>isFigmaApiError()</code> and helpers for handling status codes</li>
-      <li><code>redactToken()</code> for safe logging and support flows</li>
+      <li>
+        <code>isLocalVariablesResponse()</code> validates local responses
+      </li>
+      <li>
+        <code>isPublishedVariablesResponse()</code> validates published data
+      </li>
+      <li>
+        <code>isFigmaApiError()</code> and helpers for handling status codes
+      </li>
+      <li>
+        <code>redactToken()</code> for safe logging and support flows
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>100% test coverage</CaseStudySubheading>
@@ -212,10 +250,18 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       The Vitest suite covers:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Every hook, including edge cases</li>
-      <li>Mocked API requests and responses, and error handling</li>
-      <li>Runtime validation for all data structures</li>
-      <li>CLI command execution and file output</li>
+      <li>
+        Every hook, including edge cases
+      </li>
+      <li>
+        Mocked API requests and responses, and error handling
+      </li>
+      <li>
+        Runtime validation for all data structures
+      </li>
+      <li>
+        CLI command execution and file output
+      </li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
   </div>
@@ -234,19 +280,35 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       The React 19 integration uses:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Server Components for initial data fetching when used in Next.js</li>
-      <li>React's use hook for async data loading</li>
-      <li>Caching through React's cache function</li>
+      <li>
+        Server Components for initial data fetching when used in Next.js
+      </li>
+      <li>
+        React's use hook for async data loading
+      </li>
+      <li>
+        Caching through React's cache function
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Developer experience</CaseStudySubheading>
     <CaseStudyMutedText>The package includes:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Clear error messages with suggestions for common issues</li>
-      <li>TypeScript types exported from the package</li>
-      <li>A README with code examples and an API reference</li>
-      <li>Very little configuration to get started</li>
-      <li>ESM-first build with CJS interop and Node 20 toolchain</li>
+      <li>
+        Clear error messages with suggestions for common issues
+      </li>
+      <li>
+        TypeScript types exported from the package
+      </li>
+      <li>
+        A README with code examples and an API reference
+      </li>
+      <li>
+        Very little configuration to get started
+      </li>
+      <li>
+        ESM-first build with CJS interop and Node 20 toolchain
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Security and rate limits</CaseStudySubheading>
@@ -254,18 +316,32 @@ gradient: from-cyan-500/20 via-teal-500/10 to-transparent
       For tokens and rate limits, the package has:
     </CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Redaction helpers for safe token logging</li>
-      <li>Retry utilities with exponential backoff for 429 responses</li>
-      <li>Documented scopes for read/write access</li>
+      <li>
+        Redaction helpers for safe token logging
+      </li>
+      <li>
+        Retry utilities with exponential backoff for 429 responses
+      </li>
+      <li>
+        Documented scopes for read/write access
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudySubheading>Use cases</CaseStudySubheading>
     <CaseStudyMutedText>It's built for workflows like:</CaseStudyMutedText>
     <CaseStudyMutedList className="space-y-2">
-      <li>Storybook showing the live Figma variables</li>
-      <li>Design token validation tools that check Figma against the codebase</li>
-      <li>Admin panels for managing design tokens across teams</li>
-      <li>CI/CD pipelines that auto-sync Figma changes to code repos</li>
+      <li>
+        Storybook showing the live Figma variables
+      </li>
+      <li>
+        Design token validation tools that check Figma against the codebase
+      </li>
+      <li>
+        Admin panels for managing design tokens across teams
+      </li>
+      <li>
+        CI/CD pipelines that auto-sync Figma changes to code repos
+      </li>
     </CaseStudyMutedList>
     </CaseStudyDetails>
   </div>

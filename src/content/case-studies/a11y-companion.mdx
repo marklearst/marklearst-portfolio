@@ -111,10 +111,18 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Checklist sections collapse and show their own progress, so 64 items stay navigable</li>
-      <li>Every item cites its WCAG criterion, because people trust a cited rule more than a tool's opinion</li>
-      <li>Audits group repeated findings into causes and say what's kept and what's only a sample</li>
-      <li>Light and dark themes with six accent colors change the widget and never the record</li>
+      <li>
+        Checklist sections collapse and show their own progress, so 64 items stay navigable
+      </li>
+      <li>
+        Every item cites its WCAG criterion, because people trust a cited rule more than a tool's opinion
+      </li>
+      <li>
+        Audits group repeated findings into causes and say what's kept and what's only a sample
+      </li>
+      <li>
+        Light and dark themes with six accent colors change the widget and never the record
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
@@ -138,12 +146,37 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
       failures first, while the counts cover every affected use in the scan.
     </CaseStudyMutedText>
 
+    <EvidenceGallery
+      label="a11y Companion product views"
+      items={[
+        {
+          src: '/images/a11y-audit-browser-demo.jpg',
+          width: 1280,
+          height: 720,
+          title: 'Audit and Canvas Record',
+          alt: 'a11y Companion browser demo showing token contrast totals, representative-example counts, and affected uses beside Canvas Record.',
+          caption: 'Token audit and Canvas Record in the browser demo on the product site. Full counts stay visible when the list shows only representative findings.',
+          sourceUrl: 'https://marklearst.me/a11y-companion-widget/',
+        },
+      ]}
+    />
+
     <CaseStudyMutedList className="space-y-2">
-      <li>Targets: fails below 24px per WCAG 2.5.8, warns below 44px, with a 2000-node traversal budget</li>
-      <li>Text: per-segment font size, line height, justification, line length, and all-caps checks</li>
-      <li>Tokens: local variable collections across modes, alias chains resolved to depth 10, alpha-composited ratios</li>
-      <li>Jump on each finding selects and zooms to the offending layer</li>
-      <li>Severity always has a glyph and never relies on color alone</li>
+      <li>
+        Targets: fails below 24px per WCAG 2.5.8, warns below 44px, with a 2000-node traversal budget
+      </li>
+      <li>
+        Text: per-segment font size, line height, justification, line length, and all-caps checks
+      </li>
+      <li>
+        Tokens: local variable collections across modes, alias chains resolved to depth 10, alpha-composited ratios
+      </li>
+      <li>
+        Jump on each finding selects and zooms to the offending layer
+      </li>
+      <li>
+        Severity always has a glyph and never relies on color alone
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
@@ -153,11 +186,21 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Thresholds evaluated at full precision before rounding for display</li>
-      <li>A failing pair keeps the measured colors in the specimen while a separate line states the verdict</li>
-      <li>Color vision preview for protanopia, deuteranopia, and tritanopia, labeled as simulation</li>
-      <li>WCAG contrast stays the normative result, and the preview never issues a second grade</li>
-      <li>Pattern, shader, and video fills get an explicit notice so they don't fail silently</li>
+      <li>
+        Thresholds evaluated at full precision before rounding for display
+      </li>
+      <li>
+        A failing pair keeps the measured colors in the specimen while a separate line states the verdict
+      </li>
+      <li>
+        Color vision preview for protanopia, deuteranopia, and tritanopia, labeled as simulation
+      </li>
+      <li>
+        WCAG contrast stays the normative result, and the preview never issues a second grade
+      </li>
+      <li>
+        Pattern, shader, and video fills get an explicit notice so they don't fail silently
+      </li>
     </CaseStudyMutedList>
   </div>
 </CaseStudySection>
@@ -182,9 +225,15 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Watch ownership uses the durable <code>sessionId</code></li>
-      <li>Export and clipboard access run through a hidden iframe bridge, since the widget sandbox has neither</li>
-      <li>Empty spacer AutoLayouts default to 100px tall, so an explicit <code>height=0</code> keeps them from inflating badge and chip rows</li>
+      <li>
+        Watch ownership uses the durable <code>sessionId</code>
+      </li>
+      <li>
+        Export and clipboard access run through a hidden iframe bridge, since the widget sandbox has neither
+      </li>
+      <li>
+        Empty spacer AutoLayouts default to 100px tall, so an explicit <code>height=0</code> keeps them from inflating badge and chip rows
+      </li>
     </CaseStudyMutedList>
   </div>
 </CaseStudySection>
@@ -198,13 +247,27 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Annotate writes Dev Mode annotations for the examples shown and says how many findings it left out</li>
-      <li>Read-modify-write preserves existing annotations and stays idempotent on re-run</li>
-      <li>Annotations link the relevant WCAG Understanding page and cite the properties that failed</li>
-      <li>Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame per page</li>
-      <li>Re-running Record refreshes the same widget-owned frame and doesn't create duplicates</li>
-      <li>The record reads Action required, Review required, In progress, or Ready for handoff, and a partial or selection-only scan can't reach Ready</li>
-      <li>The record keeps one canonical palette, whatever theme each reviewer's widget uses</li>
+      <li>
+        Annotate writes Dev Mode annotations for the examples shown and says how many findings it left out
+      </li>
+      <li>
+        Read-modify-write preserves existing annotations and stays idempotent on re-run
+      </li>
+      <li>
+        Annotations link the relevant WCAG Understanding page and cite the properties that failed
+      </li>
+      <li>
+        Canvas Record compiles progress, sign-offs, audit summaries, and priority findings into one Figma frame per page
+      </li>
+      <li>
+        Re-running Record refreshes the same widget-owned frame and doesn't create duplicates
+      </li>
+      <li>
+        The record reads Action required, Review required, In progress, or Ready for handoff, and a partial or selection-only scan can't reach Ready
+      </li>
+      <li>
+        The record keeps one canonical palette, whatever theme each reviewer's widget uses
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
@@ -229,10 +292,18 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>Variable architecture and design-system conformance checks</li>
-      <li>Automated AA contrast verification across the token set with shade-step suggestions</li>
-      <li>Theme baseline snapshots that fail on unreviewed drift</li>
-      <li>Bundle size budgets, kept under ceiling by minifying syntax while preserving identifiers</li>
+      <li>
+        Variable architecture and design-system conformance checks
+      </li>
+      <li>
+        Automated AA contrast verification across the token set with shade-step suggestions
+      </li>
+      <li>
+        Theme baseline snapshots that fail on unreviewed drift
+      </li>
+      <li>
+        Bundle size budgets, kept under ceiling by minifying syntax while preserving identifiers
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
@@ -294,10 +365,18 @@ gradient: from-green-500/20 via-emerald-500/10 to-transparent
     </CaseStudyMutedText>
 
     <CaseStudyMutedList className="space-y-2">
-      <li>30 responsive page cases across five widths, from 390 to 1440px, in light, dark, and reduced-motion modes</li>
-      <li>A title, description, canonical URL, and Open Graph image checked on each of the 7 prerendered routes</li>
-      <li>Gzip budgets for initial JavaScript, product interaction code, and CSS</li>
-      <li>A separate manual check for Figma host behavior, since a browser test can't stand in for the real sandbox, multiplayer, and bridge</li>
+      <li>
+        30 responsive page cases across five widths, from 390 to 1440px, in light, dark, and reduced-motion modes
+      </li>
+      <li>
+        A title, description, canonical URL, and Open Graph image checked on each of the 7 prerendered routes
+      </li>
+      <li>
+        Gzip budgets for initial JavaScript, product interaction code, and CSS
+      </li>
+      <li>
+        A separate manual check for Figma host behavior, since a browser test can't stand in for the real sandbox, multiplayer, and bridge
+      </li>
     </CaseStudyMutedList>
 
     <CaseStudyMutedText>
