@@ -40,6 +40,9 @@ export default function PrimaryNav({ children }: PrimaryNavProps) {
             <span>{label}</span>
           </Link>
         ))}
+        <span aria-hidden='true' className={styles.mask}>
+          {items.map(({ label }) => <span key={label}>{label}</span>)}
+        </span>
       </nav>
       {children && <div className={styles.actions}>{children}</div>}
     </div>

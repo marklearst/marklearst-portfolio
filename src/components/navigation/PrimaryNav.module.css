@@ -1,22 +1,23 @@
 /* One bar holds the links and, after a rule, the actions. Its radius is the scale's, and what sits inside takes that radius less the padding. */
 .bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
   flex-shrink: 0;
   padding: var(--space-1);
   border-radius: var(--radius-4);
   background: color-mix(in srgb, var(--color-surface) 70%, transparent);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), inset 0 -1px 0 rgb(255 255 255 / 3%);
 }
 
 .nav {
-  --preview-index: var(--active-index);
-  --indicator-visible: 0;
   position: relative;
   isolation: isolate;
   display: grid;
+  --aim: var(--active-index);
+  --slot: calc(100% / 3);
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: clamp(220px, calc(100vw - 248px), 292px);
+  width: max-content;
+  min-width: clamp(220px, calc(100vw - 248px), 292px);
 }
 
 .actions {
@@ -36,10 +37,8 @@
   background: var(--color-border-subtle);
 }
 
-/* Equal tracks let both layers travel without measuring or animating layout. */
-
-.nav::before,
-.nav::after {
+/* The filled surface identifies the current route while the outline follows the pointer. */
+.nav::before {
   position: absolute;
   z-index: -1;
   inset-block: 0;
@@ -48,29 +47,17 @@
   border-radius: var(--radius-3);
   pointer-events: none;
   content: '';
-  transition: transform var(--duration-handoff) var(--ease-out), opacity var(--duration-feedback) var(--semantic-easing-linear);
-}
-
-.nav::before {
   background: var(--color-surface-raised);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 1px 3px rgb(0 0 0 / 20%);
   transform: translateX(calc(var(--active-index) * 100%));
   opacity: 0;
-}
-
-.nav::after {
-  box-shadow: inset 0 0 0 2px var(--color-accent-primary);
-  transform: translateX(calc(var(--preview-index) * 100%));
-  opacity: var(--indicator-visible);
-}
-
-.nav[data-active] {
-  --indicator-visible: 1;
 }
 
 .nav[data-active]::before {
   opacity: 1;
 }
+
+.mask { display: none; }
+.nav { letter-spacing: -0.01em; }
 
 .link {
   display: inline-flex;
@@ -80,19 +67,28 @@
   padding: 10px 8px;
   border-radius: var(--radius-3);
   color: var(--color-ink-muted);
-  font: 500 var(--text-ui)/1.4 var(--font-body);
-  letter-spacing: -0.01em;
+  font: var(--font-weight-regular) var(--text-ui)/var(--font-leading-200) var(--font-body);
   text-decoration: none;
+  transition: none;
+}
+
+/* Pointer navigation can hand off the surface. Keyboard and history settle immediately. */
+:root[data-route-input='pointer'] .nav::before {
+  transition: transform var(--duration-handoff) var(--ease-out), opacity var(--duration-feedback) var(--semantic-easing-linear);
+}
+
+:root[data-route-input='pointer'] .link {
   transition: color var(--duration-feedback) var(--ease-out);
 }
 
 .link[aria-current='page'] {
   color: var(--color-ink-primary);
+  font-weight: var(--font-weight-medium);
 }
 
 .link:focus-visible {
   color: var(--color-ink-primary);
-  outline: 2px solid var(--color-ink-primary);
+  outline: 2px solid var(--color-accent-text);
   outline-offset: -2px;
 }
 
@@ -100,55 +96,64 @@
   background: color-mix(in srgb, var(--color-ink-primary) 7%, transparent);
 }
 
-.nav:has(.link:focus-visible)::after {
+.nav::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--slot);
+  pointer-events: none;
+  border: 2px solid var(--color-accent-primary);
+  border-radius: var(--radius-3);
+  transform: translateX(calc(var(--aim) * 100%));
+  transition: transform var(--duration-reveal) var(--ease-out), opacity var(--duration-feedback) var(--ease-out);
   opacity: 0;
 }
-
-.nav:has(.link:focus-visible)::before,
-.nav:has(.link:focus-visible)::after {
-  transition: none;
-}
+.nav[data-active]::after { opacity: 1; }
+.nav:has(:focus-visible)::after { opacity: 0; }
 
 @media (hover: hover) and (pointer: fine) {
 
-  .nav:has(.link:hover) {
-    --indicator-visible: 1;
-  }
+  .nav:has(.link:nth-child(1):hover) { --aim: 0; }
+  .nav:has(.link:nth-child(2):hover) { --aim: 1; }
+  .nav:has(.link:nth-child(3):hover) { --aim: 2; }
 
-  .nav:has(.link:nth-child(1):hover) {
-    --preview-index: 0;
-  }
-
-  .nav:has(.link:nth-child(2):hover) {
-    --preview-index: 1;
-  }
-
-  .nav:has(.link:nth-child(3):hover) {
-    --preview-index: 2;
-  }
-
-  .link:hover {
+  /* A clipped impression of the lettering and its frame share a leading edge. */
+  .mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: inherit;
     color: var(--color-ink-primary);
+    background: var(--color-surface-raised);
+    clip-path: inset(0 calc((2 - var(--aim)) * var(--slot)) 0 calc(var(--aim) * var(--slot)) round var(--radius-3));
+    transition: clip-path var(--duration-reveal) var(--ease-out), opacity var(--duration-feedback) var(--ease-out);
+    opacity: 0;
+    font: var(--font-weight-regular) var(--text-ui)/var(--font-leading-200) var(--font-body);
   }
+  .mask > span { display: grid; place-items: center; }
+  .nav:has(.link:hover):not(:has(:focus-visible)) :is(.mask),
+  .nav:has(.link:hover):not(:has(:focus-visible))::after { opacity: 1; }
 }
 
-@media (max-width: 479px) {
+/* Match the wordmark and Inspect label so the complete header fits before expanding. */
+@media (max-width: 655px) {
 
   /* The links give up width to the action beside them, down to the narrowest phones. */
   .bar {
     flex: 1 1 0;
-    min-width: 0;
+    min-width: min-content;
     max-width: 284px;
   }
 
   .nav {
     flex: 1 1 0;
     width: auto;
-    min-width: 0;
+    min-width: max-content;
   }
 
-  .link {
-    padding-inline: 0;
+  .link { padding-inline: 0; }
+  .link, .mask {
     font-size: 14px;
   }
 }
@@ -156,7 +161,7 @@
 /* raw: breakpoints can't read custom properties */
 @media (max-width: 359px) {
 
-  .link {
+  .link, .mask {
     font-size: var(--font-size-50);
   }
 }
