@@ -91,7 +91,7 @@
   text-align: left;
   cursor: pointer;
   touch-action: manipulation;
-  transition: color var(--duration-reveal) var(--ease-out), background-color var(--duration-reveal) var(--ease-out);
+  transition: color var(--duration-hover) var(--ease-out), background-color var(--duration-hover) var(--ease-out);
 }
 
 .projectChoice[aria-selected='true'] {
@@ -128,7 +128,7 @@
 }
 
 .browser[data-motion='true'] .choiceArrow {
-  transition: transform var(--duration-handoff) var(--ease-out), opacity var(--duration-reveal) var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-out), opacity var(--duration-hover) var(--ease-out);
 }
 
 .browser[data-motion='false'] .projectChoice { transition: none; }
@@ -198,7 +198,7 @@
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  transition: transform var(--duration-handoff) var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-out);
 }
 
 .imageAction {
@@ -212,7 +212,7 @@
   border-radius: var(--radius-2);
   background: var(--color-surface-raised);
   color: var(--color-ink-primary);
-  transition: transform var(--duration-handoff) var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-out);
 }
 
 .caption {

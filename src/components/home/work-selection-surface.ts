@@ -15,7 +15,7 @@ export function attachWorkSelectionSurface(list: HTMLElement, surface: HTMLEleme
     }
     const visible = box.bottom > 0 && box.top < window.innerHeight
     const duration = ready && animate && visible && !document.documentElement.hasAttribute('data-inspecting')
-      ? durationMs('--semantic-duration-handoff') : 0
+      ? durationMs('--semantic-duration-hover') : 0
     const previous = duration > 0 ? getComputedStyle(surface) : undefined
     const from = previous ? { transform: previous.transform, clipPath: previous.clipPath } : undefined
     const curve = from ? easing('--semantic-easing-enter') : undefined

@@ -64,7 +64,7 @@
   background: var(--color-accent-primary);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--duration-feedback) var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-out);
 }
 .stops button[aria-pressed='true'], .stops button:hover { color: var(--color-ink-primary); }
 .stops button[aria-pressed='true']::after { transform: scaleX(1); }
