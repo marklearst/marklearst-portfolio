@@ -190,64 +190,32 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 :where(a, button):active [data-action-icon] .icon-arrow { transform: translate(0); transition-duration: var(--duration-feedback); }
 [data-motion='reduced'] [data-action-icon] .icon-arrow { transform: none !important; }
 
+/* The outgoing and incoming arrow share one aperture on directional links. */
+[data-action-icon]:has(.incoming-stroke) { overflow: hidden; }
+.incoming-stroke { visibility: hidden; }
+@media (hover: hover) and (pointer: fine) {
+  html[data-motion]:not([data-motion='reduced']) :is(a, button) [data-action-icon] {
+    --travel-x: 100%;
+    --travel-y: 0%;
+  }
+  html[data-motion]:not([data-motion='reduced']) :is(a, button) [data-action-icon='external'] { --travel-y: -100%; }
+  html[data-motion]:not([data-motion='reduced']) :is(a, button) :is(.incoming-stroke, .outgoing-stroke) {
+    transition: translate var(--duration-reveal) var(--ease-out);
+  }
+  html[data-motion]:not([data-motion='reduced']) :is(a, button) .incoming-stroke {
+    visibility: visible;
+    translate: calc(-1 * var(--travel-x)) calc(-1 * var(--travel-y));
+  }
+  html[data-motion]:not([data-motion='reduced']) :is(a, button):hover .incoming-stroke { translate: 0 0; }
+  html[data-motion]:not([data-motion='reduced']) :is(a, button):hover .outgoing-stroke { translate: var(--travel-x) var(--travel-y); }
+}
+
 html, body { scroll-behavior: auto; }
 
-/* Route changes. The leaving page fades where it stands. The arriving page
-   settles in from the top. Durations are motion tokens, so the reduced motion
-   context makes the swap instant with no rule of its own. */
+/* Shared project snapshots let pointer events reach the live page beneath them. */
 ::view-transition {
   pointer-events: none;
 }
-
-::view-transition-old(.page-exit) {
-  animation: page-exit var(--semantic-duration-feedback) var(--semantic-easing-enter) both;
-}
-
-::view-transition-new(.page-enter) {
-  animation: page-enter var(--semantic-duration-handoff) var(--semantic-easing-enter) both;
-}
-
-@keyframes page-exit {
-  to { opacity: 0; }
-}
-
-@keyframes page-enter {
-  from { opacity: 0; transform: translateY(var(--space-2)); }
-}
-
-/* Stepping through a sequence. The page moves a short way toward where it sits in the order,
-   far enough to say which way, not so far that it reads as a carousel. */
-::view-transition-old(.page-to-previous),
-::view-transition-old(.page-to-next),
-::view-transition-old(.page-to-below) {
-  animation-duration: var(--semantic-duration-feedback);
-  animation-timing-function: var(--semantic-easing-enter);
-  animation-fill-mode: both;
-}
-
-::view-transition-new(.page-from-next),
-::view-transition-new(.page-from-previous),
-::view-transition-new(.page-from-above) {
-  animation-duration: var(--semantic-duration-handoff);
-  animation-timing-function: var(--semantic-easing-settle);
-  animation-fill-mode: both;
-}
-
-::view-transition-old(.page-to-previous) { animation-name: page-to-previous; }
-::view-transition-old(.page-to-next) { animation-name: page-to-next; }
-::view-transition-old(.page-to-below) { animation-name: page-to-below; }
-::view-transition-new(.page-from-next) { animation-name: page-from-next; }
-::view-transition-new(.page-from-previous) { animation-name: page-from-previous; }
-::view-transition-new(.page-from-above) { animation-name: page-from-above; }
-
-@keyframes page-to-previous { to { opacity: 0; transform: translateX(calc(var(--space-8) * -1)); } }
-@keyframes page-to-next { to { opacity: 0; transform: translateX(var(--space-8)); } }
-@keyframes page-from-next { from { opacity: 0; transform: translateX(var(--space-12)); } }
-@keyframes page-from-previous { from { opacity: 0; transform: translateX(calc(var(--space-12) * -1)); } }
-
-/* Back up to the index: the case study sinks away and the list comes down into place. */
-@keyframes page-to-below { to { opacity: 0; transform: translateY(var(--space-6)); } }
-@keyframes page-from-above { from { opacity: 0; transform: translateY(calc(var(--space-4) * -1)); } }
 
 /* A project's name travels from the list to the top of its case study. A light blur covers the frames where two sizes of the same word overlap. */
 ::view-transition-group(.title-morph) {
@@ -270,41 +238,9 @@ html, body { scroll-behavior: auto; }
   40% { filter: blur(2px); }
 }
 
-/* A project's plate grows from the list into the cover of its case study, and shrinks back on the way out.
-   Both ends are the same 16:9 picture, so the snapshots scale together instead of stretching. It moves on the
-   handoff duration, the same as the title, so the name and the picture arrive as one. */
-::view-transition-group(.plate-morph) {
-  animation-duration: var(--semantic-duration-handoff);
-  animation-timing-function: var(--semantic-easing-move);
-}
-
-::view-transition-old(.plate-morph),
-::view-transition-new(.plate-morph) {
-  height: 100%;
-  object-fit: cover;
-}
-
-/* The header and the inspector hold still while the page changes under them. */
-::view-transition-group(root),
-::view-transition-group(site-header),
-::view-transition-group(inspector-dock) {
-  animation: none;
-}
-
-::view-transition-old(root),
-::view-transition-old(site-header),
-::view-transition-old(inspector-dock) {
-  display: none;
-}
-
-::view-transition-new(root),
-::view-transition-new(site-header),
-::view-transition-new(inspector-dock) {
-  animation: none;
-}
-
 /* A page reached by keyboard or the browser's own controls arrives at once. */
 html:not([data-route-input='pointer'])::view-transition-group(*),
+html:not([data-route-input='pointer'])::view-transition-image-pair(*),
 html:not([data-route-input='pointer'])::view-transition-old(*),
 html:not([data-route-input='pointer'])::view-transition-new(*) {
   animation: none;
@@ -319,4 +255,15 @@ html:not([data-route-input='pointer'])::view-transition-new(*) {
 li > p {
   font-size: inherit;
   margin: 0;
+}
+
+/* Only the artwork is shared. Its caption and the persistent header stay in place. */
+::view-transition-group(.plate-morph) {
+  animation-duration: var(--duration-handoff);
+  animation-timing-function: var(--ease-move);
+}
+::view-transition-old(.plate-morph), ::view-transition-new(.plate-morph) {
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: normal;
 }
