@@ -1,40 +1,21 @@
 {
-  "total": 967,
+  "total": 912,
   "totals": {
-    "spacing": 579,
+    "spacing": 557,
     "font": 134,
-    "font-size": 58,
-    "radius": 50,
-    "line-height": 47,
-    "font-weight": 35,
+    "font-size": 48,
+    "radius": 45,
+    "line-height": 44,
+    "font-weight": 27,
     "breakpoint": 26,
-    "letter-spacing": 18,
+    "letter-spacing": 13,
     "tailwind-scale": 6,
     "shadow": 5,
     "tailwind-type": 4,
     "color": 2,
-    "font-family": 2,
     "z-index": 1
   },
   "files": {
-    "src/app/artifacts/[slug]/opengraph-image.tsx": {
-      "font-family": 1,
-      "font-size": 4,
-      "font-weight": 4,
-      "letter-spacing": 4,
-      "line-height": 1,
-      "radius": 2,
-      "spacing": 9
-    },
-    "src/app/work/[slug]/opengraph-image.tsx": {
-      "font-family": 1,
-      "font-size": 6,
-      "font-weight": 4,
-      "letter-spacing": 1,
-      "line-height": 2,
-      "radius": 3,
-      "spacing": 13
-    },
     "src/components/about/AboutLayout.module.css": {
       "breakpoint": 1,
       "font": 11,
