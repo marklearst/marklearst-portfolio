@@ -11,9 +11,9 @@ export default function Hero() {
       <div className={styles.container}>
         <HeroXRay sourceToken={semantic.semantic.type.specimen.size.$value.slice(1, -1)} />
         <div className={styles.intro}>
-          <p className={styles.lead}>I’m Mark. I build React interfaces and the tools behind them.</p>
+          <p className={styles.lead}>I’m Mark Learst, a frontend design engineer. I build React interfaces and design systems.</p>
           <div className={styles.practice}>
-            <p>I built the component architecture for Skydio’s Autonomy Widget. My design token tool, <Link href='/work/primitree'>Primitree</Link>, runs this site.</p>
+            <p>I built the component architecture for Skydio’s Autonomy Widget. My design token tool, <Link href='/work/primitree'>Primitree</Link>, powers <Link href='/system'>this site’s design system</Link>.</p>
             <div className={styles.actions}>
               <TrackedFragmentLink href='#work' event={{ type: 'hero', data: { action: 'view_work', location: 'hero' } }}>Explore the work <ArrowDownIcon /></TrackedFragmentLink>
               <a href='mailto:jobs@marklearst.com'>Let’s talk <ArrowUpRightIcon /></a>
