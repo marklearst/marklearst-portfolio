@@ -161,7 +161,7 @@ Primitree builds the tokens. The sources are DTCG 2025.10 files in three layers 
 
 Components read the adapter names (`--color-ink-primary`, `--text-body`, `--duration-feedback`) or Primitree's own variables for component tokens and the spacing, radius, and layer scales. `src/tokens/css-adapter.json` maps each adapter name to its token, and the inspector reads the same map.
 
-Motion is tokenized: four durations named for the job (feedback, reveal, handoff, causal) and four easings (enter, move, linear, and settle, which passes its target a little and comes back). Motion is a context with three settings, not a media query in each component. `layout.tsx` sets `data-motion` before first paint. In the reduced context every duration resolves to zero, and in the slow one every duration runs at a quarter of its speed, which is there so anyone can watch the site's motion closely. Scripted animation reads the live value through `src/lib/motion-tokens.ts`.
+Motion is tokenized: five durations named for the job (feedback, hover, reveal, handoff, causal) and four easings (enter, move, linear, and settle, which passes its target a little and comes back). Motion is a context with three settings, not a media query in each component. `layout.tsx` sets `data-motion` before first paint. In the reduced context every duration resolves to zero, and Slow extends the durations for inspection. A hover takes 360 ms by default and 720 ms in Slow. Scripted animation reads the live value through `src/lib/motion-tokens.ts`.
 
 The system page's motion bench resolves three timing roles on the server with Primitree, including each duration's reference chain under Default, Slow, and Reduced. Playback reads those generated CSS variables through Motion mini. A native range control scrubs elapsed time; a bounded Bezier inversion maps that time to eased progress. Frame updates write to the sample, range, and plot refs without rendering React on every frame. New playback, scrubbing, resizing, role/context changes, and unmount cancel prior work; completion callbacks check the animation's identity. Reduced has no playback duration and shows the end state. The existing site motion controller owns the context, so this is one system setting shared with the inspector. `Slider` supports either a controlled `value` or native `defaultValue`, with both modes using the same input and visual treatment.
 
@@ -172,7 +172,8 @@ What still bypasses the tokens:
 - Geometry in older component CSS: padding, gap, margin, and radius literals. The spacing and radius scales exist and new components use them.
 - Fixed white and black alphas and the remaining box shadows in older CSS Modules
 - Hardcoded hex in the GlucoseIQ chart's SVG
-- `src/lib/monokai-colors.ts`, which resolves hex values from Primitree's output for the Open Graph images. Those images also write literal colors inline, and the Monokai name is due to retire.
+
+Open Graph images use one server renderer in `src/components/social/share-image.tsx`. It reads Primitree’s generated dark-theme colors and type scale and uses the homepage’s resting title and divider position. The renderer decodes the existing Wotfard webfonts in server memory and uses a transparent export of the header wordmark. Case studies link to their own generated cards through the shared page metadata.
 
 Both theme contexts pass token policy. The appearance control and bootstrap set `data-theme`; generated CSS supplies the OS fallback when that attribute is absent.
 
