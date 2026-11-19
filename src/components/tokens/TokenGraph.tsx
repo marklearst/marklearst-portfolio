@@ -1,8 +1,11 @@
 'use client'
 
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type ComponentPropsWithRef } from 'react'
 import { animate } from 'motion/mini'
 import { Button } from '@/components/ui/Button'
+import { ChevronDownIcon } from '@/components/ui/Icon'
+import { SPECIMEN_SIZE } from '@/components/home/hero-spec'
+import type { TokenPath as SiteTokenPath } from '@/tokens/generated/tokens'
 import { InspectorControls, InspectorHueControl } from '@/components/inspector/InspectorDock'
 import { useInspector, useInspectorController } from '@/components/inspector/InspectorProvider'
 import { durationMs, motionEase } from '@/lib/motion-tokens'
@@ -20,9 +23,22 @@ const LAYERS = [
   { id: 'component', name: 'Component', description: 'Interface roles' },
 ] as const
 
+const SITE_EXAMPLES: ReadonlyMap<string, string> = new Map([
+  ['semantic.color.accent.primary', 'Blueprint accent'],
+  [SPECIMEN_SIZE, 'Homepage headline size'],
+  ['semantic.type.specimen.tracking', 'Headline letter spacing'],
+  ['radius.4', 'Blueprint corners'],
+  ['semantic.color.accent.text', 'Wordmark braces'],
+  ['semantic.font.body', 'Reading typeface'],
+  ['component.button.accent.background', 'Accent button fill'],
+  ['component.button.motion', 'Button hover'],
+  ['component.inspector.outline', 'Inspector outline'],
+  ['component.dock.background', 'Inspector dock background'],
+] satisfies [SiteTokenPath, string][])
+
 interface TokenGraphProps {
   initial: Record<'dark' | 'light', TokenTrace>
-  paths: readonly string[]
+  catalog: Record<string, readonly string[]>
   accent: Record<'dark' | 'light', ChainValue>
   /** The dedicated system page exposes its selected trace in the URL. Embedded graphs keep local state. */
   linkable?: boolean
@@ -73,7 +89,18 @@ function TraceSummary({ trace }: { trace: TokenTrace }) {
   return <>{trace.nodes.length} tokens and {trace.edges.filter((edge) => !edge.broken).length} references. {trace.dependents} {trace.dependents === 1 ? 'alias follows' : 'aliases follow'} this token.</>
 }
 
-export default function TokenGraph({ initial, paths, accent, linkable = false }: TokenGraphProps) {
+function Picker({ label, ...props }: ComponentPropsWithRef<'select'> & { label: string }) {
+  const id = useId()
+  return <div className={styles.field}>
+    <label htmlFor={id}>{label}</label>
+    <div className={styles.picker}>
+      <select id={id} {...props} />
+      <ChevronDownIcon size={16} className={styles.pickerArrow} />
+    </div>
+  </div>
+}
+
+export default function TokenGraph({ initial, catalog, accent, linkable = false }: TokenGraphProps) {
   const controller = useInspectorController()
   const contextReady = useInspector((state) => state.contextReady)
   const theme = useInspector((state) => state.theme)
@@ -83,6 +110,8 @@ export default function TokenGraph({ initial, paths, accent, linkable = false }:
   const revision = useInspector((state) => state.brandPreview)
   const original = useInspector((state) => state.brand.hue === controller.brand.built.hue)
   const [localFocus, setFocus] = useState(initial.dark.focus)
+  const [browseByLayer, setBrowseByLayer] = useState(false)
+  const paths = useMemo(() => Object.values(catalog).flat(), [catalog])
   const hash = useSyncExternalStore(linkable ? subscribeLocation : ignoreLocation, linkable ? readHash : serverHash, serverHash)
   const focus = (linkable && tokenFromHash(hash, paths)) || localFocus
   const [active, setActive] = useState(initial.dark.focus)
@@ -107,7 +136,6 @@ export default function TokenGraph({ initial, paths, accent, linkable = false }:
   const retry = useRef<HTMLButtonElement>(null)
   const recoverFocus = useRef(false)
   const detachedFocus = useRef<HTMLButtonElement | null>(null)
-  const select = useId()
   const help = useId()
   const connected = useId()
   const arrival = useRef<string | undefined>(undefined)
@@ -247,20 +275,38 @@ export default function TokenGraph({ initial, paths, accent, linkable = false }:
   }
 
   const columns = LAYERS.map((layer) => ({ ...layer, nodes: trace.nodes.filter((node) => node.layer === layer.id) }))
+  // Keep a deep-linked token selectable even while its trace is loading.
+  const tracePaths = new Set([focus, ...(!busy && !error && trace.focus === focus ? trace.nodes.map(node => node.path) : [])])
+  const relatedPaths = [...tracePaths].filter(path => !SITE_EXAMPLES.has(path))
+  const layer = browseByLayer ? LAYERS.find(({ id }) => catalog[id]?.includes(focus))?.id : undefined
 
   return (
     <section ref={workbench} id={linkable ? `token=${focus}` : undefined} className={styles.workbench} data-inspector-ui='' aria-label='Live token graph' aria-describedby={help} onPointerDownCapture={() => { pointer.current = true }} onKeyDownCapture={() => { pointer.current = false }}>
       <div className={styles.toolbar}>
-        <label htmlFor={select}>Trace a token</label>
-        <select ref={selectInput} id={select} value={focus} disabled={!contextReady} onPointerEnter={controller.warm} onFocus={controller.warm} onChange={(event) => choose(event.currentTarget.value, pointer.current)}>
-          {paths.map((path) => <option key={path}>{path}</option>)}
-        </select>
+        <Picker label='Browse' value={layer ?? 'examples'} disabled={!contextReady} onChange={event => {
+          const group = catalog[event.currentTarget.value]
+          setBrowseByLayer(Boolean(group))
+          if (group?.length && !group.includes(focus)) choose(group[0], pointer.current)
+        }}>
+          <option value='examples'>On this site</option>
+          {LAYERS.map(({ id, name }) => <option key={id} value={id}>{name} ({catalog[id].length})</option>)}
+        </Picker>
+        <Picker label='Trace a token' ref={selectInput} value={focus} disabled={!contextReady} onPointerEnter={controller.warm} onFocus={controller.warm} onChange={(event) => choose(event.currentTarget.value, pointer.current)}>
+          {layer ? catalog[layer].map(path => <option key={path} value={path}>{path}</option>) : <>
+            <optgroup label='Site details'>
+              {Array.from(SITE_EXAMPLES, ([path, label]) => <option key={path} value={path}>{label}</option>)}
+            </optgroup>
+            {relatedPaths.length > 0 && <optgroup label='In this trace'>
+              {relatedPaths.map(path => <option key={path} value={path}>{path}</option>)}
+            </optgroup>}
+          </>}
+        </Picker>
         <p className={styles.context}>{contextReady ? <>{theme === 'dark' ? 'Dark' : 'Light'} theme with {motion} motion.</> : <>
           <span className={styles.builtDark}>Dark theme.</span>
           <span className={styles.builtLight}>Light theme.</span>
         </>}</p>
       </div>
-      <p id={help} className={styles.help}>Choose a token to follow its references. Arrow keys move through the nodes; Enter traces one.</p>
+      <p id={help} className={styles.help}>Choose a detail from the site to see which tokens it uses. Arrow keys move between nodes. Enter traces the selected node.</p>
       <noscript><p className={styles.help}>Interactive tracing requires JavaScript. The diagram shows the built accent chain.</p></noscript>
       {error && <div role='alert' className={styles.help}><p>The live graph could not load.</p><Button ref={retry} variant='secondary' size='sm' onClick={() => {
         recoverFocus.current = true
