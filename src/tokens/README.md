@@ -124,7 +124,7 @@ Each literal counts once, so `transition: opacity 180ms, transform 500ms` is two
 - **Geometry:** sizes, offsets, hairline borders, `50%` circles, chart coordinates, SVG geometry attributes (`d`, `r`, `strokeWidth`), and Tailwind arbitrary values on layout utilities like `w-[...]`, `grid-cols-[...]`, `border-[2px]`, and `ring-[3px]`.
 - **Tailwind's numeric spacing** (`p-4`, `gap-1.5`, `space-y-2`, `leading-7`, `text-sm/7`). It resolves through the `--spacing` token, so changing the token moves it.
 - **Resets to the font's own default:** `line-height: normal` and `letter-spacing: normal`.
-- **Values that come from code:** `${MONOKAI.pink}` in a template, an imported constant, an identifier, or the result of a ternary. They aren't literals where they're used. The strings inside a ternary still count their classes, colors, and fallbacks, but not their spacing or type, since there's no property to read them against.
+- **Values that come from code:** `${tokenValues['semantic.color.accent.primary']}` in a template, an imported constant, an identifier, or the result of a ternary. They aren't literals where they're used. The strings inside a ternary still count their classes, colors, and fallbacks, but not their spacing or type, since there's no property to read them against.
 - **Colors derived from a token:** `rgb(var(--token-color-canvas))`, `hsl(var(--h) 50% 50%)`.
 - **Content:** demo data and engines in `src/lib`, MDX prose and code, named colors in plain TS strings (where "orange" is a word), and object values under keys that are never styles (`href`, `src`, `id`, `label`, `title`, and the like).
 - **Other files:** generated output (`src/styles/generated`, `src/tokens`), font faces, type declarations, and tests.

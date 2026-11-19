@@ -7,6 +7,7 @@ import Footer from '@/components/shell/Footer'
 import ChapterNav from '@/components/navigation/ChapterNav'
 import RelatedNavigation from '@/components/navigation/RelatedNavigation'
 import { getArtifacts } from '@/lib/content/artifacts'
+import { articleMetadata } from '@/lib/social-metadata'
 import { getAdjacentContent } from '@/lib/content/adjacent-content'
 import { stripFrontmatter } from '@/lib/content/strip-frontmatter'
 import { artifactMdxComponents } from '@/components/mdx/ArtifactMdxComponents'
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: ArtifactPageProps): Promise<M
   // An address with no artifact behind it is a 404. Looking it up with the function that throws made it a 500.
   const artifact = (await getArtifacts()).find((item) => item.slug === slug)
   if (!artifact) notFound()
-  return { title: `${artifact.title} | Mark Learst`, description: artifact.summary }
+  return articleMetadata(`/artifacts/${slug}`, artifact.title, artifact.summary, artifact.publishedAt)
 }
 
 export default async function ArtifactPage({ params }: ArtifactPageProps) {
