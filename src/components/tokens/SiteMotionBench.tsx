@@ -3,7 +3,7 @@ import type { Bezier } from '@/lib/motion-curve'
 import MotionBench, { type MotionProfile } from './MotionBench'
 
 const roles = [
-  { id: 'feedback', name: 'Feedback', description: 'A short answer to a press or a hover.', token: 'component.button.motion', easing: 'semantic.easing.enter' },
+  { id: 'hover', name: 'Hover', description: 'The time a button takes to settle under the pointer.', token: 'component.button.motion', easing: 'semantic.easing.enter' },
   { id: 'reveal', name: 'Reveal', description: 'A new detail becoming visible.', token: 'component.inspector.motion', easing: 'semantic.easing.enter' },
   { id: 'handoff', name: 'Handoff', description: 'An object moving between places.', token: 'component.dock.motion', easing: 'semantic.easing.move' },
 ] as const

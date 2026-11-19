@@ -5,7 +5,7 @@ import { InspectorController } from './inspector-controller.ts'
 const config = {
   themeColors: { dark: '#111111', light: '#ffffff' },
   check: { command: 'primitree check', tokens: 142, layers: 3, contexts: 6, findings: [], exit: 0 },
-  reveal: { default: '180ms', reduced: '0ms', slow: '720ms' },
+  hoverDuration: { default: '360ms', reduced: '0ms', slow: '720ms' },
   brand: { built: { hue: 23, hex: '#DB1834' }, max: 359 },
 }
 const flush = () => new Promise((resolve) => setImmediate(resolve))

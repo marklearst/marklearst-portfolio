@@ -15,8 +15,8 @@ interface InspectorProviderProps extends InspectorConfig {
  * Owns the inspector for the whole site. It sits in the root layout, so
  * inspect mode and the floating dock carry across routes.
  */
-export function InspectorProvider({ check, reveal, brand, themeColors, children }: InspectorProviderProps) {
-  const [controller] = useState(() => new InspectorController({ check, reveal, brand, themeColors }))
+export function InspectorProvider({ check, hoverDuration, brand, themeColors, children }: InspectorProviderProps) {
+  const [controller] = useState(() => new InspectorController({ check, hoverDuration, brand, themeColors }))
   const overlay = useRef<HTMLDivElement>(null)
   const live = useRef<HTMLParagraphElement>(null)
   const pathname = usePathname()

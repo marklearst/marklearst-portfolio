@@ -411,7 +411,6 @@ export function InspectorControls({ ruleInPreview = false }: { ruleInPreview?: b
         </Button>
         {(!ruleInPreview || inspecting) && <RuleButton />}
       </div>
-      {/* Motion is a context like the theme: the same tokens, rerouted. Slow sends every duration to a quarter of its speed. */}
       <div className={styles.motionRow}>
         <span id={motionLabel} className={styles.motionLabel}>
           Motion
@@ -421,7 +420,7 @@ export function InspectorControls({ ruleInPreview = false }: { ruleInPreview?: b
           <SegmentedOption value='default' data-dock-focus='motion:default'>Default</SegmentedOption>
           <SegmentedOption value='slow' data-dock-focus='motion:slow'>Slow</SegmentedOption>
         </Segmented>
-        <code className={styles.readout}>reveal {controller.reveal[motion]}</code>
+        <code className={styles.readout}>hover {controller.hoverDuration[motion]}</code>
       </div>
     </div>
   )

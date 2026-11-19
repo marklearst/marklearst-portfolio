@@ -5,7 +5,7 @@ import type { InspectorRuntime } from './inspector-runtime'
 
 import { THEME_KEY, themePreference, resolveTheme, type Theme, type ThemePreference } from '../../lib/theme-preference.mjs'
 
-/** The motion context: as designed, off, or every duration at a quarter of its speed for a close look. */
+/** The motion context: as designed, off, or slower transitions for a close look. */
 export type Motion = 'default' | 'reduced' | 'slow'
 
 /** A stored preference, or nothing where the browser refuses storage, as it can in a private window. */
@@ -57,8 +57,8 @@ export interface InspectorState {
 export interface InspectorConfig {
   themeColors: Readonly<Record<Theme, string>>
   check: CheckSummary
-  /** `semantic.duration.reveal` as each motion context resolves it. */
-  reveal: Readonly<Record<Motion, string>>
+  /** `semantic.duration.hover` as each motion context resolves it. */
+  hoverDuration: Readonly<Record<Motion, string>>
   brand: {
     /** The accent as built. */
     built: BrandReport
@@ -102,13 +102,13 @@ export class InspectorController {
   private pendingBrand = false
   private themeChange = 0
 
-  readonly reveal: InspectorConfig['reveal']
+  readonly hoverDuration: InspectorConfig['hoverDuration']
   readonly brand: InspectorConfig['brand']
 
   constructor(config: InspectorConfig, loader: RuntimeLoader = () => import('./inspector-runtime')) {
     this.config = config
     this.loader = loader
-    this.reveal = config.reveal
+    this.hoverDuration = config.hoverDuration
     this.brand = config.brand
     this.state = {
       contextReady: false,
@@ -397,7 +397,7 @@ export class InspectorController {
     this.announce(motion === 'reduced'
       ? 'Reduced motion on. Every duration token now routes to 0 milliseconds.'
       : motion === 'slow'
-        ? 'Slow motion on. Every duration token now runs at a quarter of its speed.'
+        ? 'Slow motion on. Transitions now take longer.'
         : 'Default motion restored.')
   }
 

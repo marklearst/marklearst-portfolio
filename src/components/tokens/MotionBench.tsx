@@ -164,7 +164,7 @@ export default function MotionBench({ profiles }: { profiles: readonly MotionPro
     <section className={styles.section} aria-labelledby={heading}>
       <header className={styles.heading}><h2 id={heading}>Read the motion.</h2><p>Choose a timing role, play it, or scrub through its curve. These are the Primitree values running this site.</p></header>
       <div className={styles.bench} data-inspector-ui=''>
-        <div className={styles.toolbar}><Segmented aria-label='Timing role' value={selected} onValueChange={setSelected}>{profiles.map((entry) => <SegmentedOption key={entry.id} className={styles.option} value={entry.id}>{entry.name}</SegmentedOption>)}</Segmented><span className={styles.context}>{motion === 'slow' ? 'Quarter speed' : motion === 'reduced' ? 'Instant' : 'As designed'}</span></div>
+        <div className={styles.toolbar}><Segmented aria-label='Timing role' value={selected} onValueChange={setSelected}>{profiles.map((entry) => <SegmentedOption key={entry.id} className={styles.option} value={entry.id}>{entry.name}</SegmentedOption>)}</Segmented><span className={styles.context}>{motion === 'slow' ? 'Slow motion' : motion === 'reduced' ? 'Instant' : 'As designed'}</span></div>
         <TimingSample profile={profile} motion={motion} />
         <div className={styles.source}>
           <div><h3>Duration reference</h3><ol>{resolved.chain.map((path) => <li key={path}><code><TokenPath path={path} /></code></li>)}</ol></div>

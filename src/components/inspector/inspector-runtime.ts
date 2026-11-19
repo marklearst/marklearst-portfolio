@@ -69,11 +69,9 @@ export class InspectorRuntime {
   private pendingBrand = false
   private detach: (() => void) | undefined
 
-  readonly reveal: InspectorConfig['reveal']
   readonly brand: InspectorConfig['brand']
 
-  constructor({ reveal, brand }: InspectorConfig, store: InspectorStore) {
-    this.reveal = reveal
+  constructor({ brand }: InspectorConfig, store: InspectorStore) {
     this.brand = brand
     this.store = store
   }
