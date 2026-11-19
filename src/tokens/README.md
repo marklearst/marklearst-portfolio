@@ -11,7 +11,7 @@ The site's tokens are DTCG 2025.10 files with a Resolver. Primitree reads them, 
 | `component.tokens.json` | component | References to meaning, for the button, the inspector, and its dock |
 | `theme.light.tokens.json` | meaning | The light theme's reroutes |
 | `motion.reduced.tokens.json` | meaning | The reduced motion reroutes: every duration to `duration.instant` |
-| `motion.slow.tokens.json` | meaning | The slow motion reroutes: every duration to its `duration.quarter` step, four times as long |
+| `motion.slow.tokens.json` | meaning | The slow motion reroutes: longer timings for inspection, including a 720 ms hover |
 | `tokens.resolver.json` | | One set (the three layers) and two axes: `theme` (dark, light) and `motion` (default, reduced, slow) |
 | `css-adapter.json` | | The names the site's CSS already used, pointed at Primitree's variables |
 

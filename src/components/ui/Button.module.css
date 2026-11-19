@@ -20,7 +20,8 @@
   touch-action: manipulation;
   user-select: none;
   transition-property: scale, background-color, border-color, color;
-  transition-duration: var(--component-button-motion);
+  /* The press scale answers immediately while the paint follows the hover timing. */
+  transition-duration: var(--duration-feedback), var(--component-button-motion), var(--component-button-motion), var(--component-button-motion);
   transition-timing-function: var(--ease-out);
 }
 

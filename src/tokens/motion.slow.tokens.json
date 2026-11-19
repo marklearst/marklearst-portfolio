@@ -5,6 +5,9 @@
       "feedback": {
         "$value": "{duration.quarter.quick}"
       },
+      "hover": {
+        "$value": "{duration.quarter.base}"
+      },
       "reveal": {
         "$value": "{duration.quarter.base}"
       },

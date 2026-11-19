@@ -116,6 +116,7 @@
   "component.inspector.motion": "--component-inspector-motion",
   "component.inspector.outline": "--component-inspector-outline",
   "duration.base": "--duration-base",
+  "duration.deliberate": "--duration-deliberate",
   "duration.hop": "--duration-hop",
   "duration.instant": "--duration-instant",
   "duration.quarter.base": "--duration-quarter-base",
@@ -176,6 +177,7 @@
   "semantic.duration.causal": "--semantic-duration-causal",
   "semantic.duration.feedback": "--semantic-duration-feedback",
   "semantic.duration.handoff": "--semantic-duration-handoff",
+  "semantic.duration.hover": "--semantic-duration-hover",
   "semantic.duration.reveal": "--semantic-duration-reveal",
   "semantic.easing.enter": "--semantic-easing-enter",
   "semantic.easing.linear": "--semantic-easing-linear",
@@ -366,7 +368,7 @@
    "css": "calc({var} * 1em)"
   },
   "--default-transition-duration": {
-   "token": "semantic.duration.feedback"
+   "token": "semantic.duration.hover"
   },
   "--default-transition-timing-function": {
    "token": "semantic.easing.enter"
@@ -379,6 +381,9 @@
   },
   "--ease-settle": {
    "token": "semantic.easing.settle"
+  },
+  "--duration-hover": {
+   "token": "semantic.duration.hover"
   },
   "--duration-feedback": {
    "token": "semantic.duration.feedback"
@@ -398,8 +403,8 @@
  },
  "check": {
   "command": "primitree check",
-  "tokens": 156,
-  "references": 97,
+  "tokens": 158,
+  "references": 100,
   "layers": 3,
   "contexts": 6,
   "findings": [],
@@ -1613,7 +1618,7 @@
      {
       "value": {
        "kind": "reference",
-       "target": "source:site/token:semantic.duration.feedback"
+       "target": "source:site/token:semantic.duration.hover"
       },
       "conditions": {},
       "priority": 0,
@@ -2331,6 +2336,41 @@
      {
       "uri": "src/tokens/base.tokens.json",
       "pointer": "/duration/base"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:duration.deliberate",
+    "sourceId": "source:site",
+    "name": "deliberate",
+    "path": [
+     "duration",
+     "deliberate"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "literal",
+       "value": {
+        "value": 360,
+        "unit": "ms"
+       }
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/base.tokens.json",
+        "pointer": "/duration/deliberate"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/base.tokens.json",
+      "pointer": "/duration/deliberate"
      }
     ]
    },
@@ -4743,6 +4783,71 @@
      {
       "uri": "src/tokens/semantic.tokens.json",
       "pointer": "/semantic/duration/handoff"
+     }
+    ]
+   },
+   {
+    "id": "source:site/token:semantic.duration.hover",
+    "sourceId": "source:site",
+    "name": "hover",
+    "path": [
+     "semantic",
+     "duration",
+     "hover"
+    ],
+    "type": "duration",
+    "values": [
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.deliberate"
+      },
+      "conditions": {},
+      "priority": 0,
+      "provenance": [
+       {
+        "uri": "src/tokens/semantic.tokens.json",
+        "pointer": "/semantic/duration/hover"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.instant"
+      },
+      "conditions": {
+       "motion": "reduced"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.reduced.tokens.json",
+        "pointer": "/semantic/duration/hover"
+       }
+      ]
+     },
+     {
+      "value": {
+       "kind": "reference",
+       "target": "source:site/token:duration.quarter.base"
+      },
+      "conditions": {
+       "motion": "slow"
+      },
+      "priority": 2,
+      "provenance": [
+       {
+        "uri": "src/tokens/motion.slow.tokens.json",
+        "pointer": "/semantic/duration/hover"
+       }
+      ]
+     }
+    ],
+    "provenance": [
+     {
+      "uri": "src/tokens/semantic.tokens.json",
+      "pointer": "/semantic/duration/hover"
      }
     ]
    },

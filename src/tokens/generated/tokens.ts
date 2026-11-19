@@ -55,6 +55,7 @@ export type TokenPath =
   | "component.inspector.motion"
   | "component.inspector.outline"
   | "duration.base"
+  | "duration.deliberate"
   | "duration.hop"
   | "duration.instant"
   | "duration.quarter.base"
@@ -115,6 +116,7 @@ export type TokenPath =
   | "semantic.duration.causal"
   | "semantic.duration.feedback"
   | "semantic.duration.handoff"
+  | "semantic.duration.hover"
   | "semantic.duration.reveal"
   | "semantic.easing.enter"
   | "semantic.easing.linear"
@@ -214,6 +216,7 @@ export const tokenVars = {
   ["component.inspector.motion"]: "var(--component-inspector-motion)",
   ["component.inspector.outline"]: "var(--component-inspector-outline)",
   ["duration.base"]: "var(--duration-base)",
+  ["duration.deliberate"]: "var(--duration-deliberate)",
   ["duration.hop"]: "var(--duration-hop)",
   ["duration.instant"]: "var(--duration-instant)",
   ["duration.quarter.base"]: "var(--duration-quarter-base)",
@@ -274,6 +277,7 @@ export const tokenVars = {
   ["semantic.duration.causal"]: "var(--semantic-duration-causal)",
   ["semantic.duration.feedback"]: "var(--semantic-duration-feedback)",
   ["semantic.duration.handoff"]: "var(--semantic-duration-handoff)",
+  ["semantic.duration.hover"]: "var(--semantic-duration-hover)",
   ["semantic.duration.reveal"]: "var(--semantic-duration-reveal)",
   ["semantic.easing.enter"]: "var(--semantic-easing-enter)",
   ["semantic.easing.linear"]: "var(--semantic-easing-linear)",
@@ -352,7 +356,7 @@ export const tokenValues = {
   ["color.red.700"]: "color(srgb 0.6784 0.2235 0.1922)",
   ["component.button.accent.background"]: "color(srgb 0.8588 0.0941 0.2039)",
   ["component.button.accent.text"]: "color(srgb 0.9569 0.9569 0.949)",
-  ["component.button.motion"]: "140ms",
+  ["component.button.motion"]: "360ms",
   ["component.button.primary.background"]: "color(srgb 0.9569 0.9569 0.949)",
   ["component.button.primary.text"]: "color(srgb 0.0784 0.0784 0.0784)",
   ["component.button.secondary.background"]: "color(srgb 0.102 0.102 0.102)",
@@ -374,6 +378,7 @@ export const tokenValues = {
   ["component.inspector.motion"]: "180ms",
   ["component.inspector.outline"]: "color(srgb 0.8588 0.0941 0.2039)",
   ["duration.base"]: "180ms",
+  ["duration.deliberate"]: "360ms",
   ["duration.hop"]: "60ms",
   ["duration.instant"]: "0ms",
   ["duration.quarter.base"]: "720ms",
@@ -434,6 +439,7 @@ export const tokenValues = {
   ["semantic.duration.causal"]: "60ms",
   ["semantic.duration.feedback"]: "140ms",
   ["semantic.duration.handoff"]: "280ms",
+  ["semantic.duration.hover"]: "360ms",
   ["semantic.duration.reveal"]: "180ms",
   ["semantic.easing.enter"]: [0.22,1,0.36,1],
   ["semantic.easing.linear"]: [0,0,1,1],

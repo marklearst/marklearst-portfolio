@@ -73,6 +73,7 @@
   --duration-quick: 140ms;
   --duration-base: 180ms;
   --duration-slow: 280ms;
+  --duration-deliberate: 360ms;
   --duration-quarter-hop: 240ms;
   --duration-quarter-quick: 560ms;
   --duration-quarter-base: 720ms;
@@ -126,6 +127,7 @@
   --semantic-type-code-size: var(--font-size-50);
   --semantic-type-code-leading: var(--font-leading-600);
   --semantic-duration-feedback: var(--duration-quick);
+  --semantic-duration-hover: var(--duration-deliberate);
   --semantic-duration-reveal: var(--duration-base);
   --semantic-duration-handoff: var(--duration-slow);
   --semantic-duration-causal: var(--duration-hop);
@@ -141,7 +143,7 @@
   --component-button-secondary-border: var(--semantic-color-border-subtle);
   --component-button-secondary-text: var(--semantic-color-ink-primary);
   --component-button-secondary-background: var(--semantic-color-surface-base);
-  --component-button-motion: var(--semantic-duration-feedback);
+  --component-button-motion: var(--semantic-duration-hover);
   --component-inspector-outline: var(--semantic-color-accent-primary);
   --component-inspector-label-background: var(--semantic-color-accent-primary);
   --component-inspector-label-text: var(--semantic-color-ink-onAccent);
@@ -161,6 +163,7 @@
 
 [data-motion='reduced'] {
   --semantic-duration-feedback: var(--duration-instant);
+  --semantic-duration-hover: var(--duration-instant);
   --semantic-duration-reveal: var(--duration-instant);
   --semantic-duration-handoff: var(--duration-instant);
   --semantic-duration-causal: var(--duration-instant);
@@ -168,6 +171,7 @@
 
 [data-motion='slow'] {
   --semantic-duration-feedback: var(--duration-quarter-quick);
+  --semantic-duration-hover: var(--duration-quarter-base);
   --semantic-duration-reveal: var(--duration-quarter-base);
   --semantic-duration-handoff: var(--duration-quarter-slow);
   --semantic-duration-causal: var(--duration-quarter-hop);
@@ -264,6 +268,7 @@
   --duration-quick: 140ms;
   --duration-base: 180ms;
   --duration-slow: 280ms;
+  --duration-deliberate: 360ms;
   --duration-quarter-hop: 240ms;
   --duration-quarter-quick: 560ms;
   --duration-quarter-base: 720ms;
@@ -317,6 +322,7 @@
   --semantic-type-code-size: var(--font-size-50);
   --semantic-type-code-leading: var(--font-leading-600);
   --semantic-duration-feedback: var(--duration-instant);
+  --semantic-duration-hover: var(--duration-instant);
   --semantic-duration-reveal: var(--duration-instant);
   --semantic-duration-handoff: var(--duration-instant);
   --semantic-duration-causal: var(--duration-instant);
@@ -332,7 +338,7 @@
   --component-button-secondary-border: var(--semantic-color-border-subtle);
   --component-button-secondary-text: var(--semantic-color-ink-primary);
   --component-button-secondary-background: var(--semantic-color-surface-base);
-  --component-button-motion: var(--semantic-duration-feedback);
+  --component-button-motion: var(--semantic-duration-hover);
   --component-inspector-outline: var(--semantic-color-accent-primary);
   --component-inspector-label-background: var(--semantic-color-accent-primary);
   --component-inspector-label-text: var(--semantic-color-ink-onAccent);
@@ -423,6 +429,7 @@
   --duration-quick: 140ms;
   --duration-base: 180ms;
   --duration-slow: 280ms;
+  --duration-deliberate: 360ms;
   --duration-quarter-hop: 240ms;
   --duration-quarter-quick: 560ms;
   --duration-quarter-base: 720ms;
@@ -476,6 +483,7 @@
   --semantic-type-code-size: var(--font-size-50);
   --semantic-type-code-leading: var(--font-leading-600);
   --semantic-duration-feedback: var(--duration-quarter-quick);
+  --semantic-duration-hover: var(--duration-quarter-base);
   --semantic-duration-reveal: var(--duration-quarter-base);
   --semantic-duration-handoff: var(--duration-quarter-slow);
   --semantic-duration-causal: var(--duration-quarter-hop);
@@ -491,7 +499,7 @@
   --component-button-secondary-border: var(--semantic-color-border-subtle);
   --component-button-secondary-text: var(--semantic-color-ink-primary);
   --component-button-secondary-background: var(--semantic-color-surface-base);
-  --component-button-motion: var(--semantic-duration-feedback);
+  --component-button-motion: var(--semantic-duration-hover);
   --component-inspector-outline: var(--semantic-color-accent-primary);
   --component-inspector-label-background: var(--semantic-color-accent-primary);
   --component-inspector-label-text: var(--semantic-color-ink-onAccent);
@@ -534,6 +542,7 @@
 @media (prefers-reduced-motion: reduce) {
   :root:not([data-motion]) {
     --semantic-duration-feedback: var(--duration-instant);
+    --semantic-duration-hover: var(--duration-instant);
     --semantic-duration-reveal: var(--duration-instant);
     --semantic-duration-handoff: var(--duration-instant);
     --semantic-duration-causal: var(--duration-instant);

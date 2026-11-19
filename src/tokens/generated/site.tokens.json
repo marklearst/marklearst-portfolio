@@ -589,8 +589,14 @@
         "unit": "ms"
       }
     },
+    "deliberate": {
+      "$value": {
+        "value": 360,
+        "unit": "ms"
+      }
+    },
     "quarter": {
-      "$description": "The same four steps at a quarter of their speed, for watching motion closely.",
+      "$description": "Four extended steps, for watching motion closely.",
       "hop": {
         "$value": {
           "value": 240,
@@ -871,7 +877,11 @@
       "$description": "Named for the job. The reduced motion context routes every one of these to duration.instant.",
       "feedback": {
         "$value": "{duration.quick}",
-        "$description": "Hover and press."
+        "$description": "Immediate feedback on a press."
+      },
+      "hover": {
+        "$value": "{duration.deliberate}",
+        "$description": "A control changing appearance as the pointer enters or leaves."
       },
       "reveal": {
         "$value": "{duration.base}",
@@ -948,7 +958,7 @@
       },
       "motion": {
         "$type": "duration",
-        "$value": "{semantic.duration.feedback}"
+        "$value": "{semantic.duration.hover}"
       }
     },
     "inspector": {
