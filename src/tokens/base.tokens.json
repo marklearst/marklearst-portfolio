@@ -157,6 +157,17 @@
           "hex": "#111110"
         }
       },
+      "1000": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000"
+        }
+      },
       "$description": "One ramp for both themes. Dark reads it from the 900 end, light from the 0 end."
     },
     "brand": {
@@ -319,7 +330,8 @@
           "alpha": 0.1,
           "hex": "#000000"
         }
-      }
+      },
+      "$description": "One ramp for both themes. Dark reads it from the 900 end, light from the 0 end."
     }
   },
   "font": {
@@ -667,6 +679,15 @@
       "soft": {
         "$value": 0.2,
         "$description": "Passes its target a little, once."
+      }
+    },
+    "letter": {
+      "$type": "number",
+      "stiffness": {
+        "$value": 250
+      },
+      "damping": {
+        "$value": 30
       }
     }
   }

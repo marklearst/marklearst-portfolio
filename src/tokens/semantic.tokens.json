@@ -12,6 +12,9 @@
         },
         "raised": {
           "$value": "{color.neutral.825}"
+        },
+        "underprint": {
+          "$value": "{color.neutral.1000}"
         }
       },
       "ink": {
@@ -87,14 +90,8 @@
           "$type": "dimension",
           "$value": "{font.size.700}"
         },
-        "leading": {
-          "$type": "number",
-          "$value": "{font.leading.100}"
-        },
-        "tracking": {
-          "$type": "number",
-          "$value": "{font.tracking.tight}"
-        }
+        "leading": { "$type": "number", "$value": "{font.leading.100}" },
+        "tracking": { "$type": "number", "$value": "{font.tracking.tight}" }
       },
       "title": {
         "size": {
@@ -105,10 +102,7 @@
           "$type": "number",
           "$value": "{font.leading.200}"
         },
-        "tracking": {
-          "$type": "number",
-          "$value": "{font.tracking.tight}"
-        }
+        "tracking": { "$type": "number", "$value": "{font.tracking.tight}" }
       },
       "heading": {
         "size": {
@@ -237,6 +231,14 @@
       "land": {
         "$value": "{spring.bounce.soft}",
         "$description": "Something that was sent somewhere and arrives with its own speed: the outline, a thrown dock."
+      },
+      "letter": {
+        "stiffness": {
+          "$value": "{spring.letter.stiffness}"
+        },
+        "damping": {
+          "$value": "{spring.letter.damping}"
+        }
       }
     }
   }

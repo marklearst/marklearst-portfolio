@@ -157,6 +157,17 @@
           "hex": "#111110"
         }
       },
+      "1000": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000"
+        }
+      },
       "$description": "One ramp for both themes. Dark reads it from the 900 end, light from the 0 end."
     },
     "brand": {
@@ -319,7 +330,8 @@
           "alpha": 0.1,
           "hex": "#000000"
         }
-      }
+      },
+      "$description": "One ramp for both themes. Dark reads it from the 900 end, light from the 0 end."
     }
   },
   "font": {
@@ -671,6 +683,15 @@
         "$value": 0.2,
         "$description": "Passes its target a little, once."
       }
+    },
+    "letter": {
+      "$type": "number",
+      "stiffness": {
+        "$value": 250
+      },
+      "damping": {
+        "$value": 30
+      }
     }
   },
   "semantic": {
@@ -686,6 +707,9 @@
         },
         "raised": {
           "$value": "{color.neutral.825}"
+        },
+        "underprint": {
+          "$value": "{color.neutral.1000}"
         }
       },
       "ink": {
@@ -920,6 +944,14 @@
       "land": {
         "$value": "{spring.bounce.soft}",
         "$description": "Something that was sent somewhere and arrives with its own speed: the outline, a thrown dock."
+      },
+      "letter": {
+        "stiffness": {
+          "$value": "{spring.letter.stiffness}"
+        },
+        "damping": {
+          "$value": "{spring.letter.damping}"
+        }
       }
     }
   },
