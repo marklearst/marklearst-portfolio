@@ -1,7 +1,7 @@
 {
-  "total": 1021,
+  "total": 1020,
   "totals": {
-    "spacing": 598,
+    "spacing": 597,
     "font": 134,
     "font-size": 71,
     "line-height": 53,
@@ -178,7 +178,7 @@
     },
     "src/components/home/Hero.module.css": {
       "breakpoint": 2,
-      "spacing": 5
+      "spacing": 4
     },
     "src/components/home/Testimonials.module.css": {
       "breakpoint": 1,
