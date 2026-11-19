@@ -1,13 +1,13 @@
 {
-  "total": 1026,
+  "total": 1021,
   "totals": {
-    "spacing": 600,
+    "spacing": 598,
     "font": 134,
     "font-size": 71,
-    "radius": 54,
     "line-height": 53,
-    "font-weight": 41,
-    "breakpoint": 27,
+    "radius": 53,
+    "font-weight": 40,
+    "breakpoint": 26,
     "letter-spacing": 20,
     "tailwind-scale": 6,
     "color": 5,
@@ -86,13 +86,10 @@
       "spacing": 64
     },
     "src/components/brand/Wordmark.module.css": {
-      "breakpoint": 2,
+      "breakpoint": 1,
       "font": 3,
       "font-size": 1,
-      "font-weight": 1,
-      "letter-spacing": 1,
-      "radius": 1,
-      "spacing": 2
+      "letter-spacing": 1
     },
     "src/components/case-study/CaseStudyDetails.module.css": {
       "font": 2,
