@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { BUILD_CHECK } from '@/lib/inspector/graph'
 import InspectHere from './InspectHere'
 import styles from './Inspector.module.css'
@@ -27,7 +28,7 @@ export default function BuildLine() {
         .
       </span>
       <span>
-        Built with Primitree. <InspectHere />
+        <Link href='/system'>Explore the design system</Link>. <InspectHere />
       </span>
     </p>
   )

@@ -24,6 +24,7 @@ To trace a value, find the token in /graph.json under fragment.tokens and follow
 ## Pages
 
 - /work: case studies
+- /system: live token graph and motion examples from the portfolio
 - /work/primitree: the token tool that builds this site
 - /work/a11y-companion: accessibility review on the Figma canvas
 - /work/glucoseiq: glucose data layer
