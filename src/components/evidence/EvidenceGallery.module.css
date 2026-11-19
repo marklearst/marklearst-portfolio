@@ -110,7 +110,7 @@
   height: calc(100% - var(--evidence-padding) * 2);
   object-fit: contain;
   border-radius: 3px;
-  transition: transform var(--duration-reveal) var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-out);
 }
 
 .enlarge {
@@ -222,7 +222,7 @@
   background: var(--color-surface-raised);
   color: var(--color-ink-primary);
   cursor: pointer;
-  transition: background-color var(--duration-feedback) var(--ease-out), transform var(--duration-feedback) var(--ease-out);
+  transition: background-color var(--duration-hover) var(--ease-out), transform var(--duration-feedback) var(--ease-out);
 }
 
 .viewer button:active {
