@@ -28,7 +28,7 @@
   font: 14px/1.5 var(--font-body);
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color var(--duration-feedback) var(--ease-out), color var(--duration-feedback) var(--ease-out);
+  transition: background-color var(--duration-hover) var(--ease-out), color var(--duration-hover) var(--ease-out);
 }
 
 .header button:active {

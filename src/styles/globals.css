@@ -155,8 +155,8 @@ code {
 }
 
 a {
-  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
-  transition-duration: var(--duration-reveal);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-duration: var(--duration-hover);
   transition-timing-function: var(--ease-out);
 }
 
@@ -178,7 +178,7 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
 }
 [data-action-icon] .icon-arrow {
   transform-origin: center;
-  transition: transform var(--duration-reveal) var(--ease-out);
+  transition: transform var(--duration-hover) var(--ease-out);
 }
 :where(a, button):focus-visible [data-action-icon] .icon-arrow { transition: none; }
 @media (hover: hover) and (pointer: fine) {
@@ -200,7 +200,7 @@ a { text-underline-offset: .2em; text-decoration-thickness: from-font; }
   }
   html[data-motion]:not([data-motion='reduced']) :is(a, button) [data-action-icon='external'] { --travel-y: -100%; }
   html[data-motion]:not([data-motion='reduced']) :is(a, button) :is(.incoming-stroke, .outgoing-stroke) {
-    transition: translate var(--duration-reveal) var(--ease-out);
+    transition: translate var(--duration-hover) var(--ease-out);
   }
   html[data-motion]:not([data-motion='reduced']) :is(a, button) .incoming-stroke {
     visibility: visible;
