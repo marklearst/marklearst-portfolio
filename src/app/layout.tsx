@@ -26,7 +26,7 @@ const FigmaVarsDebug = isDev ? dynamic(() => import('@/components/dev/FigmaVarsD
 // row by row once and then stays out of the way.
 // Storage can throw, as it does in a private window with storage blocked. The motion context is set either way,
 // from the system's preference, and only the stored choice and the intro are skipped.
-const contextScript = `(function(){var d=document.documentElement,m=null;try{m=localStorage.getItem('ml:motion')}catch(e){}d.dataset.motion=m==='reduced'||m==='default'?m:matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'default';try{if(!sessionStorage.getItem('ml:intro')){sessionStorage.setItem('ml:intro','1');d.dataset.intro=''}}catch(e){}})()`
+const contextScript = `(function(){var d=document.documentElement,m=null;try{m=localStorage.getItem('ml:motion')}catch(e){}d.dataset.motion=m==='reduced'||m==='default'?m:matchMedia('(prefers-reduced-motion: reduce)').matches?'reduced':'default';try{if(!sessionStorage.getItem('ml:hero-titles'))d.dataset.heroIntro=''}catch(e){d.dataset.heroIntro=''}try{if(!sessionStorage.getItem('ml:intro')){sessionStorage.setItem('ml:intro','1');d.dataset.intro=''}}catch(e){}})()`
 
 const hoverUnder = (motion: string) =>
   tokenGraph().chain('semantic.duration.hover', { ...DEFAULT_SELECTION, motion })?.value.text ?? ''
